@@ -1,1 +1,1 @@
-# sekta_front
+Sektaschool project (rontend part - SPA)
