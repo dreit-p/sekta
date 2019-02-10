@@ -1,9 +1,12 @@
-module.exports = {
+module.exports = ({ file, options, env }) => ({
 	syntax: 'postcss-scss',
 	sourceMap: true,
 	plugins: {
 		'postcss-import': {},
-		'postcss-preset-env': {},
+		'postcss-preset-env': {
+			importFrom: './src/vars.css',
+			preserve: false
+		},
 		'postcss-short': {},
 		'postcss-color-function': {},
 		'postcss-focus': {},
@@ -13,4 +16,4 @@ module.exports = {
 		'css-mqpacker': {},
 		'postcss-discard-comments': {}
 	}
-}
+})

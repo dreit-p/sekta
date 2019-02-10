@@ -30,6 +30,7 @@
     "postcss-preset-env": "^6.5.0",
     "postcss-scss": "^2.0.0",
     "postcss-short": "^5.0.0",
+    "vue-cli-plugin-pug": "^1.0.7",
     "vue-template-compiler": "^2.5.21"
   }
 }
