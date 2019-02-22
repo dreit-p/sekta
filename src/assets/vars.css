@@ -1,0 +1,14 @@
+:root {
+	--bt-dark_elems: 							#151515;
+	--bt-color_muted: 						#878787;
+	--accent_color: 							#0ab6a1;
+	--accent_color-font: 					#00b8a0;
+
+
+	--font-main: 'Open Sans', 'PT Sans', 'Segoe UI', arial, sans-serif;
+	--font-second: 'Uni Sans', 'Tahoma', 'Segoe UI', arial, sans-serif;
+
+	--col-width: 150.8px;
+	--col-space: 15px;
+	--col-total: calc(var(--col-width) + var(--col-space));
+}

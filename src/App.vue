@@ -1,35 +1,35 @@
 <template lang="pug">
 #app
-	#nav
-		router-link(to='/') Home
-		|  |
-		router-link(to='/about') About
+	app-header
 	router-view
+	SvgAssets
 </template>
 
-<style lang="postcss">
+<script>
+	import AppHeader from '@/components/header.vue'
+	import SvgAssets from '@/components/svg.vue'
 
-body {
-	background-color: var(--black);
-	color: var(--red);
-}
+	(function(document, window) {
+		document.addEventListener("DOMContentLoaded", function() {
+			var baseUrl = window.location.href
+				.replace(window.location.hash, "");
+			[].slice.call(document.querySelectorAll("use[*|href]"))
+				.filter(function(element) {
+					return (element.getAttribute("xlink:href").indexOf("#") === 0);
+				})
+				.forEach(function(element) {
+					element.setAttribute("xlink:href", baseUrl + element.getAttribute("xlink:href"));
+				});
+		}, false);
+	}(document, window));
 
-#app {
-	font-family: 'Avenir', Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
-}
-#nav {
-	padding: 30px;
-	a {
-		font-weight: bold;
-		color: #2c3e50;
-		&.router-link-exact-active {
-			color: #42b983;
+	export default {
+		components: {
+			AppHeader,
+			SvgAssets
 		}
 	}
-}
+</script>
 
+<style lang="postcss">
 </style>

@@ -4,7 +4,7 @@ module.exports = ({ file, options, env }) => ({
 	plugins: {
 		'postcss-import': {},
 		'postcss-preset-env': {
-			importFrom: './src/vars.css',
+			importFrom: ['./src/assets/vars.css'],
 			preserve: false
 		},
 		'postcss-short': {},
