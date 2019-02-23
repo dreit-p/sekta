@@ -5,10 +5,12 @@ div
 
 <script>
 	export default {
-		name: 'tamplate',
+		name: 'template',
 		components: {
 		},
-		data: {}
+		data () {
+			return {}
+		}
 	}
 </script>
 

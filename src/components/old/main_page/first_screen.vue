@@ -1,8 +1,8 @@
 <template lang="pug">
-section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/images/first_screen-bg.jpg')}')`, backgroundPosition: '80% 0', height: '34vw' }")
-	.container.first-screen__container.clearfix
+section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/images/first_screen-bg.jpg')}')`, backgroundPosition: '80% 0' }")
+	.limit.first-screen__container.clearfix
 		.accordion2full__panel.accordion2full__panel_active(style='float: right; margin-top: 3vw;')
-			.first-screen__header(style='width: 435px;')
+			.first-screen__header
 				h1.first-screen__title
 					p Постройте ваше идеальное тело со Школой #SEKTA
 					p 
@@ -38,6 +38,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		&__title {
 			font-size: 30px;
 			text-transform: uppercase;
+			padding-right: 20px;
 			font-family: var(--font-second);
 			font-weight: 700;
 			line-height: 36px;
@@ -50,6 +51,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		}
 		&__header {
 			margin: 300px 0 0;
+			width: 435px;
 		}
 		&__content {
 			margin: -15px auto 25px;
@@ -57,7 +59,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			font-size: 15px;
 			line-height: 20px;
 			max-width: 670px;
-			padding: 0 15px;
+			padding: 0;
 			@media (min-width: 1010px) {
 				width:450px;
 				margin: 25px 0;
@@ -103,7 +105,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		}
 
 		.first-screen__header {
-			width: 600px;
+			/* width: 600px; */
 			margin: 25px 0 0;
 		}
 	}
@@ -156,7 +158,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 					max-height: max-content;
 					transform: scale(1);
 				.first-screen__header {
-						width: 90% !important;
+						width: 100%;
 						margin: 0 auto;
 						color: #fff;
 					.first-screen__title {
@@ -199,7 +201,6 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		}
 
 		.first-screen__header {
-			width: 600px;
 			margin: 25px 0 0;
 		}
 
@@ -236,14 +237,10 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		&:not(:disabled) {
 			cursor: pointer;
 		}
-	}
-
-	.clearfix:after {
-		display: block;
-		visibility: hidden;
-		clear: both;
-		height: 0;
-		content: ' ';
+		@media (max-width: 425px) {
+			width: 100%;
+			text-align: center;
+		}
 	}
 
 </style>

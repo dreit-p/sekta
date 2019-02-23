@@ -23,7 +23,7 @@ header.main-header
 					a.icon
 						svg
 							use(xlink:href='#icon-login')
-					a.icon.cross(:class='{active: isOpenedMenu}', href='#', v-on:click.prevent='isOpenedMenu = !isOpenedMenu')
+					a.icon.cross(:class='{active: isOpenedMenu}', href='#', @click.prevent='isOpenedMenu = !isOpenedMenu')
 						.x
 
 
@@ -46,10 +46,10 @@ header.main-header
 					.text Личный кабинет
 
 		transition(
-			v-on:before-enter='dropdownBeforeEnter'
-			v-on:enter='dropdownEnter'
-			v-on:after-enter='setHeightForDropdown'
-			v-on:leave='dropdownLeave'
+			@before-enter='dropdownBeforeEnter'
+			@enter='dropdownEnter'
+			@after-enter='setHeightForDropdown'
+			@leave='dropdownLeave'
 		)
 			.sub-links.outside(v-if='showSubLinks', @mouseenter='clearDropdownTimer', @mouseleave='setDropdownTimer')
 				.limit
@@ -68,9 +68,9 @@ header.main-header
 
 
 		transition(
-			v-on:before-enter='menuBeforeEnter'
-			v-on:enter='menuEnter'
-			v-on:leave='menuLeave'
+			@before-enter='menuBeforeEnter'
+			@enter='menuEnter'
+			@leave='menuLeave'
 		)
 			nav.mobile-menu(v-if='isOpenedMenu')
 				ul.additional-links(v-if='additionalLinks.length > 0')
@@ -80,7 +80,8 @@ header.main-header
 						v-for='(link, index, id) in additionalLinks', 
 						:key='`addLink-${index}`', 
 						:to='link.link',
-						:data-index="index"
+						:data-index='index',
+						@click.native='isOpenedMenu = false'
 					)
 						a.animated-underline {{ link.name }}
 						ul.sub-links(v-if='link.subLinks')
@@ -90,7 +91,8 @@ header.main-header
 								v-for='(subLink, index) in link.subLinks', 
 								:key='`subLink-${index}`', 
 								:to='subLink.link',
-								:data-index="index"
+								:data-index='index',
+								@click.native='isOpenedMenu = false'
 							)
 								a.animated-underline {{ subLink.name }}
 				ul.main-links

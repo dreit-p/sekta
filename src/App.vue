@@ -2,12 +2,11 @@
 #app
 	app-header
 	router-view
-	SvgAssets
+	app-footer
+	svg-assets
 </template>
 
 <script>
-	import AppHeader from '@/components/header.vue'
-	import SvgAssets from '@/components/svg.vue'
 
 	(function(document, window) {
 		document.addEventListener("DOMContentLoaded", function() {
@@ -25,8 +24,9 @@
 
 	export default {
 		components: {
-			AppHeader,
-			SvgAssets
+			AppHeader: () => import('@/components/header.vue'),
+			AppFooter: () => import('@/components/footer.vue'),
+			SvgAssets: () => import('@/components/svg.vue'),
 		}
 	}
 </script>
