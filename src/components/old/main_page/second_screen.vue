@@ -289,9 +289,10 @@
 				bottom: 2.5em;
 				width: calc(100% - 105px);
 				@media screen and (max-width: 768px) {
-					position: relative;
+					position: static;
 					width: 100%;
-					margin-top: 60px;
+					margin-top: 16px;
+					margin-bottom: 20px;
 				}
 			}
 			p.start {
