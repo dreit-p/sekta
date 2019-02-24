@@ -473,7 +473,7 @@ header.main-header
 	.sub-links.outside {
 		position: absolute;
 		margin: 0;
-		top: 99%;
+		top: calc(99% - 5px);
 		width: 100%;
 		z-index: 1;
 		background-color: var(--bt-dark_elems);
