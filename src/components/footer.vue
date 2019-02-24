@@ -204,6 +204,7 @@ div
 				.icons {
 					display: flex;
 					margin-bottom: 0;
+					padding: * 20px;
 				}
 			}
 			.organization {
