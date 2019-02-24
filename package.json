@@ -33,6 +33,7 @@
     "postcss-scss": "^2.0.0",
     "postcss-short": "^5.0.0",
     "vue-cli-plugin-pug": "^1.0.7",
+    "vue-cli-plugin-svg": "^0.1.2",
     "vue-template-compiler": "^2.5.21"
   }
 }

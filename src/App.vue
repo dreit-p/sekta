@@ -26,7 +26,7 @@
 		components: {
 			AppHeader: () => import('@/components/header.vue'),
 			AppFooter: () => import('@/components/footer.vue'),
-			SvgAssets: () => import('@/components/svg.vue'),
+			SvgAssets: () => import('@/components/assets.svg'),
 		}
 	}
 </script>

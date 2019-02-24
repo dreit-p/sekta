@@ -1,5 +1,5 @@
 module.exports = {
-	configureWebpack: {
+    configureWebpack: {
 		devServer: {
 			port: 4444,
 			host: '0.0.0.0',
@@ -9,7 +9,15 @@ module.exports = {
 			allowedHosts: [".dreit.ru"]
 		}
 	},
-	css: {
+
+    css: {
 		sourceMap: true,
-	}
+	},
+
+    publicPath: undefined,
+    outputDir: undefined,
+    assetsDir: undefined,
+    runtimeCompiler: undefined,
+    productionSourceMap: false,
+    parallel: undefined
 }

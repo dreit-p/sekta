@@ -1,6 +1,10 @@
 <template lang="pug">
 div
-	
+	.soc-networks
+		.limit
+			.caption
+			.icons
+				
 </template>
 
 <script>
