@@ -30,4 +30,13 @@
 </script>
 
 <style lang="postcss">
+	#app {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+	body {
+		overflow-y: scroll;
+	}
 </style>

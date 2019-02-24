@@ -11,6 +11,10 @@ npm install
 ```
 npm run serve
 ```
+or GUI with [@vue/cli](https://cli.vuejs.org/guide/)
+```
+vue ui
+```
 
 ### Compiles and minifies for production
 ```

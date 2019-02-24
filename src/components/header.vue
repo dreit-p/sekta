@@ -475,6 +475,7 @@ header.main-header
 		margin: 0;
 		top: 99%;
 		width: 100%;
+		z-index: 1;
 		background-color: var(--bt-dark_elems);
 		.limit {
 			width: 100%;
