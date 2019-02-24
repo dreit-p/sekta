@@ -3,7 +3,6 @@
 	app-header
 	router-view
 	app-footer
-	svg-assets
 </template>
 
 <script>
@@ -26,7 +25,6 @@
 		components: {
 			AppHeader: () => import('@/components/header.vue'),
 			AppFooter: () => import('@/components/footer.vue'),
-			SvgAssets: () => import('@/components/assets.svg'),
 		}
 	}
 </script>

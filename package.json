@@ -32,8 +32,10 @@
     "postcss-preset-env": "^6.5.0",
     "postcss-scss": "^2.0.0",
     "postcss-short": "^5.0.0",
+    "svgo": "^1.1.0",
+    "svgo-loader": "^2.1.0",
     "vue-cli-plugin-pug": "^1.0.7",
-    "vue-cli-plugin-svg": "^0.1.2",
+    "vue-cli-plugin-svg-sprite": "^0.3.1",
     "vue-template-compiler": "^2.5.21"
   }
 }

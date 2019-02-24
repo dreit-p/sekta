@@ -247,11 +247,11 @@
 		margin-top: 35px;
 		border-top: 1px solid;
 		padding-top: 30px;
-		margin-bottom: 35px;
+		margin-bottom: 100px;
 		@media (max-width: 768px) {
 			padding: 0px 0 0 0;
 			flex-direction: column;
-			margin-bottom: 0;
+			margin-bottom: 10px;
 			border: none;
 		}
 		&__item {

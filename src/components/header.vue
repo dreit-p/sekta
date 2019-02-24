@@ -7,8 +7,7 @@ header.main-header
 
 			nav.top
 				router-link(class='logo', title='Sekta school logo', to='/')
-					svg
-						use(xlink:href='#logo-sekta')
+					svg-icon(name='logo-sekta')
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
 						router-link(tag='li', class='link', v-bind:to='link.link')
@@ -18,11 +17,9 @@ header.main-header
 					.caption пн-пт 10:00–19:00
 				.mobile-elems
 					a.icon
-						svg
-							use(xlink:href='#icon-phone')
+						svg-icon(name='icon-phone')
 					a.icon
-						svg
-							use(xlink:href='#icon-login')
+						svg-icon(name='icon-login')
 					a.icon.cross(:class='{active: isOpenedMenu}', href='#', @click.prevent='isOpenedMenu = !isOpenedMenu')
 						.x
 
@@ -41,8 +38,7 @@ header.main-header
 						a.animated-underline {{ link.name }}
 				router-link(class='account', title='Личный кабинет', to='/account')
 					.icon
-						svg
-							use(xlink:href='#icon-login')
+						svg-icon(name='icon-login')
 					.text Личный кабинет
 
 		transition(
@@ -107,6 +103,7 @@ header.main-header
 	export default {
 		name: 'app-header',
 		components: {
+			SvgIcon: () => import('@/components/SvgIcon.vue'),
 		},
 		computed: {
 		},
