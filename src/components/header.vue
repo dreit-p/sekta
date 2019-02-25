@@ -336,7 +336,7 @@ header.main-header
 				padding-top: 0;
 				position: fixed;
 				top: 0;
-				z-index: 1;
+				z-index: 5;
 			}
 			.top {
 				display: flex;
@@ -373,7 +373,7 @@ header.main-header
 		flex-shrink: 0;
 		transition: color .2s;
 		&:hover {
-			color: var(--accent_color-font);
+			color: var(--accent_color);
 			transition-duration: .1s;
 		}
 		svg {
@@ -505,14 +505,14 @@ header.main-header
 
 
 	.account {
-		color: var(--accent_color-font);
+		color: var(--accent_color);
 		display: inline-block;
 		display: flex;
 		align-items: baseline;
 		text-decoration: none;
 		white-space: nowrap;
 		&:hover {
-			color: color(var(--accent_color-font) l(+10%))
+			color: color(var(--accent_color) l(+10%))
 		}
 		.icon {
 			width: 10px;
@@ -550,7 +550,7 @@ header.main-header
 		width: 25px;
 		margin: 12px;
 		&:hover {
-			color: color(var(--accent_color-font) l(+10%));
+			color: color(var(--accent_color) l(+10%));
 		}
 		svg {
 			height: 100%;

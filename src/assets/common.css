@@ -112,3 +112,39 @@ body {
 	height: 0;
 	content: ' ';
 }
+
+
+.text-typography {
+	.title {
+		margin: 37px * 20px;
+		font-family: var(--font-second);
+		font-size: 30px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+	.center {
+		text-align: center;
+	}
+	.caption {
+		margin: 20px * 40px;
+		text-transform: uppercase;
+		font-size: 15px;
+		color: var(--accent_color);
+	}
+	p, h4 {
+		font-size: 18px;
+		line-height: 1.44;
+	}
+	a {
+		font-size: inherit;
+		color: var(--accent_color);
+	}
+	ul {
+		li {
+			margin: 10px *;
+			line-height: 1.6;
+			font-size: 15px;
+		}
+	}
+	padding-bottom: 30px;
+}

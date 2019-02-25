@@ -4,7 +4,7 @@ section.hero
 		.background(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
-				.title {{title}}
+				h1.title {{title}}
 				.text
 					slot
 				a.button Записаться на обучение
@@ -20,12 +20,15 @@ section.hero
 		name: 'CoursesHero',
 		components: {
 		},
+		props: {
+			image: String,
+			title: String,
+		},
 		computed: {
 		},
 		data () {
 			return {
-				title: 'Курс #SektaMama',
-				backgroundImage: require( '@/assets/images/course_bg-sectamama.jpg' )
+				backgroundImage: require('@/assets/images/' + this.image)
 			}
 		}
 	}
@@ -105,13 +108,13 @@ section.hero
 			}
 		}
 		.mobile-content {
+			display: none;
+			@media (max-width: 1024px) {
+				display: block;
+			}
 			.text {
-				display: none;
-				@media (max-width: 1024px) {
-					display: block;
-					font-size: 15px;
-					margin: 30px *;
-				}
+				font-size: 15px;
+				margin: 30px *;
 			}
 		}
 	}

@@ -95,7 +95,7 @@ div
 			transition: color .3s;
 			&:hover {
 				transition-duration: .1s;
-				color: color(var(--accent_color-font) l(+10%));
+				color: color(var(--accent_color) l(+10%));
 			}
 			svg {
 				width: 100%;
