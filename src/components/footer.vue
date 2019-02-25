@@ -38,19 +38,19 @@ div
 				networks: [
 					{
 						name: 'instagram',
-						link: 'https://instagram.com/'
+						link: 'https://instagram.com/sektaschool'
 					},
 					{
 						name: 'vkontakte',
-						link: 'https://vk.com/'
+						link: 'https://vk.com/sektaschool'
 					},
 					{
 						name: 'facebook',
-						link: 'https://fb.com/'
+						link: 'https://www.facebook.com/sektaschool'
 					},
 					{
 						name: 'youtube',
-						link: 'https://youtube.com/'
+						link: 'https://www.youtube.com/user/sektaschool'
 					},
 				]
 			}
