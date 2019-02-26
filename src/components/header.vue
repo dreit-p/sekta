@@ -35,7 +35,7 @@ header.main-header
 						@mouseenter.native='changeDropdownContent(!!link.subLinks ? `${link.name}-${index}` : showSubLinks, !!link.subLinks)'
 						@mouseleave.native='setDropdownTimer'
 					)
-						a.animated-underline {{ link.name }}
+						a {{ link.name }}
 				router-link(class='account', title='Личный кабинет', to='/account')
 					.icon
 						svg-icon(name='icon-login')
@@ -371,11 +371,6 @@ header.main-header
 		height: 45px;
 		color: white;
 		flex-shrink: 0;
-		transition: color .2s;
-		&:hover {
-			color: var(--accent_color);
-			transition-duration: .1s;
-		}
 		svg {
 			width: 100%;
 			height: 100%;
@@ -462,10 +457,16 @@ header.main-header
 			padding: 0;
 			float: left;
 			>a {
-				color: white;
 				letter-spacing: 0.2px;
 				font-family: var(--font-second);
 				font-weight: bold;
+				color: white;
+				transition: color .1s;
+				text-decoration: none;
+				&:hover {
+					transition-duration: .1s;
+					color: var(--accent_color);
+				}
 			}
 		}
 	}
@@ -491,8 +492,13 @@ header.main-header
 			flex-wrap: wrap;
 			position: absolute;
 			>.sub-link >a {
-				color: var(--bt-color_muted);
 				font-weight: normal;
+				color: var(--bt-color_muted);
+				transition: color .2s;
+				&:hover {
+					transition-duration: .1s;
+					color: white;
+				}
 			}
 		}
 	}
