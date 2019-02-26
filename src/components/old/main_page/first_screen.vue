@@ -110,6 +110,12 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		}
 	}
 
+	@media (min-width: 1400px) {
+		.first-screen {
+			min-height: 34vw;
+		}
+	}
+
 	@media (max-width: 1024px) {
 		.first-screen.main {
 				background-size: cover;
