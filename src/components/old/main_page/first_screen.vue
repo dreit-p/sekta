@@ -243,6 +243,9 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		&:not(:disabled) {
 			cursor: pointer;
 		}
+		&:hover {
+			background: #078675;
+		}
 		@media (max-width: 425px) {
 			width: 100%;
 			text-align: center;
