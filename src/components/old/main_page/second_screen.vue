@@ -19,23 +19,20 @@ section
 				.here_you_will_find__item
 					p.num_bg 1
 					p
-						b Комплексный подход:
-						br
+						.caption Комплексный подход:
 						| программа питания
 						br
 						| и тренировок, советы по уходу за телом, работа с мотивацией;
 				.here_you_will_find__item
 					p.num_bg 2
 					p
-						b Обоснование всех рекомендаций:
-						br
+						.caption Обоснование всех рекомендаций:
 						| каждая рекомендация подтверждена научными исследования и опытом наших выпускников; программы составлены
 						| при участии врачей, сертифицированных тренеров, специалистов по питанию и психологии;
 				.here_you_will_find__item
 					p.num_bg 3
 					p
-						b Комьюнити:
-						br
+						.caption Комьюнити:
 						| кураторы, которые хотят
 						br
 						| привести вас к цели,
@@ -201,9 +198,14 @@ section
 		}
 		&__item {
 			float: left;
-			width: 25%;
+			width: 30%;
 			position: relative;
 			margin-top: 70px;
+			.caption {
+				font-weight: bold;
+				margin-bottom: 5px;
+				display: block;
+			}
 			.num_bg {
 				float: left;
 				font-family: var(--font-second);
@@ -214,15 +216,18 @@ section
 				font-weight: 700;
 				position: absolute;
 				font-style: normal;
-				top: 50%;
+				top: 25%;
 				z-index: -1;
 				left: 0 !important;
 				margin: auto;
 				width: 100%;
 				transform: translateY(-50%);
+				@media (max-width: 768px) {
+					top: 35%;
+				}
 			}
 			&:nth-child(2) {
-				width: 40%;
+				width: 36%;
 			}
 			@media (max-width: 768px) {
 				&:nth-child(2),
