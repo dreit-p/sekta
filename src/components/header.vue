@@ -642,6 +642,8 @@ header.main-header
 		height: 120%;
 		width: 100%;
 		min-width: 320px;
+		overflow: auto;
+		-webkit-overflow-scrolling:touch;
 		z-index: 2;
 		.additional-links {
 			margin: 0;
