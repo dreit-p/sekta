@@ -364,6 +364,11 @@ header.main-header
 				}
 			}
 		}
+		.router-link-active {
+			>a {
+				color: var(--accent_color) !important;
+			}
+		}
 	}
 	.logo {
 		display: inline-block;
@@ -466,6 +471,9 @@ header.main-header
 				&:hover {
 					transition-duration: .1s;
 					color: var(--accent_color);
+				}
+				&:focus {
+					color: color(var(--accent_color) l(50%)) !important;
 				}
 			}
 		}
