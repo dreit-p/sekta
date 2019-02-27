@@ -47,8 +47,8 @@ i {
 .limit,
 .article-limit {
 	overflow: hidden;
-	max-width: calc(var(--col-total) * 6);
-	/* 1170px */
+	max-width: calc(var(--col-total) * 6 + var(--col-space *2));
+	/* 980px */
 	margin: auto;
 	padding: 0 var(--col-space);
 	position: relative;

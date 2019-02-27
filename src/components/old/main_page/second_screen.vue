@@ -103,6 +103,9 @@ section
 			min-height: 1px;
 			padding-left: 0;
 			padding-right: 34px;
+			&:nth-child(even) {
+				padding-right: 0;
+			}
 			img {
 				width: 100%;
 			}
@@ -116,7 +119,7 @@ section
 				font-size: 15px;
 				font-style: italic;
 				color: #000;
-				line-height: 1.33;
+				line-height: 1.47;
 			}
 			p.sekta {
 				transform: rotate(180deg);
@@ -142,6 +145,7 @@ section
 				font-style: italic;
 				font-weight: 700;
 				-webkit-margin-before: 0em;
+				margin-bottom: 15px;
 				padding-right: 5px;
 				font-family: var(--font-main);
 				@media (max-width: 768px) {
