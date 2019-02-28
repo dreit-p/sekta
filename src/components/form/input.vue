@@ -94,6 +94,9 @@ label.input-wrapper.app-input(:class='this.$options.name')
 				color: var(--accent_color);
 				border-color: var(--accent_color);
 			}
+			.caption {
+				color: var(--accent_color);
+			}
 			.icon.checked {
 				display: block;
 			}
@@ -103,6 +106,9 @@ label.input-wrapper.app-input(:class='this.$options.name')
 			input {
 				color: red;
 				border-color: red;
+			}
+			.caption {
+				color: red;
 			}
 			.icon.error {
 				display: block;
