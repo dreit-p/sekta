@@ -10,7 +10,7 @@ header.main-header
 					svg-icon(name='logo-sekta')
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
-						router-link(tag='li', class='link', v-bind:to='link.link')
+						router-link(tag='li', class='link', :to='link.link')
 							a.animated-underline {{ link.name }}
 				.contacts
 					a.phone.animated-underline.left(href='callto: +78005006882') 8 (800) 500–68–82
@@ -31,7 +31,7 @@ header.main-header
 						class='link', 
 						v-for='(link, index) in additionalLinks', 
 						:key='link.id', 
-						v-bind:to='link.link',
+						:to='link.link',
 						@mouseenter.native='changeDropdownContent(!!link.subLinks ? `${link.name}-${index}` : showSubLinks, !!link.subLinks)'
 						@mouseleave.native='setDropdownTimer'
 					)
@@ -93,7 +93,7 @@ header.main-header
 								a.animated-underline {{ subLink.name }}
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
-							router-link(tag='li', class='link', :key='`mainLink-${index}`', v-bind:to='link.link', :data-index="index")
+							router-link(tag='li', class='link', :key='`mainLink-${index}`', :to='link.link', :data-index="index")
 								a.animated-underline {{ link.name }}
 </template>
 

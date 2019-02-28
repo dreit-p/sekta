@@ -43,6 +43,9 @@ div.course
 					li возможность отслеживать свой прогресс;
 					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
+
+	entry-form
+
 </template>
 
 <script>
@@ -50,6 +53,7 @@ div.course
 		name: 'for-mums',
 		components: {
 			CoursesHero: () => import('@/components/courses/hero.vue'),
+			EntryForm: () => import('@/components/courses/entry-form.vue'),
 		},
 		data () {
 			return {}
