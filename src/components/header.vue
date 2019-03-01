@@ -18,7 +18,7 @@ header.main-header
 				.mobile-elems
 					a.icon(href='tel:+78005006882')
 						svg-icon(name='icon-phone')
-					a.icon
+					a.icon(@click.prevent='toggleModal()')
 						svg-icon(name='icon-login')
 					a.icon.cross(:class='{active: isOpenedMenu}', href='#', @click.prevent='toggleMenu()')
 						.x
@@ -36,7 +36,7 @@ header.main-header
 						@mouseleave.native='setDropdownTimer'
 					)
 						a {{ link.name }}
-				router-link(class='account', title='Личный кабинет', to='/account')
+				a(class='account', title='Личный кабинет', @click.prevent='toggleModal()')
 					.icon
 						svg-icon(name='icon-login')
 					.text Личный кабинет
@@ -77,7 +77,7 @@ header.main-header
 						:key='`addLink-${index}`', 
 						:to='link.link',
 						:data-index='index',
-						@click.native='menuState(false)'
+						@click.native='setMenuState(false)'
 					)
 						a.animated-underline {{ link.name }}
 						ul.sub-links(v-if='link.subLinks')
@@ -88,7 +88,7 @@ header.main-header
 								:key='`subLink-${index}`', 
 								:to='subLink.link',
 								:data-index='index',
-								@click.native='menuState(false)'
+								@click.native='setMenuState(false)'
 							)
 								a.animated-underline {{ subLink.name }}
 				ul.main-links
@@ -99,7 +99,7 @@ header.main-header
 
 <script>
 	import Velocity from 'velocity-animate'
-	import { mapState } from 'vuex'
+	import { mapState, mapActions } from 'vuex'
 
 	export default {
 		name: 'app-header',
@@ -109,6 +109,9 @@ header.main-header
 		computed: {
 			isOpenedMenu () {
 				return this.$store.state.appStates.isOpenedMenu;
+			},
+			isOpenedModal () {
+				return this.$store.state.appStates.isOpenedModal;
 			},
 			...mapState([
 				'mainLinks',
@@ -124,11 +127,12 @@ header.main-header
 		},
 		methods: {
 			toggleMenu () {
-				this.menuState(!this.isOpenedMenu)
+				this.setMenuState(!this.isOpenedMenu)
 			},
-			menuState (state =false) {
-				this.$store.dispatch('setMenuState', state);
+			toggleModal () {
+				this.setModalState(!this.isOpenedModal)
 			},
+			...mapActions(['setMenuState', 'setModalState']),
 
 			/*================================
 			=            Dropdown            =

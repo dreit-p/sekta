@@ -1,7 +1,7 @@
 <template lang="pug">
 section.modal-auth
 	.modal-wrapper
-		.veil
+		.veil(@click='setModalState(false)')
 		.modal-content
 			.text-blocks
 				.block.login
@@ -23,7 +23,7 @@ section.modal-auth
 						a.transparent-button Войти в личный кабинет
 			form.left
 				.content
-					.close-btn
+					.close-btn(@click='setModalState(false)')
 
 					p.heavy-text Вход
 
@@ -52,6 +52,7 @@ section.modal-auth
 </template>
 
 <script>
+	import { mapState, mapActions } from 'vuex'
 	export default {
 		name: 'app-modal',
 		components: {
@@ -59,7 +60,10 @@ section.modal-auth
 			SvgIcon: () => import('@/components/SvgIcon.vue'),
 		},
 		computed: {
-
+			...mapState(['appStates'])
+		},
+		methods: {
+			...mapActions(['setModalState']),
 		},
 		data () {
 			return {
@@ -80,7 +84,7 @@ section.modal-auth
 	height: 100%;
 	width: 100%;
 	margin: auto;
-	z-index: 10;
+	z-index: 3;
 	overflow: hidden;
 	@media (max-width: 600px) {
 		top: 65px;
@@ -88,7 +92,6 @@ section.modal-auth
 	}
 	.veil {
 		position: absolute;
-		z-index: -1;
 		top: 0;
 		right: 0;
 		bottom: 0;
@@ -118,6 +121,7 @@ section.modal-auth
 		max-width: 916px;
 		width: 100%;
 		position: relative;
+		z-index: 2;
 		@media (max-width: 600px) {
 			height: auto;
 		}

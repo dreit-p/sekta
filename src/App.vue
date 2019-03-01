@@ -1,7 +1,7 @@
 <template lang="pug">
 #app
 	app-header
-	app-modal
+	app-modal(v-show='$store.state.appStates.isOpenedModal')
 	router-view
 	app-footer
 </template>
