@@ -1,9 +1,9 @@
 <template lang="pug">
 #app
 	app-header
+	app-modal
 	router-view
 	app-footer
-	app-modal
 </template>
 
 <script>

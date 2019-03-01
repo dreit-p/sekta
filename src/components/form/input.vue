@@ -10,9 +10,9 @@ label.input-wrapper.app-input(:class='this.$options.name')
 			@change="$emit('change', $event.target.value);"
 		)
 		.icon.checked
-			svg-icon(name='icon-success')
+			svg-icon(name='icon-check')
 		.icon.error
-			svg-icon(name='icon-error')
+			svg-icon(name='icon-cross')
 	.caption(v-if='computedCaption') {{computedCaption}}
 </template>
 
@@ -79,6 +79,7 @@ label.input-wrapper.app-input(:class='this.$options.name')
 		width: 100%;
 		.input-wrapper {
 			position: relative;
+			min-width: 150px;
 		}
 		input {
 			background-color: white;
@@ -86,7 +87,7 @@ label.input-wrapper.app-input(:class='this.$options.name')
 			font-size: 12px;
 			color: var(--middle_gray);
 			font-family: var(--font-main);
-			padding: 12px 10px 11px;
+			padding: 12px 40px 11px 10px;
 			border: 1px solid var(--middle_gray);
 		}
 		&.success {

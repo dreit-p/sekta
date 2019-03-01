@@ -13,10 +13,10 @@ header.main-header
 						router-link(tag='li', class='link', :to='link.link')
 							a.animated-underline {{ link.name }}
 				.contacts
-					a.phone.animated-underline.left(href='callto: +78005006882') 8 (800) 500–68–82
+					a.phone.animated-underline.left(href='tel:+78005006882') 8 (800) 500–68–82
 					.caption пн-пт 10:00–19:00
 				.mobile-elems
-					a.icon(href='callto: +78005006882')
+					a.icon(href='tel:+78005006882')
 						svg-icon(name='icon-phone')
 					a.icon
 						svg-icon(name='icon-login')
@@ -582,7 +582,7 @@ header.main-header
 		width: 100%;
 		min-width: 320px;
 		overflow: auto;
-		-webkit-overflow-scrolling:touch;
+		-webkit-overflow-scrolling: touch;
 		z-index: 2;
 		.additional-links {
 			margin: 0;

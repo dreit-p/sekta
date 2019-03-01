@@ -99,6 +99,9 @@ export default new Vuex.Store({
 			}
 			commit('setScrollLock', payload);
 			commit('setMenuState', payload);
-		}
+		},
+		lockScroll ({commit}, payload) {
+			commit('setScrollLock', payload);
+		},
 	}
 })
