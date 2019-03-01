@@ -40,7 +40,7 @@
 	}
 	body {
 		overflow-y: scroll;
-		&.menu-is-opened {
+		&.scroll-locked {
 			overflow: hidden;
 		}
 	}

@@ -7,6 +7,7 @@ export default new Vuex.Store({
 	state: {
 		appStates: {
 			isOpenedMenu: false,
+			isScrollLocked: false,
 		},
 		mainLinks: [
 			{
@@ -84,15 +85,19 @@ export default new Vuex.Store({
 	mutations: {
 		setMenuState (state, payload) {
 			state.appStates.isOpenedMenu = payload;
+		},
+		setScrollLock (state, payload) {
+			state.appStates.isScrollLocked = payload;
 		}
 	},
 	actions: {
 		setMenuState ({commit}, payload) {
 			if (payload) {
-				document.getElementsByTagName('body')[0].classList.add('menu-is-opened');
+				document.getElementsByTagName('body')[0].classList.add('scroll-locked');
 			} else {
-				document.getElementsByTagName('body')[0].classList.remove('menu-is-opened');
+				document.getElementsByTagName('body')[0].classList.remove('scroll-locked');
 			}
+			commit('setScrollLock', payload);
 			commit('setMenuState', payload);
 		}
 	}

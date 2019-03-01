@@ -16,7 +16,7 @@ header.main-header
 					a.phone.animated-underline.left(href='callto: +78005006882') 8 (800) 500–68–82
 					.caption пн-пт 10:00–19:00
 				.mobile-elems
-					a.icon
+					a.icon(href='callto: +78005006882')
 						svg-icon(name='icon-phone')
 					a.icon
 						svg-icon(name='icon-login')
