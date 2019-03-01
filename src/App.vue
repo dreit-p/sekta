@@ -3,6 +3,7 @@
 	app-header
 	router-view
 	app-footer
+	app-modal
 </template>
 
 <script>
@@ -25,6 +26,7 @@
 		components: {
 			AppHeader: () => import('@/components/header.vue'),
 			AppFooter: () => import('@/components/footer.vue'),
+			AppModal: () => import('@/components/modal.vue'),
 		}
 	}
 </script>
@@ -38,5 +40,8 @@
 	}
 	body {
 		overflow-y: scroll;
+		&.menu-is-opened {
+			overflow: hidden;
+		}
 	}
 </style>

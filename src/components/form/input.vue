@@ -44,6 +44,7 @@ label.input-wrapper.app-input(:class='this.$options.name')
 						return this.caption
 					}
 				}
+				return null;
 			}
 		},
 		components: {

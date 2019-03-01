@@ -4,6 +4,12 @@ import router from './router'
 import store from './store'
 import 'normalize.css'
 import '@/assets/common.css'
+
+
+/*=================================
+=            Validator            =
+=================================*/
+
 import VeeValidate, { Validator } from 'vee-validate';
 import ru from 'vee-validate/dist/locale/ru.js';
 
@@ -28,6 +34,10 @@ const config = {
 
 Vue.use(VeeValidate, config);
 Validator.localize('ru', ru);
+
+/*=====  End of Validator  ======*/
+
+
 
 Vue.config.productionTip = false
 

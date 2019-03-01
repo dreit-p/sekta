@@ -20,7 +20,7 @@ header.main-header
 						svg-icon(name='icon-phone')
 					a.icon
 						svg-icon(name='icon-login')
-					a.icon.cross(:class='{active: isOpenedMenu}', href='#', @click.prevent='isOpenedMenu = !isOpenedMenu')
+					a.icon.cross(:class='{active: isOpenedMenu}', href='#', @click.prevent='toggleMenu()')
 						.x
 
 
@@ -77,7 +77,7 @@ header.main-header
 						:key='`addLink-${index}`', 
 						:to='link.link',
 						:data-index='index',
-						@click.native='isOpenedMenu = false'
+						@click.native='menuState(false)'
 					)
 						a.animated-underline {{ link.name }}
 						ul.sub-links(v-if='link.subLinks')
@@ -88,7 +88,7 @@ header.main-header
 								:key='`subLink-${index}`', 
 								:to='subLink.link',
 								:data-index='index',
-								@click.native='isOpenedMenu = false'
+								@click.native='menuState(false)'
 							)
 								a.animated-underline {{ subLink.name }}
 				ul.main-links
@@ -99,6 +99,7 @@ header.main-header
 
 <script>
 	import Velocity from 'velocity-animate'
+	import { mapState } from 'vuex'
 
 	export default {
 		name: 'app-header',
@@ -106,89 +107,27 @@ header.main-header
 			SvgIcon: () => import('@/components/SvgIcon.vue'),
 		},
 		computed: {
+			isOpenedMenu () {
+				return this.$store.state.appStates.isOpenedMenu;
+			},
+			...mapState([
+				'mainLinks',
+				'appStates',
+				'additionalLinks'
+			])
 		},
 		data () {
 			return {
-				isOpenedMenu: false,
 				showSubLinks: false,
 				dropdownTimer: null,
-				mainLinks: [
-					{
-						link: '/about-us',
-						name: 'О проекте'
-					},
-					{
-						link: '/articles',
-						name: 'Наши статьи'
-					},
-					{
-						link: '/results',
-						name: 'Результаты'
-					},
-					{
-						link: '/contacts',
-						name: 'Контакты'
-					},
-				],
-				additionalLinks: [
-					{
-						link: '/online-courses',
-						name: 'Онлайн курсы',
-						subLinks: [
-							{
-								link: '/s60days',
-								name: 'Курс #s60days'
-							},
-							{
-								link: '/for-mums',
-								name: 'Курс для мам'
-							},
-							{
-								link: '/sektalite',
-								name: 'Курс #sektalite'
-							},
-							{
-								link: '/vip-course',
-								name: 'VIP программа'
-							},
-							{
-								link: '/for-pregnant',
-								name: 'Курсы для беременных'
-							},
-							{
-								link: '/s60days-men',
-								name: 'Курс #s60days для мужчин'
-							},
-						]
-					},
-					{
-						link: '/gym',
-						name: 'Тренировки в зале',
-						subLinks: [
-							{
-								link: '/gym-moscow',
-								name: 'Москва'
-							},
-							{
-								link: '/gym-saint-petersburg',
-								name: 'Санкт-Петербург'
-							}
-						]
-					},
-					{
-						link: '/camp',
-						name: 'Летний лагерь'
-					},
-					{
-						link: '/gift-cert',
-						name: 'Подарочный сертификат'
-					}
-				]
 			}
 		},
 		methods: {
-			openMenu: function () {
-				this.isOpenedMenu = !this.isOpenedMenu
+			toggleMenu () {
+				this.menuState(!this.isOpenedMenu)
+			},
+			menuState (state =false) {
+				this.$store.dispatch('setMenuState', state);
 			},
 
 			/*================================
