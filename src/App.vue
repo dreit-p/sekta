@@ -38,10 +38,4 @@
 		flex-direction: column;
 		justify-content: space-between;
 	}
-	body {
-		overflow-y: scroll;
-		&.scroll-locked {
-			overflow: hidden;
-		}
-	}
 </style>

@@ -105,9 +105,14 @@ export default new Vuex.Store({
 		},
 		lockScroll ({commit}, payload) {
 			if (payload) {
+				let scrollWidth = window.innerWidth - document.documentElement.clientWidth;
 				document.getElementsByTagName('body')[0].classList.add('scroll-locked');
+				document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+				document.getElementsByTagName('body')[0].style.paddingRight = scrollWidth + 'px';
 			} else {
 				document.getElementsByTagName('body')[0].classList.remove('scroll-locked');
+				document.getElementsByTagName('body')[0].style.overflow = 'auto';
+				document.getElementsByTagName('body')[0].style.paddingRight = 0;
 			}
 			commit('setScrollLock', payload);
 		},

@@ -98,6 +98,7 @@ label.input-wrapper.app-input(:class='this.$options.name')
 			}
 			.caption {
 				color: var(--accent_color);
+				display: none;
 			}
 			.icon.checked {
 				display: block;

@@ -468,6 +468,7 @@ header.main-header
 		align-items: baseline;
 		text-decoration: none;
 		white-space: nowrap;
+		cursor: pointer;
 		&:hover {
 			color: color(var(--accent_color) l(+10%))
 		}

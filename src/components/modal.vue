@@ -4,25 +4,36 @@ section.modal-auth
 		.veil(@click='setModalState(false)')
 		.modal-content
 			.text-blocks
-				.block.login
+
+				// Login
+
+				.block.login(:class='{show: modalContentType == 0}')
 					.content
 						p.heavy-text Рады видеть вас снова
 						p Чтобы авторизоваться введите ваш
 						| логин (e-mail) и пароль.
 						.links
-							a(href='#')
+							a(href='#', @click.prevent='modalContentType = 1')
 								svg-icon(name='icon-arrow').to-left
 								| Нет личного кабинета? Зарегистрируйтесь
-				.block.register
+
+				// Register
+
+				.block.register(:class='{show: modalContentType == 1}')
 					.content
 						p.heavy-text Регистрация
 						p Заполните форму и создайте личный кабинет, чтобы вы могли записаться на курс. 
 						| Это займет не больше минуты.
 						hr
 						p Если он у вас уже есть, просто войдите.
-						a.transparent-button Войти в личный кабинет
-			form.left
-				.content
+						a.transparent-button(@click.prevent='modalContentType = 0') Войти в личный кабинет
+
+
+			form(:class='{left: modalContentType == 1, right: modalContentType == 0}')
+
+				// Login form
+
+				.content(v-if='modalContentType == 0')
 					.close-btn(@click='setModalState(false)')
 
 					p.heavy-text Вход
@@ -48,6 +59,66 @@ section.modal-auth
 						:error='errors.first("password")'
 						name='password')
 
+				// Register form
+
+				.content(v-if='modalContentType == 1')
+					.close-btn(@click='setModalState(false)')
+
+					p.heavy-text Давайте знакомиться
+
+					app-input(
+						placeholder='Имя'
+						data-vv-as='Имя'
+						v-model.trim='firstname'
+						v-validate='"required"'
+						:class="{ 'error': errors.has('firstname'), 'success': fields.firstname && fields.firstname.valid}"
+						:error='errors.first("firstname")'
+						name='firstname')
+
+					app-input(
+						placeholder='Фамилия'
+						data-vv-as='Фамилия'
+						v-model.trim='lastname'
+						v-validate='"required"'
+						:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
+						:error='errors.first("lastname")'
+						name='lastname')
+
+					app-input(
+						placeholder='e-mail'
+						data-vv-as='e-mail'
+						v-model.trim='email'
+						v-validate='"required|email"'
+						:error='errors.first("email")'
+						:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
+						ref='asdasd'
+						name='email'
+						type='email')
+
+					app-input(
+						placeholder='e-mail еще раз'
+						data-vv-as='Повтор e-mail'
+						caption='Вы не представляете, как часто люди ошибаются :)'
+						v-model.trim='emailRepeat'
+						:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+						v-validate='"required|email|confirmed:$asdasd"'
+						:error='errors.first("emailRepeat")'
+						name='emailRepeat'
+						type='email')
+
+
+					app-input(
+						placeholder='придумайте пароль'
+						data-vv-as='пароль'
+						v-model.trim='password'
+						v-validate='"required|alpha_dash:en"'
+						:error='errors.first("password")'
+						:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
+						ref='asdasd'
+						name='password'
+						caption='Только латинские символы и цифры'
+						type='password')
+
 
 </template>
 
@@ -64,9 +135,14 @@ section.modal-auth
 		},
 		methods: {
 			...mapActions(['setModalState']),
+			openModalType(number) {
+				this.modalContentType = +number;
+				this.setModalState(false);
+			}
 		},
 		data () {
 			return {
+				modalContentType: 1,
 				email: '',
 				password: ''
 			}
@@ -124,6 +200,9 @@ section.modal-auth
 		z-index: 2;
 		@media (max-width: 600px) {
 			height: auto;
+			display: flex;
+			flex-direction: column;
+			min-height: 100%;
 		}
 		.content {
 			p.heavy-text {
@@ -149,8 +228,9 @@ section.modal-auth
 				opacity: .8;
 			}
 			.transparent-button {
-				border: 2px solid rgba(255, 255, 255, .9);
+				border: 2px solid currentColor;
 				color: white;
+				opacity: .9;
 				background-color: transparent;
 				padding: 10px 13px;
 				margin: 24px 0;
@@ -160,7 +240,12 @@ section.modal-auth
 				font-size: 18px;
 				line-height: 1.33;
 				font-weight: bold;
+				cursor: pointer;
+				user-select: none;
 				font-family: var(--font-main);
+				&:hover {
+					opacity: 1;
+				}
 			}
 		}
 	}
@@ -180,7 +265,7 @@ section.modal-auth
 			padding: * 10px;
 			width: 50%;
 			color: white;
-			mih-height: calc(100% - 40px);
+			min-height: calc(100% - 40px);
 			background: linear-gradient(to right, rgb(38, 70, 65) 25%, transparent 60%, rgb(97, 147, 139) 99%);
 			background-position: center center;
 			background-repeat: no-repeat;
@@ -189,6 +274,10 @@ section.modal-auth
 			@media (max-width: 600px) {
 				width: auto;
 				height: auto;
+				display: none;
+				&.show {
+					display: block;
+				}
 			}
 			&:before {
 				display: block;
@@ -232,6 +321,7 @@ section.modal-auth
 						align-items: baseline;
 						font-family: var(--font-second);
 						line-height: 1.5;
+						cursor: pointer;
 						.svg-icon {
 							@media (max-width: 600px) {
 								display: none;
@@ -268,6 +358,7 @@ section.modal-auth
 			width: 100%;
 			transition: none;
 			margin-bottom: 0;
+			flex-grow: 1;
 		}
 		&.right {
 			transform:  translateX(50%);
@@ -295,15 +386,14 @@ section.modal-auth
 			top: 14px;
 			right: 14px;
 			cursor: pointer;
-			transition: transform .1s, color .2s ease-out;
+			transition: color .2s ease-out;
 			@media (max-width: 600px) {
 				display: none;
 			}
 			&:hover {
-				transition-timing-function: leanear, ease-in;
-				transition-duration: .1s;
-				color: black;
-				transform: scale(1.1);
+				transition-timing-function: ease-in;
+				transition-duration: .05s;
+				color: color(#b2b2b2 b(80%));
 			}
 			&:after,
 			&:before {

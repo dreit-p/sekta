@@ -79,7 +79,7 @@ section.entry-form
 		},
 		data () {
 			return {
-				firstname: 'asd',
+				firstname: '',
 				lastname: '',
 				email: '',
 				emailRepeat: '',
