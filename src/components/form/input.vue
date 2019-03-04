@@ -5,7 +5,6 @@ label.app-input(:class='this.$options.name')
 			:placeholder='placeholder'
 			:name='name'
 			:ref='name'
-			:vid='vid'
 			:type='type'
 			@input="$emit('input', $event.target.value);"
 			@change="$emit('change', $event.target.value);"
@@ -25,9 +24,6 @@ label.app-input(:class='this.$options.name')
 			caption: String,
 			name: String,
 			type: String,
-			vid: {
-				type: String
-			},
 			value: {
 				type: null,
 				default: null
