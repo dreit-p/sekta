@@ -59,6 +59,11 @@ section.modal-auth
 						:error='errors.first("password")'
 						name='password')
 
+					a(href='#') Восстановить пароль
+
+					button.green-btn
+						| Войти
+
 				// Register form
 
 				.content(v-if='modalContentType == 1')
@@ -119,6 +124,47 @@ section.modal-auth
 						caption='Только латинские символы и цифры'
 						type='password')
 
+					app-input(
+						placeholder='пароль еще раз'
+						data-vv-as='Повтор пароль'
+						v-model.trim='passwordRepeat'
+						:class="{ 'error': errors.has('passwordRepeat'), 'success': fields.passwordRepeat && fields.passwordRepeat.valid}"
+						v-validate='"required|alpha_dash:en"'
+						:error='errors.first("passwordRepeat")'
+						name='passwordRepeat'
+						type='password')
+
+					app-checkbox(
+						name='isAdult'
+						data-vv-as='есть 18 лет'
+						v-model.trim='isAdult'
+						v-validate='"required:true"'
+						:required='true'
+						:class="{ 'error': errors.has('isAdult'), 'success': fields.isAdult && fields.isAdult.valid}"
+						:error='errors.first("isAdult")'
+					) Мне есть 18 лет
+
+					app-checkbox(
+						name='termsAgree'
+						data-vv-as='обработка персональных данных'
+						v-model.trim='termsAgree'
+						v-validate='"required:true"'
+						:required='true'
+						:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+						:error='errors.first("termsAgree")'
+					)
+						| Ознакомлен и согласен с условиями 
+						a(href='#') обработки персональных данных
+
+					app-checkbox(
+						name='spamAgree'
+						data-vv-as='получение информационных писем'
+						v-model.trim='spamAgree'
+					) Хочу получать информационные письма
+
+					button.green-btn
+						| Далее
+
 
 </template>
 
@@ -128,6 +174,7 @@ section.modal-auth
 		name: 'app-modal',
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
+			AppCheckbox: () => import('@/components/form/checkbox.vue'),
 			SvgIcon: () => import('@/components/SvgIcon.vue'),
 		},
 		computed: {
@@ -143,8 +190,15 @@ section.modal-auth
 		data () {
 			return {
 				modalContentType: 1,
+				firstname: '',
+				lastname: '',
 				email: '',
-				password: ''
+				emailRepeat: '',
+				password: '',
+				passwordRepeat: '',
+				isAdult: false,
+				termsAgree: false,
+				spamAgree: false,
 			}
 		},
 	}
@@ -360,6 +414,13 @@ section.modal-auth
 			margin-bottom: 0;
 			flex-grow: 1;
 		}
+		a {
+			color: var(--accent_color);
+			font-size: 12px;
+			line-height: 2;
+			display: inline-block;
+			margin: 5px *;
+		}
 		&.right {
 			transform:  translateX(50%);
 		}
@@ -414,6 +475,28 @@ section.modal-auth
 				transform: rotateZ(-45deg);
 			}
 		}
+	}
+}
+
+.green-btn {
+	background-color: var(--accent_color);
+	color: white;
+	width: 100%;
+	margin: 10px auto;
+	cursor: pointer;
+	font-size: 16px;
+	line-height: 1.5;
+	font-family: var(--font-main);
+	padding: 13px;
+	text-align: center;
+	display: block;
+	max-width: 200px;
+	border: 1px solid var(--accent_color);
+	transition: color .3s, background-color .3s;
+	&:hover {
+		background-color: white;
+		transition-duration: .1s;
+		color: var(--accent_color);
 	}
 }
 </style>

@@ -1,35 +1,30 @@
 <template lang="pug">
-label.app-input(:class='this.$options.name')
-	.input-wrapper
+label.app-checkbox(:class='this.$options.name')
+	.checkbox-wrapper
 		input(
-			:placeholder='placeholder'
 			:name='name'
 			:ref='name'
-			:vid='vid'
-			:type='type'
-			@input="$emit('input', $event.target.value);"
-			@change="$emit('change', $event.target.value);"
+			:required='required'
+			:checked='value'
+			type='checkbox'
+			@change='handleChange'
 		)
-		.icon.checked
+		.icon
 			svg-icon(name='icon-check')
-		.icon.error
-			svg-icon(name='icon-cross')
-	.caption(v-if='computedCaption') {{computedCaption}}
+		.text
+			slot
+			.caption(v-if='computedCaption') {{computedCaption}}
 </template>
 
 <script>
 	export default {
-		name: 'app-input',
+		name: 'app-checkbox',
 		props: {
-			placeholder: String,
 			caption: String,
 			name: String,
-			type: String,
-			vid: {
-				type: String
-			},
+			required: Boolean,
 			value: {
-				type: null,
+				type: Boolean,
 				default: null
 			},
 			error: {
@@ -55,13 +50,16 @@ label.app-input(:class='this.$options.name')
 			SvgIcon: () => import('@/components/SvgIcon.vue'),
 		},
 		methods: {
-			// updateData () {
-			// 	this.$emit('input', {name: this.name, data: this.data});
-			// }
+			handleChange() {
+				if (!this.disabled) {
+					this.$emit('input', this.value ? false : true);
+				}
+			}
 		},
 		$_veeValidate: {
 			// value getter
 			value() {
+
 				return this.$el.value;
 			},
 			// name getter
@@ -78,61 +76,49 @@ label.app-input(:class='this.$options.name')
 </script>
 
 <style lang="postcss">
-	.app-input {
+	.app-checkbox {
 		max-width: 305px;
-		width: 100%;
-		.input-wrapper {
+		display: inline-block;
+		cursor: pointer;
+		margin: 7px *;
+		.checkbox-wrapper {
 			position: relative;
-			min-width: 150px;
+			padding-left: 25px;
 		}
-		input {
-			background-color: white;
-			width: 100%;
-			font-size: 12px;
-			color: var(--middle_gray);
-			font-family: var(--font-main);
-			padding: 12px 40px 11px 10px;
-			border: 1px solid var(--middle_gray);
+		a {
+			color: var(--accent_color);
 		}
 		&.success {
-			color: var(--accent_color);
-			input {
+			.caption,
+			.icon {
 				color: var(--accent_color);
-				border-color: var(--accent_color);
 			}
 			.caption {
-				color: var(--accent_color);
 				display: none;
-			}
-			.icon.checked {
-				display: block;
 			}
 		}
 		&.error {
-			color: red;
-			input {
+			.caption,
+			.icon {
 				color: red;
-				border-color: red;
-			}
-			.caption {
-				color: red;
-			}
-			.icon.error {
-				display: block;
 			}
 		}
 		.icon {
-			/* display: none; */
 			position: absolute;
 			top: 0;
-			bottom: 0;
-			right: 26px;
+			right: auto;
+			left: 0;
+			height: 16px;
+			width: 16px;
 			margin: auto;
-			display: none;
+			border-radius: 2px;
+			user-select: none;
+			color: #a7a7a7;
+			border: solid 1px currentColor;
 			svg {
 				height: 100%;
 				width: 100%;
-				display: block;
+				display: none;
 			}
 			&.error {
 				height: 12px;
@@ -147,6 +133,22 @@ label.app-input(:class='this.$options.name')
 			font-size: 12px;
 			color: var(--middle_gray);
 			margin: 3px 0;
+		}
+		input {
+			display: none;
+			&:checked + .icon svg {
+				display: block;
+			}
+			&:checked {
+				+ .icon {
+					color: var(--accent_color);
+				}
+			}
+		}
+		.text {
+			font-size: 12px;
+			font-family: var(--font-main);
+			line-height: 1.33;
 		}
 	}
 </style>

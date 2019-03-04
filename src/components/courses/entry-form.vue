@@ -58,8 +58,60 @@ section.entry-form
 						:error='errors.first("emailRepeat")'
 						name='emailRepeat'
 						type='email')
-					br
-					br
+
+
+					app-input(
+						placeholder='придумайте пароль'
+						data-vv-as='пароль'
+						v-model.trim='password'
+						v-validate='"required|alpha_dash:en"'
+						:error='errors.first("password")'
+						:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
+						ref='asdasd'
+						name='password'
+						caption='Только латинские символы и цифры'
+						type='password')
+
+					app-input(
+						placeholder='пароль еще раз'
+						data-vv-as='Повтор пароль'
+						v-model.trim='passwordRepeat'
+						:class="{ 'error': errors.has('passwordRepeat'), 'success': fields.passwordRepeat && fields.passwordRepeat.valid}"
+						v-validate='"required|alpha_dash:en"'
+						:error='errors.first("passwordRepeat")'
+						name='passwordRepeat'
+						type='password')
+
+					app-checkbox(
+						name='isAdult'
+						data-vv-as='есть 18 лет'
+						v-model.trim='isAdult'
+						v-validate='"required:true"'
+						:required='true'
+						:class="{ 'error': errors.has('isAdult'), 'success': fields.isAdult && fields.isAdult.valid}"
+						:error='errors.first("isAdult")'
+					) Мне есть 18 лет
+
+					app-checkbox(
+						name='termsAgree'
+						data-vv-as='обработка персональных данных'
+						v-model.trim='termsAgree'
+						v-validate='"required:true"'
+						:required='true'
+						:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+						:error='errors.first("termsAgree")'
+					)
+						| Ознакомлен и согласен с условиями 
+						a(href='#') обработки персональных данных
+
+					app-checkbox(
+						name='spamAgree'
+						data-vv-as='получение информационных писем'
+						v-model.trim='spamAgree'
+					) Хочу получать информационные письма
+
+					button.green-btn
+						| Далее
 
 </template>
 
@@ -71,6 +123,7 @@ section.entry-form
 		name: 'EntryForm',
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
+			AppCheckbox: () => import('@/components/form/checkbox.vue'),
 		},
 		props: {
 			title: String,
@@ -83,6 +136,11 @@ section.entry-form
 				lastname: '',
 				email: '',
 				emailRepeat: '',
+				password: '',
+				passwordRepeat: '',
+				isAdult: false,
+				termsAgree: false,
+				spamAgree: false,
 			}
 		},
 		methods: {
