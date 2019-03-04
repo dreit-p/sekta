@@ -183,6 +183,7 @@ section.entry-form
 					width: 100%;
 					margin: auto;
 					float: left;
+					position: relative;
 					max-width: calc(var(--col-total) *3);
 				}
 				&:nth-child(odd) {
@@ -259,14 +260,17 @@ section.entry-form
 						background-image: url(~@/assets/images/markes-bg_teal.jpg);
 						background-position: center center;
 						background-repeat: no-repeat;
-						background-size: auto;
+						background-size: cover;
 						position: absolute;
 						top: 0;
 						bottom: 0;
 						right: 0;
 						left: 0;
 						margin: auto;
-						z-index: -1;
+						@media (max-width: 700px) {
+							z-index: -1;
+							position: absolute;
+						}
 						@media (max-width: 1300px) {
 							background-size: cover;
 						}
