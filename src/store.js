@@ -45,8 +45,8 @@ export default new Vuex.Store({
 						name: 'Курс для мам'
 					},
 					{
-						link: '/sektalite',
-						name: 'Курс #sektalite'
+						link: '/SektaCare',
+						name: 'Курс #SektaCare'
 					},
 					{
 						link: '/vip-course',

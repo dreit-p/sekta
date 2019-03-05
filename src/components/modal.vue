@@ -30,7 +30,7 @@ transition(name='fade')
 							a.transparent-button(@click.prevent='setModalState({type:"login"})') Войти в личный кабинет
 
 
-				form(:class='{left: formModalType == "register", right: formModalType == "login"}')
+				form(:class='{left: formModalType != "login", right: formModalType == "login"}')
 
 					// Login form
 					

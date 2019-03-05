@@ -155,7 +155,7 @@ body {
 	pointer-event: none;
 	transition-timing-function: ease-in;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+.fade-enter, .fade-leave-to {
 	opacity: 0;
 	user-select: none;
 	pointer-event: none;
@@ -169,7 +169,7 @@ body {
 	pointer-event: none;
 	transition-timing-function: ease-in;
 }
-.fade-flip-enter, .fade-flip-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+.fade-flip-enter, .fade-flip-leave-to {
 	opacity: .5;
 	user-select: none;
 	pointer-event: none;
