@@ -14,15 +14,21 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 					li под чутким контролем кураторов;
 					li с поддержкой единомышленников.
 				p
-					a.button.button_header(href='https://vk.com/away.php?utf=1&to=https%3A%2F%2Faccount.sektaschool.ru%2F%2Fregistration.php%3Futm_source%3Dsite%26utm_medium%3Dmain%26utm_campaign%3Dregistration%26utm_term%3D27.06.2018%26utm_content%3Dfirstbutton', style='color: #fff;', target='_blank') Получить демо доступ
+					a.button.button_header(href='https://vk.com/away.php?utf=1&to=https%3A%2F%2Faccount.sektaschool.ru%2F%2Fregistration.php%3Futm_source%3Dsite%26utm_medium%3Dmain%26utm_campaign%3Dregistration%26utm_term%3D27.06.2018%26utm_content%3Dfirstbutton', style='color: #fff;', target='_blank',
+					@click.prevent='setModalState({modalState: true, type: "register"})') Получить демо доступ
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
+
 	export default {
 		name: 'first_screen',
 		data() {
 			return {
 			};
+		},
+		methods: {
+			...mapActions(['setModalState'])
 		},
 	}
 </script>

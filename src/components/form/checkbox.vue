@@ -85,8 +85,10 @@ label.app-checkbox(:class='this.$options.name')
 			position: relative;
 			padding-left: 25px;
 		}
-		a {
+		.text >a {
 			color: var(--accent_color);
+			margin: 0;
+			line-height: normal;
 		}
 		&.success {
 			.caption,

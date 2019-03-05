@@ -1,7 +1,7 @@
 <template lang="pug">
 #app
 	app-header
-	app-modal(v-show='$store.state.appStates.isOpenedModal')
+	app-modal
 	router-view
 	app-footer
 </template>
@@ -37,5 +37,8 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+	}
+	body {
+		overflow-y: scroll;
 	}
 </style>

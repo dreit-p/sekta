@@ -111,7 +111,10 @@ header.main-header
 				return this.$store.state.appStates.isOpenedMenu;
 			},
 			isOpenedModal () {
-				return this.$store.state.appStates.isOpenedModal;
+				return this.$store.state.appStates.formModal.isOpened;
+			},
+			formModalType () {
+				return this.$store.state.appStates.formModal.type;
 			},
 			...mapState([
 				'mainLinks',
@@ -130,7 +133,7 @@ header.main-header
 				this.setMenuState(!this.isOpenedMenu)
 			},
 			toggleModal () {
-				this.setModalState(!this.isOpenedModal)
+				this.setModalState({modalState: !this.isOpenedModal})
 			},
 			...mapActions(['setMenuState', 'setModalState']),
 
@@ -309,6 +312,7 @@ header.main-header
 		}
 		.router-link-active {
 			>a {
+				user-select: none;
 				color: var(--accent_color) !important;
 			}
 		}
@@ -469,6 +473,7 @@ header.main-header
 		text-decoration: none;
 		white-space: nowrap;
 		cursor: pointer;
+		user-select: none;
 		&:hover {
 			color: color(var(--accent_color) l(+10%))
 		}

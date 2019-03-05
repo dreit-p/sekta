@@ -7,8 +7,11 @@ export default new Vuex.Store({
 	state: {
 		appStates: {
 			isOpenedMenu: false,
-			isOpenedModal: false,
 			isScrollLocked: false,
+			formModal: {
+				isOpened: false,
+				type: 'login'
+			}
 		},
 		mainLinks: [
 			{
@@ -87,8 +90,11 @@ export default new Vuex.Store({
 		setMenuState (state, payload) {
 			state.appStates.isOpenedMenu = payload;
 		},
-		setModalState (state, payload) {
-			state.appStates.isOpenedModal = payload;
+		setModalState (state, modalState) {
+			state.appStates.formModal.isOpened = modalState;
+		},
+		setModalType (state, modalType) {
+			state.appStates.formModal.type = modalType;
 		},
 		setScrollLock (state, payload) {
 			state.appStates.isScrollLocked = payload;
@@ -99,19 +105,28 @@ export default new Vuex.Store({
 			dispatch('lockScroll', payload);
 			commit('setMenuState', payload);
 		},
-		setModalState ({dispatch, commit}, payload) {
-			dispatch('lockScroll', payload);
-			commit('setModalState', payload);
+		setModalState ({dispatch, commit}, {modalState, type}) {
+			if (modalState !== undefined) {
+				console.log('modalState', modalState);
+				dispatch('lockScroll', modalState);
+				commit('setModalState', modalState);
+			}
+			if (type !== undefined) {
+				console.log('modalType', type);
+				commit('setModalType', type);
+			}
 		},
 		lockScroll ({commit}, payload) {
 			if (payload) {
 				let scrollWidth = window.innerWidth - document.documentElement.clientWidth;
 				document.getElementsByTagName('body')[0].classList.add('scroll-locked');
-				document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+				document.getElementsByTagName('body')[0].style.overflowX = 'hidden';
+				document.getElementsByTagName('body')[0].style.overflowY = 'hidden';
 				document.getElementsByTagName('body')[0].style.paddingRight = scrollWidth + 'px';
 			} else {
 				document.getElementsByTagName('body')[0].classList.remove('scroll-locked');
-				document.getElementsByTagName('body')[0].style.overflow = 'auto';
+				document.getElementsByTagName('body')[0].style.overflowX = 'auto';
+				document.getElementsByTagName('body')[0].style.overflowY = 'scroll';
 				document.getElementsByTagName('body')[0].style.paddingRight = 0;
 			}
 			commit('setScrollLock', payload);

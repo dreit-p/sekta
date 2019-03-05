@@ -7,7 +7,7 @@ section.hero
 				h1.title {{title}}
 				.text
 					slot
-				a.button Записаться на обучение
+				a.button(@click.prevent='setModalState({modalState: true})') Записаться на обучение
 	.mobile-content
 		.limit
 			.text
@@ -16,6 +16,7 @@ section.hero
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
 	export default {
 		name: 'CoursesHero',
 		components: {
@@ -23,6 +24,9 @@ section.hero
 		props: {
 			image: String,
 			title: String,
+		},
+		methods: {
+			...mapActions(['setModalState'])
 		},
 		computed: {
 		},

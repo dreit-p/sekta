@@ -12,7 +12,7 @@ section.entry-form
 					p Это займет не больше минуты.
 					hr
 					p Если он у вас уже есть, просто войдите.
-					a.transparent-button Войти в личный кабинет
+					a.transparent-button(@click.prevent='setModalState({modalState: true, type: "login"})') Войти в личный кабинет
 
 		.half
 			form
@@ -116,8 +116,7 @@ section.entry-form
 </template>
 
 <script>
-
-
+	import { mapActions } from 'vuex'
 
 	export default {
 		name: 'EntryForm',
@@ -127,8 +126,6 @@ section.entry-form
 		},
 		props: {
 			title: String,
-		},
-		computed: {
 		},
 		data () {
 			return {
@@ -144,7 +141,8 @@ section.entry-form
 			}
 		},
 		methods: {
-		}
+			...mapActions(['setModalState'])
+		},
 	}
 </script>
 
@@ -300,6 +298,7 @@ section.entry-form
 			font-size: 18px;
 			line-height: 1.33;
 			font-weight: bold;
+			cursor: pointer;
 			font-family: var(--font-main);
 		}
 	}
