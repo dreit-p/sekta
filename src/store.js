@@ -13,6 +13,7 @@ export default new Vuex.Store({
 				type: 'login'
 			}
 		},
+		inputs: {},
 		mainLinks: [
 			{
 				link: '/about-us',
@@ -98,6 +99,9 @@ export default new Vuex.Store({
 		},
 		setScrollLock (state, payload) {
 			state.appStates.isScrollLocked = payload;
+		},
+		setInputData(state, {name, data}) {
+			state.inputs[name] = data;
 		}
 	},
 	actions: {
@@ -107,12 +111,10 @@ export default new Vuex.Store({
 		},
 		setModalState ({dispatch, commit}, {modalState, type}) {
 			if (modalState !== undefined) {
-				console.log('modalState', modalState);
 				dispatch('lockScroll', modalState);
 				commit('setModalState', modalState);
 			}
 			if (type !== undefined) {
-				console.log('modalType', type);
 				commit('setModalType', type);
 			}
 		},
@@ -130,6 +132,6 @@ export default new Vuex.Store({
 				document.getElementsByTagName('body')[0].style.paddingRight = 0;
 			}
 			commit('setScrollLock', payload);
-		},
+		}
 	}
 })
