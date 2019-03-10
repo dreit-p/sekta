@@ -8,15 +8,15 @@ transition(name='fade')
 
 					// Login
 
-					.block
-						texts-login(:class='{show: formModalType == "login"}', v-if='formModalType == "login" || formModalType == "register"')
+					.block(:class='{show: formModalType == "login"}')
+						texts-login(v-if='formModalType == "login" || formModalType == "register"')
 
-						texts-recovery(:class='{show: formModalType == "recovery"}', v-if='formModalType == "recovery"')
+						texts-recovery(v-if='formModalType == "recovery"')
 
 					// Register
 
-					.block
-						texts-register(:class='{show: formModalType == "register"}')
+					.block(:class='{show: formModalType == "register"}')
+						texts-register
 
 
 				form(:class='{left: formModalType == "register", right: formModalType != "register"}')
@@ -127,6 +127,7 @@ transition(name='fade')
 	left: 0;
 	height: 100%;
 	width: 100vw;
+	min-width: 100%;
 	margin: auto;
 	z-index: 3;
 	overflow: hidden;
@@ -347,6 +348,7 @@ transition(name='fade')
 		.content {
 			margin: 30px auto;
 			max-width: calc(305px + 40px);
+			width: 100%;
 			padding: * 20px;
 			@media (max-width: 600px) {
 				padding-right: 40px;
