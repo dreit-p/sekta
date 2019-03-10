@@ -49,7 +49,7 @@ transition(name='fade')
 		}
 	}
 
-	for (var i = 0; i < formContent.types.length; i++) {
+	for (let i = 0; i < formContent.types.length; i++) {
 		let type = formContent.types[i];
 		formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
 			return import(`@/components/form/contents/inputs/${type}.vue`)
@@ -70,7 +70,7 @@ transition(name='fade')
 		list: {}
 	};
 
-	for (var i = 0; i < globalInputs.names.length; i++) {
+	for (let i = 0; i < globalInputs.names.length; i++) {
 		let name = globalInputs.names[i];
 		console.log(name);
 		globalInputs.list[name] = {

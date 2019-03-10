@@ -18,8 +18,9 @@ header.main-header
 				.mobile-elems
 					a.icon(href='tel:+78005006882')
 						svg-icon(name='icon-phone')
-					a.icon(@click.prevent='toggleModal()')
+					a.icon.switcher.cross(:class='{active: isOpenedModal}', @click.prevent='toggleModal()')
 						svg-icon(name='icon-login')
+						.x
 					a.icon.cross(:class='{active: isOpenedMenu}', href='#', @click.prevent='toggleMenu()')
 						.x
 
@@ -118,6 +119,7 @@ header.main-header
 			},
 			...mapState([
 				'mainLinks',
+				'formModal',
 				'appStates',
 				'additionalLinks'
 			])
@@ -518,6 +520,27 @@ header.main-header
 		svg {
 			height: 100%;
 			width: 100%;
+		}
+		&.cross.switcher {
+			z-index: 0;
+			.x {
+				opacity: 0;
+			}
+			.svg-icon {
+				opacity: 1;
+				transition: opacity 0s;
+			}
+			&.active {
+				.x {
+					transition: opacity .3s;
+					display: block;
+					opacity: 1;
+				}
+				.svg-icon {
+					transition: opacity .2s ease-out;
+					opacity: 0;
+				}
+			}
 		}
 		&.cross {
 			position: relative;
