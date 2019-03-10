@@ -8,25 +8,25 @@ transition(name='fade')
 
 					// Login
 
-					.block.login(:class='{show: formModalType == "login"}')
-						texts-login
+					.block
+						texts-login(:class='{show: formModalType == "login"}', v-if='formModalType == "login" || formModalType == "register"')
+
+						texts-recovery(:class='{show: formModalType == "recovery"}', v-if='formModalType == "recovery"')
 
 					// Register
 
-					.block.register(:class='{show: formModalType == "register"}')
-						texts-register
+					.block
+						texts-register(:class='{show: formModalType == "register"}')
 
 
-				form(:class='{left: formModalType != "login", right: formModalType == "login"}')
+				form(:class='{left: formModalType == "register", right: formModalType != "register"}')
 					.close-btn(@click='setModalState({modalState: false})')
-
-					// Login form
 
 					transition(name='fade-flip', mode='out-in')
 
 						inputs-login(v-if='formModalType == "login"', :key='formModalType')
 
-						// Register form
+						inputs-recovery(v-if='formModalType == "recovery"', :key='formModalType')
 
 						inputs-register(v-if='formModalType == "register"', :key='formModalType')
 
@@ -42,7 +42,7 @@ transition(name='fade')
 	========================================*/
 
 	const formContent = {
-		types: ['login', 'register'],
+		types: ['login', 'register', 'recovery'],
 		components: {
 			inputs: {},
 			texts: {}

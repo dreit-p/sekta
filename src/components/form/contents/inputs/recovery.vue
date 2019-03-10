@@ -1,7 +1,7 @@
 <template lang="pug">
-.content.login
+.content.recovery
 
-	p.heavy-text Вход
+	p.heavy-text Восстановление пароля
 
 	app-input(
 		placeholder='e-mail'
@@ -14,20 +14,8 @@
 		name='email'
 		type='email')
 
-	app-input(
-		placeholder='Пароль'
-		data-vv-as='Пароль'
-		v-model.trim='password'
-		v-validate='"required"'
-		type='password'
-		:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
-		:error='errors.first("password")'
-		name='password')
-
-	a(href='#', @click.prevent='setModalState({type:"recovery"})') Восстановить пароль
-
 	button.green-btn(@click.prevent)
-		| Войти
+		| Получить ссылку
 </template>
 
 <script>
@@ -37,7 +25,7 @@
 	=====================================*/
 
 	let globalInputs = {
-		names: ['email', 'password'],
+		names: ['email'],
 		list: {}
 	};
 
@@ -57,18 +45,12 @@
 	/*=====  End of define inputs  ======*/
 
 	export default {
-		name: 'form-login',
+		name: 'form-recovery',
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
-			AppCheckbox: () => import('@/components/form/checkbox.vue'),
 		},
 		computed: {
 			...globalInputs.list
-		},
-		methods: {
-			setModalState(data) {
-				return this.$store.dispatch('setModalState', data)
-			}
 		},
 		data () {
 			return {

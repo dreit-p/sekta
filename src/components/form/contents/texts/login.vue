@@ -1,5 +1,5 @@
 <template lang="pug">
-.content.login
+.content
 	p.heavy-text Рады видеть вас снова
 	p Чтобы авторизоваться введите ваш
 	| логин (e-mail) и пароль.
