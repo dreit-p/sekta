@@ -1,0 +1,296 @@
+<template lang="pug">
+section.entry-form
+	.limit.header
+		.title Запишитесь сейчас
+		.caption cтарт в понедельник
+	.wrapper.clearfix
+		.half.with-bg
+			.text-blocks
+				// Login
+
+				texts-login(v-if='entryFormType == "login"')
+
+				texts-recovery(v-if='entryFormType == "recovery"')
+
+				texts-register(v-if='entryFormType == "register"')
+
+		.half
+			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
+				.close-btn(@click='setModalState({modalState: false})')
+
+				transition(name='fade-flip', mode='out-in')
+
+					inputs-login(v-if='entryFormType == "login"', :key='entryFormType')
+
+					inputs-recovery(v-if='entryFormType == "recovery"', :key='entryFormType')
+
+					inputs-register(v-if='entryFormType == "register"', :key='entryFormType')
+
+</template>
+
+<script>
+	import { mapActions } from 'vuex'
+
+	/*========================================
+	=            define the forms            =
+	========================================*/
+
+	const formContent = {
+		types: ['login', 'register', 'recovery'],
+		components: {
+			inputs: {},
+			texts: {}
+		}
+	}
+
+	for (let i = 0; i < formContent.types.length; i++) {
+		let type = formContent.types[i];
+		formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
+			return import(`@/components/form/contents/inputs/${type}.vue`)
+		};
+		formContent.components.texts['texts-' + formContent.types[i]] = function () {
+			return import(`@/components/form/contents/texts/${type}.vue`)
+		};
+	}
+
+	/*=====  End of define the forms  ======*/
+
+	export default {
+		name: 'EntryForm',
+		components: {
+			AppInput: () => import('@/components/form/input.vue'),
+			AppCheckbox: () => import('@/components/form/checkbox.vue'),
+			...formContent.components.inputs,
+			...formContent.components.texts,
+		},
+		props: {
+			title: String,
+		},
+		data () {
+			return {
+				entryFormType: 'register',
+				firstname: '',
+				lastname: '',
+				email: '',
+				emailRepeat: '',
+				password: '',
+				passwordRepeat: '',
+				isAdult: false,
+				termsAgree: false,
+				spamAgree: false,
+			}
+		},
+		methods: {
+			setModalState(data) {
+				return this.entryFormType = data.type;
+			},
+		},
+	}
+</script>
+
+<style lang="postcss">
+	section.entry-form {
+		.header {
+			padding: 6px 0;
+			.title {
+				font-family: var(--font-second);
+				font-size: 26px;
+				margin: 8px;
+				font-weight: bold;
+				text-align: center;
+				letter-spacing: 0.3px;
+			}
+			.caption {
+				font-family: var(--font-second);
+				font-size: 22px;
+				font-weight: bold;
+				color: var(--accent_color);
+				margin: 8px;
+				text-align: center;
+			}
+		}
+
+		/*====================================
+		=            Construction            =
+		====================================*/
+		
+		.wrapper {
+			display: flex;
+			.half {
+				width: 50%;
+				min-height: 240px;
+				>* {
+					width: 100%;
+					margin: auto;
+					float: left;
+					position: relative;
+					max-width: calc(var(--col-total) *3);
+				}
+				&:nth-child(odd) {
+					>* {
+						float: right;
+					}
+				}
+				form .content {
+					max-width: calc(315px + var(--col-space) * 2);
+				}
+			}
+			@media (max-width: 700px) {
+				flex-direction: column;
+				.half {
+					width: 100%;
+					>* {
+						float: none !important;
+					}
+				}
+			}
+		}
+		
+		/*=====  End of Construction  ======*/
+
+		.wrapper {
+			.half {
+				background-color: #e8e8e8;
+				.content {
+					margin: auto;
+					padding: 19px 40px 19px 20px;
+					p.heavy-text {
+						line-height: 1;
+						font-size: 24px;
+						font-family: var(--font-second);
+						font-weight: bold;
+						margin: 13px 0;
+					}
+					p {
+						font-size: 15px;
+						margin: 0;
+						line-height: 1.5;
+					}
+					hr {
+						margin: 22px 0 18px;
+						border: none;
+						border-radius: 1px;
+						height: 1px;
+						width: 100%;
+						min-height: 1px;
+						background-color: currentColor;
+						opacity: .8;
+					}
+					.transparent-button {
+						border: 2px solid currentColor;
+						color: white;
+						opacity: .9;
+						background-color: transparent;
+						padding: 10px 13px;
+						margin: 24px 0;
+						margin-bottom: 10px;
+						display: inline-block;
+						text-align: center;
+						font-size: 18px;
+						line-height: 1.33;
+						font-weight: bold;
+						cursor: pointer;
+						user-select: none;
+						font-family: var(--font-main);
+						&:hover {
+							opacity: 1;
+						}
+					}
+				}
+
+
+				/*========================================
+				=            Background image            =
+				========================================*/
+
+				&.with-bg {
+					color: white;
+					background: linear-gradient(to right, rgb(38, 70, 65) 25%, transparent, rgb(97, 147, 139) 75%);
+					background-position: center center;
+					background-repeat: no-repeat;
+					position: relative;
+					@media (max-width: 1000px) {
+						background: linear-gradient(to right, rgb(38, 70, 65), transparent, rgb(97, 147, 139));
+					}
+					@media (min-width: 1800px) {
+						background: linear-gradient(to right, rgb(38, 70, 65) 35%, transparent, rgb(97, 147, 139) 65%);
+					}
+					&:before {
+						display: block;
+						content: "";
+						height: 100%;
+						width: 100%;
+						background-image: url(~@/assets/images/markes-bg_teal.jpg);
+						background-position: center center;
+						background-repeat: no-repeat;
+						background-size: cover;
+						position: absolute;
+						top: 0;
+						bottom: 0;
+						right: 0;
+						left: 0;
+						margin: auto;
+						@media (max-width: 700px) {
+							z-index: -1;
+							position: absolute;
+						}
+						@media (max-width: 1300px) {
+							background-size: cover;
+						}
+					}
+				}
+
+				/*=====  End of Background image  ======*/
+
+				.text-blocks {
+					.links {
+						flex-grow: 1;
+						display: flex;
+						margin-top: 20px;
+						padding: 40px *;
+						align-items: center;
+						a {
+							display: flex;
+							align-items: baseline;
+							font-family: var(--font-second);
+							line-height: 1.5;
+							cursor: pointer;
+							.svg-icon {
+								@media (max-width: 600px) {
+									display: none;
+								}
+								height: 10px;
+								width: 20px;
+								display: inline-block;
+								margin-right: 5px;
+								&.to-left {
+									transform: rotateZ(180deg);
+								}
+							}
+						}
+					}
+				}
+
+				form {
+					.close-btn {
+						display: none;
+					}
+					a {
+						color: var(--accent_color);
+						font-size: 12px;
+						line-height: 2;
+						display: inline-block;
+						margin: 5px *;
+					}
+					.content {
+						padding: 19px 40px 19px 20px;
+					}
+					.app-input {
+						margin: 7px 0;
+						display: inline-block;
+					}
+				}
+			}
+		}
+	}
+</style>
