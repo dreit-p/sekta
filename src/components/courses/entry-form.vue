@@ -5,130 +5,70 @@ section.entry-form
 		.caption cтарт в понедельник
 	.wrapper.clearfix
 		.half.with-bg
-			.info
-				.content
-					p.heavy-text Запишитесь сейчас
-					p Заполните форму и создайте личный кабинет, чтобы записаться на курс. 
-					p Это займет не больше минуты.
-					hr
-					p Если он у вас уже есть, просто войдите.
-					a.transparent-button(@click.prevent='setModalState({modalState: true, type: "login"})') Войти в личный кабинет
+			.text-blocks
+				// Login
+
+				texts-login(v-if='entryFormType == "login"')
+
+				texts-recovery(v-if='entryFormType == "recovery"')
+
+				texts-register(v-if='entryFormType == "register"')
 
 		.half
-			form
-				.content
-					p.heavy-text Давайте знакомиться
+			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
+				.close-btn(@click='setModalState({modalState: false})')
 
-					app-input(
-						placeholder='Имя'
-						data-vv-as='Имя'
-						v-model.trim='firstname'
-						v-validate='"required"'
-						:class="{ 'error': errors.has('firstname'), 'success': fields.firstname && fields.firstname.valid}"
-						:error='errors.first("firstname")'
-						name='firstname')
+				transition(name='fade-flip', mode='out-in')
 
-					app-input(
-						placeholder='Фамилия'
-						data-vv-as='Фамилия'
-						v-model.trim='lastname'
-						v-validate='"required"'
-						:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
-						:error='errors.first("lastname")'
-						name='lastname')
+					inputs-login(v-if='entryFormType == "login"', :key='entryFormType')
 
-					app-input(
-						placeholder='e-mail'
-						data-vv-as='e-mail'
-						v-model.trim='email'
-						v-validate='"required|email"'
-						:error='errors.first("email")'
-						:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
-						ref='asdasd'
-						name='email'
-						type='email')
+					inputs-recovery(v-if='entryFormType == "recovery"', :key='entryFormType')
 
-					app-input(
-						placeholder='e-mail еще раз'
-						data-vv-as='Повтор e-mail'
-						caption='Вы не представляете, как часто люди ошибаются :)'
-						v-model.trim='emailRepeat'
-						:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-						v-validate='"required|email|confirmed:$asdasd"'
-						:error='errors.first("emailRepeat")'
-						name='emailRepeat'
-						type='email')
-
-
-					app-input(
-						placeholder='придумайте пароль'
-						data-vv-as='пароль'
-						v-model.trim='password'
-						v-validate='"required|alpha_dash:en"'
-						:error='errors.first("password")'
-						:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
-						ref='asdasd'
-						name='password'
-						caption='Только латинские символы и цифры'
-						type='password')
-
-					app-input(
-						placeholder='пароль еще раз'
-						data-vv-as='Повтор пароль'
-						v-model.trim='passwordRepeat'
-						:class="{ 'error': errors.has('passwordRepeat'), 'success': fields.passwordRepeat && fields.passwordRepeat.valid}"
-						v-validate='"required|alpha_dash:en"'
-						:error='errors.first("passwordRepeat")'
-						name='passwordRepeat'
-						type='password')
-
-					app-checkbox(
-						name='isAdult'
-						data-vv-as='есть 18 лет'
-						v-model.trim='isAdult'
-						v-validate='"required:true"'
-						:required='true'
-						:class="{ 'error': errors.has('isAdult'), 'success': fields.isAdult && fields.isAdult.valid}"
-						:error='errors.first("isAdult")'
-					) Мне есть 18 лет
-
-					app-checkbox(
-						name='termsAgree'
-						data-vv-as='обработка персональных данных'
-						v-model.trim='termsAgree'
-						v-validate='"required:true"'
-						:required='true'
-						:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
-						:error='errors.first("termsAgree")'
-					)
-						| Ознакомлен и согласен с условиями 
-						a(href='#') обработки персональных данных
-
-					app-checkbox(
-						name='spamAgree'
-						data-vv-as='получение информационных писем'
-						v-model.trim='spamAgree'
-					) Хочу получать информационные письма
-
-					button.green-btn
-						| Далее
+					inputs-register(v-if='entryFormType == "register"', :key='entryFormType')
 
 </template>
 
 <script>
 	import { mapActions } from 'vuex'
 
+	/*========================================
+	=            define the forms            =
+	========================================*/
+
+	const formContent = {
+		types: ['login', 'register', 'recovery'],
+		components: {
+			inputs: {},
+			texts: {}
+		}
+	}
+
+	for (let i = 0; i < formContent.types.length; i++) {
+		let type = formContent.types[i];
+		formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
+			return import(`@/components/form/contents/inputs/${type}.vue`)
+		};
+		formContent.components.texts['texts-' + formContent.types[i]] = function () {
+			return import(`@/components/form/contents/texts/${type}.vue`)
+		};
+	}
+
+	/*=====  End of define the forms  ======*/
+
 	export default {
 		name: 'EntryForm',
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
 			AppCheckbox: () => import('@/components/form/checkbox.vue'),
+			...formContent.components.inputs,
+			...formContent.components.texts,
 		},
 		props: {
 			title: String,
 		},
 		data () {
 			return {
+				entryFormType: 'register',
 				firstname: '',
 				lastname: '',
 				email: '',
@@ -141,7 +81,9 @@ section.entry-form
 			}
 		},
 		methods: {
-			...mapActions(['setModalState'])
+			setModalState(data) {
+				return this.entryFormType = data.type;
+			},
 		},
 	}
 </script>
@@ -220,16 +162,39 @@ section.entry-form
 						margin: 13px 0;
 					}
 					p {
+						font-size: 15px;
 						margin: 0;
 						line-height: 1.5;
 					}
 					hr {
-						margin: 24px 0 20px;
+						margin: 22px 0 18px;
 						border: none;
 						border-radius: 1px;
 						height: 1px;
+						width: 100%;
+						min-height: 1px;
 						background-color: currentColor;
 						opacity: .8;
+					}
+					.transparent-button {
+						border: 2px solid currentColor;
+						color: white;
+						opacity: .9;
+						background-color: transparent;
+						padding: 10px 13px;
+						margin: 24px 0;
+						margin-bottom: 10px;
+						display: inline-block;
+						text-align: center;
+						font-size: 18px;
+						line-height: 1.33;
+						font-weight: bold;
+						cursor: pointer;
+						user-select: none;
+						font-family: var(--font-main);
+						&:hover {
+							opacity: 1;
+						}
 					}
 				}
 
@@ -277,7 +242,46 @@ section.entry-form
 
 				/*=====  End of Background image  ======*/
 
+				.text-blocks {
+					.links {
+						flex-grow: 1;
+						display: flex;
+						margin-top: 20px;
+						padding: 40px *;
+						align-items: center;
+						a {
+							display: flex;
+							align-items: baseline;
+							font-family: var(--font-second);
+							line-height: 1.5;
+							cursor: pointer;
+							.svg-icon {
+								@media (max-width: 600px) {
+									display: none;
+								}
+								height: 10px;
+								width: 20px;
+								display: inline-block;
+								margin-right: 5px;
+								&.to-left {
+									transform: rotateZ(180deg);
+								}
+							}
+						}
+					}
+				}
+
 				form {
+					.close-btn {
+						display: none;
+					}
+					a {
+						color: var(--accent_color);
+						font-size: 12px;
+						line-height: 2;
+						display: inline-block;
+						margin: 5px *;
+					}
 					.content {
 						padding: 19px 40px 19px 20px;
 					}
@@ -287,19 +291,6 @@ section.entry-form
 					}
 				}
 			}
-		}
-		.transparent-button {
-			border: 2px solid rgba(255, 255, 255, .9);
-			color: white;
-			background-color: transparent;
-			padding: 10px 13px;
-			margin: 24px 0;
-			display: inline-block;
-			font-size: 18px;
-			line-height: 1.33;
-			font-weight: bold;
-			cursor: pointer;
-			font-family: var(--font-main);
 		}
 	}
 </style>

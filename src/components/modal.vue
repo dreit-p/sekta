@@ -61,30 +61,6 @@ transition(name='fade')
 
 	/*=====  End of define the forms  ======*/
 
-	/*=====================================
-	=            define inputs            =
-	=====================================*/
-
-	let globalInputs = {
-		names: ['email', 'password', 'firstname', 'lastname'],
-		list: {}
-	};
-
-	for (let i = 0; i < globalInputs.names.length; i++) {
-		let name = globalInputs.names[i];
-		console.log(name);
-		globalInputs.list[name] = {
-			get () {
-				return this.$store.state.inputs[name]
-			},
-			set (value) {
-				this.$store.commit('setInputData', {name: name, data: value})
-			}
-		};
-	}
-
-	/*=====  End of define inputs  ======*/
-
 
 	export default {
 		name: 'app-modal',
@@ -100,8 +76,7 @@ transition(name='fade')
 			},
 			formModalType () {
 				return this.$store.state.appStates.formModal.type;
-			},
-			...globalInputs.list
+			}
 		},
 		methods: {
 			...mapActions(['setModalState'])

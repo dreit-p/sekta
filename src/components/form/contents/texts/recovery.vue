@@ -15,7 +15,7 @@
 		},
 		methods: {
 			setModalState(data) {
-				return this.$store.dispatch('setModalState', data)
+				return this.$parent.setModalState(data);
 			}
 		},
 	}
