@@ -8,7 +8,7 @@ transition(name='fade')
 
 					// Login
 
-					.block(:class='{show: formModalType == "login"}')
+					.block(:class='{show: formModalType != "register"}')
 						texts-login(v-if='formModalType == "login" || formModalType == "register"')
 
 						texts-recovery(v-if='formModalType == "recovery"')
