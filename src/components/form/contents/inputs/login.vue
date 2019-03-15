@@ -43,7 +43,6 @@
 
 	for (var i = 0; i < globalInputs.names.length; i++) {
 		let name = globalInputs.names[i];
-		console.log(name);
 		globalInputs.list[name] = {
 			get () {
 				return this.$store.state.inputs[name]

@@ -35,11 +35,9 @@ label.app-checkbox(:class='this.$options.name')
 		computed: {
 			computedCaption() {
 				if (this.error) {
-					console.log('error: ', this.error);
 					return this.error
 				} else {
 					if (this.caption) {
-						console.log('caption: ', this.caption);
 						return this.caption
 					}
 				}
@@ -69,7 +67,6 @@ label.app-checkbox(:class='this.$options.name')
 		},
 		mounted: function () {
 			// synbc the input to the initial value
-			console.log(this.$refs[this.name]);
 			this.$refs[this.name].value = this.value;
 		}
 	}
