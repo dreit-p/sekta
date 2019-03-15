@@ -149,30 +149,32 @@ body {
 	padding-bottom: 30px;
 }
 
-.fade-enter-active, .fade-leave-active {
-	transition: opacity .2s;
-	user-select: none;
-	pointer-event: none;
-	transition-timing-function: ease-in;
-}
-.fade-enter, .fade-leave-to {
-	opacity: 0;
-	user-select: none;
-	pointer-event: none;
-	transition-duration: .4s;
-	transition-timing-function: ease-out;
-}
+@media (min-width: 601px) {
+	.fade-enter-active, .fade-leave-active {
+		transition: opacity .2s;
+		user-select: none;
+		pointer-event: none;
+		transition-timing-function: ease-in;
+	}
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+		user-select: none;
+		pointer-event: none;
+		transition-duration: .4s;
+		transition-timing-function: ease-out;
+	}
 
-.fade-flip-enter-active, .fade-flip-leave-active {
-	transition: opacity .35s;
-	user-select: none;
-	pointer-event: none;
-	transition-timing-function: ease-in;
-}
-.fade-flip-enter, .fade-flip-leave-to {
-	opacity: .5;
-	user-select: none;
-	pointer-event: none;
-	transition-duration: .15s;
-	transition-timing-function: ease-out;
+	.fade-flip-enter-active, .fade-flip-leave-active {
+		transition: opacity .35s;
+		user-select: none;
+		pointer-event: none;
+		transition-timing-function: ease-in;
+	}
+	.fade-flip-enter, .fade-flip-leave-to {
+		opacity: .5;
+		user-select: none;
+		pointer-event: none;
+		transition-duration: .15s;
+		transition-timing-function: ease-out;
+	}
 }
