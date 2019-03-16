@@ -6,7 +6,7 @@ header.main-header
 
 
 			nav.top
-				router-link(class='logo', title='Sekta school logo', to='/')
+				router-link(class='logo', title='Sekta school logo', to='/', @click.native='setModalState({modalState: false})')
 					svg-icon(name='logo-sekta')
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
