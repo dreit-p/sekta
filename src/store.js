@@ -68,11 +68,11 @@ export default new Vuex.Store({
 				name: 'Тренировки в зале',
 				subLinks: [
 					{
-						link: '/gym-moscow',
+						link: '/gym/moscow',
 						name: 'Москва'
 					},
 					{
-						link: '/gym-saint-petersburg',
+						link: '/gym/saint-pitersburg',
 						name: 'Санкт-Петербург'
 					}
 				]
