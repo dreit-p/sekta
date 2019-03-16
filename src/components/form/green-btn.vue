@@ -1,16 +1,29 @@
 <template lang="pug">
-a.green-btn(@click="$emit('click', $event)")
+a.green-btn(
+	:href='href'
+	@focus="$emit('focus', $event)"
+	@click.prevent="$emit('click', $event)"
+	@blur="$emit('blur', $event)"
+	@hover="$emit('hover', $event)"
+)
 	slot
 </template>
 
 <script>
 	export default {
-		name: 'green-btn'
+		name: 'green-btn',
+		props: {
+			href: {
+				type: String,
+				default: '#'
+			}
+		}
 	}
 </script>
 
 <style lang="postcss">
 	.green-btn {
+		text-decoration: none;
 		font: 400 15px/1 var(--font-main);
 		display: inline-block;
 		padding: 12px 20px 13px;
