@@ -14,7 +14,7 @@
 		name='email'
 		type='email')
 
-	button.green-btn(@click.prevent)
+	green-btn(@click.prevent)
 		| Получить ссылку
 </template>
 
@@ -47,6 +47,7 @@
 		name: 'form-recovery',
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		computed: {
 			...globalInputs.list

@@ -26,7 +26,7 @@
 
 	a(href='#', @click.prevent='setModalState({type:"recovery"})') Восстановить пароль
 
-	button.green-btn(@click.prevent)
+	green-btn(@click.prevent)
 		| Войти
 </template>
 
@@ -60,6 +60,7 @@
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
 			AppCheckbox: () => import('@/components/form/checkbox.vue'),
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		computed: {
 			...globalInputs.list

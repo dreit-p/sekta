@@ -1,5 +1,5 @@
 <template lang="pug">
-section.hero
+section.fullsize-hero
 	.main
 		.background(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
@@ -7,7 +7,7 @@ section.hero
 				h1.title {{title}}
 				.text
 					slot
-				a.button(@click.prevent='setModalState({modalState: true})') Записаться на обучение
+				green-btn(@click.prevent='setModalState({modalState: true})') Записаться на обучение
 	.mobile-content
 		.limit
 			.text
@@ -20,6 +20,7 @@ section.hero
 	export default {
 		name: 'CoursesHero',
 		components: {
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		props: {
 			image: String,
@@ -39,7 +40,7 @@ section.hero
 </script>
 
 <style lang="postcss">
-	section.hero {
+	section.fullsize-hero {
 		.main {
 			height: 500px;
 			position: relative;
@@ -51,15 +52,12 @@ section.hero
 			height: 100%;
 			width: 100%;
 			transition: background-position .1s, width .1s;
-			background-position: center center;
+			background-position: 65% center;
+			background-size: cover;
 			background-repeat: no-repeat;
 			position: absolute;
 			top: 0;
 			right: 0;
-			@media (min-width: 1024px) {
-				width: 50%;
-				background-position: center left;
-			}
 		}
 		.content {
 			padding: 30px *;
@@ -87,29 +85,6 @@ section.hero
 					display: none;
 				}
 			}
-			.button {
-				font: 400 15px/1 var(--font-main);
-				display: inline-block;
-				padding: 12px 20px 13px;
-				border: none;
-				color: #fff;
-				text-align: center;
-				max-width: 300px;
-				margin: 25px 35px;
-				border-radius: 3px;
-				background: #0ab69f;
-				transition: all .3s;
-				@media (max-width: 1024px) {
-					margin: * auto;
-					width: 100%;
-				}
-				&:not(:disabled) {
-					cursor: pointer;
-				}
-				&:hover {
-					background: #078675;
-				}
-			}
 		}
 		.mobile-content {
 			display: none;
@@ -119,6 +94,14 @@ section.hero
 			.text {
 				font-size: 15px;
 				margin: 30px *;
+			}
+		}
+		&.dark {
+			.content {
+				color: white;
+				.title {
+					text-shadow: 0 0 1em rgba(0, 0, 0, .5);
+				}
 			}
 		}
 	}

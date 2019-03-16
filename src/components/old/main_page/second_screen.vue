@@ -53,7 +53,8 @@ section
 				.bot_part
 					p.start Старт: каждый понедельник
 					p.for_button
-						a.button.button_header(href='/online' style='color: #fff;') Выбрать курс
+						router-link(title='Выбрать курс', to='/online-courses')
+							green-btn Выбрать курс
 			.text_program__item
 				p.tit Тренировки в зале
 				p
@@ -67,7 +68,8 @@ section
 				.bot_part
 					p.start Старт 04 марта
 					p.for_button
-						a.button.button_header(href='/gym/' style='color: #fff;') Посмотреть расписание
+						router-link(title='Посмотреть расписание', to='/gym/')
+							green-btn Посмотреть расписание
 
 </template>
 
@@ -75,6 +77,7 @@ section
 	export default {
 		name: 'second_screen',
 		components: {
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		data () {
 			return {}
@@ -319,23 +322,7 @@ section
 		}
 	}
 
-	.button {
-		font: 400 15px/1 var(--font-main);
-		display: inline-block;
-		padding: 12px 20px 13px;
-		border: none;
-		color: #fff;
-		border-radius: 3px;
-		background: #0ab69f;
-		transition: all .3s;
-		&_header {
-			margin: 20px 0;
-		}
-		&:not(:disabled) {
-			cursor: pointer;
-		}
-		&:hover {
-			background: #078675;
-		}
+	.green-btn {
+		margin: 20px 0;
 	}
 </style>

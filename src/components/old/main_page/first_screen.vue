@@ -14,7 +14,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 					li под чутким контролем кураторов;
 					li с поддержкой единомышленников.
 				p
-					a.button.button_header(href='https://vk.com/away.php?utf=1&to=https%3A%2F%2Faccount.sektaschool.ru%2F%2Fregistration.php%3Futm_source%3Dsite%26utm_medium%3Dmain%26utm_campaign%3Dregistration%26utm_term%3D27.06.2018%26utm_content%3Dfirstbutton', style='color: #fff;', target='_blank',
+					green-btn(href='https://vk.com/away.php?utf=1&to=https%3A%2F%2Faccount.sektaschool.ru%2F%2Fregistration.php%3Futm_source%3Dsite%26utm_medium%3Dmain%26utm_campaign%3Dregistration%26utm_term%3D27.06.2018%26utm_content%3Dfirstbutton', style='color: #fff;', target='_blank',
 					@click.prevent='setModalState({modalState: true, type: "register"})') Получить демо доступ
 </template>
 
@@ -26,6 +26,9 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		data() {
 			return {
 			};
+		},
+		components: {
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		methods: {
 			...mapActions(['setModalState'])
@@ -234,24 +237,8 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		margin: * auto;
 	}
 
-	.button {
-		font: 400 15px/1 var(--font-main);
-		display: inline-block;
-		padding: 12px 20px 13px;
-		border: none;
-		color: #fff;
-		border-radius: 3px;
-		background: #0ab69f;
-		transition: all .3s;
-		&_header {
-			margin: 20px 0;
-		}
-		&:not(:disabled) {
-			cursor: pointer;
-		}
-		&:hover {
-			background: #078675;
-		}
+	.green-btn {
+		margin: 20px 0;
 		@media (max-width: 425px) {
 			width: 100%;
 			text-align: center;

@@ -29,7 +29,6 @@ section.entry-form
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
 
 	/*========================================
 	=            define the forms            =
@@ -275,12 +274,15 @@ section.entry-form
 					.close-btn {
 						display: none;
 					}
-					a {
+					a:not(.green-btn) {
 						color: var(--accent_color);
 						font-size: 12px;
 						line-height: 2;
 						display: inline-block;
 						margin: 5px *;
+					}
+					.green-btn {
+						display: block;
 					}
 					.content {
 						padding: 19px 40px 19px 20px;

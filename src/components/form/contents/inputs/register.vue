@@ -94,7 +94,7 @@
 		v-model.trim='spamAgree'
 	) Хочу получать информационные письма
 
-	button.green-btn(@click.prevent)
+	green-btn(@click.prevent)
 		| Далее
 </template>
 <script>
@@ -127,6 +127,7 @@
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
 			AppCheckbox: () => import('@/components/form/checkbox.vue'),
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		computed: {
 			...globalInputs.list

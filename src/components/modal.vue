@@ -370,27 +370,25 @@ transition(name='fade')
 			}
 		}
 	}
-}
-
-.green-btn {
-	background-color: var(--accent_color);
-	color: white;
-	width: 100%;
-	margin: 10px auto;
-	cursor: pointer;
-	font-size: 16px;
-	line-height: 1.5;
-	font-family: var(--font-main);
-	padding: 13px;
-	text-align: center;
-	display: block;
-	max-width: 200px;
-	border: 1px solid var(--accent_color);
-	transition: color .3s, background-color .3s;
-	&:hover {
-		background-color: white;
-		transition-duration: .1s;
-		color: var(--accent_color);
+	.green-btn {
+		color: white;
+		width: 100%;
+		margin: 20px auto;
+		cursor: pointer;
+		font-size: 16px;
+		line-height: 1.5;
+		padding: 13px;
+		text-align: center;
+		display: block;
+		max-width: 200px;
+		border: 1px solid var(--accent_color);
+		transition: color .3s, background-color .3s;
+		&:hover {
+			background-color: white;
+			transition-duration: .1s;
+			color: var(--accent_color);
+		}
 	}
 }
+
 </style>
