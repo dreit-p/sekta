@@ -4,6 +4,8 @@ div.course
 	hero(image='course_bg-sectacare.jpg', title='Курс #SektaCare')
 		p В #SEKTACARE мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вы давно не тренировались или только начинаете?
 		p Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
+		template(v-slot:buttons)
+			green-btn(@click.prevent='setModalState({modalState: true})') Записаться на обучение
 
 	article.main-content
 		.article-limit
@@ -52,6 +54,7 @@ div.course
 		components: {
 			hero: () => import('@/components/heroes/aside-hero.vue'),
 			EntryForm: () => import('@/components/entry-form.vue'),
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		data () {
 			return {}

@@ -7,7 +7,7 @@ section.aside-hero
 				h1.title {{title}}
 				.text
 					slot
-				green-btn(@click.prevent='setModalState({modalState: true})') Записаться на обучение
+				slot(name='buttons')
 	.mobile-content
 		.limit
 			.text
@@ -20,7 +20,6 @@ section.aside-hero
 	export default {
 		name: 'CoursesHero',
 		components: {
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		props: {
 			image: String,
