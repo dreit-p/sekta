@@ -24,7 +24,7 @@ export default new Router({
 		{
 			path: '/sektacare',
 			name: 'SektaCare',
-			component: () => import('./views/courses/sektacare.vue')
+			component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
 		},
 		{
 			path: '/gym',
@@ -41,12 +41,12 @@ export default new Router({
 				{
 					path: 'moscow',
 					name: 'gym-moscow',
-					component: () => import('./views/gym/moscow.vue'),
+					component: () => import(/* webpackChunkName: "gym" */ './views/gym/moscow.vue'),
 				},
 				{
 					path: 'saint-pitersburg',
 					name: 'gym-saint-pitersburg',
-					component: () => import('./views/gym/saint-pitersburg.vue'),
+					component: () => import(/* webpackChunkName: "gym" */ './views/gym/saint-pitersburg.vue'),
 				},
 			]
 		},
