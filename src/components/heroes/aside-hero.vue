@@ -41,7 +41,7 @@ section.aside-hero
 <style lang="postcss">
 	section.aside-hero {
 		.main {
-			height: 500px;
+			min-height: 500px;
 			position: relative;
 			@media (max-width: 1024px) {
 				height: 400px;
