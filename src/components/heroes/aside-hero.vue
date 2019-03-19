@@ -20,7 +20,6 @@ section.aside-hero
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
 	export default {
 		name: 'CoursesHero',
 		components: {
@@ -28,9 +27,6 @@ section.aside-hero
 		props: {
 			image: String,
 			title: String,
-		},
-		methods: {
-			...mapActions(['setModalState'])
 		},
 		computed: {
 		},

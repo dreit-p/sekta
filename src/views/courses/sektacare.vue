@@ -49,12 +49,16 @@ div.course
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
 	export default {
 		name: 'for-mums',
 		components: {
 			hero: () => import('@/components/heroes/aside-hero.vue'),
 			EntryForm: () => import('@/components/entry-form.vue'),
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
+		},
+		methods: {
+			...mapActions(['setModalState'])
 		},
 		data () {
 			return {}
