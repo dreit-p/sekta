@@ -1,7 +1,11 @@
 <template lang="pug">
 section.aside-hero
 	.main
-		.background(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
+		.background
+			.triangle
+				svg(height='500' viewBox='0 0 150 500')
+					polygon.triangle(fill='white' points='0,0 150,250 0,500')
+			.img(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
 				h1.title {{title}}
@@ -44,7 +48,9 @@ section.aside-hero
 			min-height: 500px;
 			position: relative;
 			@media (max-width: 1024px) {
-				height: 400px;
+				height: 100vw;
+				min-height: 410px;
+				max-height: 500px;
 			}
 		}
 		.background {
@@ -56,15 +62,35 @@ section.aside-hero
 			position: absolute;
 			top: 0;
 			right: 0;
-			@media (min-width: 1024px) {
+			@media (min-width: 1025px) {
 				width: 50%;
 				background-position: center left;
+			}
+			.img {
+				height: 100%;
+				width: 100%;
+				background-position: center 30%;
+				@media (max-width: 1024px) {
+					/* background-position: center; */
+					background-size: cover;
+				}
+			}
+			.triangle {
+				width: 50%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				@media (max-width: 1024px) {
+					display: none;
+				}
 			}
 		}
 		.content {
 			padding: 30px *;
 			@media (max-width: 1024px) {
 				height: 100%;
+				padding: 10px *;
 				.limit {
 					height: 100%;
 					display: flex;
