@@ -82,7 +82,10 @@ section.aside-hero
 			}
 			.text {
 				width: 440px;
-				font-size: 15px;
+				>*{
+					font-size: 15px;
+					line-height: 1.47;
+				}
 				@media (max-width: 1024px) {
 					display: none;
 				}
@@ -94,7 +97,10 @@ section.aside-hero
 				display: block;
 			}
 			.text {
-				font-size: 15px;
+				>*{
+					font-size: 15px;
+					line-height: 1.47;
+				}
 				margin: 30px *;
 			}
 		}

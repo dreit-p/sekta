@@ -5,6 +5,7 @@ section.entry-form
 		.caption cтарт в понедельник
 	.wrapper.clearfix
 		.half.with-bg
+			img(class='background', src='@/assets/images/markes-bg_teal.jpg')
 			.text-blocks
 				// Login
 
@@ -67,6 +68,7 @@ section.entry-form
 		},
 		data () {
 			return {
+				backgroundImage: require('@/assets/images/markes-bg_teal.jpg'),
 				entryFormType: 'register',
 				firstname: '',
 				lastname: '',
@@ -204,38 +206,24 @@ section.entry-form
 
 				&.with-bg {
 					color: white;
+					overflow: hidden;
 					background: linear-gradient(to right, rgb(38, 70, 65) 25%, transparent, rgb(97, 147, 139) 75%);
 					background-position: center center;
 					background-repeat: no-repeat;
 					position: relative;
-					@media (max-width: 1000px) {
-						background: linear-gradient(to right, rgb(38, 70, 65), transparent, rgb(97, 147, 139));
-					}
 					@media (min-width: 1800px) {
-						background: linear-gradient(to right, rgb(38, 70, 65) 35%, transparent, rgb(97, 147, 139) 65%);
+						background: linear-gradient(to right, rgb(38, 70, 65) 49%, transparent, rgb(97, 147, 139) 51%);
 					}
-					&:before {
-						display: block;
-						content: "";
-						height: 100%;
-						width: 100%;
-						background-image: url(~@/assets/images/markes-bg_teal.jpg);
-						background-position: center center;
-						background-repeat: no-repeat;
-						background-size: cover;
+					img.background {
 						position: absolute;
 						top: 0;
 						bottom: 0;
+						left: 50%;
+						transform: translateX(-50%);
 						right: 0;
-						left: 0;
-						margin: auto;
-						@media (max-width: 700px) {
-							z-index: -1;
-							position: absolute;
-						}
-						@media (max-width: 1300px) {
-							background-size: cover;
-						}
+						height: 100%;
+						max-width: unset;
+						width: auto;
 					}
 				}
 
