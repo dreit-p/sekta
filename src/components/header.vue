@@ -47,6 +47,7 @@ header.main-header
 			@enter='dropdownEnter'
 			@after-enter='setHeightForDropdown'
 			@leave='dropdownLeave'
+			:css='false'
 		)
 			.sub-links.outside(v-if='showSubLinks', @mouseenter='clearDropdownTimer', @mouseleave='setDropdownTimer')
 				.limit
@@ -68,6 +69,7 @@ header.main-header
 			@before-enter='menuBeforeEnter'
 			@enter='menuEnter'
 			@leave='menuLeave'
+			:css='false'
 		)
 			nav.mobile-menu(v-if='isOpenedMenu')
 				ul.additional-links(v-if='additionalLinks.length > 0')
@@ -163,6 +165,7 @@ header.main-header
 					this.clearDropdownTimer();
 				}
 				this.showSubLinks = type;
+				this.setOutsideClickListener();
 			},
 
 			theHighestElement: function (elem) {
@@ -260,9 +263,29 @@ header.main-header
 							complete: done
 						} )
 				});
-			}
+			},
 
 			/*=====  End of Menu animation  ======*/
+
+			setOutsideClickListener: function () {
+
+				let app = document.getElementById('app');
+
+				let theTarget = app.querySelector('header.main-header');
+
+				app.removeEventListener('mouseup', task, false);
+
+				let task = (e)=>{
+
+					if (!theTarget.contains(e.target) && this.showSubLinks != false) {
+							this.showSubLinks = false;
+							e.target.removeEventListener('mouseup', task, false)
+					}
+
+				}
+
+				app.addEventListener('mouseup', task, false);
+			}
 
 		}
 	}
