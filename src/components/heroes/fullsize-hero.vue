@@ -44,7 +44,9 @@ section.fullsize-hero
 			min-height: 500px;
 			position: relative;
 			@media (max-width: 1024px) {
-				height: 400px;
+				height: 100vw;
+				min-height: 410px;
+				max-height: 500px;
 			}
 		}
 		.background {
