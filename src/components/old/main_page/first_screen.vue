@@ -49,9 +49,9 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			text-transform: uppercase;
 			padding-right: 20px;
 			font-family: var(--font-second);
-			font-weight: 700;
-			line-height: 36px;
-			letter-spacing: .25px;
+			font-weight: 900;
+			line-height: 1.33;
+			letter-spacing: .3px;
 			margin: 0;
 		}
 		&__container {
@@ -214,6 +214,12 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			width: 450px;
 			margin: 25px 0;
 			padding: 0;
+			ul {
+				font-size: 14px;
+				li {
+					margin: 10px *;
+				}
+			}
 		}
 
 		.first-screen__header {

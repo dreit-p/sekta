@@ -157,7 +157,7 @@ section.entry-form
 					padding: 19px 40px 19px 20px;
 					p.heavy-text {
 						line-height: 1;
-						font-size: 24px;
+						font-size: 20px;
 						font-family: var(--font-second);
 						font-weight: bold;
 						margin: 13px 0;
@@ -240,6 +240,7 @@ section.entry-form
 							display: flex;
 							align-items: baseline;
 							font-family: var(--font-second);
+							font-size: 16px;
 							line-height: 1.5;
 							cursor: pointer;
 							.svg-icon {

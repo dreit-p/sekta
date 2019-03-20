@@ -154,7 +154,7 @@ transition(name='fade')
 		.content {
 			p.heavy-text {
 				line-height: 1;
-				font-size: 24px;
+				font-size: 20px;
 				font-family: var(--font-second);
 				font-weight: bold;
 				margin: 13px 0;
@@ -267,6 +267,7 @@ transition(name='fade')
 						display: flex;
 						align-items: baseline;
 						font-family: var(--font-second);
+						font-size: 14px;
 						line-height: 1.5;
 						cursor: pointer;
 						.svg-icon {

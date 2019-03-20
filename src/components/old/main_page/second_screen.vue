@@ -204,6 +204,8 @@ section
 			width: 30%;
 			position: relative;
 			margin-top: 70px;
+			font-size: 15px;
+			line-height: 1.33;
 			.caption {
 				font-weight: bold;
 				margin-bottom: 5px;

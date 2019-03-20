@@ -422,7 +422,7 @@ header.main-header
 		display: block;
 		list-style: none;
 		font-family: var(--font-second);
-		font-size: 18px;
+		font-size: 16px;
 		display: flex;
 		flex-wrap: wrap;
 		margin-left: -15px;
