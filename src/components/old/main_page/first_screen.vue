@@ -159,10 +159,11 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			}
 	}
 
-	@media (max-width: 767px) {
+	@media (max-width: 650px) {
 		.first-screen.main {
 			background-image: url(~@/assets/images/first_screen-bg_small.jpg) !important;
 			height: 148vw !important;
+			max-height: 700px;
 			position: relative;
 			& .first-screen__container {
 				position: absolute;
@@ -241,6 +242,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		margin: 20px 0;
 		@media (max-width: 425px) {
 			width: 100%;
+			max-width: none;
 			text-align: center;
 		}
 	}
