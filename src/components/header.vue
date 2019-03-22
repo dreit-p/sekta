@@ -96,7 +96,7 @@ header.main-header
 								a.animated-underline {{ subLink.name }}
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
-							router-link(tag='li', class='link', :key='`mainLink-${index}`', :to='link.link', :data-index="index")
+							router-link(tag='li', class='link', :key='`mainLink-${index}`', :to='link.link', :data-index='index', @click.native='setMenuState(false)')
 								a.animated-underline {{ link.name }}
 </template>
 
