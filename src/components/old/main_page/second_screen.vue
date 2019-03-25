@@ -125,11 +125,11 @@ section
 				transform: rotate(180deg);
 				float: left;
 				font-family: var(--font-second);
-				color: #e0e0e0;
-				font-size: 100px;
+				color: #eaeaea;
+				font-size: 86px;
 				text-transform: uppercase;
 				line-height: 0;
-				font-weight: 700;
+				font-weight: 900;
 				left: 0;
 				writing-mode: tb-rl;
 				margin: 0 47px 0 55px;
@@ -214,7 +214,7 @@ section
 			.num_bg {
 				float: left;
 				font-family: var(--font-second);
-				color: #eaeaea;
+				color: #f3f3f3;
 				font-size: 200px;
 				text-transform: uppercase;
 				line-height: 0;
@@ -272,7 +272,7 @@ section
 		&__item {
 			width: 48%;
 			background: #e8e8e8;
-			padding: 30px 55px 150px 50px;
+			padding: 30px 55px 12em 50px;
 			position: relative;
 			@media (max-width: 768px) {
 				width: 100%;
@@ -301,7 +301,7 @@ section
 			}
 			.bot_part {
 				position: absolute;
-				bottom: 2.5em;
+				bottom: 2em;
 				width: calc(100% - 105px);
 				@media screen and (max-width: 768px) {
 					position: static;
