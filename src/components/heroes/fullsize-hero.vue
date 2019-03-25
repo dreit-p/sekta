@@ -5,12 +5,12 @@ section.fullsize-hero
 		.content
 			.limit
 				h1.title {{title}}
-				.text
+				.hero-text
 					slot
 				slot(name='buttons')
 	.mobile-content
 		.limit
-			.text
+			.hero-text
 				slot
 
 </template>
@@ -86,13 +86,13 @@ section.fullsize-hero
 			}
 			.title {
 				margin: 30px *;
-				font-size: 26px;
-				font-weight: bold;
+				font-size: 30px;
+				font-weight: 900;
 				text-transform: uppercase;
 				font-family: var(--font-second);
 				text-shadow: 0 0 1em rgba(255, 255, 255, .5);
 			}
-			.text {
+			.hero-text {
 				width: 440px;
 				font-size: 15px;
 				@media (max-width: 1024px) {
@@ -105,7 +105,7 @@ section.fullsize-hero
 			@media (max-width: 1024px) {
 				display: block;
 			}
-			.text {
+			.hero-text {
 				font-size: 15px;
 				margin: 30px *;
 			}

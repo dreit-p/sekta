@@ -95,8 +95,8 @@ section.aside-hero
 			}
 			.title {
 				margin: 30px *;
-				font-size: 26px;
-				font-weight: bold;
+				font-size: 30px;
+				font-weight: 900;
 				text-transform: uppercase;
 				font-family: var(--font-second);
 				text-shadow: 0 0 1em rgba(255, 255, 255, .5);
