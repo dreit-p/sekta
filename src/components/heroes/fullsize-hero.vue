@@ -48,6 +48,10 @@ section.fullsize-hero
 				min-height: 410px;
 				max-height: 500px;
 			}
+			@media (max-width: 500px) {
+				height: auto;
+				max-height: none;
+			}
 		}
 		.background {
 			height: 100%;

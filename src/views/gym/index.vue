@@ -11,7 +11,7 @@ div.course
 				li индивидуальные рекомендации спортивного врача на основе медицинской анкеты;
 				li новые друзья и единомышленники.
 		template(v-slot:buttons)
-			green-btn(@click.prevent='setModalState({modalState: true})') Записаться на обучение
+			gym-location
 
 	article.main-content
 		.article-limit
@@ -53,7 +53,8 @@ div.course
 		name: 'gym',
 		components: {
 			CoursesHero: () => import('@/components/heroes/fullsize-hero.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
+			GymLocation: () => import('@/components/gym/location.vue'),
+			// GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		data () {
 			return {}
@@ -62,5 +63,4 @@ div.course
 </script>
 
 <style lang="postcss">
-	
 </style>

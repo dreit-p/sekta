@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
 
@@ -7,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	plugins: [createPersistedState({
-		paths: ['inputs'],
+		paths: ['inputs', 'user'],
 	})],
 	state: {
 		appStates: {
@@ -90,7 +91,10 @@ export default new Vuex.Store({
 				link: '/gift-cert',
 				name: 'Подарочный сертификат'
 			}
-		]
+		],
+		user: {
+			location: null,
+		}
 	},
 	mutations: {
 		setMenuState (state, payload) {
@@ -107,7 +111,10 @@ export default new Vuex.Store({
 		},
 		setInputData(state, {name, data}) {
 			state.inputs[name] = data;
-		}
+		},
+		setUserInfo(state, {type, data}) {
+			state.user[type] = data;
+		},
 	},
 	actions: {
 		setMenuState ({dispatch, commit}, payload) {
@@ -137,6 +144,21 @@ export default new Vuex.Store({
 				document.getElementsByTagName('body')[0].style.paddingRight = 0;
 			}
 			commit('setScrollLock', payload);
-		}
-	}
+		},
+		requestIPInfo ({commit}) {
+			return axios
+				.get('https://api.ipgeolocation.io/ipgeo?apiKey=f286a2fe90004550aeadbf0a8ff240d9')
+				.then(response => {
+						// console.log(response);
+						commit('setUserInfo', {type: 'location', data: response.data.state_prov});
+					})
+				.catch(error => console.log(error));
+		},
+		updateUserLocation ({state, dispatch}) {
+			if (!state.user.location) {
+				dispatch('requestIPInfo');
+			}
+			return state.user.location;
+		},
+	},
 })
