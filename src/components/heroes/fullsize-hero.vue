@@ -1,14 +1,14 @@
 <template lang="pug">
 section.fullsize-hero
-	.main
+	.hero-content
 		.background(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
-				h1.title {{title}}
-				.hero-text
+				h1.title(v-if='this.title') {{title}}
+				.hero-text(v-if='this.$slots.default')
 					slot
-				slot(name='buttons')
-	.mobile-content
+				slot(name='another')
+	.mobile-content(v-if='this.$slots.default')
 		.limit
 			.hero-text
 				slot
@@ -40,9 +40,13 @@ section.fullsize-hero
 
 <style lang="postcss">
 	section.fullsize-hero {
-		.main {
+		.hero-content {
 			min-height: 500px;
 			position: relative;
+			display: flex;
+			justify-content: stretch;
+			align-items: stretch;
+			align-content: stretch;
 			@media (max-width: 1024px) {
 				height: 100vw;
 				min-height: 410px;
@@ -72,6 +76,8 @@ section.fullsize-hero
 		}
 		.content {
 			padding: 30px *;
+			width: 100%;
+			flex-grow: 1;
 			ul {
 				li {
 					font-weight: bold;
@@ -79,10 +85,9 @@ section.fullsize-hero
 					line-height: 1.33;
 				}
 			}
-			@media (max-width: 1024px) {
+			.limit {
 				height: 100%;
-				.limit {
-					height: 100%;
+				@media (max-width: 1024px) {
 					display: flex;
 					flex-direction: column;
 					justify-content: space-between;
@@ -119,6 +124,47 @@ section.fullsize-hero
 				color: white;
 				.title {
 					text-shadow: 0 0 1em rgba(0, 0, 0, .5);
+				}
+			}
+		}
+		&.huge-content {
+			.hero-content {
+				height: 59.44vw;
+				min-height: 214px;
+				max-height: 650px;
+			}
+			.huge-hero-text {
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				.main {
+					font-size: 127px;
+					margin: .05em 0;
+					font-family: var(--font-second);
+					font-weight: 900;
+					line-height: 1;
+					text-transform: uppercase;
+					color: var(--accent_color);
+					@media (max-width: 980px) {
+						font-size: 13.33vw;
+					}
+					@media (max-width: 360px) {
+						font-size: 48px;
+					}
+				}
+				.additional {
+					font-size: 60px;
+					font-weight: 900;
+					color: #252525;
+					font-family: var(--font-second);
+					line-height: 1;
+					@media (max-width: 980px) {
+						font-size: 5vw;
+					}
+					@media (max-width: 360px) {
+						font-size: 18px;
+					}
 				}
 			}
 		}

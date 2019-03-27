@@ -8,7 +8,7 @@ section.aside-hero
 			.img(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
-				h1.title {{title}}
+				h1.title(v-if='this.title') {{title}}
 				.text
 					slot
 				slot(name='buttons')

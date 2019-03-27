@@ -10,7 +10,7 @@ div.course
 				li нагрузки, адаптированные под ваши особенности и противопоказания;
 				li индивидуальные рекомендации спортивного врача на основе медицинской анкеты;
 				li новые друзья и единомышленники.
-		template(v-slot:buttons)
+		template(v-slot:another)
 			gym-location
 
 	article.main-content
