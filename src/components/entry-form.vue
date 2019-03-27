@@ -1,19 +1,18 @@
 <template lang="pug">
-section.entry-form
-	.limit.header
-		.title Запишитесь сейчас
-		.caption cтарт в понедельник
+.entry-form
 	.wrapper.clearfix
 		.half.with-bg
 			img(class='background', src='@/assets/images/markes-bg_teal.jpg')
 			.text-blocks
 				// Login
 
-				texts-login(v-if='entryFormType == "login"')
+				transition(name='fade-flip', mode='out-in')
 
-				texts-recovery(v-if='entryFormType == "recovery"')
+					texts-login(v-if='entryFormType == "login"')
 
-				texts-register(v-if='entryFormType == "register"')
+					texts-recovery(v-if='entryFormType == "recovery"')
+
+					texts-register(v-if='entryFormType == "register"')
 
 		.half
 			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
@@ -90,26 +89,7 @@ section.entry-form
 </script>
 
 <style lang="postcss">
-	section.entry-form {
-		.header {
-			padding: 6px 0;
-			.title {
-				font-family: var(--font-second);
-				font-size: 26px;
-				margin: 8px;
-				font-weight: bold;
-				text-align: center;
-				letter-spacing: 0.3px;
-			}
-			.caption {
-				font-family: var(--font-second);
-				font-size: 22px;
-				font-weight: bold;
-				color: var(--accent_color);
-				margin: 8px;
-				text-align: center;
-			}
-		}
+	section > .entry-form {
 
 		/*====================================
 		=            Construction            =

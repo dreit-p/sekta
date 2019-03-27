@@ -44,7 +44,11 @@ div.course
 					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
 
-	entry-form
+	section
+		.section-caption
+			| Запишитесь сейчас
+			.highlight cтарт в понедельник
+		entry-form
 
 </template>
 
