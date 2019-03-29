@@ -187,14 +187,14 @@ body {
 .section-caption {
 	font-family: var(--font-second);
 	font-size: 26px;
-	padding: 8px;
+	padding: 40px var(--col-space) 20px;
 	font-weight: bold;
 	text-align: center;
 	letter-spacing: 0.3px;
 	.highlight {
 		font-size: 22px;
 		color: var(--accent_color);
-		margin: 8px;
+		margin: 0;
 	}
 }
 

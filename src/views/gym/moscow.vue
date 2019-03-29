@@ -6,11 +6,20 @@ div.gym
 			.huge-hero-text
 				h1.main Москва
 				.additional старт занятий – 01 октября
+
+
+	section
+		.section-caption Выберите программу тренировок
+		training-plans
+
+
 	section
 		.section-caption
 			| Запишитесь сейчас
 			.highlight старт занятий – 01 декабря
 		entry-form
+
+
 	article.main-content
 		.article-limit
 			.text-typography
@@ -49,6 +58,7 @@ div.gym
 		name: 'gym-moscow',
 		components: {
 			EntryForm: () => import('@/components/entry-form.vue'),
+			TrainingPlans: () => import('@/components/gym/trainings.vue'),
 			GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 		},
 		data () {
