@@ -2,7 +2,8 @@
 #app
 	app-header
 	app-modal
-	router-view
+	transition(name='fade-flip', mode='out-in')
+		router-view
 	app-footer
 </template>
 
