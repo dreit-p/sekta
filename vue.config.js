@@ -26,6 +26,17 @@ module.exports = {
 			.rule('svg-sprite')
 			.use('svgo-loader')
 			.loader('svgo-loader')
+		config
+			.plugin('imagemin-webp')
+			.use(require.resolve('imagemin-webp-webpack-plugin'), [{
+				config: [{
+						test: /\.(jpe?g|png)/,
+						options: {
+							quality: 90,
+							method: 5
+						}
+					}]
+			}]);
 	},
 	pluginOptions: {
 		svgSprite: {

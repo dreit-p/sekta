@@ -12,7 +12,7 @@ section
 					| Задача «Школы идеального тела» — подобрать для каждого идеальную формулу, подходящую именно его образу жизни. То есть научить вас привычкам, которые будут строить ваше идеальное тело, — то, о котором вы всегда мечтали.
 				p.copyright © Ольга Маркес
 			.col50
-				img(src='@/assets/images/markes-main.jpg' alt='')
+				webp-img(src='markes-main.jpg' alt='Olga Markes')
 		.here_you_will_find
 			h2.direct-speech__title здесь вы найдете
 			.here_you_will_find__conteiner
@@ -78,6 +78,7 @@ section
 		name: 'second_screen',
 		components: {
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
+			WebpImg: () => import('@/components/webp-img.vue'),
 		},
 		data () {
 			return {}
