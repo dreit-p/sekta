@@ -153,7 +153,7 @@
 				width: calc(100% /1 - 16px*2) !important;
 				height: auto;
 				max-height: none;
-				overflow: visible;
+				/* overflow: visible; */
 				box-shadow: none !important;
 			}
 			&.fake {
@@ -234,6 +234,7 @@
 				min-height: 101%;
 				width: 101%;
 				margin: -1%;
+				padding: 1%;
 				background-color: color(var(--accent_color) a(.8));
 				display: flex;
 				color: white;
