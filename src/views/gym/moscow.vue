@@ -14,6 +14,11 @@ div.gym
 
 
 	section
+		.section-caption Выберите расположение зала
+		gym-map
+
+
+	section
 		.section-caption
 			| Запишитесь сейчас
 			.highlight старт занятий – 01 декабря
@@ -59,6 +64,7 @@ div.gym
 		components: {
 			EntryForm: () => import('@/components/entry-form.vue'),
 			TrainingPlans: () => import('@/components/gym/trainings.vue'),
+			GymMap: () => import('@/components/gym/map.vue'),
 			GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 		},
 		data () {
