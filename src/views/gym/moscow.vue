@@ -67,6 +67,12 @@ div.gym
 			GymMap: () => import('@/components/gym/map.vue'),
 			GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 		},
+		beforeRouteLeave (to, from, next) {
+			if (window.map) {
+				window.map.destroy();
+			}
+			next();
+		},
 		data () {
 			return {}
 		}
