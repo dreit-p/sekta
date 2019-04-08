@@ -5,15 +5,15 @@
 	| Это займет не больше минуты.
 	hr
 	p Если он у вас уже есть, просто войдите.
-	a.transparent-button(@click.prevent='setModalState({type:"login"})') Войти в личный кабинет
+	a.transparent-button(@click.prevent='setFormModalState({type:"login"})') Войти в личный кабинет
 </template>
 
 <script>
 	export default {
 		name: 'texts-register',
 		methods: {
-			setModalState(data) {
-				return this.$parent.setModalState(data);
+			setFormModalState(data) {
+				return this.$parent.setFormModalState(data);
 			}
 		},
 	}

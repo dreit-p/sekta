@@ -24,7 +24,7 @@
 		:error='errors.first("password")'
 		name='password')
 
-	a(href='#', @click.prevent='setModalState({type:"recovery"})') Восстановить пароль
+	a(href='#', @click.prevent='setFormModalState({type:"recovery"})') Восстановить пароль
 
 	green-btn(@click.prevent)
 		| Войти
@@ -66,8 +66,8 @@
 			...globalInputs.list
 		},
 		methods: {
-			setModalState(data) {
-				return this.$parent.setModalState(data);
+			setFormModalState(data) {
+				return this.$parent.setFormModalState(data);
 			}
 		},
 		data () {

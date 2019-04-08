@@ -4,7 +4,7 @@
 	p Чтобы авторизоваться введите ваш
 	| логин (e-mail) и пароль.
 	.links
-		a(href='#', @click.prevent='setModalState({type:"register"})')
+		a(href='#', @click.prevent='setFormModalState({type:"register"})')
 			svg-icon(name='icon-arrow').to-left
 			| Нет личного кабинета? Зарегистрируйтесь
 </template>
@@ -16,8 +16,8 @@
 			SvgIcon: () => import('@/components/SvgIcon.vue')
 		},
 		methods: {
-			setModalState(data) {
-				return this.$parent.setModalState(data);
+			setFormModalState(data) {
+				return this.$parent.setFormModalState(data);
 			}
 		},
 	}

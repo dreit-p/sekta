@@ -16,7 +16,6 @@
 
 		.half
 			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
-				.close-btn(@click='setModalState({modalState: false})')
 
 				transition(name='fade-flip', mode='out-in')
 
@@ -81,7 +80,7 @@
 			}
 		},
 		methods: {
-			setModalState(data) {
+			setFormModalState(data) {
 				return this.entryFormType = data.type;
 			},
 		},

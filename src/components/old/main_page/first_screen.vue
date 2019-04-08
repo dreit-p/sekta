@@ -15,7 +15,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 					li с поддержкой единомышленников.
 				p
 					green-btn(href='https://vk.com/away.php?utf=1&to=https%3A%2F%2Faccount.sektaschool.ru%2F%2Fregistration.php%3Futm_source%3Dsite%26utm_medium%3Dmain%26utm_campaign%3Dregistration%26utm_term%3D27.06.2018%26utm_content%3Dfirstbutton', style='color: #fff;', target='_blank',
-					@click.prevent='setModalState({modalState: true, type: "register"})') Получить демо доступ
+					@click.prevent='setFormModalState({modalState: true, type: "register"})') Получить демо доступ
 </template>
 
 <script>
@@ -31,7 +31,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		methods: {
-			...mapActions(['setModalState'])
+			...mapActions(['setFormModalState'])
 		},
 	}
 </script>

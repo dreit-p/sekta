@@ -100,7 +100,7 @@ export default new Vuex.Store({
 		setMenuState (state, payload) {
 			state.appStates.isOpenedMenu = payload;
 		},
-		setModalState (state, modalState) {
+		setFormModalState (state, modalState) {
 			state.appStates.formModal.isOpened = modalState;
 		},
 		setModalType (state, modalType) {
@@ -121,10 +121,10 @@ export default new Vuex.Store({
 			dispatch('lockScroll', payload);
 			commit('setMenuState', payload);
 		},
-		setModalState ({dispatch, commit}, {modalState, type}) {
+		setFormModalState ({dispatch, commit}, {modalState, type}) {
 			if (modalState !== undefined) {
 				dispatch('lockScroll', modalState);
-				commit('setModalState', modalState);
+				commit('setFormModalState', modalState);
 			}
 			if (type !== undefined) {
 				commit('setModalType', type);

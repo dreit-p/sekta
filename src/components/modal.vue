@@ -1,7 +1,7 @@
 <template lang="pug">
 transition(name='fade')
 	section.modal-auth(v-show='$store.state.appStates.formModal.isOpened')
-		.veil(@click='setModalState({modalState: false})')
+		.veil(@click='setFormModalState({modalState: false})')
 		.modal-wrapper
 			.modal-content
 				.text-blocks
@@ -20,7 +20,7 @@ transition(name='fade')
 
 
 				form(:class='{left: formModalType == "register", right: formModalType != "register"}')
-					.close-btn(@click='setModalState({modalState: false})')
+					.close-btn(@click='setFormModalState({modalState: false})')
 
 					transition(name='fade-flip', mode='out-in')
 
@@ -79,7 +79,7 @@ transition(name='fade')
 			}
 		},
 		methods: {
-			...mapActions(['setModalState'])
+			...mapActions(['setFormModalState'])
 		},
 		data () {
 			return {

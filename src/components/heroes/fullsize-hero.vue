@@ -26,7 +26,7 @@ section.fullsize-hero
 			title: String,
 		},
 		methods: {
-			...mapActions(['setModalState'])
+			...mapActions(['setFormModalState'])
 		},
 		computed: {
 		},

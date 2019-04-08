@@ -6,7 +6,7 @@ header.main-header
 
 
 			nav.top
-				router-link(class='logo', title='Sekta school logo', to='/', @click.native='setModalState({modalState: false})')
+				router-link(class='logo', title='Sekta school logo', to='/', @click.native='setFormModalState({modalState: false})')
 					svg-icon(name='logo-sekta')
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
@@ -137,9 +137,9 @@ header.main-header
 				this.setMenuState(!this.isOpenedMenu)
 			},
 			toggleModal () {
-				this.setModalState({modalState: !this.isOpenedModal})
+				this.setFormModalState({modalState: !this.isOpenedModal})
 			},
-			...mapActions(['setMenuState', 'setModalState']),
+			...mapActions(['setMenuState', 'setFormModalState']),
 
 			/*================================
 			=            Dropdown            =
