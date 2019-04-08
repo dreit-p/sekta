@@ -8,7 +8,7 @@
 
 <script>
 export default {
-	name: 'svg-icon',
+	name: 'webp-img',
 
 	props: {
 		src: {
@@ -33,3 +33,9 @@ export default {
 	}
 };
 </script>
+
+<style>
+	img {
+		width: 100%;
+	}
+</style>
