@@ -107,7 +107,7 @@ section
 			&:nth-child(even) {
 				padding-right: 0;
 			}
-			img {
+			picture {
 				width: 100%;
 			}
 			@media screen and (max-width: 810px) {
