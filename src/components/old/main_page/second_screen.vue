@@ -107,6 +107,7 @@ section
 			&:nth-child(even) {
 				padding-right: 0;
 			}
+			img,
 			picture {
 				width: 100%;
 			}
