@@ -8,8 +8,8 @@
 		.tiles(:class='{hidden: isChoseMap}')
 			a.tile(
 				href='#'
-				v-for='(gym, index) in addresses'
-				:class='{checked: gym.states.checked}'
+				v-for='(gym, index) in locations'
+				:class='{checked: selectedIndex == index}'
 				@click.prevent='selectGym(index)'
 			)
 				p.bold {{gym.firstLine}}
@@ -32,14 +32,14 @@
 		.additional-info
 			.links
 				span Не знаете как пройти в зал? 
-				a(href='#', v-if='addresses[selectedIndex].video', @click.prevent='showVideoModal = !showVideoModal') Посмотрите видео
-				span(v-if='addresses[selectedIndex].video && addresses[selectedIndex].description')  или 
-				a(href='#', v-if='addresses[selectedIndex].description', @click.prevent='showDescriptionText = !showDescriptionText') Прочитайте описание 
-			.description-text(v-if='showDescriptionText && addresses[selectedIndex].description') {{addresses[selectedIndex].description}}
+				a(href='#', v-if='locations[selectedIndex].video', @click.prevent='showVideoModal = !showVideoModal') Посмотрите видео
+				span(v-if='locations[selectedIndex].video && locations[selectedIndex].description')  или 
+				a(href='#', v-if='locations[selectedIndex].description', @click.prevent='showDescriptionText = !showDescriptionText') Прочитайте описание 
+			.description-text(v-if='showDescriptionText && locations[selectedIndex].description') {{locations[selectedIndex].description}}
 	transition(name='fade')
-		video-modal(:iframe-link='addresses[selectedIndex].video', v-if='showVideoModal && addresses[selectedIndex].video', @close='showVideoModal = false')
-			p.bold {{addresses[selectedIndex].firstLine}}
-			p {{addresses[selectedIndex].secondLine}}
+		video-modal(:iframe-link='locations[selectedIndex].video', v-if='showVideoModal && locations[selectedIndex].video', @close='showVideoModal = false')
+			p.bold {{locations[selectedIndex].firstLine}}
+			p {{locations[selectedIndex].secondLine}}
 
 
 </template>
@@ -61,7 +61,7 @@
 				type: Number,
 				default: 0
 			},
-			addresses: {
+			locations: {
 				type: Array,
 				default: ()=>[]
 			},
@@ -72,8 +72,8 @@
 			},
 			placemarks () {
 				var marks = [];
-				for (let i = 0; i < this.addresses.length; i++) {
-					let address = this.addresses[i];
+				for (let i = 0; i < this.locations.length; i++) {
+					let address = this.locations[i];
 					var theOne = {
 						coords: address.coords,
 						properties: {
@@ -88,8 +88,8 @@
 						},
 						clusterName: 'gyms',
 						options: {
-							fillColor: this.marksColor(address),
-							iconColor: this.marksColor(address),
+							fillColor: this.marksColor(i),
+							iconColor: this.marksColor(i),
 						},
 						markerType: 'placemark',
 						icon: {layout: 'islands#darkBlueCircleDotIcon',iconContent: i},
@@ -101,18 +101,13 @@
 			},
 		},
 		methods: {
-			marksColor (address) {
-				return address.states.checked ? '#0ab6a1' : '#000'
+			marksColor (index) {
+				return this.selectedIndex == index ? '#0ab6a1' : '#000'
 			},
 			selectGym (index) {
-				this.addresses.forEach(function(address) {
-					if (address.states.checked) {
-						address.states.checked = false;
-					}
-				});
-				this.$emit('change', index);
+				index = +index
+				this.$emit('change', parseInt(this.locations[index].id));
 				this.selectedIndex = index;
-				this.addresses[index].states.checked = true;
 			},
 			initHandler(map) {
 				this.map = map;
@@ -134,7 +129,12 @@
 			}
 		},
 		created () {
-			this.selectGym(this.value);
+			this.locations.some((elem, index)=>{
+				if (elem.id == this.value) {
+					this.selectGym(index);
+					return true;
+				}
+			});
 		},
 		watch: {
 			isShowingMap () {

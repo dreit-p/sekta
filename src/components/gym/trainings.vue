@@ -1,118 +1,78 @@
 <template lang="pug">
-.training-programs
-	.group.limit(v-for='(group, index) in courses')
-		.group-title {{group.groupName}}
+.training-plans
+	.group.limit(v-for='(group, index) in groups')
+		.group-title {{group.name}}
 		.tiles
 			a.tile(
 				href='#'
-				v-for='(course, index) in group.data'
-				:class='{checked: course.states.checked}'
-				@click.prevent='toggleClass($event, course)'
+				v-for='(plan, index) in group.elements'
+				:class='{checked: selectedID == plan.id}'
+				@click.prevent='selectPlan(plan.id)'
 			)
-				.image(:style="{ backgroundImage: `url(' ${require('@/assets/images/'+course.image)} ')`}")
-					.caption {{course.name}}
+				.image(:style="{ backgroundImage: `url(' ${require('@/assets/images/'+plan.image)} ')`}")
+					.caption {{plan.name}}
 				.description
-					.desc-title {{course.title}}
-					.desc-text {{course.description}}
+					.desc-title {{plan.title}}
+					.desc-text {{plan.description}}
 			.tile.fake
 			.tile.fake
 </template>
 
 <script>
 	export default {
-		name: 'gym-location',
-		components: {
+		name: 'training-plans',
+		model: {
+			event: 'change'
+		},
+		props: {
+			value: {
+				type: Number,
+				default: 0
+			},
+			plans: {
+				type: Array,
+				default: ()=>[]
+			},
+		},
+		created () {
+			this.selectPlan(this.value);
 		},
 		computed: {
+			groups () {
+				let groups = {};
+
+				this.plans.forEach(function(elem) {
+					if (!groups[elem.group]) groups[elem.group] = []
+					groups[elem.group].push(elem);
+				});
+
+				let results = Object.keys(groups).map(function(key){
+					let obj = {
+						name: key,
+						elements: groups[key]
+					};
+					return obj;
+				});
+
+				return results;
+			},
 		},
 		methods: {
-			toggleClass(event, course) {
-				course.states.checked = !course.states.checked;
-			}
+			selectPlan(id) {
+				this.$emit('change', parseInt(id));
+				this.selectedID = id;
+			},
 		},
 		data () {
 			return {
-				courses: [
-				{
-					groupName: 'Программы для всех',
-					data: [
-					{
-						name: 'Sektacare',
-						image: 'course_bg-sectamama.jpg',
-						title: 'Основное направление',
-						description: 'Интенсивная тренировочная программа для мужчин с рекомендациями по набору мышечной массы и снижению веса. Доступна онлайн и в залах Москвы и Санкт-Петербурга.',
-						states: {
-							checked: false
-						}
-					},
-					{
-						name: 'SectaLite',
-						image: 'course_bg-sectacare.jpg',
-						title: 'Какой-то еще один заголовок',
-						description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты.',
-						states: {
-							checked: false
-						}
-					},
-					{
-						name: 'Sektacare',
-						image: 'course_bg-sectamama.jpg',
-						title: 'Основное направление',
-						description: 'Интенсивная тренировочная программа для мужчин с рекомендациями по набору мышечной массы и снижению веса. Доступна онлайн и в залах Москвы и Санкт-Петербурга.',
-						states: {
-							checked: false
-						}
-					},
-					{
-						name: 'SectaLite',
-						image: 'course_bg-sectacare.jpg',
-						title: 'Какой-то еще один заголовок',
-						description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты. Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты.',
-						states: {
-							checked: false
-						}
-					},
-					{
-						name: 'SectaMen',
-						image: 'markes-main.jpg',
-						title: 'Только для настоящих мужчин',
-						description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Себя рот маленький, обеспечивает речью имеет, переписали повстречался букв инициал лучше меня которой точках, вопрос большой свою последний журчит это.',
-						states: {
-							checked: false
-						}
-					},
-					]
-				},{
-					groupName: 'Программы для выпускников',
-					data: [
-					{
-						name: 'Sektacare',
-						image: 'course_bg-sectamama.jpg',
-						title: 'Основное направление',
-						description: 'Интенсивная тренировочная программа для мужчин с рекомендациями по набору мышечной массы и снижению веса. Доступна онлайн и в залах Москвы и Санкт-Петербурга.',
-						states: {
-							checked: false
-						}
-					},
-					{
-						name: 'SectaLite',
-						image: 'course_bg-sectacare.jpg',
-						title: 'Какой-то еще один заголовок',
-						description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты.',
-						states: {
-							checked: false
-						}
-					},
-					]
-				},
-				]
+				selectedID: null,
 			}
 		}
 	}
 </script>
 
 <style lang="postcss">
-	.training-programs {
+	.training-plans {
 		.group {
 			overflow: visible;
 			margin-bottom: 50px;
@@ -137,7 +97,6 @@
 			position: relative;
 			max-width: 300px;
 			width: calc(100% /3 - 16px*2);
-			/* height: calc(62vw); */
 			border-radius: 5px;
 			overflow: hidden;
 			display: inline-block;
@@ -153,7 +112,6 @@
 				width: calc(100% /1 - 16px*2) !important;
 				height: auto;
 				max-height: none;
-				/* overflow: visible; */
 				box-shadow: none !important;
 			}
 			&.fake {
