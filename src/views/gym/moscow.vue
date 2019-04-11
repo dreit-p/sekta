@@ -15,7 +15,7 @@ div.gym
 
 	section
 		.section-caption Выберите расположение зала
-		gym-map
+		gym-map(v-model='gym', :addresses='addresses')
 
 
 	section
@@ -74,7 +74,49 @@ div.gym
 			next();
 		},
 		data () {
-			return {}
+			return {
+				gym: 1,
+				addresses: [
+					{
+						id: '1',
+						firstLine: 'м. Кропоткинская',
+						secondLine: 'Малый Власьевский переулок дом 12',
+						video: 'https://www.youtube.com/embed/1L6AaH3rFlQ',
+						coords: [55.746709, 37.593381],
+						states: {
+							checked: true
+						}
+					},{
+						id: '2',
+						firstLine: 'м. Курская',
+						secondLine: 'Нижний Cусальный переулок 5/4',
+						video: 'https://www.youtube.com/embed/9lX1OAsN868',
+						description: 'Спортивную форму, кроссовки для тренинга или бега, банные принадлежности (если в выбранном вами зале есть душ), бутылку с водой. Коврики и нужный инвентарь для тренировок есть в зале.',
+						coords: [55.760201, 37.663889],
+						states: {
+							checked: false
+						}
+					},{
+						id: '3',
+						firstLine: 'м. Сокол',
+						secondLine: 'Ул. Балтийская 9',
+						description: 'Перенос и восстановление тренировок возможен только по медицинской справке или больничному листу. В других форс-мажорных обстоятельствах вопрос переноса решается в индивидуальном порядке.',
+						coords: [55.809176, 37.512955],
+						states: {
+							checked: false
+						}
+					},{
+						id: '4',
+						firstLine: 'м. Бауманская',
+						secondLine: '(Старокирочный переулок,2 )',
+						video: 'https://www.youtube.com/embed/Qb_QlMs5TfU',
+						coords: [55.768522, 37.680490],
+						states: {
+							checked: false
+						}
+					},
+				],
+			}
 		}
 	}
 </script>

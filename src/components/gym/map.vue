@@ -1,16 +1,16 @@
 <template lang="pug">
 .gym-map
 	.selectors
-		a(href='#', @click.prevent='choseMap = !choseMap')
-			span(v-if='!this.choseMap') Посмотреть на карте
-			span(v-if='this.choseMap') Показать список
+		a(href='#', @click.prevent='isChoseMap = !isChoseMap')
+			span(v-if='!this.isChoseMap') Посмотреть на карте
+			span(v-if='this.isChoseMap') Показать список
 	.wrapper.limit
-		.tiles(:class='{hidden: choseMap}')
+		.tiles(:class='{hidden: isChoseMap}')
 			a.tile(
 				href='#'
 				v-for='(gym, index) in addresses'
 				:class='{checked: gym.states.checked}'
-				@click.prevent='gym.states.checked = !gym.states.checked;'
+				@click.prevent='selectGym(index)'
 			)
 				p.bold {{gym.firstLine}}
 				p {{gym.secondLine}}
@@ -28,6 +28,19 @@
 				map-link='https://api-maps.yandex.ru/2.1/?apikey=32d7c971-fea9-41f9-ba2c-5c2aaade6810&lang=ru_RU'
 				@map-was-initialized='initHandler'
 			)
+	.limit
+		.additional-info
+			.links
+				span Не знаете как пройти в зал? 
+				a(href='#', v-if='addresses[selectedIndex].video', @click.prevent='showVideoModal = !showVideoModal') Посмотрите видео
+				span(v-if='addresses[selectedIndex].video && addresses[selectedIndex].description')  или 
+				a(href='#', v-if='addresses[selectedIndex].description', @click.prevent='showDescriptionText = !showDescriptionText') Прочитайте описание 
+			.description-text(v-if='showDescriptionText && addresses[selectedIndex].description') {{addresses[selectedIndex].description}}
+	transition(name='fade')
+		video-modal(:iframe-link='addresses[selectedIndex].video', v-if='showVideoModal && addresses[selectedIndex].video', @close='showVideoModal = false')
+			p.bold {{addresses[selectedIndex].firstLine}}
+			p {{addresses[selectedIndex].secondLine}}
+
 
 </template>
 
@@ -38,10 +51,24 @@
 		components: {
 			yandexMap, ymapMarker,
 			WebpImg: () => import('@/components/webp-img.vue'),
+			VideoModal: () => import('@/components/gym/video-modal.vue'),
+		},
+		model: {
+			event: 'change'
+		},
+		props: {
+			value: {
+				type: Number,
+				default: 0
+			},
+			addresses: {
+				type: Array,
+				default: ()=>[]
+			},
 		},
 		computed: {
 			isShowingMap () {
-				return this.windowWidth >= 700 && this.mounted || this.choseMap
+				return this.windowWidth >= 700 && this.mounted || this.isChoseMap
 			},
 			placemarks () {
 				var marks = [];
@@ -56,7 +83,7 @@
 						},
 						callbacks: {
 							click: () => {
-								address.states.checked = !address.states.checked;
+								this.selectGym(i);
 							}
 						},
 						clusterName: 'gyms',
@@ -76,6 +103,16 @@
 		methods: {
 			marksColor (address) {
 				return address.states.checked ? '#0ab6a1' : '#000'
+			},
+			selectGym (index) {
+				this.addresses.forEach(function(address) {
+					if (address.states.checked) {
+						address.states.checked = false;
+					}
+				});
+				this.$emit('change', index);
+				this.selectedIndex = index;
+				this.addresses[index].states.checked = true;
 			},
 			initHandler(map) {
 				this.map = map;
@@ -97,6 +134,7 @@
 			}
 		},
 		created () {
+			this.selectGym(this.value);
 		},
 		watch: {
 			isShowingMap () {
@@ -119,7 +157,10 @@
 				map: {},
 				mapCreated: false,
 				mounted: false,
-				choseMap: false,
+				isChoseMap: false,
+				showVideoModal: false,
+				showDescriptionText: false,
+				selectedIndex: null,
 				clusterOptions: {
 					gyms: {
 						useMapMargin: true,
@@ -130,41 +171,6 @@
 				},
 				defaultPosition: [55.746726, 37.5911983],
 				windowWidth: window.innerWidth,
-				addresses: [
-					{
-						firstLine: 'м. Кропоткинская',
-						secondLine: 'Малый Власьевский переулок дом 12',
-						video: 'https://www.youtube.com/embed/1L6AaH3rFlQ',
-						coords: [55.746709, 37.593381],
-						states: {
-							checked: false
-						}
-					},{
-						firstLine: 'м. Курская',
-						secondLine: 'Нижний Cусальный переулок 5/4',
-						video: 'https://www.youtube.com/embed/9lX1OAsN868',
-						coords: [55.760201, 37.663889],
-						states: {
-							checked: false
-						}
-					},{
-						firstLine: 'м. Сокол',
-						secondLine: 'Ул. Балтийская 9',
-						video: 'https://www.youtube.com/embed/b1BKJF2V5NE',
-						coords: [55.809176, 37.512955],
-						states: {
-							checked: false
-						}
-					},{
-						firstLine: 'м. Бауманская',
-						secondLine: '(Старокирочный переулок,2 )',
-						video: 'https://www.youtube.com/embed/Qb_QlMs5TfU',
-						coords: [55.768522, 37.680490],
-						states: {
-							checked: false
-						}
-					},
-				],
 			}
 		}
 	}
@@ -205,6 +211,9 @@
 				display: none;
 			}
 		}
+		.video-link {
+			color: black;
+		}
 		.map {
 			position: absolute;
 			top: 0;
@@ -224,7 +233,8 @@
 		.tiles {
 			position: relative;
 			z-index: 1;
-			min-height: 400px;
+			margin: -1px;
+			min-height: 390px;
 			display: inline-flex;
 			flex-direction: column;
 			align-items: stretch;
@@ -278,6 +288,31 @@
 					font-weight: bold;
 				}
 			}
+		}
+		.additional-info {
+			.links {
+				margin: 12px auto;
+				>* {
+					font-size: 18px;
+					font-style: italic;
+					@media (max-width: 700px) {
+						display: block;
+					}
+				}
+				a {
+					font-weight: bold;
+					color: var(--accent_color);
+				}
+			}
+			.description-text {
+				font-size: 15px;
+				margin: 10px *;
+				line-height: 1.47;
+				text-align: left;
+			}
+		}
+		.map *[class*="map-bg"] {
+			background: none;
 		}
 	}
 </style>
