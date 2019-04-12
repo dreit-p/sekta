@@ -19,6 +19,11 @@ div.gym
 
 
 	section
+		.section-caption Фотографии зала
+		photo-gallery(:photos='cityData.photos')
+
+
+	section
 		.section-caption
 			| Запишитесь сейчас
 			.highlight старт занятий – 01 декабря
@@ -63,6 +68,7 @@ div.gym
 		name: 'gym-moscow',
 		components: {
 			EntryForm: () => import('@/components/entry-form.vue'),
+			PhotoGallery: () => import('@/components/gym/photo-gallery.vue'),
 			TrainingPlans: () => import('@/components/gym/trainings.vue'),
 			GymMap: () => import('@/components/gym/map.vue'),
 			GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
@@ -164,6 +170,38 @@ div.gym
 							secondLine: '(Старокирочный переулок,2 )',
 							video: 'https://www.youtube.com/embed/Qb_QlMs5TfU',
 							coords: [55.768522, 37.680490],
+						},
+					],
+					photos: [
+						{
+							file: 'gym-photo-example.jpg',
+							width: '1200',
+							height: '822'
+						},
+						{
+							file: 'gym-photo-example_2.jpg',
+							width: '176',
+							height: '220'
+						},
+						{
+							file: 'gym-photo-example_3.jpg',
+							width: '550',
+							height: '734'
+						},
+						{
+							file: 'gym-photo-example_4.jpg',
+							width: '2000',
+							height: '1124'
+						},
+						{
+							file: 'gym-photo-example_5.jpg',
+							width: '1920',
+							height: '720'
+						},
+						{
+							file: 'gym-photo-example_6.jpg',
+							width: '1600',
+							height: '1065'
 						},
 					],
 				},
