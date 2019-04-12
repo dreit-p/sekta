@@ -19,6 +19,11 @@ div.gym
 
 
 	section
+		.section-caption Выберите количество тренировок
+		training-quantities(v-model='selected.quantityTypeID', :quantityTypes='cityData.quantityTypes')
+
+
+	section
 		.section-caption Фотографии зала
 		photo-gallery(:photos='cityData.photos')
 
@@ -70,6 +75,7 @@ div.gym
 			EntryForm: () => import('@/components/entry-form.vue'),
 			PhotoGallery: () => import('@/components/gym/photo-gallery.vue'),
 			TrainingPlans: () => import('@/components/gym/trainings.vue'),
+			TrainingQuantities: () => import('@/components/gym/quantities.vue'),
 			GymMap: () => import('@/components/gym/map.vue'),
 			GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 		},
@@ -84,6 +90,7 @@ div.gym
 				selected: {
 					gymID: 1,
 					planID: 1,
+					quantityTypeID: 1,
 				},
 				cityData: {
 					plans: [
@@ -142,6 +149,72 @@ div.gym
 							group: 'Программы для выпускников',
 							title: 'Какой-то еще один заголовок',
 							description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты.',
+						},
+					],
+					quantityTypes: [
+						{
+							id: '1',
+							type: '6 тренировок в неделю (утро)',
+							caption: '6500 руб. за месяц',
+							group: 'Групповые занятия',
+							quantity: '6',
+							dayParts: ['am'],
+						},
+						{
+							id: '2',
+							type: '3 тренировок в неделю (утро)',
+							caption: '3900 руб. за месяц',
+							group: 'Групповые занятия',
+							quantity: '3',
+							dayParts: ['am'],
+						},
+						{
+							id: '33',
+							type: '2 тренировок в неделю (утро)',
+							caption: '3000 руб. за месяц',
+							group: 'Групповые занятия',
+							quantity: '2',
+							dayParts: ['am'],
+						},
+						{
+							id: '4',
+							type: '6 тренировок в неделю (вечер)',
+							caption: '7500 руб. за месяц',
+							group: 'Групповые занятия',
+							quantity: '6',
+							dayParts: ['pm'],
+						},
+						{
+							id: '5',
+							type: '3 тренировок в неделю (вечер)',
+							caption: '4900 руб. за месяц',
+							group: 'Групповые занятия',
+							quantity: '3',
+							dayParts: ['pm'],
+						},
+						{
+							id: '6',
+							type: '2 тренировок в неделю (вечер)',
+							caption: '4000 руб. за месяц',
+							group: 'Групповые занятия',
+							quantity: '2',
+							dayParts: ['pm'],
+						},
+						{
+							id: '7',
+							type: 'Дневной абонемент',
+							caption: '2500 руб. за 6 тренировок в месяц',
+							group: 'Абонементы (доступны для выпускников)',
+							quantity: '3',
+							dayParts: ['am', 'pm'],
+						},
+						{
+							id: '8',
+							type: 'Вечерний абонемент',
+							caption: '3000 руб. за 6 тренировок в месяц',
+							group: 'Абонементы (доступны для выпускников)',
+							quantity: '2',
+							dayParts: ['pm'],
 						},
 					],
 					locations: [

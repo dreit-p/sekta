@@ -130,6 +130,7 @@
 				}
 			}
 			.image {
+				background-color: #e6e6e6;
 				height: 100%;
 				width: 100%;
 				transition: background-position .1s, width .1s, box-shadow .2s;
