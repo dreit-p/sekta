@@ -82,7 +82,7 @@ section.photo-gallery
 		.photos {
 			overflow-x: auto;
 			scroll-snap-type: mandatory;
-			scroll-snap-points-x: repeat(300px);
+			scroll-snap-points-x: repeat(100%);
 			scroll-snap-type: x mandatory;
 			margin: 0;
 			.padding {
