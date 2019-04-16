@@ -24,6 +24,11 @@ div.gym
 
 
 	section
+		.section-caption Время занятий
+		time-selector(v-model='selected.timeID', :schedule='cityData.schedule')
+
+
+	section
 		.section-caption Фотографии зала
 		photo-gallery(:photos='cityData.photos')
 
@@ -76,6 +81,7 @@ div.gym
 			PhotoGallery: () => import('@/components/gym/photo-gallery.vue'),
 			TrainingPlans: () => import('@/components/gym/trainings.vue'),
 			TrainingQuantities: () => import('@/components/gym/quantities.vue'),
+			TimeSelector: () => import('@/components/gym/time-selector.vue'),
 			GymMap: () => import('@/components/gym/map.vue'),
 			GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 		},
@@ -91,6 +97,7 @@ div.gym
 					gymID: 1,
 					planID: 1,
 					quantityTypeID: 1,
+					timeID: 1,
 				},
 				cityData: {
 					plans: [
@@ -158,7 +165,6 @@ div.gym
 							caption: '6500 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '6',
-							dayParts: ['am'],
 						},
 						{
 							id: '2',
@@ -166,7 +172,6 @@ div.gym
 							caption: '3900 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '3',
-							dayParts: ['am'],
 						},
 						{
 							id: '33',
@@ -174,7 +179,6 @@ div.gym
 							caption: '3000 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '2',
-							dayParts: ['am'],
 						},
 						{
 							id: '4',
@@ -182,7 +186,6 @@ div.gym
 							caption: '7500 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '6',
-							dayParts: ['pm'],
 						},
 						{
 							id: '5',
@@ -190,7 +193,6 @@ div.gym
 							caption: '4900 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '3',
-							dayParts: ['pm'],
 						},
 						{
 							id: '6',
@@ -198,7 +200,6 @@ div.gym
 							caption: '4000 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '2',
-							dayParts: ['pm'],
 						},
 						{
 							id: '7',
@@ -206,7 +207,6 @@ div.gym
 							caption: '2500 руб. за 6 тренировок в месяц',
 							group: 'Абонементы (доступны для выпускников)',
 							quantity: '3',
-							dayParts: ['am', 'pm'],
 						},
 						{
 							id: '8',
@@ -214,7 +214,6 @@ div.gym
 							caption: '3000 руб. за 6 тренировок в месяц',
 							group: 'Абонементы (доступны для выпускников)',
 							quantity: '2',
-							dayParts: ['pm'],
 						},
 					],
 					locations: [
@@ -275,6 +274,127 @@ div.gym
 							file: 'gym-photo-example_6.jpg',
 							width: '1600',
 							height: '1065'
+						},
+					],
+					schedule: [
+						{
+							id: '1',
+							text: '8:30',
+							row: '1',
+							column: '1',
+							rowspan: 0,
+						},
+						{
+							id: '23',
+							text: '8:30',
+							row: '1',
+							column: '2',
+							rowspan: 0,
+						},
+						{
+							id: '3',
+							text: '8:30',
+							row: '1',
+							column: '3',
+							rowspan: 0,
+						},
+						{
+							id: '4',
+							text: '8:30',
+							row: '1',
+							column: '4',
+							rowspan: 0,
+						},
+						{
+							id: '5',
+							text: '8:30',
+							row: '1',
+							column: '5',
+							rowspan: 0,
+						},
+						{
+							id: '6',
+							text: '10:30 12:00',
+							row: '1',
+							column: '6',
+							rowspan: 2,
+						},
+						{
+							id: '7',
+							text: '10:30',
+							row: '2',
+							column: '1',
+							rowspan: 0,
+						},
+						{
+							id: '8',
+							text: '10:30',
+							row: '2',
+							column: '2',
+							rowspan: 0,
+						},
+						{
+							id: '9',
+							text: '10:30',
+							row: '2',
+							column: '3',
+							rowspan: 0,
+						},
+						{
+							id: '10',
+							text: '10:30',
+							row: '2',
+							column: '4',
+							rowspan: 0,
+						},
+						{
+							id: '11',
+							text: '10:30',
+							row: '2',
+							column: '5',
+							rowspan: 0,
+						},
+						{
+							id: '12',
+							text: '12:00',
+							row: '3',
+							column: '1',
+							rowspan: 0,
+						},
+						{
+							id: '13',
+							text: '12:00',
+							row: '3',
+							column: '2',
+							rowspan: 0,
+						},
+						{
+							id: '14',
+							text: '12:00',
+							row: '3',
+							column: '3',
+							rowspan: 0,
+						},
+						{
+							id: '15',
+							text: '12:00',
+							row: '3',
+							column: '4',
+							rowspan: 0,
+						},
+						{
+							id: '16',
+							text: '12:00',
+							row: '3',
+							column: '5',
+							rowspan: 0,
+						},
+						{
+							id: '16',
+							text: '13:30',
+							row: '3',
+							column: '6',
+							rowspan: 0,
 						},
 					],
 				},

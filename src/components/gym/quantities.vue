@@ -51,7 +51,6 @@
 					};
 					return obj;
 				});
-				console.log(results);
 				return results;
 			},
 		},
