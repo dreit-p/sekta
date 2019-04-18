@@ -1,9 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
+
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+	plugins: [createPersistedState({
+		paths: ['inputs', 'user'],
+	})],
 	state: {
 		appStates: {
 			isOpenedMenu: false,
@@ -68,11 +74,11 @@ export default new Vuex.Store({
 				name: 'Тренировки в зале',
 				subLinks: [
 					{
-						link: '/gym-moscow',
+						link: '/gym/moscow',
 						name: 'Москва'
 					},
 					{
-						link: '/gym-saint-petersburg',
+						link: '/gym/saint-pitersburg',
 						name: 'Санкт-Петербург'
 					}
 				]
@@ -85,13 +91,16 @@ export default new Vuex.Store({
 				link: '/gift-cert',
 				name: 'Подарочный сертификат'
 			}
-		]
+		],
+		user: {
+			location: null,
+		}
 	},
 	mutations: {
 		setMenuState (state, payload) {
 			state.appStates.isOpenedMenu = payload;
 		},
-		setModalState (state, modalState) {
+		setFormModalState (state, modalState) {
 			state.appStates.formModal.isOpened = modalState;
 		},
 		setModalType (state, modalType) {
@@ -102,36 +111,55 @@ export default new Vuex.Store({
 		},
 		setInputData(state, {name, data}) {
 			state.inputs[name] = data;
-		}
+		},
+		setUserInfo(state, {type, data}) {
+			state.user[type] = data;
+		},
 	},
 	actions: {
 		setMenuState ({dispatch, commit}, payload) {
 			dispatch('lockScroll', payload);
 			commit('setMenuState', payload);
 		},
-		setModalState ({dispatch, commit}, {modalState, type}) {
+		setFormModalState ({dispatch, commit}, {modalState, type}) {
 			if (modalState !== undefined) {
 				dispatch('lockScroll', modalState);
-				commit('setModalState', modalState);
+				commit('setFormModalState', modalState);
 			}
 			if (type !== undefined) {
 				commit('setModalType', type);
 			}
 		},
 		lockScroll ({commit}, payload) {
+			let body = document.getElementsByTagName('body')[0];
 			if (payload) {
 				let scrollWidth = window.innerWidth - document.documentElement.clientWidth;
-				document.getElementsByTagName('body')[0].classList.add('scroll-locked');
-				document.getElementsByTagName('body')[0].style.overflowX = 'hidden';
-				document.getElementsByTagName('body')[0].style.overflowY = 'hidden';
-				document.getElementsByTagName('body')[0].style.paddingRight = scrollWidth + 'px';
+				body.classList.add('scroll-locked');
+				body.style.overflowX = 'hidden';
+				body.style.overflowY = 'hidden';
+				body.style.paddingRight = scrollWidth + 'px';
 			} else {
-				document.getElementsByTagName('body')[0].classList.remove('scroll-locked');
-				document.getElementsByTagName('body')[0].style.overflowX = 'auto';
-				document.getElementsByTagName('body')[0].style.overflowY = 'scroll';
-				document.getElementsByTagName('body')[0].style.paddingRight = 0;
+				body.classList.remove('scroll-locked');
+				body.style.overflowX = 'auto';
+				body.style.overflowY = 'scroll';
+				body.style.paddingRight = 0;
 			}
 			commit('setScrollLock', payload);
-		}
-	}
+		},
+		requestIPInfo ({commit}) {
+			return axios
+				.get('https://api.ipgeolocation.io/ipgeo?apiKey=f286a2fe90004550aeadbf0a8ff240d9')
+				.then(response => {
+						// console.log(response);
+						commit('setUserInfo', {type: 'location', data: response.data.state_prov});
+					})
+				.catch(error => console.log(error));
+		},
+		updateUserLocation ({state, dispatch}) {
+			if (!state.user.location) {
+				dispatch('requestIPInfo');
+			}
+			return state.user.location;
+		},
+	},
 })

@@ -14,7 +14,7 @@
 		name='email'
 		type='email')
 
-	button.green-btn(@click.prevent)
+	green-btn(@click.prevent)
 		| Получить ссылку
 </template>
 
@@ -31,7 +31,6 @@
 
 	for (var i = 0; i < globalInputs.names.length; i++) {
 		let name = globalInputs.names[i];
-		console.log(name);
 		globalInputs.list[name] = {
 			get () {
 				return this.$store.state.inputs[name]
@@ -48,6 +47,7 @@
 		name: 'form-recovery',
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		computed: {
 			...globalInputs.list

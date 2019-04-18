@@ -1,13 +1,17 @@
 <template lang="pug">
-section.hero
+section.aside-hero
 	.main
-		.background(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
+		.background
+			.triangle
+				svg(height='500' viewBox='0 0 150 500')
+					polygon.triangle(fill='white' points='0,0 150,250 0,500')
+			.img(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
-				h1.title {{title}}
+				h1.title(v-if='this.title') {{title}}
 				.text
 					slot
-				a.button(@click.prevent='setModalState({modalState: true})') Записаться на обучение
+				slot(name='buttons')
 	.mobile-content
 		.limit
 			.text
@@ -16,7 +20,6 @@ section.hero
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
 	export default {
 		name: 'CoursesHero',
 		components: {
@@ -24,9 +27,6 @@ section.hero
 		props: {
 			image: String,
 			title: String,
-		},
-		methods: {
-			...mapActions(['setModalState'])
 		},
 		computed: {
 		},
@@ -39,12 +39,14 @@ section.hero
 </script>
 
 <style lang="postcss">
-	section.hero {
+	section.aside-hero {
 		.main {
-			height: 500px;
+			min-height: 500px;
 			position: relative;
 			@media (max-width: 1024px) {
-				height: 400px;
+				height: 100vw;
+				min-height: 410px;
+				max-height: 500px;
 			}
 		}
 		.background {
@@ -56,15 +58,34 @@ section.hero
 			position: absolute;
 			top: 0;
 			right: 0;
-			@media (min-width: 1024px) {
+			@media (min-width: 1025px) {
 				width: 50%;
 				background-position: center left;
+			}
+			.img {
+				height: 100%;
+				width: 100%;
+				background-position: center 30%;
+				@media (max-width: 1024px) {
+					background-size: cover;
+				}
+			}
+			.triangle {
+				width: 50%;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 0;
+				@media (max-width: 1024px) {
+					display: none;
+				}
 			}
 		}
 		.content {
 			padding: 30px *;
 			@media (max-width: 1024px) {
 				height: 100%;
+				padding: 10px *;
 				.limit {
 					height: 100%;
 					display: flex;
@@ -75,39 +96,19 @@ section.hero
 			.title {
 				margin: 30px *;
 				font-size: 30px;
-				font-weight: bold;
+				font-weight: 900;
 				text-transform: uppercase;
 				font-family: var(--font-second);
 				text-shadow: 0 0 1em rgba(255, 255, 255, .5);
 			}
 			.text {
 				width: 440px;
-				font-size: 15px;
+				>*{
+					font-size: 15px;
+					line-height: 1.47;
+				}
 				@media (max-width: 1024px) {
 					display: none;
-				}
-			}
-			.button {
-				font: 400 15px/1 var(--font-main);
-				display: inline-block;
-				padding: 12px 20px 13px;
-				border: none;
-				color: #fff;
-				text-align: center;
-				max-width: 300px;
-				margin: 25px 35px;
-				border-radius: 3px;
-				background: #0ab69f;
-				transition: all .3s;
-				@media (max-width: 1024px) {
-					margin: * auto;
-					width: 100%;
-				}
-				&:not(:disabled) {
-					cursor: pointer;
-				}
-				&:hover {
-					background: #078675;
 				}
 			}
 		}
@@ -117,7 +118,10 @@ section.hero
 				display: block;
 			}
 			.text {
-				font-size: 15px;
+				>*{
+					font-size: 15px;
+					line-height: 1.47;
+				}
 				margin: 30px *;
 			}
 		}

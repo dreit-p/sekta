@@ -1,15 +1,17 @@
 <template lang="pug">
 div.course
 
-	courses-hero(image='course_bg-sectacare.jpg', title='Курс #SektaCare')
+	hero(image='course_bg-sectacare.jpg', title='Курс #SektaCare')
 		p В #SEKTACARE мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вы давно не тренировались или только начинаете?
 		p Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
+		template(v-slot:buttons)
+			green-btn(@click.prevent='setFormModalState({modalState: true})') Записаться на обучение
 
 	article.main-content
 		.article-limit
 			.text-typography
-				h2.title.center #SEKTACARE
-				h3.caption.center ДЕМО-ВЕРСИЯ ПРОГРАММЫ #SEKTACARE
+				h3.center #SEKTACARE
+				h4.center ДЕМО-ВЕРСИЯ ПРОГРАММЫ #SEKTACARE
 				p Мечтаете о хорошем результате, но боитесь, что противопоказания сделают прогресс слишком медленным?
 				p На курсе вы проработаете мышцы пресса, спины, ног и ягодиц и всего тела комплексно. Даже при наличии противопоказаний мы подберем упражнения, которые будут воздействовать эффективно.
 				p
@@ -30,7 +32,7 @@ div.course
 				p
 					b Стоимость одной недели обучения: 
 					| 1 350 рублей.
-				h4
+				h5
 					b Особенности программы:
 				ul
 					li индивидуальные рекомендации спортивного врача на основе медицинской анкеты;
@@ -42,16 +44,25 @@ div.course
 					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
 
-	entry-form
+	section
+		.section-caption
+			| Запишитесь сейчас
+			.highlight cтарт в понедельник
+		entry-form
 
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
 	export default {
 		name: 'for-mums',
 		components: {
-			CoursesHero: () => import('@/components/courses/hero.vue'),
-			EntryForm: () => import('@/components/courses/entry-form.vue'),
+			hero: () => import('@/components/heroes/aside-hero.vue'),
+			EntryForm: () => import('@/components/entry-form.vue'),
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
+		},
+		methods: {
+			...mapActions(['setFormModalState'])
 		},
 		data () {
 			return {}

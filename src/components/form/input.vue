@@ -36,11 +36,9 @@ label.app-input(:class='this.$options.name')
 		computed: {
 			computedCaption() {
 				if (this.error) {
-					console.log('error: ', this.error);
 					return this.error
 				} else {
 					if (this.caption) {
-						console.log('caption: ', this.caption);
 						return this.caption
 					}
 				}
@@ -51,9 +49,6 @@ label.app-input(:class='this.$options.name')
 			SvgIcon: () => import('@/components/SvgIcon.vue'),
 		},
 		methods: {
-			// updateData () {
-			// 	this.$emit('input', {name: this.name, data: this.data});
-			// }
 		},
 		$_veeValidate: {
 			// value getter
@@ -67,7 +62,6 @@ label.app-input(:class='this.$options.name')
 		},
 		mounted: function () {
 			// synbc the input to the initial value
-			console.log(this.$refs[this.name]);
 			this.$refs[this.name].value = this.value;
 		}
 	}
@@ -118,7 +112,6 @@ label.app-input(:class='this.$options.name')
 			}
 		}
 		.icon {
-			/* display: none; */
 			position: absolute;
 			top: 0;
 			bottom: 0;

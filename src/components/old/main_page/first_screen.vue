@@ -14,8 +14,8 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 					li под чутким контролем кураторов;
 					li с поддержкой единомышленников.
 				p
-					a.button.button_header(href='https://vk.com/away.php?utf=1&to=https%3A%2F%2Faccount.sektaschool.ru%2F%2Fregistration.php%3Futm_source%3Dsite%26utm_medium%3Dmain%26utm_campaign%3Dregistration%26utm_term%3D27.06.2018%26utm_content%3Dfirstbutton', style='color: #fff;', target='_blank',
-					@click.prevent='setModalState({modalState: true, type: "register"})') Получить демо доступ
+					green-btn(href='https://vk.com/away.php?utf=1&to=https%3A%2F%2Faccount.sektaschool.ru%2F%2Fregistration.php%3Futm_source%3Dsite%26utm_medium%3Dmain%26utm_campaign%3Dregistration%26utm_term%3D27.06.2018%26utm_content%3Dfirstbutton', style='color: #fff;', target='_blank',
+					@click.prevent='setFormModalState({modalState: true, type: "register"})') Получить демо доступ
 </template>
 
 <script>
@@ -27,8 +27,11 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			return {
 			};
 		},
+		components: {
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
+		},
 		methods: {
-			...mapActions(['setModalState'])
+			...mapActions(['setFormModalState'])
 		},
 	}
 </script>
@@ -46,9 +49,9 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			text-transform: uppercase;
 			padding-right: 20px;
 			font-family: var(--font-second);
-			font-weight: 700;
-			line-height: 36px;
-			letter-spacing: .25px;
+			font-weight: 900;
+			line-height: 1.33;
+			letter-spacing: .3px;
 			margin: 0;
 		}
 		&__container {
@@ -156,10 +159,11 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			}
 	}
 
-	@media (max-width: 767px) {
+	@media (max-width: 650px) {
 		.first-screen.main {
 			background-image: url(~@/assets/images/first_screen-bg_small.jpg) !important;
 			height: 148vw !important;
+			max-height: 700px;
 			position: relative;
 			& .first-screen__container {
 				position: absolute;
@@ -210,6 +214,12 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 			width: 450px;
 			margin: 25px 0;
 			padding: 0;
+			ul {
+				font-size: 14px;
+				li {
+					margin: 10px *;
+				}
+			}
 		}
 
 		.first-screen__header {
@@ -234,26 +244,11 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		margin: * auto;
 	}
 
-	.button {
-		font: 400 15px/1 var(--font-main);
-		display: inline-block;
-		padding: 12px 20px 13px;
-		border: none;
-		color: #fff;
-		border-radius: 3px;
-		background: #0ab69f;
-		transition: all .3s;
-		&_header {
-			margin: 20px 0;
-		}
-		&:not(:disabled) {
-			cursor: pointer;
-		}
-		&:hover {
-			background: #078675;
-		}
+	.green-btn {
+		margin: 20px 0;
 		@media (max-width: 425px) {
 			width: 100%;
+			max-width: none;
 			text-align: center;
 		}
 	}

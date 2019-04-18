@@ -6,7 +6,7 @@ header.main-header
 
 
 			nav.top
-				router-link(class='logo', title='Sekta school logo', to='/')
+				router-link(class='logo', title='Sekta school logo', to='/', @click.native='setFormModalState({modalState: false})')
 					svg-icon(name='logo-sekta')
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
@@ -47,6 +47,7 @@ header.main-header
 			@enter='dropdownEnter'
 			@after-enter='setHeightForDropdown'
 			@leave='dropdownLeave'
+			:css='false'
 		)
 			.sub-links.outside(v-if='showSubLinks', @mouseenter='clearDropdownTimer', @mouseleave='setDropdownTimer')
 				.limit
@@ -68,6 +69,7 @@ header.main-header
 			@before-enter='menuBeforeEnter'
 			@enter='menuEnter'
 			@leave='menuLeave'
+			:css='false'
 		)
 			nav.mobile-menu(v-if='isOpenedMenu')
 				ul.additional-links(v-if='additionalLinks.length > 0')
@@ -94,7 +96,7 @@ header.main-header
 								a.animated-underline {{ subLink.name }}
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
-							router-link(tag='li', class='link', :key='`mainLink-${index}`', :to='link.link', :data-index="index")
+							router-link(tag='li', class='link', :key='`mainLink-${index}`', :to='link.link', :data-index='index', @click.native='setMenuState(false)')
 								a.animated-underline {{ link.name }}
 </template>
 
@@ -135,9 +137,9 @@ header.main-header
 				this.setMenuState(!this.isOpenedMenu)
 			},
 			toggleModal () {
-				this.setModalState({modalState: !this.isOpenedModal})
+				this.setFormModalState({modalState: !this.isOpenedModal})
 			},
-			...mapActions(['setMenuState', 'setModalState']),
+			...mapActions(['setMenuState', 'setFormModalState']),
 
 			/*================================
 			=            Dropdown            =
@@ -163,6 +165,7 @@ header.main-header
 					this.clearDropdownTimer();
 				}
 				this.showSubLinks = type;
+				this.setOutsideClickListener();
 			},
 
 			theHighestElement: function (elem) {
@@ -260,9 +263,29 @@ header.main-header
 							complete: done
 						} )
 				});
-			}
+			},
 
 			/*=====  End of Menu animation  ======*/
+
+			setOutsideClickListener: function () {
+
+				let app = document.getElementById('app');
+
+				let theTarget = app.querySelector('header.main-header');
+
+				app.removeEventListener('mouseup', task, false);
+
+				let task = (e)=>{
+
+					if (!theTarget.contains(e.target) && this.showSubLinks != false) {
+							this.showSubLinks = false;
+							e.target.removeEventListener('mouseup', task, false)
+					}
+
+				}
+
+				app.addEventListener('mouseup', task, false);
+			}
 
 		}
 	}
@@ -399,7 +422,7 @@ header.main-header
 		display: block;
 		list-style: none;
 		font-family: var(--font-second);
-		font-size: 18px;
+		font-size: 16px;
 		display: flex;
 		flex-wrap: wrap;
 		margin-left: -15px;

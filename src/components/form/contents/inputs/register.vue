@@ -94,7 +94,7 @@
 		v-model.trim='spamAgree'
 	) Хочу получать информационные письма
 
-	button.green-btn(@click.prevent)
+	green-btn(@click.prevent)
 		| Далее
 </template>
 <script>
@@ -110,7 +110,6 @@
 
 	for (var i = 0; i < globalInputs.names.length; i++) {
 		let name = globalInputs.names[i];
-		console.log(name);
 		globalInputs.list[name] = {
 			get () {
 				return this.$store.state.inputs[name]
@@ -128,6 +127,7 @@
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
 			AppCheckbox: () => import('@/components/form/checkbox.vue'),
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		computed: {
 			...globalInputs.list

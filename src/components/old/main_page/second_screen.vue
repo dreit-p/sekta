@@ -12,7 +12,7 @@ section
 					| Задача «Школы идеального тела» — подобрать для каждого идеальную формулу, подходящую именно его образу жизни. То есть научить вас привычкам, которые будут строить ваше идеальное тело, — то, о котором вы всегда мечтали.
 				p.copyright © Ольга Маркес
 			.col50
-				img(src='@/assets/images/markes-main.jpg' alt='')
+				webp-img(src='markes-main.jpg' alt='Olga Markes')
 		.here_you_will_find
 			h2.direct-speech__title здесь вы найдете
 			.here_you_will_find__conteiner
@@ -53,7 +53,8 @@ section
 				.bot_part
 					p.start Старт: каждый понедельник
 					p.for_button
-						a.button.button_header(href='/online' style='color: #fff;') Выбрать курс
+						router-link(title='Выбрать курс', to='/online-courses')
+							green-btn Выбрать курс
 			.text_program__item
 				p.tit Тренировки в зале
 				p
@@ -67,7 +68,8 @@ section
 				.bot_part
 					p.start Старт 04 марта
 					p.for_button
-						a.button.button_header(href='/gym/' style='color: #fff;') Посмотреть расписание
+						router-link(title='Посмотреть расписание', to='/gym/')
+							green-btn Посмотреть расписание
 
 </template>
 
@@ -75,6 +77,8 @@ section
 	export default {
 		name: 'second_screen',
 		components: {
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
+			WebpImg: () => import('@/components/webp-img.vue'),
 		},
 		data () {
 			return {}
@@ -103,7 +107,8 @@ section
 			&:nth-child(even) {
 				padding-right: 0;
 			}
-			img {
+			img,
+			picture {
 				width: 100%;
 			}
 			@media screen and (max-width: 810px) {
@@ -122,11 +127,11 @@ section
 				transform: rotate(180deg);
 				float: left;
 				font-family: var(--font-second);
-				color: #e0e0e0;
-				font-size: 100px;
+				color: #eaeaea;
+				font-size: 86px;
 				text-transform: uppercase;
 				line-height: 0;
-				font-weight: 700;
+				font-weight: 900;
 				left: 0;
 				writing-mode: tb-rl;
 				margin: 0 47px 0 55px;
@@ -201,6 +206,8 @@ section
 			width: 30%;
 			position: relative;
 			margin-top: 70px;
+			font-size: 15px;
+			line-height: 1.33;
 			.caption {
 				font-weight: bold;
 				margin-bottom: 5px;
@@ -209,7 +216,7 @@ section
 			.num_bg {
 				float: left;
 				font-family: var(--font-second);
-				color: #eaeaea;
+				color: #f3f3f3;
 				font-size: 200px;
 				text-transform: uppercase;
 				line-height: 0;
@@ -267,7 +274,7 @@ section
 		&__item {
 			width: 48%;
 			background: #e8e8e8;
-			padding: 30px 55px 150px 50px;
+			padding: 30px 55px 12em 50px;
 			position: relative;
 			@media (max-width: 768px) {
 				width: 100%;
@@ -296,7 +303,7 @@ section
 			}
 			.bot_part {
 				position: absolute;
-				bottom: 2.5em;
+				bottom: 2em;
 				width: calc(100% - 105px);
 				@media screen and (max-width: 768px) {
 					position: static;
@@ -319,23 +326,7 @@ section
 		}
 	}
 
-	.button {
-		font: 400 15px/1 var(--font-main);
-		display: inline-block;
-		padding: 12px 20px 13px;
-		border: none;
-		color: #fff;
-		border-radius: 3px;
-		background: #0ab69f;
-		transition: all .3s;
-		&_header {
-			margin: 20px 0;
-		}
-		&:not(:disabled) {
-			cursor: pointer;
-		}
-		&:hover {
-			background: #078675;
-		}
+	.green-btn {
+		margin: 20px 0;
 	}
 </style>

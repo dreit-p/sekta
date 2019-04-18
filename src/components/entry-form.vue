@@ -1,22 +1,21 @@
 <template lang="pug">
-section.entry-form
-	.limit.header
-		.title Запишитесь сейчас
-		.caption cтарт в понедельник
+.entry-form
 	.wrapper.clearfix
 		.half.with-bg
+			img(class='background', src='@/assets/images/markes-bg_teal.jpg')
 			.text-blocks
 				// Login
 
-				texts-login(v-if='entryFormType == "login"')
+				transition(name='fade-flip', mode='out-in')
 
-				texts-recovery(v-if='entryFormType == "recovery"')
+					texts-login(v-if='entryFormType == "login"')
 
-				texts-register(v-if='entryFormType == "register"')
+					texts-recovery(v-if='entryFormType == "recovery"')
+
+					texts-register(v-if='entryFormType == "register"')
 
 		.half
 			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
-				.close-btn(@click='setModalState({modalState: false})')
 
 				transition(name='fade-flip', mode='out-in')
 
@@ -29,7 +28,6 @@ section.entry-form
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
 
 	/*========================================
 	=            define the forms            =
@@ -68,6 +66,7 @@ section.entry-form
 		},
 		data () {
 			return {
+				backgroundImage: require('@/assets/images/markes-bg_teal.jpg'),
 				entryFormType: 'register',
 				firstname: '',
 				lastname: '',
@@ -81,7 +80,7 @@ section.entry-form
 			}
 		},
 		methods: {
-			setModalState(data) {
+			setFormModalState(data) {
 				return this.entryFormType = data.type;
 			},
 		},
@@ -89,26 +88,7 @@ section.entry-form
 </script>
 
 <style lang="postcss">
-	section.entry-form {
-		.header {
-			padding: 6px 0;
-			.title {
-				font-family: var(--font-second);
-				font-size: 26px;
-				margin: 8px;
-				font-weight: bold;
-				text-align: center;
-				letter-spacing: 0.3px;
-			}
-			.caption {
-				font-family: var(--font-second);
-				font-size: 22px;
-				font-weight: bold;
-				color: var(--accent_color);
-				margin: 8px;
-				text-align: center;
-			}
-		}
+	section > .entry-form {
 
 		/*====================================
 		=            Construction            =
@@ -156,13 +136,13 @@ section.entry-form
 					padding: 19px 40px 19px 20px;
 					p.heavy-text {
 						line-height: 1;
-						font-size: 24px;
+						font-size: 20px;
 						font-family: var(--font-second);
 						font-weight: bold;
 						margin: 13px 0;
 					}
 					p {
-						font-size: 15px;
+						font-size: 16px;
 						margin: 0;
 						line-height: 1.5;
 					}
@@ -205,38 +185,24 @@ section.entry-form
 
 				&.with-bg {
 					color: white;
+					overflow: hidden;
 					background: linear-gradient(to right, rgb(38, 70, 65) 25%, transparent, rgb(97, 147, 139) 75%);
 					background-position: center center;
 					background-repeat: no-repeat;
 					position: relative;
-					@media (max-width: 1000px) {
-						background: linear-gradient(to right, rgb(38, 70, 65), transparent, rgb(97, 147, 139));
-					}
 					@media (min-width: 1800px) {
-						background: linear-gradient(to right, rgb(38, 70, 65) 35%, transparent, rgb(97, 147, 139) 65%);
+						background: linear-gradient(to right, rgb(38, 70, 65) 49%, transparent, rgb(97, 147, 139) 51%);
 					}
-					&:before {
-						display: block;
-						content: "";
-						height: 100%;
-						width: 100%;
-						background-image: url(~@/assets/images/markes-bg_teal.jpg);
-						background-position: center center;
-						background-repeat: no-repeat;
-						background-size: cover;
+					img.background {
 						position: absolute;
 						top: 0;
 						bottom: 0;
+						left: 50%;
+						transform: translateX(-50%);
 						right: 0;
-						left: 0;
-						margin: auto;
-						@media (max-width: 700px) {
-							z-index: -1;
-							position: absolute;
-						}
-						@media (max-width: 1300px) {
-							background-size: cover;
-						}
+						height: 100%;
+						max-width: unset;
+						width: auto;
 					}
 				}
 
@@ -253,6 +219,7 @@ section.entry-form
 							display: flex;
 							align-items: baseline;
 							font-family: var(--font-second);
+							font-size: 16px;
 							line-height: 1.5;
 							cursor: pointer;
 							.svg-icon {
@@ -275,12 +242,15 @@ section.entry-form
 					.close-btn {
 						display: none;
 					}
-					a {
+					a:not(.green-btn) {
 						color: var(--accent_color);
 						font-size: 12px;
 						line-height: 2;
 						display: inline-block;
 						margin: 5px *;
+					}
+					.green-btn {
+						display: block;
 					}
 					.content {
 						padding: 19px 40px 19px 20px;

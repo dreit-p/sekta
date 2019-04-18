@@ -1,7 +1,7 @@
 <template lang="pug">
 transition(name='fade')
 	section.modal-auth(v-show='$store.state.appStates.formModal.isOpened')
-		.veil(@click='setModalState({modalState: false})')
+		.veil(@click='setFormModalState({modalState: false})')
 		.modal-wrapper
 			.modal-content
 				.text-blocks
@@ -20,7 +20,7 @@ transition(name='fade')
 
 
 				form(:class='{left: formModalType == "register", right: formModalType != "register"}')
-					.close-btn(@click='setModalState({modalState: false})')
+					.close-btn(@click='setFormModalState({modalState: false})')
 
 					transition(name='fade-flip', mode='out-in')
 
@@ -79,7 +79,7 @@ transition(name='fade')
 			}
 		},
 		methods: {
-			...mapActions(['setModalState'])
+			...mapActions(['setFormModalState'])
 		},
 		data () {
 			return {
@@ -154,7 +154,7 @@ transition(name='fade')
 		.content {
 			p.heavy-text {
 				line-height: 1;
-				font-size: 24px;
+				font-size: 20px;
 				font-family: var(--font-second);
 				font-weight: bold;
 				margin: 13px 0;
@@ -267,6 +267,7 @@ transition(name='fade')
 						display: flex;
 						align-items: baseline;
 						font-family: var(--font-second);
+						font-size: 14px;
 						line-height: 1.5;
 						cursor: pointer;
 						.svg-icon {
@@ -370,27 +371,25 @@ transition(name='fade')
 			}
 		}
 	}
-}
-
-.green-btn {
-	background-color: var(--accent_color);
-	color: white;
-	width: 100%;
-	margin: 10px auto;
-	cursor: pointer;
-	font-size: 16px;
-	line-height: 1.5;
-	font-family: var(--font-main);
-	padding: 13px;
-	text-align: center;
-	display: block;
-	max-width: 200px;
-	border: 1px solid var(--accent_color);
-	transition: color .3s, background-color .3s;
-	&:hover {
-		background-color: white;
-		transition-duration: .1s;
-		color: var(--accent_color);
+	.green-btn {
+		color: white;
+		width: 100%;
+		margin: 20px auto;
+		cursor: pointer;
+		font-size: 16px;
+		line-height: 1.5;
+		padding: 13px;
+		text-align: center;
+		display: block;
+		max-width: 200px;
+		border: 1px solid var(--accent_color);
+		transition: color .3s, background-color .3s;
+		&:hover {
+			background-color: white;
+			transition-duration: .1s;
+			color: var(--accent_color);
+		}
 	}
 }
+
 </style>
