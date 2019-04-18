@@ -24,6 +24,11 @@ div.gym
 
 
 	section
+		.section-caption Время занятий
+		time-selector(v-model='selected.timeIDs', :schedule='cityData.schedule', :certificateDays='getCertificateData("available_days")', :bracketing='+getCertificateData("quantity")')
+
+
+	section
 		.section-caption Фотографии зала
 		photo-gallery(:photos='cityData.photos')
 
@@ -76,6 +81,7 @@ div.gym
 			PhotoGallery: () => import('@/components/gym/photo-gallery.vue'),
 			TrainingPlans: () => import('@/components/gym/trainings.vue'),
 			TrainingQuantities: () => import('@/components/gym/quantities.vue'),
+			TimeSelector: () => import('@/components/gym/time-selector.vue'),
 			GymMap: () => import('@/components/gym/map.vue'),
 			GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 		},
@@ -85,12 +91,24 @@ div.gym
 			}
 			next();
 		},
+		computed: {
+		},
+		methods: {
+			getCertificateData (dataType) {
+				for (var i = 0; i < this.cityData.quantityTypes.length; i++) {
+					if (+this.cityData.quantityTypes[i].id == +this.selected.quantityTypeID) {
+						return this.cityData.quantityTypes[i][dataType]
+					}
+				}
+			},
+		},
 		data () {
 			return {
 				selected: {
 					gymID: 1,
 					planID: 1,
 					quantityTypeID: 1,
+					timeIDs: [],
 				},
 				cityData: {
 					plans: [
@@ -158,7 +176,7 @@ div.gym
 							caption: '6500 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '6',
-							dayParts: ['am'],
+							available_days: [1,2,3,4,5,6,7,10,13,15],
 						},
 						{
 							id: '2',
@@ -166,7 +184,7 @@ div.gym
 							caption: '3900 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '3',
-							dayParts: ['am'],
+							available_days: [1,3,5,6,7,8,9,11,15],
 						},
 						{
 							id: '33',
@@ -174,31 +192,31 @@ div.gym
 							caption: '3000 руб. за месяц',
 							group: 'Групповые занятия',
 							quantity: '2',
-							dayParts: ['am'],
+							available_days: [3,5,6,8,9,11,15],
 						},
 						{
 							id: '4',
-							type: '6 тренировок в неделю (вечер)',
+							type: '5 тренировок в неделю (вечер)',
 							caption: '7500 руб. за месяц',
 							group: 'Групповые занятия',
-							quantity: '6',
-							dayParts: ['pm'],
+							quantity: '5',
+							available_days: [1,5,8,13,15,16],
 						},
 						{
 							id: '5',
-							type: '3 тренировок в неделю (вечер)',
+							type: '4 тренировок в неделю (вечер)',
 							caption: '4900 руб. за месяц',
 							group: 'Групповые занятия',
-							quantity: '3',
-							dayParts: ['pm'],
+							quantity: '4',
+							available_days: [1,5,8,13,15,16],
 						},
 						{
 							id: '6',
-							type: '2 тренировок в неделю (вечер)',
+							type: '1 тренировка в неделю (вечер)',
 							caption: '4000 руб. за месяц',
 							group: 'Групповые занятия',
-							quantity: '2',
-							dayParts: ['pm'],
+							quantity: '1',
+							available_days: [1,5,8,13,15,16],
 						},
 						{
 							id: '7',
@@ -206,7 +224,7 @@ div.gym
 							caption: '2500 руб. за 6 тренировок в месяц',
 							group: 'Абонементы (доступны для выпускников)',
 							quantity: '3',
-							dayParts: ['am', 'pm'],
+							available_days: [1,5,8,13,15,16],
 						},
 						{
 							id: '8',
@@ -214,7 +232,7 @@ div.gym
 							caption: '3000 руб. за 6 тренировок в месяц',
 							group: 'Абонементы (доступны для выпускников)',
 							quantity: '2',
-							dayParts: ['pm'],
+							available_days: [1,5,8,13,15,16],
 						},
 					],
 					locations: [
@@ -275,6 +293,144 @@ div.gym
 							file: 'gym-photo-example_6.jpg',
 							width: '1600',
 							height: '1065'
+						},
+					],
+					schedule: [
+						{
+							id: '1',
+							text: '8:30',
+							row: '1',
+							column: '1',
+							rowspan: 0,
+							available_days: [1,2,3,4,5,6],
+						},
+						{
+							id: '2',
+							text: '8:30',
+							row: '1',
+							column: '2',
+							rowspan: 0,
+							available_days: [1,2,3,4,5,6],
+						},
+						{
+							id: '3',
+							text: '8:30',
+							row: '1',
+							column: '3',
+							rowspan: 0,
+							available_days: [1,2,3,4,5,6],
+						},
+						{
+							id: '4',
+							text: '8:30',
+							row: '1',
+							column: '4',
+							rowspan: 0,
+							available_days: [1,2,3,4,5,6],
+						},
+						{
+							id: '5',
+							text: '8:30',
+							row: '1',
+							column: '5',
+							rowspan: 0,
+							available_days: [1,2,3,4,5,6],
+						},
+						{
+							id: '6',
+							text: '8:30 10:30',
+							row: '1',
+							column: '6',
+							rowspan: 2,
+							available_days: [1,2,3,4,5,6],
+						},
+						{
+							id: '7',
+							text: '10:30',
+							row: '2',
+							column: '1',
+							rowspan: 0,
+							available_days: [6,7,8,9,10,11],
+						},
+						{
+							id: '8',
+							text: '10:30',
+							row: '2',
+							column: '2',
+							rowspan: 0,
+							available_days: [6,7,8,9,10,11],
+						},
+						{
+							id: '9',
+							text: '10:30',
+							row: '2',
+							column: '3',
+							rowspan: 0,
+							available_days: [6,7,8,9,10,11],
+						},
+						{
+							id: '10',
+							text: '10:30',
+							row: '2',
+							column: '4',
+							rowspan: 0,
+							available_days: [6,7,8,9,10,11],
+						},
+						{
+							id: '11',
+							text: '10:30',
+							row: '2',
+							column: '5',
+							rowspan: 0,
+							available_days: [6,7,8,9,10,11],
+						},
+						{
+							id: '12',
+							text: '12:00',
+							row: '3',
+							column: '1',
+							rowspan: 0,
+							available_days: [12,13,14,15,16,17],
+						},
+						{
+							id: '13',
+							text: '12:00',
+							row: '3',
+							column: '2',
+							rowspan: 0,
+							available_days: [12,13,14,15,16,17],
+						},
+						{
+							id: '14',
+							text: '12:00',
+							row: '3',
+							column: '3',
+							rowspan: 0,
+							available_days: [12,13,14,15,16,17],
+						},
+						{
+							id: '15',
+							text: '12:00',
+							row: '3',
+							column: '4',
+							rowspan: 0,
+							available_days: [12,13,14,15,16,17],
+						},
+						{
+							id: '16',
+							text: '12:00',
+							row: '3',
+							column: '5',
+							rowspan: 0,
+							available_days: [12,13,14,15,16,17],
+						},
+						{
+							id: '17',
+							text: '12:00',
+							row: '3',
+							column: '6',
+							rowspan: 0,
+							available_days: [12,13,14,15,16,17],
 						},
 					],
 				},

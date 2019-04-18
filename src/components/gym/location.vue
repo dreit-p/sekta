@@ -17,7 +17,7 @@ div.location
 			| К сожалению, тренировки в зале сейчас доступны только в Москве и Санкт-Петербурге. Вы можете записаться на онлайн-курс — его прошли 101 000 человек.
 		.btns
 			router-link(title='Страница онлайн курсов', to='/online-courses')
-				green-btn Онлайн курсы
+				green-btn На страницу онлайн-курсов
 
 
 	template(v-if='location == "Moscow"')
@@ -94,9 +94,10 @@ div.location
 		}
 		.green-btn {
 			margin: 0;
-			font-size: 22px;
+			font-size: 18px;
 			line-height: 0.9;
 			width: 100%;
+			max-width: 300px;
 			padding: 14px 20px 15px;
 		}
 		.link {
