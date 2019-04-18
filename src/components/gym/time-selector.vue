@@ -7,11 +7,11 @@
 			.day(v-for='name in daysNames') {{name}}
 			.tile(
 				v-for='(tile, index) in schedule'
-				:class='{odd: tile.column % 2, hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index)}'
+				:class='{odd: tile.column % 2, hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index), checked: selectedIDs.includes(+tile.id)}'
 				:style='{gridRow: tile.rowspan > 0 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tile.column }'
 				@mouseenter='hoverTiles(index)'
 				@mouseleave='hoveredIDs = []'
-				@click='checkTile(tile)'
+				@click='selectPlan()'
 			) {{tile.text}}
 
 </template>
@@ -24,8 +24,8 @@
 		},
 		props: {
 			value: {
-				type: Number,
-				default: 0
+				type: Array,
+				default: ()=>[]
 			},
 			schedule: {
 				type: Array,
@@ -41,11 +41,23 @@
 			},
 		},
 		created () {
-			this.selectPlan(this.value);
+			// this.selectPlan(this.value);
+		},
+		watch: {
+			certificateDays: function () {
+				this.resetTableStates();
+			},
+			bracketing: function () {
+				this.resetTableStates();
+			},
 		},
 		computed: {
 		},
 		methods: {
+			resetTableStates () {
+				this.hoveredIDs = [];
+				this.selectedIDs = [];
+			},
 			hoverTiles(index) {
 
 				let tile = this.schedule[index];
@@ -126,9 +138,9 @@
 				console.log(this.hoveredIDs);
 				console.log(this.hoveredIDs.includes(+tile.id));
 			},
-			selectPlan(id) {
-				this.$emit('change', parseInt(id));
-				this.selectedID = id;
+			selectPlan() {
+				this.$emit('change', this.hoveredIDs);
+				this.selectedIDs = this.hoveredIDs;
 			},
 		},
 		data () {
@@ -185,14 +197,18 @@
 			}
 			&.hovered {
 				transition-duration: .1s;
-				box-shadow: inset 0 0 0 5px var(--accent_color);
+				box-shadow: inset 0 0 0 3px var(--accent_color);
+			}
+			&.checked.hovered {
+				box-shadow: inset 0 0 0 3px color(var(--accent_color) shade(10%));
+				background-color: color(var(--accent_color) blend(#e6e6e6 30%)) !important;
 			}
 			&.available.odd {
 				background-color: #d1d1d1;
 			}
 			&.checked {
-				background-color: var(--accent_color);
-				color: white;
+				background-color: var(--accent_color) !important;
+				color: white !important;
 			}
 		}
 	}

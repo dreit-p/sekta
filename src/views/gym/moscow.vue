@@ -25,7 +25,7 @@ div.gym
 
 	section
 		.section-caption Время занятий
-		time-selector(v-model='selected.timeID', :schedule='cityData.schedule', :certificateDays='getCertificateData("available_days")', :bracketing='+getCertificateData("quantity")')
+		time-selector(v-model='selected.timeIDs', :schedule='cityData.schedule', :certificateDays='getCertificateData("available_days")', :bracketing='+getCertificateData("quantity")')
 
 
 	section
@@ -108,7 +108,7 @@ div.gym
 					gymID: 1,
 					planID: 1,
 					quantityTypeID: 1,
-					timeID: 1,
+					timeIDs: [],
 				},
 				cityData: {
 					plans: [
@@ -338,7 +338,7 @@ div.gym
 						},
 						{
 							id: '6',
-							text: '10:30 12:00',
+							text: '8:30 10:30',
 							row: '1',
 							column: '6',
 							rowspan: 2,
@@ -426,7 +426,7 @@ div.gym
 						},
 						{
 							id: '17',
-							text: '13:30',
+							text: '12:00',
 							row: '3',
 							column: '6',
 							rowspan: 0,
