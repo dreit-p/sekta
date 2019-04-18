@@ -7,7 +7,7 @@
 			.day(v-for='name in daysNames') {{name}}
 			.tile(
 				v-for='(tile, index) in schedule'
-				:class='{odd: tile.column % 2, hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index), checked: selectedIDs.includes(+tile.id)}'
+				:class='{hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index), checked: selectedIDs.includes(+tile.id)}'
 				:style='{gridRow: tile.rowspan > 0 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tile.column }'
 				@mouseenter='hoverTiles(index)'
 				@mouseleave='hoveredIDs = []'
@@ -41,7 +41,6 @@
 			},
 		},
 		created () {
-			// this.selectPlan(this.value);
 		},
 		watch: {
 			certificateDays: function () {
@@ -133,11 +132,6 @@
 				});
 				return IDs
 			},
-			checkTile (tile) {
-				console.log(tile.id);
-				console.log(this.hoveredIDs);
-				console.log(this.hoveredIDs.includes(+tile.id));
-			},
 			selectPlan() {
 				this.$emit('change', this.hoveredIDs);
 				this.selectedIDs = this.hoveredIDs;
@@ -202,9 +196,6 @@
 			&.checked.hovered {
 				box-shadow: inset 0 0 0 3px color(var(--accent_color) shade(10%));
 				background-color: color(var(--accent_color) blend(#e6e6e6 30%)) !important;
-			}
-			&.available.odd {
-				background-color: #d1d1d1;
 			}
 			&.checked {
 				background-color: var(--accent_color) !important;

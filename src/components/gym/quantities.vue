@@ -125,20 +125,20 @@
 			.description {
 				padding: 25px;
 				.desc-title {
-					font-size: 20px;
+					font-size: 16px;
 					letter-spacing: 0.0125rem;
 				}
 				.desc-caption {
-					font-size: 18px;
+					font-size: 16px;
 					font-weight: bold;
 				}
 				@media (max-width: 500px) {
 					padding: 20px;
 					.desc-title {
-						font-size: 15px;
+						font-size: 13px;
 					}
 					.desc-caption {
-						font-size: 14px;
+						font-size: 13px;
 						letter-spacing: 0.00625rem;
 						font-weight: bold;
 					}

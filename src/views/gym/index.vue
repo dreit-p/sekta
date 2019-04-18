@@ -1,7 +1,7 @@
 <template lang="pug">
 div.course
 
-	courses-hero(class='dark', image='gym_bg.jpg', title='Что такое курс #sekta в зале?')
+	courses-hero(class='dark', image='gym_bg.jpg', title='Курс #sekta в зале')
 		template(v-slot:default)
 			ul
 				li 4 недели разнообразных тренировок от 2 до 6 раз в неделю;
@@ -54,7 +54,6 @@ div.course
 		components: {
 			CoursesHero: () => import('@/components/heroes/fullsize-hero.vue'),
 			GymLocation: () => import('@/components/gym/location.vue'),
-			// GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		data () {
 			return {}
