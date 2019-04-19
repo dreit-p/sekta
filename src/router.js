@@ -27,6 +27,11 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
 		},
 		{
+			path: '/sektamama',
+			name: 'SektaMama',
+			component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektamama.vue')
+		},
+		{
 			path: '/gym',
 			// name: 'gym',
 			component: {

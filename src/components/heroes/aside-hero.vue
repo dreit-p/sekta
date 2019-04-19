@@ -79,6 +79,9 @@ section.aside-hero
 				@media (max-width: 1024px) {
 					display: none;
 				}
+				svg {
+					height: 100%;
+				}
 			}
 		}
 		.content {

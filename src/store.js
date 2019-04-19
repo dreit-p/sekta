@@ -48,7 +48,7 @@ export default new Vuex.Store({
 						name: 'Курс #s60days'
 					},
 					{
-						link: '/for-mums',
+						link: '/sektamama',
 						name: 'Курс для мам'
 					},
 					{
