@@ -22,14 +22,27 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "about" */ './views/template.vue')
 		},
 		{
-			path: '/sektacare',
-			name: 'SektaCare',
-			component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
-		},
-		{
-			path: '/sektamama',
-			name: 'SektaMama',
-			component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektamama.vue')
+			path: '/online-courses',
+			component: {
+				name: 'router-wrapper',
+				template: `<router-view></router-view>`
+			},
+			children: [
+				// {
+				// 	path: '/',
+				// 	component: () => import('./views/courses/index.vue'),
+				// },
+				{
+					path: 'sektacare',
+					name: 'SektaCare',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
+				},
+				{
+					path: 'sektamama',
+					name: 'SektaMama',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektamama.vue')
+				},
+			]
 		},
 		{
 			path: '/gym',

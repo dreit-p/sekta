@@ -44,27 +44,27 @@ export default new Vuex.Store({
 				name: 'Онлайн курсы',
 				subLinks: [
 					{
-						link: '/s60days',
+						link: '/online-courses/s60days',
 						name: 'Курс #s60days'
 					},
 					{
-						link: '/sektamama',
+						link: '/online-courses/sektamama',
 						name: 'Курс для мам'
 					},
 					{
-						link: '/SektaCare',
+						link: '/online-courses/SektaCare',
 						name: 'Курс #SektaCare'
 					},
 					{
-						link: '/vip-course',
+						link: '/online-courses/vip-course',
 						name: 'VIP программа'
 					},
 					{
-						link: '/for-pregnant',
+						link: '/online-courses/for-pregnant',
 						name: 'Курсы для беременных'
 					},
 					{
-						link: '/s60days-men',
+						link: '/online-courses/s60days-men',
 						name: 'Курс #s60days для мужчин'
 					},
 				]
