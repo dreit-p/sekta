@@ -84,8 +84,20 @@ section.aside-hero
 				}
 			}
 		}
+		ul {
+			padding: * 20px;
+			li {
+				margin: .5em *;
+			}
+		}
 		.content {
 			padding: 30px *;
+			ul {
+				li {
+					font-size: 15px;
+					line-height: 1.33;
+				}
+			}
 			@media (max-width: 1024px) {
 				height: 100%;
 				padding: 10px *;

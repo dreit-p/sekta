@@ -22,6 +22,11 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "about" */ './views/template.vue')
 		},
 		{
+			path: '/gift-cert',
+			name: 'gift-cert',
+			component: () => import(/* webpackChunkName: "about" */ './views/certificates.vue')
+		},
+		{
 			path: '/online-courses',
 			component: {
 				name: 'router-wrapper',
@@ -54,7 +59,7 @@ export default new Router({
 			children: [
 				{
 					path: '/',
-					component: () => import('./views/gym/index.vue'),
+					component: () => import('./views/gym/main.vue'),
 				},
 				{
 					path: 'moscow',

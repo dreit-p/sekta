@@ -1,31 +1,41 @@
 <template lang="pug">
-label.app-input(:class='this.$options.name')
-	.input-wrapper
-		input(
-			:placeholder='placeholder'
+label.app-dropdown(:class='this.$options.name')
+	.select-wrapper
+		select.medium(
+			required
+			:class='{opened: isOpenedSelect}'
 			:name='name'
 			:ref='name'
-			:type='type'
-			@input="$emit('input', $event.target.value);"
 			@change="$emit('change', $event.target.value);"
+			@click='isOpenedSelect = !isOpenedSelect'
+			@blur='isOpenedSelect = false'
 		)
-		.icon.checked
-			svg-icon(name='icon-check')
-		.icon.error
-			svg-icon(name='icon-cross')
+			option(value="" v-if='placeholder != undefined' disabled selected) {{this.placeholder}}
+			option(v-for='(element, index) in options', :value="index") {{element}}
+		.dropdown-icon
+			svg(viewBox='0 0 18 9')
+				polygon.triangle(fill='currentColor' points='0,9 9,0 18,9')
 	.caption(v-if='computedCaption') {{computedCaption}}
 </template>
 
 <script>
 	export default {
 		name: 'app-input',
+		model: {
+			event: 'change'
+		},
 		props: {
 			placeholder: String,
 			caption: String,
 			name: String,
 			type: String,
+			options: {
+				type: Array,
+				default: ()=>[],
+			},
 			value: {
-				default: null
+				type: String,
+				default: '',
 			},
 			error: {
 				type: String,
@@ -44,10 +54,10 @@ label.app-input(:class='this.$options.name')
 				return null;
 			}
 		},
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
-		},
-		methods: {
+		data (){
+			return {
+				isOpenedSelect: false,
+			};
 		},
 		$_veeValidate: {
 			// value getter
@@ -67,14 +77,14 @@ label.app-input(:class='this.$options.name')
 </script>
 
 <style lang="postcss">
-	.app-input {
+	.app-dropdown {
 		max-width: 305px;
 		width: 100%;
-		.input-wrapper {
+		.select-wrapper {
 			position: relative;
 			min-width: 150px;
 		}
-		input {
+		select {
 			background-color: white;
 			width: 100%;
 			font-size: 12px;
@@ -82,10 +92,15 @@ label.app-input(:class='this.$options.name')
 			font-family: var(--font-main);
 			padding: 12px 40px 11px 10px;
 			border: 1px solid var(--middle_gray);
+			cursor: pointer;
+			appearance: none;
+			&::-ms-expand {
+				display: none;
+			}
 		}
 		&.success {
 			color: var(--accent_color);
-			input {
+			select {
 				color: var(--accent_color);
 				border-color: var(--accent_color);
 			}
@@ -99,7 +114,7 @@ label.app-input(:class='this.$options.name')
 		}
 		&.error {
 			color: red;
-			input {
+			select {
 				color: red;
 				border-color: red;
 			}
@@ -110,25 +125,27 @@ label.app-input(:class='this.$options.name')
 				display: block;
 			}
 		}
-		.icon {
+		.dropdown-icon {
+			width: 18px;
+			height: 9px;
+			pointer-events: none;
 			position: absolute;
+			right: 10px;
 			top: 0;
 			bottom: 0;
-			right: 12px;
 			margin: auto;
-			display: none;
+			transform-origin: center-center;
+			transform: rotateX(180deg);
+			color: var(--accent_color);
 			svg {
 				height: 100%;
 				width: 100%;
 				display: block;
 			}
-			&.error {
-				height: 12px;
-				width: 12px;
-			}
-			&.checked {
-				height: 10px;
-				width: 14px;
+		}
+		@media (min-width: 425px) {
+			select.opened + .dropdown-icon {
+				transform: rotateX(0deg);
 			}
 		}
 		.caption {
@@ -136,5 +153,11 @@ label.app-input(:class='this.$options.name')
 			color: var(--middle_gray);
 			margin: 3px 0;
 		}
+		option {
+			color: black;
+			font-size: 16px;
+			cursor: pointer;
+		}
+		option[disabled] { display: none; }
 	}
 </style>
