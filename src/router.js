@@ -1,12 +1,28 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import Home from './views/home.vue'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
+const Router = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
+	scrollBehavior: (to, from, savedPosition) => new Promise((resolve) => {
+		if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+		const position = savedPosition || {x:0, y:0};
+		if (!savedPosition) {
+			if (to.hash) {
+				position.selector = to.hash;
+			}
+			if (to.matched.some((m) => m.meta.scrollToTop)) {
+				position.x = 0;
+				position.y = 0;
+			}
+		}
+		Router.app.$root.$once('triggerScroll', () => {
+			Router.app.$nextTick(() => resolve(position));
+		});
+	}),
 	routes: [
 		{
 			path: '/',
@@ -102,3 +118,5 @@ export default new Router({
 		}
 	]
 })
+
+export default Router
