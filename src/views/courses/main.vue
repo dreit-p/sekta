@@ -170,10 +170,11 @@
 				margin: 30px *;
 				@media (max-width: 600px) {
 					font-size: 26px;
+				margin: 10px *;
 				}
 			}
 			ul {
-				padding: * 1.2em;
+				padding: * 1em;
 				margin: 10px *;
 				li {
 					margin: 10px *;
@@ -181,7 +182,7 @@
 					font-weight: bold;
 					line-height: 1.33;
 					@media (max-width: 600px) {
-						font-size: 13px;
+						font-size: 11px;
 						margin: 6px *;
 					}
 				}
@@ -192,12 +193,15 @@
 				font-weight: bold;
 				line-height: 1.33;
 				@media (max-width: 600px) {
-					font-size: 13px;
+					font-size: 11px;
 					margin: 6px *;
 				}
 			}
 			.buttons {
-				margin: 30px *;
+				margin: 30px -5px;
+				@media (max-width: 600px) {
+					margin: 10px *;
+				}
 			}
 			.green-btn {
 				min-width: 0;
