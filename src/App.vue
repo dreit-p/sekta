@@ -2,7 +2,7 @@
 #app
 	app-header
 	app-modal
-	transition(name='fade-flip', mode='out-in')
+	transition(name='fade-flip', mode='out-in', @after-leave="$root.$emit('triggerScroll')")
 		router-view
 	app-footer
 </template>

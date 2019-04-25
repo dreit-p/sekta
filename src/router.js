@@ -1,12 +1,28 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import Home from './views/home.vue'
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
+const Router = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
+	scrollBehavior: (to, from, savedPosition) => new Promise((resolve) => {
+		if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+		const position = savedPosition || {x:0, y:0};
+		if (!savedPosition) {
+			if (to.hash) {
+				position.selector = to.hash;
+			}
+			if (to.matched.some((m) => m.meta.scrollToTop)) {
+				position.x = 0;
+				position.y = 0;
+			}
+		}
+		Router.app.$root.$once('triggerScroll', () => {
+			Router.app.$nextTick(() => resolve(position));
+		});
+	}),
 	routes: [
 		{
 			path: '/',
@@ -22,9 +38,52 @@ export default new Router({
 			component: () => import(/* webpackChunkName: "about" */ './views/template.vue')
 		},
 		{
-			path: '/sektacare',
-			name: 'SektaCare',
-			component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
+			path: '/gift-cert',
+			name: 'gift-cert',
+			component: () => import(/* webpackChunkName: "about" */ './views/certificates.vue')
+		},
+		{
+			path: '/online-courses',
+			component: {
+				name: 'router-wrapper',
+				template: `<router-view></router-view>`
+			},
+			children: [
+				{
+					path: '/',
+					component: () => import('./views/courses/main.vue'),
+				},
+				{
+					path: 's60days',
+					// name: 's60-women',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-women.vue')
+				},
+				{
+					path: 's60days-men',
+					// name: 's60-men',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-men.vue')
+				},
+				{
+					path: 'sektacare',
+					name: 'SektaCare',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
+				},
+				{
+					path: 'pregnant',
+					name: 'pregnant',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/pregnant.vue')
+				},
+				{
+					path: 'sektavip',
+					name: 'sektavip',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/vip.vue')
+				},
+				{
+					path: 'sektamama',
+					name: 'SektaMama',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektamama.vue')
+				},
+			]
 		},
 		{
 			path: '/gym',
@@ -36,7 +95,7 @@ export default new Router({
 			children: [
 				{
 					path: '/',
-					component: () => import('./views/gym/index.vue'),
+					component: () => import('./views/gym/main.vue'),
 				},
 				{
 					path: 'moscow',
@@ -59,3 +118,5 @@ export default new Router({
 		}
 	]
 })
+
+export default Router

@@ -14,6 +14,8 @@
 
 					texts-register(v-if='entryFormType == "register"')
 
+					texts-certificates(v-if='entryFormType == "certificates"')
+
 		.half
 			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
 
@@ -25,6 +27,8 @@
 
 					inputs-register(v-if='entryFormType == "register"', :key='entryFormType')
 
+					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType')
+
 </template>
 
 <script>
@@ -34,7 +38,7 @@
 	========================================*/
 
 	const formContent = {
-		types: ['login', 'register', 'recovery'],
+		types: ['login', 'register', 'recovery', 'certificates'],
 		components: {
 			inputs: {},
 			texts: {}
@@ -43,10 +47,10 @@
 
 	for (let i = 0; i < formContent.types.length; i++) {
 		let type = formContent.types[i];
-		formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
+		formContent.components.inputs['inputs-' + formContent.types[i]] = ()=>{
 			return import(`@/components/form/contents/inputs/${type}.vue`)
 		};
-		formContent.components.texts['texts-' + formContent.types[i]] = function () {
+		formContent.components.texts['texts-' + formContent.types[i]] = ()=>{
 			return import(`@/components/form/contents/texts/${type}.vue`)
 		};
 	}
@@ -63,11 +67,12 @@
 		},
 		props: {
 			title: String,
+			formType: String,
 		},
 		data () {
 			return {
 				backgroundImage: require('@/assets/images/markes-bg_teal.jpg'),
-				entryFormType: 'register',
+				entryFormType: this.formType || 'register',
 				firstname: '',
 				lastname: '',
 				email: '',
@@ -145,6 +150,15 @@
 						font-size: 16px;
 						margin: 0;
 						line-height: 1.5;
+						&.small-text {
+							font-size: 14px;
+							line-height: 1.43;
+						}
+						&.tiny-text {
+							margin: 7px *;
+							font-size: 12px;
+							line-height: 1.33;
+						}
 					}
 					hr {
 						margin: 22px 0 18px;
@@ -248,6 +262,10 @@
 						line-height: 2;
 						display: inline-block;
 						margin: 5px *;
+					}
+					label a:not(.green-btn) {
+						line-height: normal;
+						margin: 0;
 					}
 					.green-btn {
 						display: block;
