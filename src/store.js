@@ -56,11 +56,11 @@ export default new Vuex.Store({
 						name: 'Курс #SektaCare'
 					},
 					{
-						link: '/online-courses/vip-course',
+						link: '/online-courses/sektavip',
 						name: 'VIP программа'
 					},
 					{
-						link: '/online-courses/for-pregnant',
+						link: '/online-courses/pregnant',
 						name: 'Курсы для беременных'
 					},
 					{
