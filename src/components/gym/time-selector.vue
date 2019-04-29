@@ -5,13 +5,16 @@
 
 		.grid
 			.day(v-for='name in daysNames') {{name}}
-			.tile(
+			button.tile(
 				v-for='(tile, index) in schedule'
 				:class='{hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index), checked: selectedIDs.includes(+tile.id)}'
+				:disabled='!chackAvailability(index)'
 				:style='{gridRow: tile.rowspan > 0 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tile.column }'
 				@mouseenter='hoverTiles(index)'
+				@focus='hoverTiles(index)'
 				@mouseleave='hoveredIDs = []'
-				@click='selectPlan()'
+				@blut='hoveredIDs = []'
+				@click='selectPlan(index)'
 			) {{tile.text}}
 
 </template>
@@ -132,8 +135,11 @@
 				});
 				return IDs
 			},
-			selectPlan() {
+			selectPlan(index) {
 				this.$emit('change', this.hoveredIDs);
+				if (this.hoveredIDs.length == 0) {
+					this.hoverTiles(index);
+				}
 				this.selectedIDs = this.hoveredIDs;
 			},
 		},
@@ -182,6 +188,7 @@
 			user-select: none;
 			opacity: .3;
 			pointer-events: none;
+			border: none;
 			&.available {
 				opacity: 1;
 				pointer-events: auto;
