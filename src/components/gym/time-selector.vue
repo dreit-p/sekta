@@ -10,11 +10,11 @@
 				:class='{hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index), checked: selectedIDs.includes(+tile.id)}'
 				:disabled='!chackAvailability(index)'
 				:style='{gridRow: tile.rowspan > 0 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tile.column }'
-				@mouseenter='hoverTiles(index)'
-				@focus='hoverTiles(index)'
+				@mouseenter='hoveredIDs = hoverableSiblings[+tile.id]'
+				@focus='hoveredIDs = hoverableSiblings[+tile.id]'
 				@mouseleave='hoveredIDs = []'
 				@blut='hoveredIDs = []'
-				@click='selectPlan(index)'
+				@click='selectPlan(+tile.id)'
 			) {{tile.text}}
 
 </template>
@@ -54,15 +54,43 @@
 			},
 		},
 		computed: {
+			availableDays () {
+				let availableDays = {};
+				let availableWeeks = [];
+
+				this.schedule.forEach((day)=>{
+						if (this.certificateDays.includes(+day.id)) {
+							if (availableWeeks[+day.row -1] == undefined) {availableWeeks.push([])}
+							availableWeeks[+day.row -1].push({[day.id]: day});
+						}
+				});
+				availableWeeks.forEach((week)=>{
+					if (week.length >= this.bracketing) {
+						week.forEach((day) =>{
+							Object.assign(availableDays, day);
+						});
+					}
+				});
+				return availableDays;
+			},
+			hoverableSiblings () {
+				let daysConnections = {};
+				for (let id in this.availableDays) {
+					if (this.availableDays.hasOwnProperty(id)) {
+						daysConnections[id] = this.getHoveredTiles(id);
+					}
+				}
+				return daysConnections;
+			},
 		},
 		methods: {
 			resetTableStates () {
 				this.hoveredIDs = [];
 				this.selectedIDs = [];
 			},
-			hoverTiles(index) {
+			getHoveredTiles(id) {
 
-				let tile = this.schedule[index];
+				let tile = this.availableDays[id];
 
 				let availableRowDays = this.getAvailableRowDays(tile.available_days, +tile.row);
 
@@ -72,14 +100,14 @@
 					let StartPos = Math.min(  Math.max(0, tile.column-1 - startOffset), availableRowDays.length - this.bracketing );
 					let FinishPos = Math.max(  Math.min(availableRowDays.length, tile.column-1 + this.bracketing - startOffset), 0 + this.bracketing  );
 
-					this.hoveredIDs = availableRowDays.slice(
+					return availableRowDays.slice(
 							StartPos,
 							FinishPos
 						)
 				}
 
 			},
-			getAvailableRowDays (array, row) {
+			getAvailableRowDays(array, row) {
 				let availableRowDays = [];
 
 				let ids = this.idsInRow(+row);
@@ -135,10 +163,10 @@
 				});
 				return IDs
 			},
-			selectPlan(index) {
+			selectPlan(id) {
 				this.$emit('change', this.hoveredIDs);
 				if (this.hoveredIDs.length == 0) {
-					this.hoverTiles(index);
+					this.hoveredIDs = this.hoverableSiblings[id];
 				}
 				this.selectedIDs = this.hoveredIDs;
 			},
