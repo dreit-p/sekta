@@ -52,10 +52,10 @@ transition(name='fade')
 	for (let i = 0; i < formContent.types.length; i++) {
 		let type = formContent.types[i];
 		formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
-			return import(`@/components/form/contents/inputs/${type}.vue`)
+			return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
 		};
 		formContent.components.texts['texts-' + formContent.types[i]] = function () {
-			return import(`@/components/form/contents/texts/${type}.vue`)
+			return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
 		};
 	}
 
@@ -63,12 +63,21 @@ transition(name='fade')
 
 
 	export default {
-		name: 'app-modal',
+		name: 'AppModal',
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
 			AppCheckbox: () => import('@/components/form/checkbox.vue'),
 			...formContent.components.inputs,
 			...formContent.components.texts,
+		},
+		data () {
+			return {
+				emailRepeat: '',
+				passwordRepeat: '',
+				isAdult: false,
+				termsAgree: false,
+				spamAgree: false,
+			}
 		},
 		computed: {
 			isOpenedModal () {
@@ -80,15 +89,6 @@ transition(name='fade')
 		},
 		methods: {
 			...mapActions(['setFormModalState'])
-		},
-		data () {
-			return {
-				emailRepeat: '',
-				passwordRepeat: '',
-				isAdult: false,
-				termsAgree: false,
-				spamAgree: false,
-			}
 		},
 	}
 </script>

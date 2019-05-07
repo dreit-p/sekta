@@ -48,10 +48,10 @@
 	for (let i = 0; i < formContent.types.length; i++) {
 		let type = formContent.types[i];
 		formContent.components.inputs['inputs-' + formContent.types[i]] = ()=>{
-			return import(`@/components/form/contents/inputs/${type}.vue`)
+			return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
 		};
 		formContent.components.texts['texts-' + formContent.types[i]] = ()=>{
-			return import(`@/components/form/contents/texts/${type}.vue`)
+			return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
 		};
 	}
 
@@ -66,13 +66,15 @@
 			...formContent.components.texts,
 		},
 		props: {
-			title: String,
-			formType: String,
+			formType: {
+				type: String,
+				default: 'register'
+			},
 		},
 		data () {
 			return {
 				backgroundImage: require('@/assets/images/markes-bg_teal.jpg'),
-				entryFormType: this.formType || 'register',
+				entryFormType: this.formType,
 				firstname: '',
 				lastname: '',
 				email: '',
