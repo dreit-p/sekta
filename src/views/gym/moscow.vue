@@ -25,7 +25,7 @@ div.gym
 
 	section
 		.section-caption Время занятий
-		time-selector(v-model='selected.timeIDs', :schedule='cityData.schedule', :certificateDays='getCertificateData("available_days")', :bracketing='+getCertificateData("quantity")')
+		time-selector(v-model='selected.timeIDs', :schedule='cityData.schedule', :certificateTimes='getCertificateData("available_days")', :bracketing='+getCertificateData("quantity")')
 
 
 	section
@@ -107,7 +107,7 @@ div.gym
 				selected: {
 					gymID: 1,
 					planID: 1,
-					quantityTypeID: 1,
+					quantityTypeID: 2,
 					timeIDs: [],
 				},
 				cityData: {
