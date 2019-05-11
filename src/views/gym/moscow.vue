@@ -75,7 +75,7 @@ div.gym
 
 <script>
 	export default {
-		name: 'gym-moscow',
+		name: 'GymMoscow',
 		components: {
 			EntryForm: () => import('@/components/entry-form.vue'),
 			PhotoGallery: () => import('@/components/gym/photo-gallery.vue'),
@@ -90,17 +90,6 @@ div.gym
 				window.map.destroy();
 			}
 			next();
-		},
-		computed: {
-		},
-		methods: {
-			getCertificateData (dataType) {
-				for (var i = 0; i < this.cityData.quantityTypes.length; i++) {
-					if (+this.cityData.quantityTypes[i].id == +this.selected.quantityTypeID) {
-						return this.cityData.quantityTypes[i][dataType]
-					}
-				}
-			},
 		},
 		data () {
 			return {
@@ -435,7 +424,18 @@ div.gym
 					],
 				},
 			}
-		}
+		},
+		computed: {
+		},
+		methods: {
+			getCertificateData (dataType) {
+				for (var i = 0; i < this.cityData.quantityTypes.length; i++) {
+					if (+this.cityData.quantityTypes[i].id == +this.selected.quantityTypeID) {
+						return this.cityData.quantityTypes[i][dataType]
+					}
+				}
+			},
+		},
 	}
 </script>
 

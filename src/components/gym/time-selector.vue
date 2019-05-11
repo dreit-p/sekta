@@ -13,15 +13,22 @@
 				@mouseenter='hoveredIDs = hoverableSiblings[+tile.id]'
 				@focus='hoveredIDs = hoverableSiblings[+tile.id]'
 				@mouseleave='hoveredIDs = []'
-				@blut='hoveredIDs = []'
-				@click='selectPlan(+tile.id)'
+				@blur='hoveredIDs = []'
+				@click='selectTilesById(+tile.id)'
 			) {{tile.text}}
-		.mobile-grid
-			.item(
-				
+		.mobile-grid(v-if='windowWidth <= mobileWidth')
+			.grid(
+				v-for='(group) in minimizedGroups'
+				:style='{gridTemplateColumns: `repeat(${group.width}, 1fr [col-start])`}'
 			)
-				.days
-				.time
+				.day(v-for='(dayTitle) in group.daysTitles') {{dayTitle}}
+				template(v-for='(row, rowIndex) in group.rows')
+					.tile.available(
+						v-for='(tile, tileIndex) in row'
+						:class='{checked: isContainsArray(selectedIDs, tile.daysNameNums) }'
+						:style='{gridRow: tile.rowspan > 0 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
+						@click='selectTiles(tile.siblingsIds)'
+					) {{tile.text}}
 
 </template>
 
@@ -55,7 +62,6 @@
 				selectedIDs: [],
 				mobileWidth: 650,
 				windowWidth: 0,
-				minimizedGroups: [],
 				daysNames: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
 			}
 		},
@@ -88,6 +94,97 @@
 				}
 				return timesConnections;
 			},
+			minimizedGroups () {
+
+				var prevDayArray = [];
+
+				var allRows = {}
+
+				for (let dayId in this.hoverableSiblings) {
+					if (this.hoverableSiblings.hasOwnProperty(dayId)) {
+						let daySiblings = this.hoverableSiblings[dayId].sort((a,b)=>a-b);
+						if (!this.isArrEquals(prevDayArray, daySiblings)) { // Define one row
+
+							prevDayArray = daySiblings;
+
+							/* Define row times */
+							var columnNames = [];
+							var allTimes = {};
+							for (let i = 0; i < daySiblings.length; i++) {
+								let time = this.availableTimes[daySiblings[i]]
+								columnNames.push(+time.column -1);
+								if (!allTimes[time.text]) {allTimes[time.text] = []}
+								allTimes[time.text].push(+time.id)
+							}
+
+							columnNames = columnNames.sort((a,b)=>a-b);
+
+							if (!allRows[columnNames]) { allRows[columnNames] = []}
+							allRows[columnNames].push(allTimes);
+
+						}
+					}
+				}
+
+				var results = [];
+
+				for (let rowKey in allRows) {
+					if (allRows.hasOwnProperty(rowKey)) {
+						let group = {};
+
+						if (!group.rows) {group.rows = []}
+						if (!group.daysTitles) {group.daysTitles = []}
+						group.rows = [];
+						group.width = 0;
+
+						// allRows[rowKey] contains rows array
+
+						for (let rowIndex = 0; rowIndex < allRows[rowKey].length; rowIndex++) { // row content
+							for (let tileTextKey in allRows[rowKey][rowIndex]) {
+								if (allRows[rowKey][rowIndex].hasOwnProperty(tileTextKey)) {
+
+									if (!group.rows[rowIndex]) {group.rows[rowIndex] = []}
+
+									let tilesIds = allRows[rowKey][rowIndex][tileTextKey];
+
+									let columnTitle = '';
+									let rowspan = 0;
+									let tileStartPosition = +this.availableTimes[ tilesIds[0] ].row;
+									for (var timeIdIdx = 0; timeIdIdx < tilesIds.length; timeIdIdx++) {
+										columnTitle = columnTitle.concat(
+											this.daysNames[ this.availableTimes[ tilesIds[timeIdIdx] ].column -1 ],
+											timeIdIdx === tilesIds.length-1 ? '' : '/'
+										);
+
+										rowspan = Math.max(rowspan, +this.availableTimes[ tilesIds[timeIdIdx] ].rowspan);
+
+										tileStartPosition = Math.min(tileStartPosition, +this.availableTimes[ tilesIds[timeIdIdx] ].row)
+									}
+									if (!group.daysTitles.includes(columnTitle)) {group.daysTitles.push(columnTitle)}
+
+									if (tileStartPosition >= rowIndex+1) {
+										group.rows[rowIndex].push({
+											text: tileTextKey,
+											daysNameNums: tilesIds,
+											row: rowIndex+1,
+											rowspan: rowspan,
+											siblingsIds: this.hoverableSiblings[ tilesIds[0] ]
+										});
+									}
+
+								}
+
+							}
+							let lastRow = group.rows[rowIndex]
+							group.width = Math.max(group.width, lastRow.length);
+						}
+						results.push(group);
+
+					}
+				}
+
+				return results;
+			},
 		},
 		watch: {
 			certificateTimes: function () {
@@ -95,11 +192,6 @@
 			},
 			bracketing: function () {
 				this.resetTableStates();
-			},
-			windowWidth(newWidth) {
-				if (newWidth <= this.mobileWidth && this.minimizedGroups.length == 0) {
-					this.minimizedGroups = this.getMinimizedGroups();
-				}
 			},
 		},
 		created () {
@@ -166,125 +258,30 @@
 
 				return this.certificateTimes.includes(+this.schedule[index].id) && checkRow(this.schedule[index].row)
 			},
-			getMinimizedGroups () {
-
-
-				const isArrEquals = (arr1, arr2)=>{
-					return arr1.length === arr2.length && arr1.sort((a,b)=>a-b).every((val, i)=>{ return val === arr2.sort((a,b)=>a-b)[i]});
-				}
-
-				var prevDayArray = [];
-
-				var allRows = {}
-
-				for (let dayId in this.hoverableSiblings) {
-					if (this.hoverableSiblings.hasOwnProperty(dayId)) {
-						let daySiblings = this.hoverableSiblings[dayId].sort((a,b)=>a-b);
-						if (!isArrEquals(prevDayArray, daySiblings)) { // Define one row
-
-							prevDayArray = daySiblings;
-
-							/* Define row times */
-							var columnNames = [];
-							var allTimes = {};
-							for (let i = 0; i < daySiblings.length; i++) {
-								let time = this.availableTimes[daySiblings[i]]
-								columnNames.push(+time.column -1);
-								if (!allTimes[time.text]) {allTimes[time.text] = []}
-								allTimes[time.text].push(+time.id)
-							}
-
-							columnNames = columnNames.sort((a,b)=>a-b);
-
-							if (!allRows[columnNames]) { allRows[columnNames] = []}
-							allRows[columnNames].push(allTimes);
-
-						}
-					}
-				}
-
-				var results = [];
-
-				for (let rowKey in allRows) {
-					if (allRows.hasOwnProperty(rowKey)) {
-						let group = {};
-
-						if (!group.rows) {group.rows = []}
-						if (!group.daysTitles) {group.daysTitles = []}
-						group.rows = [];
-
-						// allRows[rowKey] contains rows array
-
-						for (let rowIndex = 0; rowIndex < allRows[rowKey].length; rowIndex++) { // row content
-							for (let tileTextKey in allRows[rowKey][rowIndex]) {
-								if (allRows[rowKey][rowIndex].hasOwnProperty(tileTextKey)) {
-
-									if (!group.rows[rowIndex]) {group.rows[rowIndex] = []}
-
-									let tilesIds = allRows[rowKey][rowIndex][tileTextKey];
-
-									let columnTitle = '';
-									let tileStartPosition = +this.availableTimes[ tilesIds[0] ].row;
-									for (var timeIdIdx = 0; timeIdIdx < tilesIds.length; timeIdIdx++) {
-										columnTitle = columnTitle.concat(
-											this.daysNames[ this.availableTimes[ tilesIds[timeIdIdx] ].column -1 ],
-											timeIdIdx === tilesIds.length-1 ? '' : '/'
-										);
-
-										tileStartPosition = Math.min(tileStartPosition, +this.availableTimes[ tilesIds[timeIdIdx] ].row)
-									}
-									if (!group.daysTitles.includes(columnTitle)) {group.daysTitles.push(columnTitle)}
-
-									if (tileStartPosition >= rowIndex+1) {
-										group.rows[rowIndex].push({
-											text: tileTextKey,
-											daysNameNums: tilesIds,
-											row: rowIndex+1,
-											siblingsIds: this.hoverableSiblings[ tilesIds[0] ]
-										});
-									}
-
-								}
-
-							}
-						}
-						results.push(group);
-
-					}
-				}
-
-				return results;
-
-				// this.minimizedGroups = [
-				// 	{ // group
-				// 		daysTitles: ['пн/вт', 'сб'],
-				// 		rows: [
-				// 			[ // row
-				// 				{
-				// 					daysNameNums: [0, 1],
-				// 					text: '8:30'
-				// 				},
-				// 				{
-				// 					daysNameNums: [5],
-				// 					text: '8:30 10:30'
-				// 				},
-				// 			],
-				// 			[ // row
-				// 				{
-				// 					daysNameNums: [0, 1],
-				// 					text: '8:30'
-				// 				},
-				// 				{
-				// 					daysNameNums: [5],
-				// 					text: '8:30 10:30'
-				// 				},
-				// 			],
-				// 		],
-
-				// 	},
-				// ];
+			isArrEquals (arr1, arr2) {
+				return arr1.length === arr2.length && arr1.sort((a,b)=>a-b).every((val, i)=>{ return val === arr2.sort((a,b)=>a-b)[i]});
 			},
-			getDataById () {},
+			isContainsArray (mainArr, desiredArr) {
+				mainArr = mainArr.slice();
+				desiredArr = desiredArr.slice();
+				var state = false;
+				for (var i = 0; i < desiredArr.length; i++) {
+					if (mainArr.length == 0 && desiredArr.length == 0) {
+						console.warn('Arrays are empty');
+						return false;
+					}
+					if (!mainArr.includes(desiredArr[i])) {
+						state = false;
+						return false;
+					} else {
+						console.log('##########');
+						console.log('mainArr: ', mainArr);
+						console.log('desiredArr: ', desiredArr);
+						state = true;
+					}
+				}
+				return state;
+			},
 			tilesInRow(number) {
 				if (number == undefined) return false
 
@@ -309,12 +306,17 @@
 				});
 				return IDs
 			},
-			selectPlan(id) {
+			selectTilesById(id) {
 				this.$emit('change', this.hoveredIDs);
 				if (this.hoveredIDs.length == 0) {
 					this.hoveredIDs = this.hoverableSiblings[id];
 				}
 				this.selectedIDs = this.hoveredIDs;
+			},
+			selectTiles(idsArr) {
+				this.$emit('change', idsArr);
+				this.hoveredIDs = idsArr;
+				this.selectedIDs = idsArr;
 			},
 		},
 	}
