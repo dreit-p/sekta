@@ -7,7 +7,7 @@
 			.day(v-for='name in daysNames') {{name}}
 			button.tile(
 				v-for='(tile, index) in schedule'
-				:class='{hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index), checked: selectedIDs.includes(+tile.id)}'
+				:class='{hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index), selected: selectedIDs.includes(+tile.id)}'
 				:disabled='!chackAvailability(index)'
 				:style='{gridRow: tile.rowspan > 0 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tile.column }'
 				@mouseenter='hoveredIDs = hoverableSiblings[+tile.id]'
@@ -25,8 +25,8 @@
 				template(v-for='(row, rowIndex) in group.rows')
 					.tile.available(
 						v-for='(tile, tileIndex) in row'
-						:class='{checked: isContainsArray(selectedIDs, tile.daysNameNums) }'
-						:style='{gridRow: tile.rowspan > 0 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
+						:class='{selected: isContainsArray(selectedIDs, tile.daysNameNums) }'
+						:style='{gridRow: tile.rowspan > 0 && group.rows.length > 1 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
 						@click='selectTiles(tile.siblingsIds)'
 					) {{tile.text}}
 
@@ -102,7 +102,7 @@
 
 				for (let dayId in this.hoverableSiblings) {
 					if (this.hoverableSiblings.hasOwnProperty(dayId)) {
-						let daySiblings = this.hoverableSiblings[dayId].sort((a,b)=>a-b);
+						let daySiblings = this.hoverableSiblings[dayId].slice().sort((a,b)=>a-b);
 						if (!this.isArrEquals(prevDayArray, daySiblings)) { // Define one row
 
 							prevDayArray = daySiblings;
@@ -153,7 +153,7 @@
 									for (var timeIdIdx = 0; timeIdIdx < tilesIds.length; timeIdIdx++) {
 										columnTitle = columnTitle.concat(
 											this.daysNames[ this.availableTimes[ tilesIds[timeIdIdx] ].column -1 ],
-											timeIdIdx === tilesIds.length-1 ? '' : '/'
+											timeIdIdx === tilesIds.length-1 ? '' : ', '
 										);
 
 										rowspan = Math.max(rowspan, +this.availableTimes[ tilesIds[timeIdIdx] ].rowspan);
@@ -274,9 +274,6 @@
 						state = false;
 						return false;
 					} else {
-						console.log('##########');
-						console.log('mainArr: ', mainArr);
-						console.log('desiredArr: ', desiredArr);
 						state = true;
 					}
 				}
@@ -330,11 +327,18 @@
 		line-height: 1.47;
 		letter-spacing: 0.0125rem;
 	}
+	.mobile-grid {
+		max-width: 420px;
+		margin: auto;
+	}
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(6, 1fr [col-start]);
 		grid-gap: 10px;
 		margin: 10px *;
+		@media (max-width: 650px) {
+			grid-gap: 15px;
+		}
 		.day,
 		.tile {
 			padding: 28px 10px 30px;
@@ -349,6 +353,7 @@
 		}
 		.day {
 			padding: 15px 10px;
+			margin-top: 10px;
 			background-color: transparent;
 		}
 		.tile {
@@ -369,11 +374,11 @@
 				transition-duration: .1s;
 				box-shadow: inset 0 0 0 3px var(--accent_color);
 			}
-			&.checked.hovered {
+			&.selected.hovered {
 				box-shadow: inset 0 0 0 3px color(var(--accent_color) shade(10%));
 				background-color: color(var(--accent_color) blend(#e6e6e6 30%)) !important;
 			}
-			&.checked {
+			&.selected {
 				background-color: var(--accent_color) !important;
 				color: white !important;
 			}
