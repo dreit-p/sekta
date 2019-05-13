@@ -25,8 +25,8 @@
 				template(v-for='(row, rowIndex) in group.rows')
 					.tile.available(
 						v-for='(tile, tileIndex) in row'
-						:class='{selected: isContainsArray(selectedIDs, tile.daysNameNums) }'
-						:style='{gridRow: tile.rowspan > 0 && group.rows.length > 1 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
+						:class='{selected: isContainsArray(selectedIDs, tile.siblingsIds)}'
+						:style='{gridRow: tile.rowspan > 0 && group.rows.length >= tile.rowspan ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
 						@click='selectTiles(tile.siblingsIds)'
 					) {{tile.text}}
 
@@ -162,13 +162,36 @@
 									}
 									if (!group.daysTitles.includes(columnTitle)) {group.daysTitles.push(columnTitle)}
 
+									let siblingsIds;
+
+									if (rowspan > 1) {
+										siblingsIds = [];
+										for (var tileRowIndex = 0; tileRowIndex < rowspan; tileRowIndex++) {
+											let times = allRows[rowKey][tileRowIndex];
+
+											for (let timeKey in times) {
+												if (times.hasOwnProperty(timeKey)) {
+													if (!siblingsIds[tileRowIndex]) {siblingsIds[tileRowIndex] = []}
+
+													for (var siblingsIdxOfArr = 0; siblingsIdxOfArr < times[timeKey].length; siblingsIdxOfArr++) {
+														siblingsIds[tileRowIndex].push(times[timeKey][siblingsIdxOfArr])
+													}
+
+												}
+											}
+
+										}
+									} else {
+										siblingsIds = [this.hoverableSiblings[ tilesIds[0] ]];
+									}
+
 									if (tileStartPosition >= rowIndex+1) {
 										group.rows[rowIndex].push({
 											text: tileTextKey,
 											daysNameNums: tilesIds,
 											row: rowIndex+1,
 											rowspan: rowspan,
-											siblingsIds: this.hoverableSiblings[ tilesIds[0] ]
+											siblingsIds: siblingsIds,
 										});
 									}
 
@@ -259,25 +282,20 @@
 				return this.certificateTimes.includes(+this.schedule[index].id) && checkRow(this.schedule[index].row)
 			},
 			isArrEquals (arr1, arr2) {
-				return arr1.length === arr2.length && arr1.sort((a,b)=>a-b).every((val, i)=>{ return val === arr2.sort((a,b)=>a-b)[i]});
+				return arr1.length === arr2.length && arr1.slice().sort((a,b)=>a-b).every((val, i)=>{ return val === arr2.slice().sort((a,b)=>a-b)[i]});
 			},
 			isContainsArray (mainArr, desiredArr) {
-				mainArr = mainArr.slice();
-				desiredArr = desiredArr.slice();
-				var state = false;
-				for (var i = 0; i < desiredArr.length; i++) {
-					if (mainArr.length == 0 && desiredArr.length == 0) {
-						console.warn('Arrays are empty');
-						return false;
-					}
-					if (!mainArr.includes(desiredArr[i])) {
-						state = false;
-						return false;
-					} else {
-						state = true;
+				if (mainArr.length == 0 || desiredArr.length == 0) return false
+				let copyMainArr = [...mainArr];
+				let copyDesiredArr = [...desiredArr];
+
+				for (var i = 0; i < copyDesiredArr.length; i++) {
+					if (this.isArrEquals(copyDesiredArr[i], copyMainArr)) {
+						return true;
 					}
 				}
-				return state;
+				return false;
+
 			},
 			tilesInRow(number) {
 				if (number == undefined) return false
@@ -310,10 +328,21 @@
 				}
 				this.selectedIDs = this.hoveredIDs;
 			},
-			selectTiles(idsArr) {
-				this.$emit('change', idsArr);
-				this.hoveredIDs = idsArr;
-				this.selectedIDs = idsArr;
+			selectTiles(idsArrs) {
+				const setState = data => {
+					this.$emit('change', data);
+					this.hoveredIDs = data;
+					this.selectedIDs = data;
+				}
+
+				if (idsArrs.length > 1 && this.selectedIDs.length > 0) {
+					for (var i = 0; i < idsArrs.length; i++) {
+						if (this.isArrEquals(idsArrs[i], this.selectedIDs)) {
+							return setState( i < idsArrs.length-1 ? idsArrs[i+1] : idsArrs[0] );
+						}
+					}
+				}
+				return setState(idsArrs[0]);
 			},
 		},
 	}
