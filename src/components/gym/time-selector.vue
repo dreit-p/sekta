@@ -17,6 +17,9 @@
 				@click='selectTilesById(+tile.id)'
 			) {{tile.text}}
 		.mobile-grid(v-if='windowWidth <= mobileWidth')
+			.empty-msg(v-if='minimizedGroups.length == 0') 
+				b Нет доступного времени.
+				p Выберите другое количество тренировок.
 			.grid(
 				v-for='(group) in minimizedGroups'
 				:style='{gridTemplateColumns: `repeat(${group.width}, 1fr [col-start])`}'
@@ -355,6 +358,15 @@
 		font-size: 15px;
 		line-height: 1.47;
 		letter-spacing: 0.0125rem;
+	}
+	.empty-msg {
+		margin: 30px 0;
+		text-align: center;
+		b {
+			font-size: 30px;
+			font-weight: bold;
+		}
+		font-size: 16px;
 	}
 	.mobile-grid {
 		max-width: 420px;
