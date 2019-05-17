@@ -38,8 +38,10 @@ Validator.localize('ru', ru);
 /*=====  End of Validator  ======*/
 
 
-
-Vue.config.productionTip = false
+if (process.env.NODE_ENV === 'production') {
+	Vue.config.devtools = false
+	Vue.config.productionTip = false
+}
 
 window.vm = new Vue({
 	router,
