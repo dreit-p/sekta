@@ -93,6 +93,7 @@ export default new Vuex.Store({
 			}
 		],
 		user: {
+			isAuth: false,
 			location: null,
 		}
 	},

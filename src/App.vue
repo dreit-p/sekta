@@ -1,10 +1,8 @@
 <template lang="pug">
 #app
-	app-header
-	app-modal
-	transition(name='fade-flip', mode='out-in', @after-leave="$root.$emit('triggerScroll')")
-		router-view
-	app-footer
+	component(:is="layout")
+		transition(name='fade-flip', mode='out-in', @after-leave="$root.$emit('triggerScroll')")
+			router-view
 </template>
 
 <script>
@@ -35,22 +33,31 @@
 		document.getElementsByTagName('body')[0].classList.add('mobile');
 	}
 
+	const default_layout = 'default';
+
 	export default {
 		components: {
-			AppHeader: () => import('@/components/header.vue'),
-			AppFooter: () => import('@/components/footer.vue'),
-			AppModal: () => import('@/components/modal.vue'),
+			DefaultLayout: () => import('@/layouts/default.vue'),
+			PersonalLayout: () => import('@/layouts/personal.vue'),
+			SvgIcon: () => import('@/components/SvgIcon.vue'),
+		},
+		computed: {
+			layout() {
+				return (this.$route.meta.layout || default_layout) + '-layout';
+			}
+		},
+		created() {
+			// nothing defined here (when this.$route.path is other than "/")
+			console.log(this.$route, this.$route.meta.layout);
+		},
+		updated() {
+			// something defined here whatever the this.$route.path
+			console.log(this.$route, this.$route.meta.layout);
 		}
 	}
 </script>
 
 <style lang="postcss">
-	#app {
-		min-height: 100vh;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-	}
 	body {
 		overflow-y: scroll;
 	}
