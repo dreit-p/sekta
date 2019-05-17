@@ -60,12 +60,13 @@ section.aside-hero
 			right: 0;
 			@media (min-width: 1025px) {
 				width: 50%;
-				background-position: center left;
+				background-position: left center;
 			}
 			.img {
 				height: 100%;
 				width: 100%;
-				background-position: center 30%;
+				background-repeat: no-repeat;
+				background-position: left 30%;
 				@media (max-width: 1024px) {
 					background-size: cover;
 				}
