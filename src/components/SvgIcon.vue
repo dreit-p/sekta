@@ -1,8 +1,7 @@
-<template>
-	<svg :class="className" :viewBox="icon.viewBox" xmlns="http://www.w3.org/2000/svg">
-		<title v-if="title">{{ title }}</title>
-		<use :xlink:href="icon.url" xmlns:xlink="http://www.w3.org/1999/xlink"/>
-	</svg>
+<template lang="pug">
+	svg(:class="className", :viewBox="icon.viewBox", xmlns="http://www.w3.org/2000/svg")
+		title(v-if="title") {{ title }}
+		use(:xlink:href="icon.url", xmlns:xlink="http://www.w3.org/1999/xlink")
 </template>
 
 <script>
