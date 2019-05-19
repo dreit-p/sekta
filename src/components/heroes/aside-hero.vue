@@ -72,7 +72,10 @@ section.aside-hero
 				height: 100%;
 				width: 100%;
 				background-repeat: no-repeat;
-				background-position: left 30%;
+				background-position: center 30%;
+				@media (min-width: 1920px) {
+					background-position: left 30%;
+				}
 				@media (max-width: 1024px) {
 					background-size: cover;
 				}
