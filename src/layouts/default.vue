@@ -8,12 +8,12 @@ div.main-layout
 
 <script>
 	export default {
+		name: 'DefaultLayout',
 		components: {
 			AppHeader: () => import('@/components/header.vue'),
 			AppFooter: () => import('@/components/footer.vue'),
 			AppModal: () => import('@/components/modal.vue'),
 		},
-		name: 'DefaultLayout',
 	}
 </script>
 

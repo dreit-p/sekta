@@ -25,16 +25,22 @@ section.aside-hero
 		components: {
 		},
 		props: {
-			image: String,
-			title: String,
-		},
-		computed: {
+			image: {
+				type: String,
+				default: ''
+			},
+			title: {
+				type: String,
+				default: ''
+			},
 		},
 		data () {
 			return {
 				backgroundImage: require('@/assets/images/' + this.image)
 			}
-		}
+		},
+		computed: {
+		},
 	}
 </script>
 
