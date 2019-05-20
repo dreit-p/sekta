@@ -48,6 +48,11 @@ const Router = new VueRouter({
 			component: () => import('./views/contacts.vue')
 		},
 		{
+			path: '/jobs',
+			name: 'jobs',
+			component: () => import('./views/jobs.vue')
+		},
+		{
 			path: '/online-courses',
 			component: {
 				name: 'router-wrapper',
