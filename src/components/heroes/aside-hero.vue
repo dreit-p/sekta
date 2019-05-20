@@ -8,10 +8,11 @@ section.aside-hero
 			.img(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
-				h1.title(v-if='this.title') {{title}}
-				.text
-					slot
-				slot(name='buttons')
+				.wrapper
+					h1.title(v-if='this.title') {{title}}
+					.text
+						slot
+					slot(name='buttons')
 	.mobile-content
 		.limit
 			.text
@@ -73,11 +74,9 @@ section.aside-hero
 				width: 100%;
 				background-repeat: no-repeat;
 				background-position: center 30%;
+				background-size: cover;
 				@media (min-width: 1920px) {
 					background-position: left 30%;
-				}
-				@media (max-width: 1024px) {
-					background-size: cover;
 				}
 			}
 			.triangle {
@@ -102,20 +101,28 @@ section.aside-hero
 		}
 		.content {
 			padding: 30px *;
-			ul {
-				li {
-					font-size: 15px;
-					line-height: 1.33;
-				}
+			.wrapper {
+				width: 50%;
+				height: 100%;
 			}
 			@media (max-width: 1024px) {
 				height: 100%;
 				padding: 10px *;
-				.limit {
+				.wrapper {
+					width: 100%;
 					height: 100%;
 					display: flex;
 					flex-direction: column;
 					justify-content: space-between;
+				}
+				.limit {
+					height: 100%;
+				}
+			}
+			ul {
+				li {
+					font-size: 15px;
+					line-height: 1.33;
 				}
 			}
 			.title {
