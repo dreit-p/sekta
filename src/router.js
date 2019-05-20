@@ -43,6 +43,16 @@ const Router = new VueRouter({
 			component: () => import(/* webpackChunkName: "about" */ './views/certificates.vue')
 		},
 		{
+			path: '/contacts',
+			name: 'contacts',
+			component: () => import('./views/contacts.vue')
+		},
+		{
+			path: '/jobs',
+			name: 'jobs',
+			component: () => import('./views/jobs.vue')
+		},
+		{
 			path: '/online-courses',
 			component: {
 				name: 'router-wrapper',
@@ -57,6 +67,10 @@ const Router = new VueRouter({
 					path: 's60days',
 					// name: 's60-women',
 					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-women.vue')
+				},
+				{
+					path: 'accu',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/accu.vue')
 				},
 				{
 					path: 's60days-men',
@@ -110,6 +124,21 @@ const Router = new VueRouter({
 			]
 		},
 		{
+			path: '/personal',
+			meta: { requiresAuth: true, layout: 'personal' },
+			component: {
+				name: 'router-wrapper',
+				template: `<router-view></router-view>`
+			},
+			children: [
+				{
+					path: '',
+					meta: { requiresAuth: true, layout: 'personal' },
+					component: () => import('./views/personal/main.vue'),
+				},
+			]
+		},
+		{
 			// 404
 			path: '*',
 			component: {
@@ -117,6 +146,24 @@ const Router = new VueRouter({
 			}
 		}
 	]
+})
+
+Router.beforeEach((to, from, next) => {
+	if (to.matched.some(record => record.meta.requiresAuth)) {
+		// этот путь требует авторизации, проверяем залогинен ли
+		// пользователь, и если нет, перенаправляем на страницу логина
+		// if (!auth.loggedIn()) {
+		if (false) {
+			next({
+				path: '/login',
+				query: { redirect: to.fullPath }
+			})
+		} else {
+			next()
+		}
+	} else {
+		next() // всегда так или иначе нужно вызвать next()!
+	}
 })
 
 export default Router

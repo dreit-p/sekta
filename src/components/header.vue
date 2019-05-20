@@ -105,9 +105,15 @@ header.main-header
 	import { mapState, mapActions } from 'vuex'
 
 	export default {
-		name: 'app-header',
+		name: 'AppHeader',
 		components: {
 			SvgIcon: () => import('@/components/SvgIcon.vue'),
+		},
+		data () {
+			return {
+				showSubLinks: false,
+				dropdownTimer: null,
+			}
 		},
 		computed: {
 			isOpenedMenu () {
@@ -125,12 +131,6 @@ header.main-header
 				'appStates',
 				'additionalLinks'
 			])
-		},
-		data () {
-			return {
-				showSubLinks: false,
-				dropdownTimer: null,
-			}
 		},
 		methods: {
 			toggleMenu () {
@@ -294,7 +294,7 @@ header.main-header
 <style lang="postcss" scoped>
 	.main-header {
 		position: relative;
-		z-index: 2;
+		z-index: 4;
 		.header-offset {
 			@media (max-width: 600px) {
 				height: 65px;

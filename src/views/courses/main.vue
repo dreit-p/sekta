@@ -3,6 +3,7 @@
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-s60days.jpg')} ')`}")
+				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-s60days.jpg')} ')`}")
 			.content-wrapper
 				.content
 					.title Основной онлайн-курс #s60days:
@@ -18,6 +19,7 @@
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-s60lite.jpg')} ')`}")
+				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-s60lite.jpg')} ')`}")
 			.content-wrapper
 				.content
 					.title КУРС #SEKTACARE:
@@ -33,6 +35,7 @@
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-sectamama.jpg')} ')`}")
+				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-sectamama.jpg')} ')`}")
 			.content-wrapper
 				.content
 					.title Школа идеального тела для мам
@@ -48,6 +51,7 @@
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-pregnant.jpg')} ')`}")
+				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-pregnant.jpg')} ')`}")
 			.content-wrapper
 				.content
 					.title Школа идеального тела для беременных
@@ -62,6 +66,7 @@
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-vip.jpg')} ')`}")
+				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-vip.jpg')} ')`}")
 			.content-wrapper
 				.content
 					.title VIP программа с личным тренером
@@ -128,11 +133,26 @@
 			position: absolute;
 			top: 0;
 			right: 0;
-			.img {
+			.img,
+			.mobile-img {
+				position: absolute;
 				height: 100%;
 				width: 100%;
 				background-position: 25% center;
 				background-size: cover;
+			}
+			.mobile-img {
+				background-position: center;
+				background-size: cover;
+				display: none;
+			}
+			@media (max-width: 600px) {
+				.mobile-img {
+					display: block;
+				}
+				.img {
+					display: none;
+				}
 			}
 		}
 		.content-wrapper {

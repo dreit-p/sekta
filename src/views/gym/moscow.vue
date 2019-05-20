@@ -1,88 +1,95 @@
 <template lang="pug">
 div.gym
 
+
 	gym-hero(class='huge-content', image='gym_bg.jpg')
 		template(v-slot:another)
 			.huge-hero-text
 				h1.main Москва
 				.additional старт занятий – 01 октября
 
+	.section-btns
+		.btn.next(v-if='nextBtn.isVisible', @click='scrollTo(nextBtn.destination); nextBtn.isVisible = false') {{ nextBtn.text }}
 
-	section
-		.section-caption Выберите программу тренировок
-		training-plans(v-model='selected.planID', :plans='cityData.plans')
-
-
-	section
-		.section-caption Выберите расположение зала
-		gym-map(v-model='selected.gymID', :locations='cityData.locations')
-
-
-	section
-		.section-caption Выберите количество тренировок
-		training-quantities(v-model='selected.quantityTypeID', :quantityTypes='cityData.quantityTypes')
+	#training-params
+		.back-btn(v-if='section > 0', @click='section = 0;')
+			svg-icon(name='icon-arrow').to-left
+			| назад
+		.gym-section(:class='{available: section === 0}')
+			section#plan
+				.section-caption Выберите программу тренировок
+				training-plans(v-model='selected.planID', @click='setSection(1)', :plans='cityData.plans')
 
 
-	section
-		.section-caption Время занятий
-		time-selector(v-model='selected.timeIDs', :schedule='cityData.schedule', :certificateDays='getCertificateData("available_days")', :bracketing='+getCertificateData("quantity")')
+		.gym-section(:class='{available: section === 1}')
+			section#gym
+				.section-caption Выберите расположение зала
+				gym-map(v-model='selected.gymID', :locations='cityData.locations')
+
+			section#quantityType
+				.section-caption Выберите количество тренировок
+				training-quantities(v-model='selected.quantityTypeID', :quantityTypes='cityData.quantityTypes')
+
+			section#time
+				.section-caption Время занятий
+				time-selector(v-model='selected.timeIDs', :schedule='cityData.schedule', :certificateTimes='getCertificateData("available_days")', :bracketing='+getCertificateData("quantity")')
 
 
-	section
-		.section-caption Фотографии зала
-		photo-gallery(:photos='cityData.photos')
+			section
+				.section-caption Фотографии зала
+				photo-gallery(:photos='cityData.photos')
 
+			section#form
+				.section-caption
+					| Оформление заказа
+					.highlight старт занятий – 01 декабря
+				entry-form
 
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight старт занятий – 01 декабря
-		entry-form
+	.gym-section(:class='{available: section === 1}')
+		article.main-content
+			.article-limit
+				.text-typography
+					h2.center Часто задаваемые вопросы
+					h5 Что входит в курс #sekta в зале?
+					p Курс #sekta в зале включает:
+					ul
+						li 4 недели групповых тренировок от 2 до 6 раз в неделю (количество тренировок вы выбираете при подаче заявки на курс);
+						li работу с личной страницей на сайте, где размещаются задания по питанию, видео коротких утренних тренировок и полезные материалы; 
+						li трекер целей и полезных привычек на личной странице на сайте.
 
+					h5 Какие будут тренировки?
+					p В программе чередуются высокоинтенсивные, кардио, силовые и альтернативные виды тренировок на все группы мышц. Работаем с собственным весом, иногда включаем спортивный инвентарь, если он есть в зале. Тренировки не повторяются.
 
-	article.main-content
-		.article-limit
-			.text-typography
-				h2.center Часто задаваемые вопросы
-				h5 Что входит в курс #sekta в зале?
-				p Курс #sekta в зале включает:
-				ul
-					li 4 недели групповых тренировок от 2 до 6 раз в неделю (количество тренировок вы выбираете при подаче заявки на курс);
-					li работу с личной страницей на сайте, где размещаются задания по питанию, видео коротких утренних тренировок и полезные материалы; 
-					li трекер целей и полезных привычек на личной странице на сайте.
+					h5 Сколько длится курс?
+					p Курс рассчитан на 4 недели, но программа длится столько, сколько вам нужно для достижения результата — вы можете заниматься месяц, два или год. Каждый месяц — новые задания для продолжающих обучение и новичков.
 
-				h5 Какие будут тренировки?
-				p В программе чередуются высокоинтенсивные, кардио, силовые и альтернативные виды тренировок на все группы мышц. Работаем с собственным весом, иногда включаем спортивный инвентарь, если он есть в зале. Тренировки не повторяются.
+					h5 Я могу менять дни, время и ходить на тренировки в любую группу?
+					p Нет. Вы оплачиваете конкретное направление, зал, время, количество и дни тренировок (выбираете при подаче заявки) — и можете ходить только в выбранную группу.
 
-				h5 Сколько длится курс?
-				p Курс рассчитан на 4 недели, но программа длится столько, сколько вам нужно для достижения результата — вы можете заниматься месяц, два или год. Каждый месяц — новые задания для продолжающих обучение и новичков.
+					h5 Можно ли перенести тренировки на следующий месяц?
+					p Перенос и восстановление тренировок возможен только по медицинской справке или больничному листу. В других форс-мажорных обстоятельствах вопрос переноса решается в индивидуальном порядке.
 
-				h5 Я могу менять дни, время и ходить на тренировки в любую группу?
-				p Нет. Вы оплачиваете конкретное направление, зал, время, количество и дни тренировок (выбираете при подаче заявки) — и можете ходить только в выбранную группу.
+					h5 Открыт набор во все группы, кроме направления #sektalite. Что делать?
+					p Подождать до 20 числа текущего месяца — в этот день мы открываем набор в группы направления #sektalite.
 
-				h5 Можно ли перенести тренировки на следующий месяц?
-				p Перенос и восстановление тренировок возможен только по медицинской справке или больничному листу. В других форс-мажорных обстоятельствах вопрос переноса решается в индивидуальном порядке.
+					h5 Когда старт курса?
+					p сюда надо подкручивать дату из аминки (проставляется вручную каждый месяц)
 
-				h5 Открыт набор во все группы, кроме направления #sektalite. Что делать?
-				p Подождать до 20 числа текущего месяца — в этот день мы открываем набор в группы направления #sektalite.
-
-				h5 Когда старт курса?
-				p сюда надо подкручивать дату из аминки (проставляется вручную каждый месяц)
-
-				h5 Что брать с собой на тренировки в зал?
-				p Спортивную форму, кроссовки для тренинга или бега, банные принадлежности (если в выбранном вами зале есть душ), бутылку с водой. Коврики и нужный инвентарь для тренировок есть в зале.
+					h5 Что брать с собой на тренировки в зал?
+					p Спортивную форму, кроссовки для тренинга или бега, банные принадлежности (если в выбранном вами зале есть душ), бутылку с водой. Коврики и нужный инвентарь для тренировок есть в зале.
 </template>
 
 <script>
 	export default {
-		name: 'gym-moscow',
+		name: 'GymMoscow',
 		components: {
 			EntryForm: () => import('@/components/entry-form.vue'),
-			PhotoGallery: () => import('@/components/gym/photo-gallery.vue'),
-			TrainingPlans: () => import('@/components/gym/trainings.vue'),
-			TrainingQuantities: () => import('@/components/gym/quantities.vue'),
-			TimeSelector: () => import('@/components/gym/time-selector.vue'),
-			GymMap: () => import('@/components/gym/map.vue'),
+			SvgIcon: () => import('@/components/SvgIcon.vue'),
+			PhotoGallery: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/photo-gallery.vue'),
+			TrainingPlans: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/trainings.vue'),
+			TrainingQuantities: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/quantities.vue'),
+			TimeSelector: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/time-selector.vue'),
+			GymMap: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/map.vue'),
 			GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 		},
 		beforeRouteLeave (to, from, next) {
@@ -91,25 +98,21 @@ div.gym
 			}
 			next();
 		},
-		computed: {
-		},
-		methods: {
-			getCertificateData (dataType) {
-				for (var i = 0; i < this.cityData.quantityTypes.length; i++) {
-					if (+this.cityData.quantityTypes[i].id == +this.selected.quantityTypeID) {
-						return this.cityData.quantityTypes[i][dataType]
-					}
-				}
-			},
-		},
 		data () {
 			return {
 				selected: {
-					gymID: 1,
 					planID: 1,
+					gymID: 1,
 					quantityTypeID: 1,
 					timeIDs: [],
 				},
+				nextBtn: {
+					scrollEvent: null,
+					isVisible: false,
+					destination: 'plan',
+					text: ''
+				},
+				section: 0,
 				cityData: {
 					plans: [
 						{
@@ -435,9 +438,206 @@ div.gym
 					],
 				},
 			}
-		}
+		},
+		computed: {
+		},
+		watch: {
+			'selected.gymID' () {
+				this.activateNextBtn({
+					elemId: 'gym',
+					destId: 'quantityType',
+					text: 'Выбрать количество тренировок'
+				})
+			},
+			'selected.quantityTypeID' () {
+				this.activateNextBtn({
+					elemId: 'quantityType',
+					destId: 'time',
+					text: 'Выбрать время занятий'
+				})
+			},
+			'selected.timeIDs' () {
+				this.activateNextBtn({
+					elemId: 'time',
+					destId: 'form',
+					text: 'Начать оформление'
+				})
+			},
+		},
+		methods: {
+			setSection (num) {
+				this.section = 1;
+				this.scrollTo('training-params');
+			},
+			activateNextBtn ({elemId, destId, text}) {
+				let screenHeight = window.innerHeight
+												|| document.documentElement.clientHeight
+												|| document.body.clientHeight;
+				if (document.getElementById(elemId).offsetHeight < screenHeight -100 -65 && this.isScrolledIntoView(document.getElementById(destId))) {return false}
+
+					var forLastExec,
+							delay = 100, // delay between calls
+							throttled = false;
+
+					function throttling(cb) {
+						// only run if we're not throttled
+						if (!throttled) {
+							// actual callback action
+							cb();
+							// we're throttled!
+							throttled = true;
+							// set a timeout to un-throttle
+							setTimeout(()=>{
+								throttled = false;
+							}, delay); 
+						}
+						// last exec on resize end
+						clearTimeout(forLastExec);
+						forLastExec = setTimeout(cb, delay);
+					}
+
+				this.nextBtn = {
+					isVisible: true,
+					destination: destId,
+					text: text,
+					scrollEvent: ()=>{
+						throttling(()=>{
+							if (this.isScrolledIntoView(document.getElementById(destId))) {
+								this.clearScrollEvent();
+								this.nextBtn.isVisible = false;
+							}
+						});
+					},
+				}
+				window.addEventListener('scroll', this.nextBtn.scrollEvent, false);
+			},
+			getCertificateData (dataType) {
+				for (var i = 0; i < this.cityData.quantityTypes.length; i++) {
+					if (+this.cityData.quantityTypes[i].id == +this.selected.quantityTypeID) {
+						return this.cityData.quantityTypes[i][dataType]
+					}
+				}
+			},
+			isScrolledIntoView (elem) {
+				let rect = elem.getBoundingClientRect();
+				let elemTop = rect.top;
+				let elemBottom = rect.bottom;
+				let offset = 100;
+
+				let screenHeight = window.innerHeight
+												|| document.documentElement.clientHeight
+												|| document.body.clientHeight;
+
+				// Only completely visible elements return true:
+				// let isVisible = (elemTop >= 0) && (elemBottom <= screenHeight);
+				// Partially visible elements return true:
+				let isVisible = elemTop < screenHeight - offset && elemBottom >= offset;
+				return isVisible;
+			},
+			clearScrollEvent() {
+				window.removeEventListener('scroll', this.nextBtn.scrollEvent);
+				this.nextBtn.scrollEvent = null;
+			},
+			scrollTo (id) {
+				if (this.nextBtn.scrollEvent) {
+					this.clearScrollEvent();
+				}
+				window.scrollTo({
+					top: getPosition(document.getElementById(id)).y -65,
+					behavior: "smooth"
+				});
+				function getPosition(el) {
+
+					var x = 0,
+							y = 0;
+
+					while (el != null && (el.tagName || '').toLowerCase() != 'html') {
+						x += el.offsetLeft || 0; 
+						y += el.offsetTop || 0;
+						el = el.offsetParent;
+					}
+
+					return { x: parseInt(x, 10), y: parseInt(y, 10) };
+				}
+			},
+		},
 	}
 </script>
 
 <style lang="postcss">
+.section-btns {
+	display: none;
+}
+.back-btn {
+	cursor: pointer;
+	display: none;
+	padding: 10px var(--col-space);
+	/* margin: * -10px; */
+	top: 5px;
+	position: absolute;
+	z-index: 1;
+	@media (max-width: 650px) {
+		display: inline-block;
+	}
+	.svg-icon {
+		height: 10px;
+		width: 20px;
+		display: inline-block;
+		margin-right: 5px;
+		&.to-left {
+			transform: rotateZ(180deg);
+		}
+	}
+}
+@media (max-width: 650px) {
+	.gym-section {
+		display: none;
+		&.available {
+			display: block;
+		}
+	}
+	#training-params {
+		padding-top: 15px;
+		position: relative;
+		overflow: hidden;
+	}
+	.section-btns {
+		position: fixed;
+		z-index: 2;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+		display: flex;
+		width: 100%;
+		.btn {
+			padding: 10px 30px;
+			background-color: var(--accent_color);
+			font-size: 16px;
+			user-select: none;
+			color: white;
+			text-align: center;
+			cursor: pointer;
+			white-space: nowrap;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-left: 3px solid color(var(--accent_color) shade(10%));
+			&.invisible {
+				opacity: 0;
+				pointer-events: none;
+				border: none;
+				& + .btn {
+					border: none;
+				}
+			}
+			&:first-child {
+				border: none;
+			}
+			&.next {
+				flex-grow: 1;
+			}
+		}
+	}
+}
 </style>

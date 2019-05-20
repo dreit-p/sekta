@@ -8,10 +8,11 @@ section.aside-hero
 			.img(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
-				h1.title(v-if='this.title') {{title}}
-				.text
-					slot
-				slot(name='buttons')
+				.wrapper
+					h1.title(v-if='this.title') {{title}}
+					.text
+						slot
+					slot(name='buttons')
 	.mobile-content
 		.limit
 			.text
@@ -25,16 +26,22 @@ section.aside-hero
 		components: {
 		},
 		props: {
-			image: String,
-			title: String,
-		},
-		computed: {
+			image: {
+				type: String,
+				default: ''
+			},
+			title: {
+				type: String,
+				default: ''
+			},
 		},
 		data () {
 			return {
 				backgroundImage: require('@/assets/images/' + this.image)
 			}
-		}
+		},
+		computed: {
+		},
 	}
 </script>
 
@@ -60,14 +67,16 @@ section.aside-hero
 			right: 0;
 			@media (min-width: 1025px) {
 				width: 50%;
-				background-position: center left;
+				background-position: left center;
 			}
 			.img {
 				height: 100%;
 				width: 100%;
+				background-repeat: no-repeat;
 				background-position: center 30%;
-				@media (max-width: 1024px) {
-					background-size: cover;
+				background-size: cover;
+				@media (min-width: 1920px) {
+					background-position: left 30%;
 				}
 			}
 			.triangle {
@@ -92,20 +101,28 @@ section.aside-hero
 		}
 		.content {
 			padding: 30px *;
-			ul {
-				li {
-					font-size: 15px;
-					line-height: 1.33;
-				}
+			.wrapper {
+				width: 50%;
+				height: 100%;
 			}
 			@media (max-width: 1024px) {
 				height: 100%;
 				padding: 10px *;
-				.limit {
+				.wrapper {
+					width: 100%;
 					height: 100%;
 					display: flex;
 					flex-direction: column;
 					justify-content: space-between;
+				}
+				.limit {
+					height: 100%;
+				}
+			}
+			ul {
+				li {
+					font-size: 15px;
+					line-height: 1.33;
 				}
 			}
 			.title {

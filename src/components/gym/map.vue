@@ -47,7 +47,7 @@
 <script>
 	import { yandexMap, ymapMarker } from 'vue-yandex-maps'
 	export default {
-		name: 'gym-map',
+		name: 'GymMap',
 		components: {
 			yandexMap, ymapMarker,
 			WebpImg: () => import('@/components/webp-img.vue'),
@@ -65,6 +65,27 @@
 				type: Array,
 				default: ()=>[]
 			},
+		},
+		data () {
+			return {
+				map: {},
+				mapCreated: false,
+				mounted: false,
+				isChoseMap: false,
+				showVideoModal: false,
+				showDescriptionText: false,
+				selectedIndex: null,
+				clusterOptions: {
+					gyms: {
+						useMapMargin: true,
+						zoomMargin: [40, 20, 10, 20],
+						gridSize: 16,
+						preset: 'islands#blackClusterIcons'
+					},
+				},
+				defaultPosition: [55.746726, 37.5911983],
+				windowWidth: window.innerWidth,
+			}
 		},
 		computed: {
 			isShowingMap () {
@@ -100,6 +121,30 @@
 				return marks;
 			},
 		},
+		watch: {
+			isShowingMap () {
+				if (!this.isShowingMap) {
+					this.map.destroy();
+					this.mapCreated = false;
+				}
+			}
+		},
+		created () {
+			this.locations.some((elem, index)=>{
+				if (elem.id == this.value) {
+					this.selectGym(index);
+					return true;
+				}
+			});
+		},
+		mounted () {
+			this.mounted = true;
+			window.addEventListener('resize', ()=>{
+				this.$nextTick(function () {
+					this.windowWidth = window.innerWidth
+				});
+			});
+		},
 		methods: {
 			marksColor (index) {
 				return this.selectedIndex == index ? '#0ab6a1' : '#000'
@@ -128,51 +173,6 @@
 				this.defaultPosition = map.getCenter();
 			}
 		},
-		created () {
-			this.locations.some((elem, index)=>{
-				if (elem.id == this.value) {
-					this.selectGym(index);
-					return true;
-				}
-			});
-		},
-		watch: {
-			isShowingMap () {
-				if (!this.isShowingMap) {
-					this.map.destroy();
-					this.mapCreated = false;
-				}
-			}
-		},
-		mounted () {
-			this.mounted = true;
-			window.addEventListener('resize', ()=>{
-				this.$nextTick(function () {
-					this.windowWidth = window.innerWidth
-				});
-			});
-		},
-		data () {
-			return {
-				map: {},
-				mapCreated: false,
-				mounted: false,
-				isChoseMap: false,
-				showVideoModal: false,
-				showDescriptionText: false,
-				selectedIndex: null,
-				clusterOptions: {
-					gyms: {
-						useMapMargin: true,
-						zoomMargin: [40, 20, 10, 20],
-						gridSize: 16,
-						preset: 'islands#blackClusterIcons'
-					},
-				},
-				defaultPosition: [55.746726, 37.5911983],
-				windowWidth: window.innerWidth,
-			}
-		}
 	}
 </script>
 

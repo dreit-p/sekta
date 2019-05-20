@@ -1,11 +1,11 @@
 @import 'vars.css';
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,400i,700i|Montserrat:400,700,900&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700,400i,700i,800|Montserrat:400,700,900&subset=cyrillic&display=swap');
 
 
 @font-face {
 	font-family: 'Uni Sans';
 	font-style: normal;
-	font-display: block;
+	font-display: swap;
 	font-weight: 400;
 	src: local('Uni Sans Regular'), 
 				local('UniSans-Regular'), 
@@ -16,7 +16,7 @@
 @font-face {
 	font-family: 'Uni Sans';
 	font-style: normal;
-	font-display: block;
+	font-display: swap;
 	font-weight: 700;
 	src: local('Uni Sans Bold'), 
 				local('UniSans-Bold'), 
@@ -27,7 +27,7 @@
 @font-face {
 	font-family: 'Uni Sans';
 	font-style: normal;
-	font-display: block;
+	font-display: swap;
 	font-weight: 900;
 	src: local('Uni Sans Heavy CAPS'), 
 				local('UniSans-Heavy-CAPS'), 

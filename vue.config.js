@@ -1,5 +1,5 @@
 module.exports = {
-	configureWebpack: {
+    configureWebpack: {
 		devServer: {
 			port: 4444,
 			host: '0.0.0.0',
@@ -10,18 +10,18 @@ module.exports = {
 		}
 	},
 
-	css: {
+    css: {
 		sourceMap: true,
 	},
 
-	publicPath: undefined,
-	outputDir: undefined,
-	assetsDir: undefined,
-	runtimeCompiler: true,
-	productionSourceMap: false,
-	parallel: undefined,
+    publicPath: undefined,
+    outputDir: undefined,
+    assetsDir: undefined,
+    runtimeCompiler: true,
+    productionSourceMap: false,
+    parallel: undefined,
 
-	chainWebpack: config => {
+    chainWebpack: config => {
 		config.module
 			.rule('svg-sprite')
 			.use('svgo-loader')
@@ -38,7 +38,8 @@ module.exports = {
 					}]
 			}]);
 	},
-	pluginOptions: {
+
+    pluginOptions: {
 		svgSprite: {
 			/*
 			 * The directory containing your SVG files.
@@ -62,5 +63,7 @@ module.exports = {
 				plainSprite: true
 			}
 		}
-	}
+	},
+
+    lintOnSave: undefined
 }

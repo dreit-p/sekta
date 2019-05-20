@@ -1,13 +1,12 @@
-<template>
-	<svg :class="className" xmlns="http://www.w3.org/2000/svg">
-		<title v-if="title">{{ title }}</title>
-		<use :xlink:href="iconPath" xmlns:xlink="http://www.w3.org/1999/xlink"/>
-	</svg>
+<template lang="pug">
+	svg(:class="className", :viewBox="icon.viewBox", xmlns="http://www.w3.org/2000/svg")
+		title(v-if="title") {{ title }}
+		use(:xlink:href="icon.url", xmlns:xlink="http://www.w3.org/1999/xlink")
 </template>
 
 <script>
 export default {
-	name: 'svg-icon',
+	name: 'SvgIcon',
 
 	props: {
 		name: {
@@ -22,10 +21,9 @@ export default {
 	},
 
 	computed: {
-		iconPath() {
-			return require(`@/assets/images/svg/${this.name}.svg`).default.url;
+		icon() {
+			return require(`@/assets/images/svg/${this.name}.svg`).default;
 		},
-
 		className() {
 			return 'svg-icon svg-icon--' + this.name;
 		}
