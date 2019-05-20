@@ -7,7 +7,7 @@
 				href='#'
 				v-for='(plan, index) in group.elements'
 				:class='{checked: selectedID == plan.id}'
-				@click.prevent='selectPlan(plan.id)'
+				@click.prevent='selectPlan(plan.id); click()'
 			)
 				.image(:style="{ backgroundImage: `url(' ${require('@/assets/images/'+plan.image)} ')`}")
 					.caption {{plan.name}}
@@ -61,6 +61,9 @@
 			selectPlan(id) {
 				this.$emit('change', parseInt(id));
 				this.selectedID = id;
+			},
+			click() {
+				this.$emit('click');
 			},
 		},
 		data () {

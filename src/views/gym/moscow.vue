@@ -18,7 +18,7 @@ div.gym
 		.gym-section(:class='{available: section === 0}')
 			section#plan
 				.section-caption Выберите программу тренировок
-				training-plans(v-model='selected.planID', :plans='cityData.plans')
+				training-plans(v-model='selected.planID', @click='setSection(1)', :plans='cityData.plans')
 
 
 		.gym-section(:class='{available: section === 1}')
@@ -101,9 +101,9 @@ div.gym
 		data () {
 			return {
 				selected: {
-					planID: 0,
+					planID: 1,
 					gymID: 1,
-					quantityTypeID: 2,
+					quantityTypeID: 1,
 					timeIDs: [],
 				},
 				nextBtn: {
@@ -442,10 +442,6 @@ div.gym
 		computed: {
 		},
 		watch: {
-			'selected.planID' () {
-				this.section = 1;
-				this.scrollTo('training-params');
-			},
 			'selected.gymID' () {
 				this.activateNextBtn({
 					elemId: 'gym',
@@ -469,6 +465,10 @@ div.gym
 			},
 		},
 		methods: {
+			setSection (num) {
+				this.section = 1;
+				this.scrollTo('training-params');
+			},
 			activateNextBtn ({elemId, destId, text}) {
 				let screenHeight = window.innerHeight
 												|| document.documentElement.clientHeight
