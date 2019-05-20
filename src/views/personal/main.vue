@@ -90,6 +90,26 @@ div.personal-layout
 						.open-btn Подробнее о курсе
 							.arrow-icon
 
+
+				h2.section-title Сертфикаты
+				.tile.certificate
+					.img(:style="{ backgroundImage: `url('${require('@/assets/images/certificates_bg.jpg')}')` }")
+					.text СЕРТИФИКАТ НА СУММУ 10 900руб.
+
+
+				h2.section-title Рекомендуем
+				.tile.simple
+					.img-side
+						svg-icon(name='logo-sekta')
+					.text-side
+						.title #s60lite
+						.description
+							| Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
+						.btns
+							a.btn Демо
+
+
+
 			section.column.sidebar
 				h2.section-title Статистика
 				.tile
@@ -420,6 +440,9 @@ div.personal-layout
 		.btn {
 			background-color: white;
 			border-radius: 5px;
+			display: inline-block;
+			text-decoration: none;
+			text-align: center;
 			border: 1px solid var(--accent_color);
 			padding: 15px 18px;
 			min-width: 145px;
@@ -459,6 +482,72 @@ div.personal-layout
 					margin: 0;
 					@media (max-width: 500px) {
 						width: 15px;
+					}
+				}
+			}
+		}
+
+
+		.tile.certificate {
+			display: flex;
+			align-items: center;
+			.img {
+				background-position: center center;
+				background-size: cover;
+				flex-basis: 47%;
+				max-width: 310px;
+				height: 30vw;
+				max-height: 226px;
+			}
+			.text {
+				flex-shrink: 1;
+				flex-basis: 57%;
+				padding: 20px;
+				font-size: 18px;
+				font-weight: bold;
+				text-align: center;
+				@media (max-width: 500px) {
+					font-size: 12px;
+				}
+			}
+		}
+
+		.tile.simple {
+			display: flex;
+			align-items: stretch;
+			padding: 20px 30px;
+			@media (max-width: 500px) {
+				display: block;
+				padding: 14px 18px;
+			}
+			.img-side {
+				margin-right: 30px;
+				min-width: 145px;
+				float: left;
+				img,
+				svg {
+					height: auto;
+					width: auto;
+				}
+			}
+			.text-side {
+				.title {
+					font-size: 18px;
+					font-weight: bold;
+					text-transform: uppercase;
+					@media (max-width: 500px) {
+						font-size: 13px;
+					}
+				}
+				.description {
+					margin: 23px * 15px;
+					line-height: 1.5;
+					font-size: 14px;
+					@media (max-width: 500px) {
+						float: left;
+						font-size: 13px;
+						line-height: 1.38;
+						margin: 18px * 10px;
 					}
 				}
 			}
