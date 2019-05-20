@@ -43,6 +43,11 @@ const Router = new VueRouter({
 			component: () => import(/* webpackChunkName: "about" */ './views/certificates.vue')
 		},
 		{
+			path: '/contacts',
+			name: 'contacts',
+			component: () => import('./views/contacts.vue')
+		},
+		{
 			path: '/online-courses',
 			component: {
 				name: 'router-wrapper',
