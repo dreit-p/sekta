@@ -64,6 +64,10 @@ const Router = new VueRouter({
 					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-women.vue')
 				},
 				{
+					path: 'accu',
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/accu.vue')
+				},
+				{
 					path: 's60days-men',
 					// name: 's60-men',
 					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-men.vue')
