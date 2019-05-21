@@ -466,7 +466,7 @@ div.gym
 		},
 		methods: {
 			setSection (num) {
-				this.section = 1;
+				this.section = num;
 				this.scrollTo('training-params');
 			},
 			activateNextBtn ({elemId, destId, text}) {

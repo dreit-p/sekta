@@ -20,7 +20,7 @@
 
 <script>
 	export default {
-		name: 'training-plans',
+		name: 'TrainingPlans',
 		model: {
 			event: 'change'
 		},
@@ -34,8 +34,10 @@
 				default: ()=>[]
 			},
 		},
-		created () {
-			this.selectPlan(this.value);
+		data () {
+			return {
+				selectedID: null,
+			}
 		},
 		computed: {
 			groups () {
@@ -57,6 +59,9 @@
 				return results;
 			},
 		},
+		created () {
+			this.selectPlan(this.value);
+		},
 		methods: {
 			selectPlan(id) {
 				this.$emit('change', parseInt(id));
@@ -66,11 +71,6 @@
 				this.$emit('click');
 			},
 		},
-		data () {
-			return {
-				selectedID: null,
-			}
-		}
 	}
 </script>
 
