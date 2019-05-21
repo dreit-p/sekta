@@ -80,17 +80,17 @@
 	import { mapActions } from 'vuex'
 
 	export default {
-		name: 'for-mums',
+		name: 'Courses',
 		components: {
 			// CourseSection: () => courseSection,
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
+		data () {
+			return {}
+		},
 		methods: {
 			...mapActions(['setFormModalState'])
 		},
-		data () {
-			return {}
-		}
 	}
 </script>
 
