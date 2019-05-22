@@ -5,7 +5,7 @@ section.aside-hero
 			.triangle
 				svg(height='500' viewBox='0 0 150 500')
 					polygon.triangle(fill='white' points='0,0 150,250 0,500')
-			.img(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
+			.img(:class='{horizontal: horizontal}', :style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
 				.wrapper
@@ -29,6 +29,10 @@ section.aside-hero
 			image: {
 				type: String,
 				default: ''
+			},
+			horizontal: {
+				type: Boolean,
+				default: false
 			},
 			title: {
 				type: String,
@@ -68,6 +72,9 @@ section.aside-hero
 			@media (min-width: 1025px) {
 				width: 50%;
 				background-position: left center;
+				.img.horizontal {
+					background-position: left 30%;
+				}
 			}
 			.img {
 				height: 100%;
@@ -75,6 +82,7 @@ section.aside-hero
 				background-repeat: no-repeat;
 				background-position: center 30%;
 				background-size: cover;
+				
 				@media (min-width: 1920px) {
 					background-position: left 30%;
 				}

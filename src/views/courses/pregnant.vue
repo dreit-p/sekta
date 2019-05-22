@@ -1,7 +1,7 @@
 <template lang="pug">
 div.course
 
-	hero(image='course_bg-pregnant.jpg', title='ДЛЯ БЕРЕМЕННЫХ')
+	hero(image='course_bg-pregnant.jpg', title='ДЛЯ БЕРЕМЕННЫХ', horizontal)
 		p Чтобы быстрее восстановиться после родов, нужно заранее позаботиться о своем теле и здоровье в целом. Курс «Я беременна» составлен совместно с акушером-гинекологом и учитывает все особенности этого периода. Программа курса поможет вам сохранить форму, укрепить организм и обеспечит здоровое протекание беременности. 
 		template(v-slot:buttons)
 			green-btn(@click.prevent='setFormModalState({modalState: true})') Записаться на обучение
