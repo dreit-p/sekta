@@ -75,7 +75,7 @@ section
 
 <script>
 	export default {
-		name: 'second_screen',
+		name: 'SecondScreen',
 		components: {
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 			WebpImg: () => import('@/components/webp-img.vue'),
