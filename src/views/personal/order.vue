@@ -19,6 +19,7 @@ div
 				span.variable-text 9 недель
 
 				p.variable-text.small Итого к оплате: 2 700 руб.
+				green-btn Перейти к оплате
 
 </template>
 
@@ -26,6 +27,7 @@ div
 	export default {
 		name: 'Order',
 		components: {
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		data () {
 			return {}
@@ -34,11 +36,13 @@ div
 </script>
 
 <style lang="postcss" scoped>
+:root {
+	--faint-gray: #808080;
+}
 .order-info-block {
 	.wrapper {
 		margin: 25px 0;
 		display: inline-block;
-		--faint-gray: #808080;
 	}
 	.main-text {
 		font-size: 22px;
@@ -60,6 +64,10 @@ div
 		letter-spacing: 0.06875rem;
 		line-height: 1.33;
 		font-family: var(--font-second);
+	}
+	.small {
+		font-size: 16px;
+		line-height: 1.5;
 	}
 	.inline {
 		display: flex;
