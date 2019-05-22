@@ -20,7 +20,7 @@ div.personal-layout
 	}
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 	.personal-layout {
 		min-height: 100vh;
 		display: flex;

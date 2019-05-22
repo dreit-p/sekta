@@ -53,6 +53,11 @@ const Router = new VueRouter({
 			component: () => import('./views/jobs.vue')
 		},
 		{
+			path: '/success-message',
+			name: 'success-message',
+			component: () => import('./views/success-message.vue')
+		},
+		{
 			path: '/online-courses',
 			component: {
 				name: 'router-wrapper',
@@ -141,9 +146,7 @@ const Router = new VueRouter({
 		{
 			// 404
 			path: '*',
-			component: {
-				template: `<span><center>404</center></span>`
-			}
+			component: () => import('./views/404.vue'),
 		}
 	]
 })
