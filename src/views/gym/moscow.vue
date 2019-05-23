@@ -12,7 +12,7 @@ div.gym
 		.btn.next(v-if='nextBtn.isVisible', @click='scrollTo(nextBtn.destination); nextBtn.isVisible = false') {{ nextBtn.text }}
 
 	#training-params
-		.back-btn(v-if='section > 0', @click='section = 0;')
+		.back-btn(v-if='section > 0', @click='section = 0; nextBtn.isVisible = false')
 			svg-icon(name='icon-arrow').to-left
 			| назад
 		.gym-section(:class='{available: section === 0}')
