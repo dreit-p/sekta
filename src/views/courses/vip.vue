@@ -1,7 +1,7 @@
 <template lang="pug">
 div.course
 
-	hero(image='course_bg-sectavip.jpg', title='VIP ПРОГРАММА', horizontal)
+	hero(image='course_bg-sectavip.jpg', title='VIP ПРОГРАММА', horizontal, inversed)
 		p Индивидуальная коучинговая программа с самыми актуальными разработками нашей Школы. Мы поможем вам выстроить эффективную систему питания и тренировок с учетом ваших особенностей, жизненного графика, свободного времени, предпочитаемой платформы (VK, Facebook, Viber, WhatsApp, Telegram, Skype, Email) и подберем куратора, исходя из ваших запросов.
 		template(v-slot:buttons)
 			green-btn(@click.prevent='setFormModalState({modalState: true})') Записаться на обучение

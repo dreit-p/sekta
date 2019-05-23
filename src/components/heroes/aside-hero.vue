@@ -6,10 +6,11 @@ section.aside-hero
 				svg(height='500' viewBox='0 0 150 500')
 					polygon.triangle(fill='white' points='0,0 150,250 0,500')
 			.img(:class='{horizontal: horizontal}', :style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
+			.mobile-img(:style="{ backgroundImage: `url(' ${backgroundImage_mobile} ')`}")
 		.content
 			.limit
 				.wrapper
-					h1.title(v-if='this.title') {{title}}
+					h1.title(:class='{inversed: inversed}', v-if='this.title') {{title}}
 					.text
 						slot
 					slot(name='buttons')
@@ -34,6 +35,10 @@ section.aside-hero
 				type: Boolean,
 				default: false
 			},
+			inversed: {
+				type: Boolean,
+				default: false
+			},
 			title: {
 				type: String,
 				default: ''
@@ -41,7 +46,8 @@ section.aside-hero
 		},
 		data () {
 			return {
-				backgroundImage: require('@/assets/images/' + this.image)
+				backgroundImage: require('@/assets/images/aside-hero/' + this.image),
+				backgroundImage_mobile: require('@/assets/images/aside-hero/mobile-' + this.image)
 			}
 		},
 		computed: {
@@ -76,15 +82,22 @@ section.aside-hero
 					background-position: left 30%;
 				}
 			}
-			.img {
+			.img,
+			.mobile-img {
+				position: absolute;
 				height: 100%;
 				width: 100%;
 				background-repeat: no-repeat;
 				background-position: center 30%;
 				background-size: cover;
-				
 				@media (min-width: 1920px) {
 					background-position: left 30%;
+				}
+			}
+			.mobile-img {
+				display: none;
+				@media (max-width: 500px) {
+					display: block;
 				}
 			}
 			.triangle {
@@ -93,6 +106,7 @@ section.aside-hero
 				position: absolute;
 				top: 0;
 				left: 0;
+				z-index: 1;
 				@media (max-width: 1024px) {
 					display: none;
 				}
@@ -140,6 +154,12 @@ section.aside-hero
 				text-transform: uppercase;
 				font-family: var(--font-second);
 				text-shadow: 0 0 1em rgba(255, 255, 255, .5);
+				@media (max-width: 1024px) {
+					&.inversed {
+						color: #efefef;
+						text-shadow: 0 0 1em rgba(0, 0, 0, .5);
+					}
+				}
 			}
 			.text {
 				width: 440px;
