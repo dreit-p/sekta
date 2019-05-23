@@ -58,6 +58,11 @@ const Router = new VueRouter({
 			component: () => import('./views/success-message.vue')
 		},
 		{
+			path: '/requisites',
+			name: 'requisites',
+			component: () => import('./views/requisites.vue')
+		},
+		{
 			path: '/online-courses',
 			component: {
 				name: 'router-wrapper',
