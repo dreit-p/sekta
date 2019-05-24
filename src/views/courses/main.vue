@@ -53,13 +53,14 @@
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-pregnant.jpg')} ')`}")
 				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-pregnant.jpg')} ')`}")
 			.content-wrapper
-				.content
+				.content.fix-to-top
 					.title Школа идеального тела для беременных
+					p СО ВТОРОГО ТРИМЕСТРА
 					p Поможет:
 					ul
 						li сохранить форму,
 						li укрепить организм,
-						li обеспечить здоровое протекание беременности. СО ВТОРОГО ТРИМЕСТРА
+						li обеспечить здоровое протекание беременности.
 					.buttons
 						router-link(title='#sektamama', to='/online-courses/pregnant')
 							green-btn Подробности
@@ -181,6 +182,11 @@
 		.content {
 			padding: 20px var(--col-space);
 			max-width: calc(var(--col-total)*6 /2);
+			@media (min-width: 601px) {
+				&.fix-to-top {
+					align-self: flex-start;
+				}
+			}
 			.title {
 				font-weight: 900;
 				font-family: var(--font-second);

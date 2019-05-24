@@ -294,7 +294,10 @@ header.main-header
 <style lang="postcss" scoped>
 	.main-header {
 		position: relative;
-		z-index: 4;
+		z-index: 3;
+		@media (max-width: 600px) {
+			z-index: 5;
+		}
 		.header-offset {
 			@media (max-width: 600px) {
 				height: 65px;

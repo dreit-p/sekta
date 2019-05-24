@@ -6,7 +6,7 @@ section.aside-hero
 				svg(height='500' viewBox='0 0 150 500')
 					polygon.triangle(fill='white' points='0,0 150,250 0,500')
 			.img(:class='{horizontal: horizontal}', :style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
-			.mobile-img(:style="{ backgroundImage: `url(' ${backgroundImage_mobile} ')`}")
+			.mobile-img(v-if='!noMobile && !!backgroundImage_mobile', :style="{ backgroundImage: `url(' ${backgroundImage_mobile} ')`}")
 		.content
 			.limit
 				.wrapper
@@ -36,6 +36,10 @@ section.aside-hero
 				default: false
 			},
 			inversed: {
+				type: Boolean,
+				default: false
+			},
+			noMobile: {
 				type: Boolean,
 				default: false
 			},
