@@ -57,18 +57,18 @@ div.course
 <script>
 	import { mapActions } from 'vuex'
 	export default {
-		name: 'for-mums',
+		name: 'SektaMama',
 		components: {
 			hero: () => import('@/components/heroes/aside-hero.vue'),
 			EntryForm: () => import('@/components/entry-form.vue'),
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
+		data () {
+			return {}
+		},
 		methods: {
 			...mapActions(['setFormModalState'])
 		},
-		data () {
-			return {}
-		}
 	}
 </script>
 

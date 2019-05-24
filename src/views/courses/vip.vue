@@ -1,7 +1,7 @@
 <template lang="pug">
 div.course
 
-	hero(image='course_bg-sectavip.jpg', title='VIP ПРОГРАММА')
+	hero(image='course_bg-sectavip.jpg', title='VIP ПРОГРАММА', horizontal, inversed)
 		p Индивидуальная коучинговая программа с самыми актуальными разработками нашей Школы. Мы поможем вам выстроить эффективную систему питания и тренировок с учетом ваших особенностей, жизненного графика, свободного времени, предпочитаемой платформы (VK, Facebook, Viber, WhatsApp, Telegram, Skype, Email) и подберем куратора, исходя из ваших запросов.
 		template(v-slot:buttons)
 			green-btn(@click.prevent='setFormModalState({modalState: true})') Записаться на обучение
@@ -45,18 +45,18 @@ div.course
 <script>
 	import { mapActions } from 'vuex'
 	export default {
-		name: 'for-mums',
+		name: 'Vip',
 		components: {
 			hero: () => import('@/components/heroes/aside-hero.vue'),
 			EntryForm: () => import('@/components/entry-form.vue'),
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
+		data () {
+			return {}
+		},
 		methods: {
 			...mapActions(['setFormModalState'])
 		},
-		data () {
-			return {}
-		}
 	}
 </script>
 

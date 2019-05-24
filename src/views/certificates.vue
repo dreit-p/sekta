@@ -1,7 +1,7 @@
 <template lang="pug">
 div.course
 
-	hero(image='certificates_bg.jpg', title='Подарочный сертификат')
+	hero(image='certificates_bg.jpg', title='Подарочный сертификат', no-mobile)
 		p Полезный подарок - самый лучший!
 		p Все онлайн-курсы #sekta, очные тренировки в зале — всё это можно подарить друзьям и близким.
 		p В зависимости от суммы, подарочный сертификат #sekta может стать:

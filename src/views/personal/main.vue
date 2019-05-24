@@ -85,7 +85,7 @@ div
 
 				h2.section-title Сертфикаты
 				.tile.certificate
-					.img(:style="{ backgroundImage: `url('${require('@/assets/images/certificates_bg.jpg')}')` }")
+					.img(:style="{ backgroundImage: `url('${require('@/assets/images/aside-hero/certificates_bg.jpg')}')` }")
 					.text СЕРТИФИКАТ НА СУММУ 10 900руб.
 
 
