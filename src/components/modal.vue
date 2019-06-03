@@ -36,7 +36,6 @@ transition(name='fade')
 <script>
 	import { mapActions } from 'vuex'
 
-
 	/*========================================
 	=            define the forms            =
 	========================================*/
@@ -123,7 +122,7 @@ transition(name='fade')
 		margin: auto;
 		background-color: rgba(0, 0, 0, .6);
 		@media (max-width: 600px) {
-			background-color: rgba(38, 70, 65, .9);
+			display:none;
 		}
 	}
 	.modal-wrapper {
