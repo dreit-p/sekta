@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
+const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
 
 Vue.use(Vuex)
 
@@ -149,10 +150,10 @@ export default new Vuex.Store({
 		},
 		requestIPInfo ({commit}) {
 			return axios
-				.get('https://api.ipgeolocation.io/ipgeo?apiKey=f286a2fe90004550aeadbf0a8ff240d9')
+				.get(`${TEST_URL}/api/define-city`)
 				.then(response => {
-						// console.log(response);
-						commit('setUserInfo', {type: 'location', data: response.data.state_prov});
+						console.log(response);
+						commit('setUserInfo', {type: 'city', data: response.data.data});
 					})
 				.catch(error => console.log(error));
 		},

@@ -1,26 +1,21 @@
 <template lang="pug">
 div.location
 
-	template(v-if='location == null')
-		.text
-			| У нас есть залы в двух городах. Какой подходим вам?
-		.btns
-			router-link(title='Тренировки в Москве', to='/gym/moscow')
-				green-btn Москва
-			router-link(title='Тренировки в Питере', to='/gym/saint-pitersburg')
-				green-btn Санкт-Петербург
-		.link(@click='location = "another"') Я в другом городе
+	//- template(v-if='cityId == null')
+	//- 	.text
+	//- 		| У нас есть залы в двух городах. Какой подходим вам?
+	//- 	.btns
+	//- 		router-link(title='Тренировки в Москве', to='/gym/moscow')
+	//- 			green-btn Москва
+	//- 		router-link(title='Тренировки в Питере', to='/gym/saint-pitersburg')
+	//- 			green-btn Санкт-Петербург
+	//- 	.link(@click='location = "another"') Я в другом городе
 
 
-	template(v-if='location == "another" || location != "St.-Petersburg" && location != "St.-Petersburg" && location != null')
-		.text
-			| К сожалению, тренировки в зале сейчас доступны только в Москве и Санкт-Петербурге. Вы можете записаться на онлайн-курс — его прошли 101 000 человек.
-		.btns
-			router-link(title='Страница онлайн курсов', to='/online-courses')
-				green-btn На страницу онлайн-курсов
 
 
-	template(v-if='location == "Moscow"')
+
+	template(v-if='cityId == "1"')
 		.text
 			| Нам кажется, вы находитесь в Москве
 		.btns
@@ -28,12 +23,19 @@ div.location
 				green-btn Посмотреть расписание
 
 
-	template(v-if='location == "St.-Petersburg"')
+	template(v-else-if='cityId == "2"')
 		.text
 			| Нам кажется, вы находитесь в Санкт-Петербурге
 		.btns
 			router-link(title='Тренировки в Питере', to='/gym/saint-pitersburg')
 				green-btn Посмотреть расписание
+
+	template(v-else)
+		.text
+			| К сожалению, тренировки в зале сейчас доступны только в Москве и Санкт-Петербурге. Вы можете записаться на онлайн-курс — его прошли 101 000 человек.
+		.btns
+			router-link(title='Страница онлайн курсов', to='/online-courses')
+				green-btn На страницу онлайн-курсов
 </template>
 
 <script>
@@ -44,16 +46,17 @@ div.location
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		computed: {
-			location: {
+			cityId: {
 				get () {
-					if (!this.$store.state.user.location) {
+					// console.log(this.$store.state.user.city, 'trtr');
+					if (!this.$store.state.user.city) {
 						this.$store.dispatch('updateUserLocation');
 					}
-					return this.$store.state.user.location
+					return this.$store.state.user.city.id
 				},
-				set (value) {
-					this.$store.commit('setUserInfo', {type: 'location', data: value})
-				}
+				// set (value) {
+				// 	this.$store.commit('setUserInfo', {type: 'city', data: value})
+				// }
 			}
 		},
 		data () {
