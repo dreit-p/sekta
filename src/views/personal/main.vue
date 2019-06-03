@@ -14,7 +14,7 @@ div
 								.info
 									.line
 										svg-icon(name='icon-graph')
-										| Прогресс: 
+										| Прогресс:
 										span.green 0%
 									.line
 										svg-icon(name='icon-calendar')
@@ -41,7 +41,7 @@ div
 								.info
 									.line
 										svg-icon(name='icon-graph')
-										| Прогресс: 
+										| Прогресс:
 										span.green 0%
 									.line
 										svg-icon(name='icon-calendar')
@@ -108,25 +108,25 @@ div
 					.content
 						h2.title.green Курсы
 						hr
-						.text Завершенных курсов: 
+						.text Завершенных курсов:
 							span.green 2
 						hr
-						.text Активных курсов: 
+						.text Активных курсов:
 							span.green 3
 						hr
 						h2.title.green Прогресс
 						hr
-						.text.heavy #sekta bootcamp3 
+						.text.heavy #sekta bootcamp3
 							span.green 0%
 						hr
-						.text.heavy #sekta bootcamp3 vol.2 
+						.text.heavy #sekta bootcamp3 vol.2
 							span.green 84%
 						hr
-						.text.heavy oldschool 
+						.text.heavy oldschool
 							span.green 0%
 						hr
 
-	footer Подвал как на основном сайте)
+	app-footer
 </template>
 
 <script>
@@ -134,6 +134,7 @@ div
 		name: 'MainPersonal',
 		components: {
 			SvgIcon: () => import('@/components/SvgIcon.vue'),
+			AppFooter: () => import('@/components/footer.vue'),
 		},
 		data () {
 			return {}
