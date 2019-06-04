@@ -7,9 +7,9 @@ const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
 	plugins: [createPersistedState({
-		paths: ['inputs', 'user'],
+		paths: ['inputs', 'user', 'cityId'],
 	})],
 	state: {
 		appStates: {
@@ -94,9 +94,9 @@ export default new Vuex.Store({
 			}
 		],
 		user: {
-			isAuth: false,
-			location: null,
-		}
+			isAuth: false
+		},
+		cityId: null
 	},
 	mutations: {
 		setMenuState (state, payload) {
@@ -117,6 +117,9 @@ export default new Vuex.Store({
 		setUserInfo(state, {type, data}) {
 			state.user[type] = data;
 		},
+		setCity(state, {city}) {
+			state.cityId = city;
+		}
 	},
 	actions: {
 		setMenuState ({dispatch, commit}, payload) {
@@ -152,16 +155,16 @@ export default new Vuex.Store({
 			return axios
 				.get(`${TEST_URL}/api/define-city`)
 				.then(response => {
-						console.log(response);
-						commit('setUserInfo', {type: 'city', data: response.data.data});
-					})
+						commit('setCity', {city: response.data.data});
+				})
 				.catch(error => console.log(error));
 		},
-		updateUserLocation ({state, dispatch}) {
-			if (!state.user.location) {
+		updateCity ({state, dispatch}) {
+			if (!state.cityId) {
 				dispatch('requestIPInfo');
 			}
-			return state.user.location;
-		},
-	},
+		}
+	}
 })
+
+export default store;

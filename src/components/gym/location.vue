@@ -12,9 +12,6 @@ div.location
 	//- 	.link(@click='location = "another"') Я в другом городе
 
 
-
-
-
 	template(v-if='cityId == "1"')
 		.text
 			| Нам кажется, вы находитесь в Москве
@@ -36,6 +33,7 @@ div.location
 		.btns
 			router-link(title='Страница онлайн курсов', to='/online-courses')
 				green-btn На страницу онлайн-курсов
+
 </template>
 
 <script>
@@ -48,15 +46,10 @@ div.location
 		computed: {
 			cityId: {
 				get () {
-					// console.log(this.$store.state.user.city, 'trtr');
-					if (!this.$store.state.user.city) {
-						this.$store.dispatch('updateUserLocation');
-					}
-					return this.$store.state.user.city.id
-				},
-				// set (value) {
-				// 	this.$store.commit('setUserInfo', {type: 'city', data: value})
-				// }
+					this.$store.dispatch('updateCity');
+
+					return this.$store.state.cityId ? this.$store.state.cityId : 3
+				}
 			}
 		},
 		data () {
