@@ -118,7 +118,7 @@ const store = new Vuex.Store({
 			state.user[type] = data;
 		},
 		setCity(state, {city}) {
-			state.cityId = city;
+			state.cityId = city.id;
 		}
 	},
 	actions: {
