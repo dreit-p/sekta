@@ -155,7 +155,7 @@ label.app-dropdown(:class='this.$options.name')
 		}
 		option {
 			color: black;
-			font-size: 16px;
+			/* font-size: 16px; */
 			cursor: pointer;
 		}
 		option[disabled] { display: none; }

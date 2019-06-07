@@ -1,0 +1,116 @@
+<template lang="pug">
+.content.register
+
+	p.light-text Вы выбрали курс
+	p.heavy-text Основной курс
+
+	app-dropdown(
+		placeholder='Платформа обучения'
+		data-vv-as='Платформа обучения'
+		:options='platform_options'
+
+		v-validate='"required"'
+		:class="{ 'error': errors.has('platform'), 'success': fields.platform && fields.platform.valid}"
+		:error='errors.first("platform")'
+		name='platform')
+
+	app-input(
+		placeholder='Введите ссылку на ваш аккаунт'
+		data-vv-as='Фамилия'
+		v-model.trim='lastname'
+		v-validate='"required"'
+		:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
+		:error='errors.first("lastname")'
+		name='lastname')
+
+	app-dropdown(
+		placeholder='Сколько недель вы хотите оплатить?'
+		data-vv-as='Количество недель'
+		:options='weeks_options'
+		v-validate='"required"'
+		:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
+		:error='errors.first("weeks")'
+		name='weeks')
+
+	app-input(
+		placeholder='Промокод (если есть)'
+		data-vv-as='Повтор e-mail'
+		v-model.trim='emailRepeat'
+		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+		v-validate='"required|email|confirmed:$asdasd"'
+		:error='errors.first("emailRepeat")'
+		name='emailRepeat'
+		type='email')
+
+	app-input(
+		placeholder='Ваш город'
+		data-vv-as='пароль'
+		v-model.trim='password'
+		v-validate='"required|alpha_dash:en"'
+		:error='errors.first("password")'
+		:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
+		ref='asdasd'
+		name='password'
+		caption='Только латинские символы и цифры'
+		type='password')
+
+	app-checkbox(
+		name='termsAgree'
+		data-vv-as='обработка персональных данных'
+		v-model.trim='termsAgree'
+		v-validate='"required:true"'
+		:required='true'
+		:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+		:error='errors.first("termsAgree")'
+	)
+		| Ознакомлен и согласен с условиями
+		a(href='#') обработки персональных данных
+
+	green-btn(@click.prevent)
+		| Перейти к оплате
+</template>
+<script>
+
+	/*=====================================
+	=            define inputs            =
+	=====================================*/
+
+	let globalInputs = {
+		names: ['email', 'password', 'firstname', 'lastname'],
+		list: {}
+	};
+
+	for (var i = 0; i < globalInputs.names.length; i++) {
+		let name = globalInputs.names[i];
+		globalInputs.list[name] = {
+			get () {
+				return this.$store.state.inputs[name]
+			},
+			set (value) {
+				this.$store.commit('setInputData', {name: name, data: value})
+			}
+		};
+	}
+
+	/*=====  End of define inputs  ======*/
+
+	export default {
+		name: 'form-register',
+		components: {
+			AppInput: () => import('@/components/form/input.vue'),
+			AppCheckbox: () => import('@/components/form/checkbox.vue'),
+			AppDropdown: () => import('@/components/form/dropdown.vue'),
+			GreenBtn: () => import('@/components/form/green-btn.vue'),
+		},
+		computed: {
+			...globalInputs.list
+		},
+		data () {
+			return {
+				platform_options: ['Москва', 'Санкт-Петербург', 'Другой город'],
+				weeks_options:[1,2,3],
+				termsAgree: false,
+			}
+		},
+	}
+</script>

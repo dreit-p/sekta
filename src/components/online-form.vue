@@ -1,21 +1,6 @@
 <template lang="pug">
 .entry-form
 	.wrapper.clearfix
-		.half.with-bg
-			img(class='background', src='@/assets/images/markes-bg_teal.jpg')
-			.text-blocks
-				// Login
-
-				transition(name='fade-flip', mode='out-in')
-
-					texts-login(v-if='entryFormType == "login"')
-
-					texts-recovery(v-if='entryFormType == "recovery"')
-
-					texts-register(v-if='entryFormType == "register"')
-
-					texts-certificates(v-if='entryFormType == "certificates"')
-
 		.half
 			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
 
