@@ -4,10 +4,19 @@ div.personal-layout
 		.limit
 			router-link(class='logo', title='Sekta school logo', to='/personal')
 				svg-icon(name='logo-sekta')
-			.dropdown-menu
-				svg-icon(name='icon-login')
-				.text Анастасия Фадеева
-				.arrow-icon
+			.dropdown-wrapper(
+				v-bind:class="{ dropdown_active: isDropDownActive }"
+				@click='isDropDownActive = !isDropDownActive'
+			)
+				.dropdown-menu
+					svg-icon(name='icon-login')
+					.text Анастасия Фадеева
+					svg-icon(name='down-arrow')
+				ul.dropdown-list
+					li.dropdown-item
+						a.dropdown-link(href="/personal/details/") Личные данные
+					li.dropdown-item
+						a.dropdown-link(href="#") Выход
 	slot
 </template>
 
@@ -17,6 +26,11 @@ div.personal-layout
 		components: {
 			SvgIcon: () => import('@/components/SvgIcon.vue'),
 		},
+		data () {
+			return {
+				isDropDownActive: false
+			}
+		}
 	}
 </script>
 
@@ -31,8 +45,65 @@ div.personal-layout
 		}
 		.limit {
 			max-width: 1170px;
+
+			overflow: visible;
 		}
-		
+		.svg-icon--down-arrow {
+			width: 10px;
+
+			color: #0ab69f;
+
+			transition: transform .4s ease;
+		}
+		.dropdown-wrapper {
+			position: relative;
+		}
+		.dropdown-list {
+			position: absolute;
+			top:54px;
+			z-index: 55;
+
+			height: 0;
+			width: 100%;
+
+			margin-top: 0;
+			padding-left: 0;
+
+			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+			overflow: hidden;
+			transition: all .5s ease;
+			@media (max-width: 500px) {
+				top: 36px;
+			}
+		}
+		.dropdown-item {
+			list-style: none;
+			border-bottom: 1px solid rgba(0,0,0,.1);
+			background-color: white;
+			&:last-child {
+				border-bottom: none;
+			}
+		}
+		.dropdown-link {
+			display: block;
+
+			padding: 0 20px;
+
+			text-decoration: none;
+			line-height: 40px;
+
+			transition: all .3s ease;
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.12);
+				color: #0ab69f;
+			}
+			@media (max-width: 500px) {
+				line-height: 30px;
+				font-size: 11px;
+			}
+		}
+
 		header.main-header {
 			background-color: white;
 			padding: 28px *;
@@ -56,50 +127,67 @@ div.personal-layout
 					}
 				}
 			}
-			.dropdown-menu {
-				border-radius: 5px;
-				border: solid 1px #cbcbcb;
-				padding: 19px 20px 18px;
-				display: flex;
-				align-items: center;
-				cursor: pointer;
-				user-select: none;
+		}
+		.dropdown-wrapper {
+			border-radius: 5px;
+			border: solid 1px #cbcbcb;
+		}
+		.dropdown-menu {
+			padding: 19px 20px 18px;
+			display: flex;
+			align-items: center;
+			cursor: pointer;
+			user-select: none;
+			@media (max-width: 500px) {
+				padding: 11px;
+			}
+			&:hover {
+				border-color: var(--accent_color);
+			}
+			.svg-icon--icon-login {
+				color: var(--accent_color);
+				stroke-width: 5px;
+				height: 14px;
+				width: 12px;
 				@media (max-width: 500px) {
-					padding: 11px;
+					height: 9px;
 				}
-				&:hover {
-					border-color: var(--accent_color);
+			}
+			.text {
+				padding: * 13px;
+				font-size: 14px;
+				font-weight: bold;
+				white-space: nowrap;
+				@media (max-width: 500px) {
+					padding: * 5px;
+					font-size: 11px;
 				}
-				.svg-icon--icon-login {
-					color: var(--accent_color);
-					stroke-width: 5px;
-					height: 14px;
-					width: 12px;
-					@media (max-width: 500px) {
-						height: 9px;
-					}
-				}
-				.text {
-					padding: * 13px;
-					font-size: 14px;
-					font-weight: bold;
-					white-space: nowrap;
-					@media (max-width: 500px) {
-						padding: * 5px;
-						font-size: 11px;
-					}
-				}
-				.arrow-icon {
-					position: relative;
-					width: 18px;
-					color: var(--accent_color);
-					@media (max-width: 500px) {
-						width: 15px;
-						margin-left: -5px;
-					}
+			}
+			.arrow-icon {
+				position: relative;
+				width: 18px;
+				color: var(--accent_color);
+				@media (max-width: 500px) {
+					width: 15px;
+					margin-left: -5px;
 				}
 			}
 		}
+		.dropdown_active {
+			border-radius: 0;
+			border-top-left-radius: 5px;
+			border-top-right-radius: 5px;
+			.dropdown-list {
+				height: 81px;
+				@media (max-width: 500px) {
+					height: 62px;
+				}
+			}
+			.svg-icon--down-arrow {
+				transform: rotate(-180deg);
+			}
+		}
+	
 	}
 
 
