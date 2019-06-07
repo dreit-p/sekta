@@ -38,7 +38,7 @@
 	========================================*/
 
 	const formContent = {
-		types: ['login', 'register', 'recovery', 'certificates'],
+		types: ['login', 'register', 'recovery', 'certificates', 'online'],
 		components: {
 			inputs: {},
 			texts: {}
@@ -100,7 +100,7 @@
 		/*====================================
 		=            Construction            =
 		====================================*/
-		
+
 		.wrapper {
 			display: flex;
 			.half {
@@ -132,7 +132,7 @@
 				}
 			}
 		}
-		
+
 		/*=====  End of Construction  ======*/
 
 		.wrapper {
