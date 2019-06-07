@@ -6,6 +6,7 @@ label.app-input(:class='this.$options.name')
 			:name='name'
 			:ref='name'
 			:type='type'
+			autocomplete="off"
 			@input="$emit('input', $event.target.value);"
 			@change="$emit('change', $event.target.value);"
 		)
@@ -72,7 +73,7 @@ label.app-input(:class='this.$options.name')
 		width: 100%;
 		.input-wrapper {
 			position: relative;
-			min-width: 150px;
+			/* min-width: 150px; */
 		}
 		input {
 			background-color: white;
