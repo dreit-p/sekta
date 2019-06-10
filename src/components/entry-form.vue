@@ -38,7 +38,7 @@
 	========================================*/
 
 	const formContent = {
-		types: ['login', 'register', 'recovery', 'certificates', 'online'],
+		types: ['login', 'register', 'recovery', 'certificates', 'online', 'face-to-face'],
 		components: {
 			inputs: {},
 			texts: {}
@@ -147,6 +147,10 @@
 						font-family: var(--font-second);
 						font-weight: bold;
 						margin: 13px 0;
+						&_face {
+							margin: 0;
+							margin-bottom: 20px;
+						}
 					}
 					p {
 						font-size: 16px;
@@ -160,6 +164,18 @@
 							margin: 7px *;
 							font-size: 12px;
 							line-height: 1.33;
+							&_face {
+								color: grey;
+								margin-bottom: 5px;
+							}
+							&_long {
+								width: 385px;
+								margin-bottom: 10px;
+								margin-top: 5px;
+								@media (max-width: 992px) {
+									width: auto;
+								}
+							}
 						}
 					}
 					hr {
