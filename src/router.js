@@ -152,6 +152,11 @@ const Router = new VueRouter({
 					component: () => import('./views/personal/main.vue'),
 				},
 				{
+					path: 'details',
+					meta: { requiresAuth: true, layout: 'personal' },
+					component: () => import('./views/personal/details.vue'),
+				},
+				{
 					path: 'success-order',
 					meta: { requiresAuth: true, layout: 'personal' },
 					component: () => import('./views/personal/success_order.vue'),
