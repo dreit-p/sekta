@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "normalize.css": "^8.0.1",
+    "prerender-spa-plugin": "^3.4.0",
     "vee-validate": "^2.2.6",
     "velocity-animate": "^1.5.2",
     "vue": "^2.6.10",

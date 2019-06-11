@@ -1,13 +1,22 @@
+const path = require('path');
+const PrerenderSPAPlugin = require('prerender-spa-plugin');
+
 module.exports = {
     configureWebpack: {
-		devServer: {
-			port: 4444,
-			host: '0.0.0.0',
-			overlay: true,
-			compress: true,
-			public: "home.dreit.ru", //for autorefresh
-			allowedHosts: [".dreit.ru"]
-		}
+      plugins: [
+        new PrerenderSPAPlugin({
+          staticDir: path.join(__dirname, 'dist'),
+          routes: [ '/', '/contacts', '/about-us', '/online-courses', '/online-courses/s60days' ],
+        })
+      ],
+  		devServer: {
+  			port: 4444,
+  			host: '0.0.0.0',
+  			overlay: true,
+  			compress: true,
+  			public: "home.dreit.ru", //for autorefresh
+  			allowedHosts: [".dreit.ru"]
+  		}
 	},
 
     css: {
