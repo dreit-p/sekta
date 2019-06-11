@@ -4,25 +4,39 @@ import Home from './views/home.vue'
 
 Vue.use(VueRouter)
 
+const scrollBehavior = (to, from, savedPosition) => {
+  if (savedPosition) {
+    // savedPosition is only available for popstate navigations.
+    return savedPosition
+  } else {
+    const position = {}
+    // new navigation.
+    // scroll to anchor by returning the selector
+    if (to.hash) {
+      position.selector = to.hash
+
+      // specify offset of the element
+      if (to.hash === '#anchor2') {
+        position.offset = { y: 100 }
+      }
+    }
+    // check if any matched route config has meta that requires scrolling to top
+    if (to.matched.some(m => m.meta.scrollToTop)) {
+      // cords will be used if no selector is provided,
+      // or if the selector didn't match any element.
+      position.x = 0
+      position.y = 0
+    }
+    // if the returned position is falsy or an empty object,
+    // will retain current scroll position.
+    return position
+  }
+}
+
 const Router = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
-	scrollBehavior: (to, from, savedPosition) => new Promise((resolve) => {
-		if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-		const position = savedPosition || {x:0, y:0};
-		if (!savedPosition) {
-			if (to.hash) {
-				position.selector = to.hash;
-			}
-			if (to.matched.some((m) => m.meta.scrollToTop)) {
-				position.x = 0;
-				position.y = 0;
-			}
-		}
-		Router.app.$root.$once('triggerScroll', () => {
-			Router.app.$nextTick(() => resolve(position));
-		});
-	}),
+	scrollBehavior,
 	routes: [
 		{
 			path: '/',
@@ -76,36 +90,43 @@ const Router = new VueRouter({
 				{
 					path: 's60days',
 					// name: 's60-women',
-					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-women.vue')
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-women.vue'),
+					meta: { scrollToTop: true }
 				},
 				{
 					path: 'accu',
-					component: () => import(/* webpackChunkName: "courses" */ './views/courses/accu.vue')
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/accu.vue'),
+					meta: { scrollToTop: true }
 				},
 				{
 					path: 's60days-men',
 					// name: 's60-men',
-					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-men.vue')
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/s60-men.vue'),
+					meta: { scrollToTop: true }
 				},
 				{
 					path: 'sektacare',
 					name: 'SektaCare',
-					component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektacare.vue'),
+					meta: { scrollToTop: true }
 				},
 				{
 					path: 'pregnant',
 					name: 'pregnant',
-					component: () => import(/* webpackChunkName: "courses" */ './views/courses/pregnant.vue')
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/pregnant.vue'),
+					meta: { scrollToTop: true }
 				},
 				{
 					path: 'sektavip',
 					name: 'sektavip',
-					component: () => import(/* webpackChunkName: "courses" */ './views/courses/vip.vue')
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/vip.vue'),
+					meta: { scrollToTop: true }
 				},
 				{
 					path: 'sektamama',
 					name: 'SektaMama',
-					component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektamama.vue')
+					component: () => import(/* webpackChunkName: "courses" */ './views/courses/sektamama.vue'),
+					meta: { scrollToTop: true }
 				},
 			]
 		},
