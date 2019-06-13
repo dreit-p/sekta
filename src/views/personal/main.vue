@@ -26,10 +26,16 @@ div
 						.btns
 							button.btn Открыть курс
 							button.btn Оплатить курс
-					.additional-content
-						.open-btn Подробнее о курсе
-							.arrow-icon
-
+					.additional-content(
+						v-bind:class="{ dropdown_active: isDropDownActive }"
+					)
+						button.open-btn(
+							@click='isDropDownActive = !isDropDownActive'
+						) Подробнее о курсе
+							svg-icon(name='down-arrow')
+						.more-dropdown
+							p #SektaBootCamp2 – это тренировочный интенсив, который настроен под тебя и твои цели. Представь, чего ты хочешь добиться к этому лету.Проявить рельеф? Сохранить форму? Мы приготовили для тебя настоящий квест. Интенсивные тренировкидва варианта питания, карта прогресса – это только часть того, что ждет тебя в #SektaBootCamp2.
+						
 
 				.tile.course
 					.main-content
@@ -137,7 +143,9 @@ div
 			AppFooter: () => import('@/components/footer.vue'),
 		},
 		data () {
-			return {}
+			return {
+				isDropDownActive: false
+			}
 		}
 	}
 </script>
@@ -378,13 +386,32 @@ div
 		.additional-content {
 			border-top: 1px solid #cbcbcb;
 			.open-btn {
+				display: block;
+				position: relative;
+
+				margin: 10px auto;
+				padding-right: 15px;
+
+				background-color: transparent;
+				border: none;
+
+				cursor: pointer;
+
 				font-size: 11px;
 				font-weight: bold;
 				color: #6a6a6a;
-				display: flex;
-				justify-content: center;
-				padding: 21px;
-				align-items: center;
+				&:focus {
+					outline: none;
+				}
+				&:hover {
+					color: #0ab6a1;
+				}
+				.svg-icon--down-arrow {
+					position: absolute;
+					right: 0;
+					color: inherit;
+					margin-left: 5px;
+				}
 				@media (max-width: 500px) {
 					padding: 10px;
 				}
@@ -396,6 +423,24 @@ div
 						width: 15px;
 					}
 				}
+			}
+		}
+
+		.additional-content {
+			.more-dropdown {
+				margin: 0 30px;
+
+				max-height: 0;
+
+				overflow: hidden;
+				transition: all .5s ease;
+				font-size: 16px;
+			}
+		}
+
+		.dropdown_active {
+			.more-dropdown {
+				max-height: 200px;
 			}
 		}
 
