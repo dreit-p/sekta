@@ -16,6 +16,9 @@
 
 					texts-certificates(v-if='entryFormType == "certificates"')
 
+					texts-camp(v-if='entryFormType == "camp"')
+
+
 		.half
 			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
 
@@ -29,6 +32,10 @@
 
 					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType')
 
+					inputs-face-to-face(v-if='entryFormType == "faceToFace"', :key='entryFormType')
+
+					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType')
+
 </template>
 
 <script>
@@ -38,7 +45,7 @@
 	========================================*/
 
 	const formContent = {
-		types: ['login', 'register', 'recovery', 'certificates', 'online', 'face-to-face'],
+		types: ['login', 'register', 'recovery', 'certificates', 'online', 'face-to-face', 'camp'],
 		components: {
 			inputs: {},
 			texts: {}
