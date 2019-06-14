@@ -51,7 +51,6 @@
 		:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
 		ref='asdasd'
 		name='password'
-		caption='Только латинские символы и цифры'
 		type='password')
 
 	app-checkbox(
@@ -95,7 +94,7 @@
 	/*=====  End of define inputs  ======*/
 
 	export default {
-		name: 'form-register',
+		name: 'form-online',
 		components: {
 			AppInput: () => import('@/components/form/input.vue'),
 			AppCheckbox: () => import('@/components/form/checkbox.vue'),
@@ -107,7 +106,7 @@
 		},
 		data () {
 			return {
-				platform_options: ['Москва', 'Санкт-Петербург', 'Другой город'],
+				platform_options: ['ВКонтакте', 'Telegram'],
 				weeks_options:[1,2,3],
 				termsAgree: false,
 			}

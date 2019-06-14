@@ -48,7 +48,7 @@ div.course
 		.section-caption
 			| Запишитесь сейчас
 			.highlight cтарт в понедельник
-		entry-form
+		entry-form(formType='online')
 
 </template>
 

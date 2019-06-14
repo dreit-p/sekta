@@ -16,6 +16,8 @@
 
 					texts-certificates(v-if='entryFormType == "certificates"')
 
+					texts-online(v-if='entryFormType == "online"')
+
 					texts-camp(v-if='entryFormType == "camp"')
 
 
@@ -31,6 +33,8 @@
 					inputs-register(v-if='entryFormType == "register"', :key='entryFormType')
 
 					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType')
+
+					inputs-online(v-if='entryFormType == "online"', :key='entryFormType')
 
 					inputs-face-to-face(v-if='entryFormType == "faceToFace"', :key='entryFormType')
 
