@@ -4,7 +4,7 @@
 	p.heavy-text Запишись сейчас
 
 	app-dropdown(
-		placeholder='Выберите курс'
+		placeholder='Выберите тип размещения'
 		data-vv-as='Курс'
 		:options='course_options'
 		name='course')
