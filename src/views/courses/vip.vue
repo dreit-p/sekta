@@ -34,22 +34,31 @@ div.course
 				| .
 
 
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form(formType='online')
-
+	caption-section(v-bind:dateStart='dateStart') 	
 </template>
 
 <script>
 	import { mapActions } from 'vuex'
+
+	const currentId = 2;
+
 	export default {
 		name: 'Vip',
 		components: {
 			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
+			CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
+		},
+		computed: {
+			dateStart: {
+				get () {
+					this.$store.dispatch('updateOnline');
+
+					return this.$store.state.dateStart.length === 0 ? 
+						null : 
+						this.$store.state.dateStart[currentId].last_start_date;
+				}
+			}
 		},
 		data () {
 			return {}

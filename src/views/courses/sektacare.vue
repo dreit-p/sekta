@@ -43,13 +43,7 @@ div.course
 					li возможность отслеживать свой прогресс;
 					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
-
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form(formType='online')
-
+	caption-section(v-bind:dateStart='dateStart') 	
 </template>
 
 <script>
@@ -58,9 +52,18 @@ div.course
 		name: 'SektaCare',
 		components: {
 			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
+			CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
+		computed: {
+			dateStart: {
+				get () {
+					this.$store.dispatch('updateOnline', 1);
+					
+					return this.$store.state.online;
+				}
+			}
+		},   
 		data () {
 			return {}
 		},

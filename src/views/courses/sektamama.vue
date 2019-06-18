@@ -45,13 +45,7 @@ div.course
 					li Забота о здоровье — возможность обсудить вопросы со специалистами (акушер-гинеколог, консультант по грудному вскармливанию)
 					li Готовое меню, книги рецептов, полезные советы — всё, чтобы облегчить путь к новому телу.
 
-
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form(formType="online")
-
+	caption-section(v-bind:dateStart='dateStart') 	
 </template>
 
 <script>
@@ -60,9 +54,18 @@ div.course
 		name: 'SektaMama',
 		components: {
 			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
+			CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
+		computed: {
+			dateStart: {
+				get () {
+					this.$store.dispatch('updateOnline', 3);
+					
+					return this.$store.state.online;
+				}
+			}
+		}, 
 		data () {
 			return {}
 		},

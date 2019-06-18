@@ -31,23 +31,31 @@ div.course
 					li советы по возвращению к физической активности после родов.
 				p Программа курса рекомендована ведущими врачами Перинатального Медицинского Центра (ПМЦ) г. Москвы.
 
-
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form(formType='online')
-
+	caption-section(v-bind:dateStart='dateStart') 	
 </template>
 
 <script>
 	import { mapActions } from 'vuex'
+
+	const currentId = 3;
+
 	export default {
 		name: 'Pregnants',
 		components: {
 			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
+			CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		},
+		computed: {
+			dateStart: {
+				get () {
+					this.$store.dispatch('updateOnline');
+
+					return this.$store.state.dateStart.length === 0 ? 
+						null : 
+						this.$store.state.dateStart[currentId].last_start_date;
+				}
+			}
 		},
 		data () {
 			return {}
