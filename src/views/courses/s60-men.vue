@@ -39,7 +39,10 @@ div.course
 					li консультации по питанию;
 					li помощь куратора в адаптации общих рекомендаций под ваши особенности и цели.
 
-	caption-section(v-bind:dateStart='dateStart') 	
+	caption-section(
+		v-bind:dateStart='dateStart',
+		v-bind:prices='prices'
+	) 	
 </template>
 
 <script>
@@ -59,9 +62,17 @@ div.course
 				get () {
 					this.$store.dispatch('updateOnline');
 
-					return this.$store.state.dateStart.length === 0 ? 
-						null : 
-						this.$store.state.dateStart[currentId].last_start_date;
+					if (this.$store.state.dateStart.length !== 0) {
+						return this.$store.state.dateStart[currentId].last_start_date;
+					} 
+				}
+			},
+			prices: {
+				get () {
+					if (this.$store.state.dateStart.length !== 0) {
+						return this.$store.state.dateStart[currentId].prices
+							.map(({ name }) => name);
+					}
 				}
 			}
 		},

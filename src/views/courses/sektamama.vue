@@ -45,11 +45,17 @@ div.course
 					li Забота о здоровье — возможность обсудить вопросы со специалистами (акушер-гинеколог, консультант по грудному вскармливанию)
 					li Готовое меню, книги рецептов, полезные советы — всё, чтобы облегчить путь к новому телу.
 
-	caption-section(v-bind:dateStart='dateStart') 	
+	caption-section(
+		v-bind:dateStart='dateStart',
+		v-bind:prices='prices'
+	) 	
 </template>
 
 <script>
 	import { mapActions } from 'vuex'
+
+	const currentId = 3;
+
 	export default {
 		name: 'SektaMama',
 		components: {
@@ -60,9 +66,19 @@ div.course
 		computed: {
 			dateStart: {
 				get () {
-					this.$store.dispatch('updateOnline', 3);
-					
-					return this.$store.state.online;
+					this.$store.dispatch('updateOnline');
+
+					if (this.$store.state.dateStart.length !== 0) {
+						return this.$store.state.dateStart[currentId].last_start_date;
+					} 
+				}
+			},
+			prices: {
+				get () {
+					if (this.$store.state.dateStart.length !== 0) {
+						return this.$store.state.dateStart[currentId].prices
+							.map(({ name }) => name);
+					}
 				}
 			}
 		}, 

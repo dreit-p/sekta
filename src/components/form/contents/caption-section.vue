@@ -6,7 +6,7 @@
         .section-caption(v-else)
             | Запишитесь сейчас 
 
-        entry-form(formType="online")
+        entry-form(formType="online", v-bind:prices='this.prices')
 </template>
 
 <script>
@@ -20,6 +20,10 @@
                 type: String,
                 default: null
             },
+            prices : {
+                type: Array,
+                default: null
+            }
         },
         data () {
             return {

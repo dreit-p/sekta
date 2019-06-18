@@ -90,13 +90,19 @@
 			AppDropdown: () => import('@/components/form/dropdown.vue'),
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
+		props: {
+			prices: {
+				type: Array,
+				default: null
+			}
+		},
 		computed: {
 			...globalInputs.list
 		},
 		data () {
 			return {
 				platform_options: ['ВКонтакте', 'Telegram'],
-				weeks_options:[1,2,3],
+				weeks_options:this.prices,
 				termsAgree: false,
 			}
 		},

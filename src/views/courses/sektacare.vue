@@ -43,11 +43,17 @@ div.course
 					li возможность отслеживать свой прогресс;
 					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
-	caption-section(v-bind:dateStart='dateStart') 	
+	caption-section(
+		v-bind:dateStart='dateStart',
+		v-bind:prices='prices'
+	) 	
 </template>
 
 <script>
 	import { mapActions } from 'vuex'
+
+	const currentId = 2;
+
 	export default {
 		name: 'SektaCare',
 		components: {
@@ -58,9 +64,19 @@ div.course
 		computed: {
 			dateStart: {
 				get () {
-					this.$store.dispatch('updateOnline', 1);
-					
-					return this.$store.state.online;
+					this.$store.dispatch('updateOnline');
+
+					if (this.$store.state.dateStart.length !== 0) {
+						return this.$store.state.dateStart[currentId].last_start_date;
+					} 
+				}
+			},
+			prices: {
+				get () {
+					if (this.$store.state.dateStart.length !== 0) {
+						return this.$store.state.dateStart[currentId].prices
+							.map(({ name }) => name);
+					}
 				}
 			}
 		},   
