@@ -151,7 +151,7 @@ const store = new Vuex.Store({
             }
             commit('setScrollLock', payload);
         },
-        requestOnlineCourse({ commit }, id) {
+        requestOnlineCourse({ commit }) {
             return axios
                 .get(`${TEST_URL}/api/online-courses`)
                 .then(response => {
