@@ -8,8 +8,6 @@
 		placeholder='Платформа обучения'
 		data-vv-as='Платформа обучения'
 		:options='platform_options'
-
-		v-validate='"required"'
 		:class="{ 'error': errors.has('platform'), 'success': fields.platform && fields.platform.valid}"
 		:error='errors.first("platform")'
 		name='platform')
@@ -17,8 +15,6 @@
 	app-input(
 		placeholder='Введите ссылку на ваш аккаунт'
 		data-vv-as='Фамилия'
-		v-model.trim='lastname'
-		v-validate='"required"'
 		:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
 		:error='errors.first("lastname")'
 		name='lastname')
@@ -27,7 +23,6 @@
 		placeholder='Сколько недель вы хотите оплатить?'
 		data-vv-as='Количество недель'
 		:options='weeks_options'
-		v-validate='"required"'
 		:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
 		:error='errors.first("weeks")'
 		name='weeks')
@@ -35,9 +30,7 @@
 	app-input(
 		placeholder='Промокод (если есть)'
 		data-vv-as='Повтор e-mail'
-		v-model.trim='emailRepeat'
 		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		v-validate='"required|email|confirmed:$asdasd"'
 		:error='errors.first("emailRepeat")'
 		name='emailRepeat'
 		type='email')
@@ -45,8 +38,6 @@
 	app-input(
 		placeholder='Ваш город'
 		data-vv-as='пароль'
-		v-model.trim='password'
-		v-validate='"required|alpha_dash:en"'
 		:error='errors.first("password")'
 		:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
 		ref='asdasd'
@@ -56,8 +47,6 @@
 	app-checkbox(
 		name='termsAgree'
 		data-vv-as='обработка персональных данных'
-		v-model.trim='termsAgree'
-		v-validate='"required:true"'
 		:required='true'
 		:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
 		:error='errors.first("termsAgree")'
