@@ -1,6 +1,6 @@
 <template lang="pug">
 section.fullsize-hero
-	.hero-content
+	.hero-content(v-bind:class="{ right: this.sideToRender === 'right' }")
 		.background(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
@@ -24,6 +24,7 @@ section.fullsize-hero
 		props: {
 			image: String,
 			title: String,
+			sideToRender: String
 		},
 		methods: {
 			...mapActions(['setFormModalState'])
@@ -55,6 +56,19 @@ section.fullsize-hero
 			@media (max-width: 500px) {
 				height: auto;
 				max-height: none;
+			}
+		}
+		.right {
+			.background {
+				background-position-x: -200px;
+			}
+			.limit {
+				width: 50%;
+				margin-left: 50%;
+			}
+			.merch__list li {
+				line-height: 1;
+				font-weight: normal;
 			}
 		}
 		.background {

@@ -211,6 +211,12 @@ const Router = new VueRouter({
             ]
         },
         {
+            path: '/sektamerch',
+            name: 'sektamerch',
+            component: () =>
+                import ('./views/sektamerch.vue'),
+        },
+        {
             // 404
             path: '*',
             component: () =>

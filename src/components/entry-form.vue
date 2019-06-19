@@ -20,6 +20,8 @@
 
 					texts-camp(v-if='entryFormType == "camp"')
 
+					texts-merch(v-if='entryFormType == "merch"')
+
 
 		.half
 			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
@@ -40,6 +42,8 @@
 
 					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType')
 
+					inputs-merch(v-if='entryFormType == "merch"', :key='entryFormType')
+					
 </template>
 
 <script>
@@ -49,7 +53,7 @@
 	========================================*/
 
 	const formContent = {
-		types: ['login', 'register', 'recovery', 'certificates', 'online', 'face-to-face', 'camp'],
+		types: ['login', 'register', 'recovery', 'certificates', 'online', 'face-to-face', 'camp', 'merch'],
 		components: {
 			inputs: {},
 			texts: {}
