@@ -10,52 +10,16 @@
 		name='course')
 
 	app-input(
-		placeholder='Имя'
-		data-vv-as='Имя'
-		v-model.trim='firstname'
-		v-validate='"required"'
-		:class="{ 'error': errors.has('firstname'), 'success': fields.firstname && fields.firstname.valid}"
-		:error='errors.first("firstname")'
-		name='firstname')
+		placeholder='Промокод'
+		data-vv-as='Промокод'
+		name='promocode'
+		type='promocode')
 
 	app-input(
-		placeholder='Фамилия'
-		data-vv-as='Фамилия'
-		v-model.trim='lastname'
-		v-validate='"required"'
-		:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
-		:error='errors.first("lastname")'
-		name='lastname')
-
-	app-input(
-		placeholder="Отчество"
-	)
-
-	app-input(
-		placeholder='e-mail'
-		data-vv-as='e-mail'
-		v-model.trim='email'
-		v-validate='"required|email"'
-		:error='errors.first("email")'
-		:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
-		ref='asdasd'
-		name='email'
-		type='email')
-
-	app-input(
-		placeholder='Телефон'
-		data-vv-as='Телефон'
-	)
-
-	app-checkbox(
-		name='isAdult'
-		data-vv-as='есть 18 лет'
-		v-model.trim='isAdult'
-		v-validate='"required:true"'
-		:required='true'
-		:class="{ 'error': errors.has('isAdult'), 'success': fields.isAdult && fields.isAdult.valid}"
-		:error='errors.first("isAdult")'
-	) Мне есть 18 лет
+		placeholder='Ваш город'
+		data-vv-as='Ваш город'
+		name='city'
+		type='city')
 
 	app-checkbox(
 		name='termsAgree'
@@ -68,6 +32,8 @@
 	)
 		| Ознакомлен и согласен с условиями
 		a(href='#') обработки персональных данных
+
+	p Итого к оплате: 3555 рублей	
 
 	green-btn(@click.prevent)
 		| Оплатить
