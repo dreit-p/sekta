@@ -47,7 +47,7 @@ div.course
             title="Bullet Journal от #sekta"
             description="Блокнот в точку - Bullet Journal от #sekta. Расчерченный календарь на 12 месяцев; трекеры привычек, настроения, сна и физической усталости; десятки страниц дневника для фантазии и жизни."
     )
-    hero(image='bullet_bg-sektabullet.jpg', title='SEKTAMERCH', sideToRender='right')
+    hero(image='bullet_bg-sektabullet.jpg', title='SEKTABULLET', sideToRender='right')
         p Буллет джорнал — это
         ul.merch__list 
             li расчерченный календарь на 12 месяцев;
