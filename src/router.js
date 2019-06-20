@@ -169,7 +169,12 @@ const Router = new VueRouter({
             name: 'camp',
             component: () =>
                 import ( /* webpackChunkName: "gym" */ './views/camp.vue'),
-
+        },
+        {
+            path: '/sektabullet',
+            name: 'camp',
+            component: () =>
+                import ( /* webpackChunkName: "gym" */ './views/bullet.vue'),
         },
         {
             path: '/personal',
