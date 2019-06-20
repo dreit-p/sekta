@@ -22,6 +22,7 @@
 
 					texts-merch(v-if='entryFormType == "merch"')
 
+					texts-bullet(v-if='entryFormType == "bullet"')
 
 		.half
 			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
@@ -43,6 +44,8 @@
 					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType')
 
 					inputs-merch(v-if='entryFormType == "merch"', :key='entryFormType')
+
+					inputs-bullet(v-if='entryFormType == "bullet"', :key='entryFormType')
 					
 </template>
 
@@ -53,7 +56,9 @@
 	========================================*/
 
 	const formContent = {
-		types: ['login', 'register', 'recovery', 'certificates', 'online', 'face-to-face', 'camp', 'merch'],
+		types: ['login', 'register', 'recovery',
+		 	'certificates', 'online', 'face-to-face',
+			'camp', 'merch', 'bullet'],
 		components: {
 			inputs: {},
 			texts: {}
