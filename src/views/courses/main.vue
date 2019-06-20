@@ -1,5 +1,9 @@
 <template lang="pug">
 	article.courses-list
+		vue-headful(
+				title="Онлайн-курсы #sekta"
+				description="Онлайн-курсы правильного питания и программы видео тренировок у вас дома."
+		)
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-s60days.jpg')} ')`}")
@@ -79,6 +83,10 @@
 
 <script>
 	import { mapActions } from 'vuex'
+	import Vue from 'vue';
+    import vueHeadful from 'vue-headful';
+
+    Vue.component('vue-headful', vueHeadful);
 
 	export default {
 		name: 'Courses',

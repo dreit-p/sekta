@@ -1,6 +1,9 @@
 <template lang="pug">
 div.course
-
+	vue-headful(
+            title="Тренировки #sekta в залах"
+            description="Очные курсы #sekta в Москве и Санкт-Петербурге. Тренировки от 2 до 6 раз в неделю для мужчин и женщин, программа правильного питания, задания по уходу за кожей и работа с куратором для вашего лучшего результата."
+    )
 	courses-hero(class='dark', image='gym_bg.jpg', title='Курс #sekta в зале')
 		template(v-slot:default)
 			ul
@@ -49,6 +52,11 @@ div.course
 </template>
 
 <script>
+	import Vue from 'vue';
+    import vueHeadful from 'vue-headful';
+
+	Vue.component('vue-headful', vueHeadful);
+	
 	export default {
 		name: 'gym',
 		components: {

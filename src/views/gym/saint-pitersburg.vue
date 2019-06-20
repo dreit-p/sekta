@@ -1,5 +1,9 @@
 <template lang="pug">
 div.gym
+	vue-headful(
+            title="Санкт-петербург курс #sekta"
+            description="Покупая абонемент в #sekta на месяц, вы получаете не просто групповые тренировки в залах, а полноценную комплексную программу, направленную на ваш лучший результат. Здоврое питание, новые тренировочные задания каждый месяц, уход за кожей и поддержка и помощь куратороской команды каждый день."
+    )
 	.article-limit
 		.text-typography
 			h2.center H2 Заголовок
@@ -31,6 +35,11 @@ div.gym
 </template>
 
 <script>
+ 	import Vue from 'vue';
+    import vueHeadful from 'vue-headful';
+
+	Vue.component('vue-headful', vueHeadful);
+	
 	export default {
 		name: 'gym-saint-pitersburg',
 		components: {

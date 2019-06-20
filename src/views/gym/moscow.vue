@@ -1,7 +1,9 @@
 <template lang="pug">
 div.gym
-
-
+	vue-headful(
+            title="Москва курс #sekta"
+            description="Покупая абонемент в #sekta на месяц, вы получаете не просто групповые тренировки в залах, а полноценную комплексную программу, направленную на ваш лучший результат. Здоврое питание, новые тренировочные задания каждый месяц, уход за кожей и поддержка и помощь куратороской команды каждый день."
+    )
 	gym-hero(class='huge-content', image='gym_bg.jpg')
 		template(v-slot:another)
 			.huge-hero-text
@@ -80,6 +82,11 @@ div.gym
 </template>
 
 <script>
+ 	import Vue from 'vue';
+    import vueHeadful from 'vue-headful';
+
+	Vue.component('vue-headful', vueHeadful);
+	
 	export default {
 		name: 'GymMoscow',
 		components: {

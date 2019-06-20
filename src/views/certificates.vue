@@ -1,6 +1,9 @@
 <template lang="pug">
 div.course
-
+	vue-headful(
+            title="Подарочные сертификаты #sekta"
+            description="Футблоки, майки и толстовки #sekta. Размеры от xs до xl. Доставка по всей России.Лучший подарок себе и близким: сертификаты в #sekta номиналом от 1350 до 10900. Сертификат может стать любым онлайн или очным курсом #sekta."
+    )
 	hero(image='certificates_bg.jpg', title='Подарочный сертификат', no-mobile)
 		p Полезный подарок - самый лучший!
 		p Все онлайн-курсы #sekta, очные тренировки в зале — всё это можно подарить друзьям и близким.
@@ -21,6 +24,11 @@ div.course
 
 <script>
 	import { mapActions } from 'vuex'
+	import Vue from 'vue';
+    import vueHeadful from 'vue-headful';
+
+	Vue.component('vue-headful', vueHeadful);
+	
 	export default {
 		name: 'for-mums',
 		components: {
