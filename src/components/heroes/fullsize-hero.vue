@@ -60,15 +60,29 @@ section.fullsize-hero
 		}
 		.right {
 			.background {
-				background-position-x: -200px;
+				background-position:center;
+				@media (max-width: 1024px) {
+					background-position-x: -200px;
+				}
 			}
 			.limit {
 				width: 50%;
 				margin-left: 50%;
+				@media (max-width: 480px) {
+					width: 100%;
+					margin-left: 0;
+				}
 			}
 			.merch__list li {
 				line-height: 1;
 				font-weight: normal;
+			}
+		}
+		.right + .mobile-content {
+			.hero-text p {
+				@media (max-width: 1024px) {
+					max-width: 445px;
+				}
 			}
 		}
 		.background {
