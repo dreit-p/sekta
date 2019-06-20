@@ -41,7 +41,6 @@
     app-dropdown(
 		placeholder='Выберите товар'
 		data-vv-as='Товар'
-		:options='weeks_options'
 		:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
 		:error='errors.first("weeks")'
 		name='weeks')  
@@ -49,20 +48,52 @@
     app-dropdown(
 		placeholder='Выберите способ получения заказа'
 		data-vv-as='Способ получения'
-		:options='weeks_options'
+		:options='getFeed_options'
 		:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
 		:error='errors.first("weeks")'
         caption='Забрать заказ можно по адресу: Невский пр., 11/2, офис 42 с понедельника по пятницу с 10:00 до 19:00.'
-		name='weeks') 
+		name='getFeed') 
 
     app-input(
-        placeholder='Промокод (если он у вас есть)'
+        placeholder='Город'
+        data-vv-as='Город'
+        :class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+        :error='errors.first("emailRepeat")'
+        name='city'
+        type='city')
+
+    app-input(
+        placeholder='Индекс'
+        data-vv-as='Индекс'
+        :class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+        :error='errors.first("emailRepeat")'
+        name='index'
+        type='index')
+
+    app-input(
+        placeholder='Адрес доставки'
+        data-vv-as='Адрес доставки'
+        :class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+        :error='errors.first("emailRepeat")'
+        name='address'
+        type='address')
+
+    app-input(
+        placeholder='ФИО получателя'
+        data-vv-as='ФИО'
+        :class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+        :error='errors.first("emailRepeat")'
+        name='FIO'
+        type='FIO')               
+
+    app-input(
+        placeholder='Промокод'
         data-vv-as='Промокод'
         :class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
         :error='errors.first("emailRepeat")'
-        name='email'
-        caption='*на указанный адрес будет анправлен чек об оплате'
-        type='email')             
+        name='promocode'
+        caption='Если у вас есть промокод, введите его в это поле'
+    )
 
     app-checkbox(
         name='termsAgree'
@@ -122,7 +153,7 @@
         data () {
             return {
                 platform_options: ['ВКонтакте', 'Telegram'],
-                weeks_options:this.prices,
+                getFeed_options: ['Самовывоз из Санкт-Петербурга', 'Доставка курьером по России'],
                 termsAgree: false,
             }
         },
