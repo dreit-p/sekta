@@ -6,7 +6,7 @@
         .section-caption(v-else)
             | Запишитесь сейчас 
 
-        entry-form(formType="online", v-bind:prices='this.prices')
+        entry-form(formType="online", v-bind:prices='this.prices', v-bind:courseName='this.courseName')
 </template>
 
 <script>
@@ -23,6 +23,9 @@
             prices : {
                 type: Array,
                 default: null
+            },
+            courseName: {
+                type: String,
             }
         },
         data () {

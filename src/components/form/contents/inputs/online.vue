@@ -2,7 +2,7 @@
 .content.register
 
 	p.light-text Вы выбрали курс
-	p.heavy-text Основной курс
+	p.heavy-text {{ this.courseName }}
 
 	app-dropdown(
 		placeholder='Платформа обучения'
@@ -80,6 +80,8 @@
 		};
 	}
 
+	
+
 	/*=====  End of define inputs  ======*/
 
 	export default {
@@ -94,6 +96,9 @@
 			prices: {
 				type: Array,
 				default: null
+			},
+			courseName: {
+				type: String
 			}
 		},
 		computed: {
@@ -102,7 +107,7 @@
 		data () {
 			return {
 				platform_options: ['ВКонтакте', 'Telegram'],
-				weeks_options:this.prices,
+				weeks_options: this.prices.map(({name}) => name),
 				termsAgree: false,
 			}
 		},

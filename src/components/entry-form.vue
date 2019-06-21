@@ -37,7 +37,7 @@
 
 					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType')
 
-					inputs-online(v-if='entryFormType == "online"', :key='entryFormType', v-bind:prices='this.prices')
+					inputs-online(v-if='entryFormType == "online"', :key='entryFormType', v-bind:prices='this.prices', v-bind:courseName='this.courseName')
 
 					inputs-face-to-face(v-if='entryFormType == "faceToFace"', :key='entryFormType')
 
@@ -93,6 +93,9 @@
 			prices: {
 				type: Array,
 				default: null
+			},
+			courseName: {
+				type: String
 			}
 		},
 		data () {

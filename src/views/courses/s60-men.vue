@@ -42,10 +42,12 @@ div.course
 					li консультации по питанию;
 					li помощь куратора в адаптации общих рекомендаций под ваши особенности и цели.
 
-	caption-section(
-		v-bind:dateStart='dateStart',
-		v-bind:prices='prices'
-	) 	
+	caption-section(v-if='courseInfo'
+		v-bind:dateStart='courseInfo.last_start_date',
+		v-bind:prices='courseInfo.prices'
+		v-bind:courseName='courseInfo.name'
+	)
+	caption-section(v-else)
 </template>
 
 <script>
@@ -55,7 +57,7 @@ div.course
 
     Vue.component('vue-headful', vueHeadful);
 
-	const currentId = 0;
+	const currentId = 5;
 
 	export default {
 		name: 'S60Men',
@@ -65,21 +67,13 @@ div.course
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		computed: {
-			dateStart: {
+			courseInfo: {
 				get () {
 					this.$store.dispatch('updateOnline');
 
 					if (this.$store.state.dateStart !== null && this.$store.state.dateStart.length !== 0) {
-						return this.$store.state.dateStart[currentId].last_start_date;
+						return this.$store.state.dateStart.find((course) => course.id === currentId);
 					} 
-				}
-			},
-			prices: {
-				get () {
-					if (this.$store.state.dateStart !== null && this.$store.state.dateStart.length !== 0) {
-						return this.$store.state.dateStart[currentId].prices
-							.map(({ name }) => name);
-					}
 				}
 			}
 		},
