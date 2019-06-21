@@ -3,12 +3,12 @@ const PrerenderSPAPlugin = require('prerender-spa-plugin');
 
 module.exports = {
     configureWebpack: {
-        plugins: [
-            new PrerenderSPAPlugin({
-                staticDir: path.join(__dirname, 'dist'),
-                routes: ['/', '/contacts', '/about-us', '/online-courses', '/online-courses/s60days'],
-            })
-        ],
+        // plugins: [
+        //     new PrerenderSPAPlugin({
+        //         staticDir: path.join(__dirname, 'dist'),
+        //         routes: ['/', '/contacts', '/about-us', '/online-courses', '/online-courses/s60days'],
+        //     })
+        // ],
         devServer: {
             port: 4444,
             host: '0.0.0.0',
