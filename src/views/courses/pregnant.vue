@@ -63,7 +63,7 @@ div.course
 				get () {
 					this.$store.dispatch('updateOnline');
 
-					if (this.$store.state.onlineCourseData !== null && this.$store.state.onlineCourseData.length !== 0) {
+					if (this.$store.state.onlineCourseData && this.$store.state.onlineCourseData.length !== 0) {
 						return this.$store.state.onlineCourseData.find((course) => course.id === currentId);
 					} 
 				}
