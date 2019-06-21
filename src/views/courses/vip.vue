@@ -65,14 +65,14 @@ div.course
 				get () {
 					this.$store.dispatch('updateOnline');
 
-					if (this.$store.state.dateStart.length !== 0) {
+					if (this.$store.state.dateStart !== null && this.$store.state.dateStart.length !== 0) {
 						return this.$store.state.dateStart[currentId].last_start_date;
 					} 
 				}
 			},
 			prices: {
 				get () {
-					if (this.$store.state.dateStart.length !== 0) {
+					if (this.$store.state.dateStart !== null && this.$store.state.dateStart.length !== 0) {
 						return this.$store.state.dateStart[currentId].prices
 							.map(({ name }) => name);
 					}

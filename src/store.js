@@ -93,7 +93,7 @@ const store = new Vuex.Store({
             isAuth: false
         },
         cityId: null,
-        dateStart: []
+        dateStart: null
     },
     mutations: {
         setMenuState(state, payload) {
@@ -168,7 +168,7 @@ const store = new Vuex.Store({
                 .catch(error => console.log(error));
         },
         updateOnline({ state, dispatch }) {
-            if (state.dateStart.length === 0) {
+            if (state.dateStart === null) {
                 dispatch('requestOnlineCourse');
             }
         },
