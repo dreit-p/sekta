@@ -93,7 +93,7 @@ const store = new Vuex.Store({
             isAuth: false
         },
         cityId: null,
-        dateStart: null
+        onlineCourseData: null
     },
     mutations: {
         setMenuState(state, payload) {
@@ -117,8 +117,8 @@ const store = new Vuex.Store({
         setCity(state, { city }) {
             state.cityId = city.id;
         },
-        setOnlineDate(state, dateStart) {
-            state.dateStart = dateStart;
+        setOnlineDate(state, data) {
+            state.onlineCourseData = data;
         }
     },
     actions: {
@@ -155,6 +155,7 @@ const store = new Vuex.Store({
             return axios
                 .get(`${TEST_URL}/api/online-courses`)
                 .then(response => {
+                    console.log(response.data.data)
                     commit('setOnlineDate', response.data.data);
                 })
                 .catch(error => console.log(error));
@@ -168,7 +169,7 @@ const store = new Vuex.Store({
                 .catch(error => console.log(error));
         },
         updateOnline({ state, dispatch }) {
-            if (state.dateStart === null) {
+            if (state.onlineCourseData === null) {
                 dispatch('requestOnlineCourse');
             }
         },
