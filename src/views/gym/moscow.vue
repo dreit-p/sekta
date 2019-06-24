@@ -10,13 +10,7 @@ div.gym
 				h1.main Москва
 				.additional старт занятий – 01 октября
 
-	
-	
-
-
-
-
-	
+	.section-btns
 		.btn.next(v-if='nextBtn.isVisible', @click='scrollTo(nextBtn.destination); nextBtn.isVisible = false') {{ nextBtn.text }}
 
 	#training-params
@@ -614,8 +608,12 @@ div.gym
 		position: relative;
 		overflow: hidden;
 	}
+	.gym {
+		-webkit-overflow-scrolling: touch;
+	}
 	.section-btns {
 		position: fixed;
+		 -webkit-overflow-scrolling: touch;
 		z-index: 2;
 		left: 0;
 		bottom: 0;
