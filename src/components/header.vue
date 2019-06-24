@@ -638,10 +638,10 @@ header.main-header
 		right: 0;
 		background-color: var(--bt-dark_elems);
 		padding: 20px 15px;
-		height: 120%;
+		height: auto;
 		width: 100%;
 		min-width: 320px;
-		overflow: auto;
+		overflow-y:scroll;
 		-webkit-overflow-scrolling: touch;
 		z-index: 2;
 		.additional-links {
