@@ -29,17 +29,17 @@ div
 			GreenBtn: () => import('@/components/form/green-btn.vue'),
 		},
 		props: {
-            number: {
-                type: String,
-                default: null
+			number: {
+				type: String,
+				default: null
 			},
 			orderDate: {
 				type: String,
 				default: null
 			},
-            choice : {
-                type: String,
-                default: null
+				choice : {
+				type: String,
+				default: null
 			},
 			dateStart: {
 				type: Object,
@@ -53,7 +53,7 @@ div
 				type: String,
 				default: null
 			}
-        },
+		},
 		data () {
 			return {}
 		}

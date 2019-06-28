@@ -4,14 +4,25 @@ module.exports = {
 		node: true
 	},
 	'extends': [
-		'plugin:vue/recommended',
+		'plugin:vue/strongly-recommended',
 		'eslint:recommended'
 	],
 	rules: {
-      'no-console': 'off',
-      'no-debugger': 'off',
-      'vue/no-confusing-v-for-v-if': 'warning'
-    },
+		'vue/html-indent': 'off',
+		indent: ['error', 'tab'],
+		'no-console': ['error', { allow: ['warn', 'error'] } ],
+		'no-debugger': 'error',
+		'vue/no-confusing-v-for-v-if': 'warning',
+		"vue/max-attributes-per-line": [4,
+			{
+				"singleline": 4,
+				"multiline": {
+					"max": 1,
+					"allowFirstLine": true
+				}
+			}
+		],
+	},
 	parserOptions: {
 		parser: 'babel-eslint'
 	}

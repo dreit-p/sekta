@@ -1,9 +1,9 @@
 <template lang="pug">
 div
 	vue-headful(
-            title="Контакты"
-            description="Связь с #sektaoffice"
-    )
+		title="Контакты"
+		description="Связь с #sektaoffice"
+	)
 	.article-limit
 		.text-typography
 			h2 Контакты
@@ -28,7 +28,7 @@ div
 
 <script>
 	import Vue from 'vue';
-    import vueHeadful from 'vue-headful';
+	import vueHeadful from 'vue-headful';
 
 	Vue.component('vue-headful', vueHeadful);
 	

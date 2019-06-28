@@ -1,14 +1,14 @@
 <template>
 	<picture>
-		<source type="image/webp" :srcset="this.fileName[0]">
-		<source type="image/jpeg" :srcset="this.fileName[1]">
-		<img :src="this.fileName[1]" :alt="this.alt">
+		<source type="image/webp" :srcset="fileName[0]">
+		<source type="image/jpeg" :srcset="fileName[1]">
+		<img :src="fileName[1]" :alt="alt">
 	</picture>
 </template>
 
 <script>
 export default {
-	name: 'webp-img',
+	name: 'WebpImg',
 
 	props: {
 		src: {
@@ -16,7 +16,8 @@ export default {
 			required: true
 		},
 		alt: {
-			type: String
+			type: String,
+			default: ''
 		},
 	},
 	computed: {
