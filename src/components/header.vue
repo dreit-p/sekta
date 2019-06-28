@@ -117,7 +117,7 @@ header.main-header
 		},
 		computed: {
 			isOpenedMenu () {
-				return this.$store.state.appStates.isOpenedMenu;
+				return this.$store.state.header.isOpenedMenu;
 			},
 			isOpenedModal () {
 				return this.$store.state.appStates.formModal.isOpened;
@@ -125,11 +125,15 @@ header.main-header
 			formModalType () {
 				return this.$store.state.appStates.formModal.type;
 			},
+			mainLinks () {
+				return this.$store.state.header.mainLinks;
+			},
+			additionalLinks () {
+				return this.$store.state.header.additionalLinks;
+			},
 			...mapState([
-				'mainLinks',
 				'formModal',
-				'appStates',
-				'additionalLinks'
+				'appStates'
 			])
 		},
 		methods: {
@@ -139,7 +143,8 @@ header.main-header
 			toggleModal () {
 				this.setFormModalState({modalState: !this.isOpenedModal})
 			},
-			...mapActions(['setMenuState', 'setFormModalState']),
+			...mapActions('header', {setMenuState: 'setMenuState'}),
+			...mapActions(['setFormModalState']),
 
 			/*================================
 			=            Dropdown            =
@@ -638,10 +643,11 @@ header.main-header
 		right: 0;
 		background-color: var(--bt-dark_elems);
 		padding: 20px 15px;
-		height: auto;
+		padding-bottom: calc(20% + 15px);
+		height: 120%;
 		width: 100%;
 		min-width: 320px;
-		overflow-y:scroll;
+		overflow: auto;
 		-webkit-overflow-scrolling: touch;
 		z-index: 2;
 		.additional-links {
