@@ -74,16 +74,16 @@ section
 </template>
 
 <script>
-	export default {
-		name: 'SecondScreen',
-		components: {
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-			WebpImg: () => import('@/components/webp-img.vue'),
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'SecondScreen',
+	components: {
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+		WebpImg: () => import('@/components/webp-img.vue'),
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>
