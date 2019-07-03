@@ -32,47 +32,47 @@
 
 <script>
 
-	/*=====================================
-	=            define inputs            =
-	=====================================*/
+/*=====================================
+=            define inputs            =
+=====================================*/
 
-	let globalInputs = {
-		names: ['email', 'password'],
-		list: {}
+let globalInputs = {
+	names: ['email', 'password'],
+	list: {}
+};
+
+for (var i = 0; i < globalInputs.names.length; i++) {
+	let name = globalInputs.names[i];
+	globalInputs.list[name] = {
+		get () {
+			return this.$store.state.inputs[name]
+		},
+		set (value) {
+			this.$store.commit('setInputData', {name: name, data: value})
+		}
 	};
+}
 
-	for (var i = 0; i < globalInputs.names.length; i++) {
-		let name = globalInputs.names[i];
-		globalInputs.list[name] = {
-			get () {
-				return this.$store.state.inputs[name]
-			},
-			set (value) {
-				this.$store.commit('setInputData', {name: name, data: value})
-			}
-		};
-	}
+/*=====  End of define inputs  ======*/
 
-	/*=====  End of define inputs  ======*/
-
-	export default {
-		name: 'form-login',
-		components: {
-			AppInput: () => import('@/components/form/input.vue'),
-			AppCheckbox: () => import('@/components/form/checkbox.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		computed: {
-			...globalInputs.list
-		},
-		methods: {
-			setFormModalState(data) {
-				return this.$parent.setFormModalState(data);
-			}
-		},
-		data () {
-			return {
-			}
-		},
-	}
+export default {
+	name: 'FormLogin',
+	components: {
+		AppInput: () => import('@/components/form/input.vue'),
+		AppCheckbox: () => import('@/components/form/checkbox.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	computed: {
+		...globalInputs.list
+	},
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	},
+	data () {
+		return {
+		}
+	},
+}
 </script>

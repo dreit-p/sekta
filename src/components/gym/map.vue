@@ -45,135 +45,135 @@
 </template>
 
 <script>
-	import { yandexMap, ymapMarker } from 'vue-yandex-maps'
-	export default {
-		name: 'GymMap',
-		components: {
-			yandexMap, ymapMarker,
-			WebpImg: () => import('@/components/webp-img.vue'),
-			VideoModal: () => import('@/components/gym/video-modal.vue'),
+import { yandexMap, ymapMarker } from 'vue-yandex-maps'
+export default {
+	name: 'GymMap',
+	components: {
+		yandexMap, ymapMarker,
+		WebpImg: () => import('@/components/webp-img.vue'),
+		VideoModal: () => import('@/components/gym/video-modal.vue'),
+	},
+	model: {
+		event: 'change'
+	},
+	props: {
+		value: {
+			type: Number,
+			default: 0
 		},
-		model: {
-			event: 'change'
+		locations: {
+			type: Array,
+			default: ()=>[]
 		},
-		props: {
-			value: {
-				type: Number,
-				default: 0
-			},
-			locations: {
-				type: Array,
-				default: ()=>[]
-			},
-		},
-		data () {
-			return {
-				map: {},
-				mapCreated: false,
-				mounted: false,
-				isChoseMap: false,
-				showVideoModal: false,
-				showDescriptionText: false,
-				selectedIndex: null,
-				clusterOptions: {
-					gyms: {
-						useMapMargin: true,
-						zoomMargin: [40, 20, 10, 20],
-						gridSize: 16,
-						preset: 'islands#blackClusterIcons'
-					},
+	},
+	data () {
+		return {
+			map: {},
+			mapCreated: false,
+			mounted: false,
+			isChoseMap: false,
+			showVideoModal: false,
+			showDescriptionText: false,
+			selectedIndex: null,
+			clusterOptions: {
+				gyms: {
+					useMapMargin: true,
+					zoomMargin: [40, 20, 10, 20],
+					gridSize: 16,
+					preset: 'islands#blackClusterIcons'
 				},
-				defaultPosition: [55.746726, 37.5911983],
-				windowWidth: window.innerWidth,
+			},
+			defaultPosition: [55.746726, 37.5911983],
+			windowWidth: window.innerWidth,
+		}
+	},
+	computed: {
+		isShowingMap () {
+			return this.windowWidth >= 700 && this.mounted || this.isChoseMap
+		},
+		placemarks () {
+			var marks = [];
+			for (let i = 0; i < this.locations.length; i++) {
+				let address = this.locations[i];
+				var theOne = {
+					coords: address.coords,
+					properties: {
+						firstLine: address.firstLine,
+						secondLine: address.secondLine,
+						hintContent: address.secondLine,
+					},
+					callbacks: {
+						click: () => {
+							this.selectGym(i);
+						}
+					},
+					clusterName: 'gyms',
+					options: {
+						fillColor: this.marksColor(i),
+						iconColor: this.marksColor(i),
+					},
+					markerType: 'placemark',
+					icon: {layout: 'islands#darkBlueCircleDotIcon',iconContent: i},
+					markerId: i
+				}
+				marks.push(theOne);
 			}
+			return marks;
 		},
-		computed: {
-			isShowingMap () {
-				return this.windowWidth >= 700 && this.mounted || this.isChoseMap
-			},
-			placemarks () {
-				var marks = [];
-				for (let i = 0; i < this.locations.length; i++) {
-					let address = this.locations[i];
-					var theOne = {
-						coords: address.coords,
-						properties: {
-							firstLine: address.firstLine,
-							secondLine: address.secondLine,
-							hintContent: address.secondLine,
-						},
-						callbacks: {
-							click: () => {
-								this.selectGym(i);
-							}
-						},
-						clusterName: 'gyms',
-						options: {
-							fillColor: this.marksColor(i),
-							iconColor: this.marksColor(i),
-						},
-						markerType: 'placemark',
-						icon: {layout: 'islands#darkBlueCircleDotIcon',iconContent: i},
-						markerId: i
-					}
-					marks.push(theOne);
-				}
-				return marks;
-			},
-		},
-		watch: {
-			isShowingMap () {
-				if (!this.isShowingMap) {
-					this.map.destroy();
-					this.mapCreated = false;
-				}
+	},
+	watch: {
+		isShowingMap () {
+			if (!this.isShowingMap) {
+				this.map.destroy();
+				this.mapCreated = false;
 			}
-		},
-		created () {
-			this.locations.some((elem, index)=>{
-				if (elem.id == this.value) {
-					this.selectGym(index);
-					return true;
-				}
+		}
+	},
+	created () {
+		this.locations.some((elem, index)=>{
+			if (elem.id == this.value) {
+				this.selectGym(index);
+				return true;
+			}
+		});
+	},
+	mounted () {
+		this.mounted = true;
+		window.addEventListener('resize', ()=>{
+			this.$nextTick(function () {
+				this.windowWidth = window.innerWidth
 			});
+		});
+	},
+	methods: {
+		marksColor (index) {
+			return this.selectedIndex == index ? '#0ab6a1' : '#000'
 		},
-		mounted () {
-			this.mounted = true;
-			window.addEventListener('resize', ()=>{
-				this.$nextTick(function () {
-					this.windowWidth = window.innerWidth
-				});
-			});
+		selectGym (index) {
+			index = +index
+			this.$emit('change', parseInt(this.locations[index].id));
+			this.selectedIndex = index;
 		},
-		methods: {
-			marksColor (index) {
-				return this.selectedIndex == index ? '#0ab6a1' : '#000'
-			},
-			selectGym (index) {
-				index = +index
-				this.$emit('change', parseInt(this.locations[index].id));
-				this.selectedIndex = index;
-			},
-			initHandler(map) {
-				this.map = map;
-				window.map = map;
-				this.mapCreated = true;
-				this.setCenterPosition(map);
+		initHandler(map) {
+			this.map = map;
+			window.map = map;
+			this.mapCreated = true;
+			this.setCenterPosition(map);
 
-				window.addEventListener('resize', ()=>{
-					this.$nextTick(this.setCenterPosition(map));
-				});
-			},
-			setCenterPosition (map) {
-				let offsetLeft = this.windowWidth < 700 ? 10 : this.$el.querySelector('.tiles').offsetWidth + 10;
-				map.margin.setDefaultMargin([0, 0, 0, offsetLeft]);
-				map.setBounds(map.geoObjects.getBounds(), {
-					zoomMargin: [10, 10, 10, offsetLeft]
-				});
-				this.defaultPosition = map.getCenter();
-			}
+			window.addEventListener('resize', ()=>{
+				this.$nextTick(this.setCenterPosition(map));
+			});
 		},
-	}
+		setCenterPosition (map) {
+			let offsetLeft = this.windowWidth < 700 ? 10 : this.$el.querySelector('.tiles').offsetWidth + 10;
+			map.margin.setDefaultMargin([0, 0, 0, offsetLeft]);
+			map.setBounds(map.geoObjects.getBounds(), {
+				zoomMargin: [10, 10, 10, offsetLeft]
+			});
+			this.defaultPosition = map.getCenter();
+		}
+	},
+}
 </script>
 
 <style lang="postcss">

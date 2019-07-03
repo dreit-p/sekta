@@ -134,31 +134,31 @@ div
 
 <script>
 
-	let globalInputs = {
-		names: ['email', 'password', 'firstname', 'lastname'],
-		list: {}
-	};
+let globalInputs = {
+	names: ['email', 'password', 'firstname', 'lastname'],
+	list: {}
+};
 
-	export default {
-		name: 'MainPersonal',
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
-			AppFooter: () => import('@/components/footer.vue'),
-			AppInput: () => import('@/components/form/input.vue'),
-			AppDropdown: () => import('@/components/form/dropdown.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue')		
-		},
-		data () {
-			return {
-				time_options: ['GTM-12', 'GTM-11','GTM-10','GTM-9','GTM-8','GTM-7','GTM-6','GTM-5','GTM-4','GTM-3',
+export default {
+	name: 'MainPersonal',
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+		AppFooter: () => import('@/components/footer.vue'),
+		AppInput: () => import('@/components/form/input.vue'),
+		AppDropdown: () => import('@/components/form/dropdown.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue')		
+	},
+	data () {
+		return {
+			time_options: ['GTM-12', 'GTM-11','GTM-10','GTM-9','GTM-8','GTM-7','GTM-6','GTM-5','GTM-4','GTM-3',
 				'GTM-2','GTM-1','GTM+0','GTM+1', 'GTM+2 (Калининград)', 'GTM+3 (Москва, Санкт-Петербург)','GTM+4 (Самара, Ижевск)',
 				'GTM+5 (Екатеринбург)', 'GTM+6 (Омск)', 'GTM+7 (Красноярск)', 'GTM+8 (Иркутск)', 'GTM+9 (Якутск)',
 				'GTM+10 (Магадан, Верхоянск, Сахалин, Владивосток)', 'GTM+11 (Сахалинская область)', 'GTM+12 (Камчатка, Чукотка)',
 				'GTM+13', 'GTM+14'],
-				city_options: ['Москва', 'Санкт-Петербург', 'Другой город']
-			}
+			city_options: ['Москва', 'Санкт-Петербург', 'Другой город']
 		}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

@@ -59,56 +59,56 @@
 </template>
 <script>
 
-	/*=====================================
-	=            define inputs            =
-	=====================================*/
+/*=====================================
+=            define inputs            =
+=====================================*/
 
-	let globalInputs = {
-		names: ['email', 'password', 'firstname', 'lastname'],
-		list: {}
+let globalInputs = {
+	names: ['email', 'password', 'firstname', 'lastname'],
+	list: {}
+};
+
+for (var i = 0; i < globalInputs.names.length; i++) {
+	let name = globalInputs.names[i];
+	globalInputs.list[name] = {
+		get () {
+			return this.$store.state.inputs[name]
+		},
+		set (value) {
+			this.$store.commit('setInputData', {name: name, data: value})
+		}
 	};
-
-	for (var i = 0; i < globalInputs.names.length; i++) {
-		let name = globalInputs.names[i];
-		globalInputs.list[name] = {
-			get () {
-				return this.$store.state.inputs[name]
-			},
-			set (value) {
-				this.$store.commit('setInputData', {name: name, data: value})
-			}
-		};
-	}
+}
 
 	
 
-	/*=====  End of define inputs  ======*/
+/*=====  End of define inputs  ======*/
 
-	export default {
-		name: 'form-online',
-		components: {
-			AppInput: () => import('@/components/form/input.vue'),
-			AppCheckbox: () => import('@/components/form/checkbox.vue'),
-			AppDropdown: () => import('@/components/form/dropdown.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
+export default {
+	name: 'FormOnline',
+	components: {
+		AppInput: () => import('@/components/form/input.vue'),
+		AppCheckbox: () => import('@/components/form/checkbox.vue'),
+		AppDropdown: () => import('@/components/form/dropdown.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	props: {
+		prices: {
+			type: Array,
 		},
-		props: {
-			prices: {
-				type: Array,
-			},
-			courseName: {
-				type: String
-			}
-		},
-		computed: {
-			...globalInputs.list
-		},
-		data () {
-			return {
-				platform_options: ['ВКонтакте', 'Telegram'],
-				weeks_options: this.prices ? this.prices.map(({name}) => name) : ['Продажа невозможна'],
-				termsAgree: false,
-			}
-		},
-	}
+		courseName: {
+			type: String
+		}
+	},
+	computed: {
+		...globalInputs.list
+	},
+	data () {
+		return {
+			platform_options: ['ВКонтакте', 'Telegram'],
+			weeks_options: this.prices ? this.prices.map(({name}) => name) : ['Продажа невозможна'],
+			termsAgree: false,
+		}
+	},
+}
 </script>

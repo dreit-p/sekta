@@ -52,21 +52,21 @@ div.course
 </template>
 
 <script>
-	import Vue from 'vue';
-    import vueHeadful from 'vue-headful';
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
 
-	Vue.component('vue-headful', vueHeadful);
+Vue.component('vue-headful', vueHeadful);
 	
-	export default {
-		name: 'gym',
-		components: {
-			CoursesHero: () => import('@/components/heroes/fullsize-hero.vue'),
-			GymLocation: () => import('@/components/gym/location.vue'),
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'Gym',
+	components: {
+		CoursesHero: () => import('@/components/heroes/fullsize-hero.vue'),
+		GymLocation: () => import('@/components/gym/location.vue'),
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss">

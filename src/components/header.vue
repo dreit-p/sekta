@@ -101,199 +101,199 @@ header.main-header
 </template>
 
 <script>
-	import Velocity from 'velocity-animate'
-	import { mapState, mapActions } from 'vuex'
+import Velocity from 'velocity-animate'
+import { mapState, mapActions } from 'vuex'
 
-	export default {
-		name: 'AppHeader',
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
+export default {
+	name: 'AppHeader',
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	data () {
+		return {
+			showSubLinks: false,
+			dropdownTimer: null,
+		}
+	},
+	computed: {
+		isOpenedMenu () {
+			return this.$store.state.header.isOpenedMenu;
 		},
-		data () {
-			return {
-				showSubLinks: false,
-				dropdownTimer: null,
-			}
+		isOpenedModal () {
+			return this.$store.state.appStates.formModal.isOpened;
 		},
-		computed: {
-			isOpenedMenu () {
-				return this.$store.state.header.isOpenedMenu;
-			},
-			isOpenedModal () {
-				return this.$store.state.appStates.formModal.isOpened;
-			},
-			formModalType () {
-				return this.$store.state.appStates.formModal.type;
-			},
-			mainLinks () {
-				return this.$store.state.header.mainLinks;
-			},
-			additionalLinks () {
-				return this.$store.state.header.additionalLinks;
-			},
-			...mapState([
-				'formModal',
-				'appStates'
-			])
+		formModalType () {
+			return this.$store.state.appStates.formModal.type;
 		},
-		methods: {
-			toggleMenu () {
-				this.setMenuState(!this.isOpenedMenu)
-			},
-			toggleModal () {
-				this.setFormModalState({modalState: !this.isOpenedModal})
-			},
-			...mapActions('header', {setMenuState: 'setMenuState'}),
-			...mapActions(['setFormModalState']),
+		mainLinks () {
+			return this.$store.state.header.mainLinks;
+		},
+		additionalLinks () {
+			return this.$store.state.header.additionalLinks;
+		},
+		...mapState([
+			'formModal',
+			'appStates'
+		])
+	},
+	methods: {
+		toggleMenu () {
+			this.setMenuState(!this.isOpenedMenu)
+		},
+		toggleModal () {
+			this.setFormModalState({modalState: !this.isOpenedModal})
+		},
+		...mapActions('header', {setMenuState: 'setMenuState'}),
+		...mapActions(['setFormModalState']),
 
-			/*================================
+		/*================================
 			=            Dropdown            =
 			================================*/
 
-			clearDropdownTimer () {
-				if (this.dropdownTimer) {
-					clearTimeout(this.dropdownTimer);
-					this.dropdownTimer = null;
-				}
-			},
-
-			setDropdownTimer () {
+		clearDropdownTimer () {
+			if (this.dropdownTimer) {
 				clearTimeout(this.dropdownTimer);
-				this.dropdownTimer = setTimeout(()=>{
-					this.showSubLinks = false;
-				}, 400);
-			},
+				this.dropdownTimer = null;
+			}
+		},
 
-			changeDropdownContent (type, clearTimer) {
+		setDropdownTimer () {
+			clearTimeout(this.dropdownTimer);
+			this.dropdownTimer = setTimeout(()=>{
+				this.showSubLinks = false;
+			}, 400);
+		},
 
-				if (clearTimer) {
-					this.clearDropdownTimer();
-				}
-				this.showSubLinks = type;
-				this.setOutsideClickListener();
-			},
+		changeDropdownContent (type, clearTimer) {
 
-			theHighestElement: function (elem) {
-				let theBiggest = 0;
-				document.querySelectorAll(elem).forEach(function(elem) {
-					if (elem.offsetHeight > theBiggest) {
-						theBiggest = elem.offsetHeight;
-					}
-				});
-				return theBiggest;
-			},
-			setHeightForDropdown: function () {
-				let elems = document.querySelectorAll('.sub-links.outside .category');
-				let height = 0 + 'px';
-				if (elems.length > 0) {
-					if (elems.length > 1) {
-						height = this.theHighestElement('.sub-links.outside .links-fade-enter-active') + 'px';
-					} else {
-						height = elems[0].offsetHeight + 'px';
-					}
-				}
-				document.querySelector('.sub-links.outside .limit').style.height = height;
-			},
-
-			dropdownBeforeEnter: function (el) {
+			if (clearTimer) {
 				this.clearDropdownTimer();
-				el.style.opacity = 0;
-				let links = el.querySelectorAll('.link');
-				links.forEach(function(link) {
-					Velocity(link, { opacity: 0}, {queue: false} )
-				});
-			},
-			dropdownEnter: function (el, done) {
-				this.setHeightForDropdown();
-				Velocity(el, { opacity: 1}, { duration: 300 })
-				el.querySelectorAll('.link').forEach(function(link) {
-					Velocity(link, 
-						{
-							opacity: 1
-						}, {
-							duration: 300,
-							delay: 200 + (link.dataset.index * 60),
-							easing: 'ease-out',
-							queue: false,
-							complete: done
-						} )
-				});
-			},
-			dropdownLeave: function (el, done) {
-				Velocity(el, { opacity: 0}, { duration: 300, complete: done});
-				document.querySelector('.sub-links.outside .limit').style.height = '0px';
-			},
+			}
+			this.showSubLinks = type;
+			this.setOutsideClickListener();
+		},
 
-			/*=====  End of Dropdown  ======*/
+		theHighestElement: function (elem) {
+			let theBiggest = 0;
+			document.querySelectorAll(elem).forEach(function(elem) {
+				if (elem.offsetHeight > theBiggest) {
+					theBiggest = elem.offsetHeight;
+				}
+			});
+			return theBiggest;
+		},
+		setHeightForDropdown: function () {
+			let elems = document.querySelectorAll('.sub-links.outside .category');
+			let height = 0 + 'px';
+			if (elems.length > 0) {
+				if (elems.length > 1) {
+					height = this.theHighestElement('.sub-links.outside .links-fade-enter-active') + 'px';
+				} else {
+					height = elems[0].offsetHeight + 'px';
+				}
+			}
+			document.querySelector('.sub-links.outside .limit').style.height = height;
+		},
+
+		dropdownBeforeEnter: function (el) {
+			this.clearDropdownTimer();
+			el.style.opacity = 0;
+			let links = el.querySelectorAll('.link');
+			links.forEach(function(link) {
+				Velocity(link, { opacity: 0}, {queue: false} )
+			});
+		},
+		dropdownEnter: function (el, done) {
+			this.setHeightForDropdown();
+			Velocity(el, { opacity: 1}, { duration: 300 })
+			el.querySelectorAll('.link').forEach(function(link) {
+				Velocity(link, 
+					{
+						opacity: 1
+					}, {
+						duration: 300,
+						delay: 200 + (link.dataset.index * 60),
+						easing: 'ease-out',
+						queue: false,
+						complete: done
+					} )
+			});
+		},
+		dropdownLeave: function (el, done) {
+			Velocity(el, { opacity: 0}, { duration: 300, complete: done});
+			document.querySelector('.sub-links.outside .limit').style.height = '0px';
+		},
+
+		/*=====  End of Dropdown  ======*/
 
 
-			/*======================================
+		/*======================================
 			=            Menu animation            =
 			======================================*/
 
-			menuBeforeEnter: function (el) {
-				el.style.opacity = 0;
-				let links = el.querySelectorAll('.link');
-				links.forEach(function(link) {
-					Velocity(link, { opacity: 0}, {queue: false} )
-				});
-			},
-			menuEnter: function (el, done) {
-				Velocity(el, { opacity: 1}, { duration: 300 })
-				el.querySelectorAll('.link').forEach(function(link) {
-					Velocity(link, 
-						{
-							opacity: 1
-						}, {
-							duration: 300,
-							delay: 200 + (link.dataset.index * 60),
-							easing: 'ease-out',
-							queue: false,
-							complete: done
-						} )
-				});
-			},
-			menuLeave: function (el, done) {
-				Velocity(el, { opacity: 0}, { duration: 300 })
-				let links = el.querySelectorAll('.link');
-				links.forEach(function(link) {
-					Velocity(link, 
-						{
-							opacity: 0
-						}, {
-							duration: 300,
-							delay: 0,
-							easing: 'ease-in',
-							queue: false,
-							complete: done
-						} )
-				});
-			},
+		menuBeforeEnter: function (el) {
+			el.style.opacity = 0;
+			let links = el.querySelectorAll('.link');
+			links.forEach(function(link) {
+				Velocity(link, { opacity: 0}, {queue: false} )
+			});
+		},
+		menuEnter: function (el, done) {
+			Velocity(el, { opacity: 1}, { duration: 300 })
+			el.querySelectorAll('.link').forEach(function(link) {
+				Velocity(link, 
+					{
+						opacity: 1
+					}, {
+						duration: 300,
+						delay: 200 + (link.dataset.index * 60),
+						easing: 'ease-out',
+						queue: false,
+						complete: done
+					} )
+			});
+		},
+		menuLeave: function (el, done) {
+			Velocity(el, { opacity: 0}, { duration: 300 })
+			let links = el.querySelectorAll('.link');
+			links.forEach(function(link) {
+				Velocity(link, 
+					{
+						opacity: 0
+					}, {
+						duration: 300,
+						delay: 0,
+						easing: 'ease-in',
+						queue: false,
+						complete: done
+					} )
+			});
+		},
 
-			/*=====  End of Menu animation  ======*/
+		/*=====  End of Menu animation  ======*/
 
-			setOutsideClickListener: function () {
+		setOutsideClickListener: function () {
 
-				let app = document.getElementById('app');
+			let app = document.getElementById('app');
 
-				let theTarget = app.querySelector('header.main-header');
+			let theTarget = app.querySelector('header.main-header');
 
-				app.removeEventListener('mouseup', task, false);
+			app.removeEventListener('mouseup', task, false);
 
-				let task = (e)=>{
+			let task = (e)=>{
 
-					if (!theTarget.contains(e.target) && this.showSubLinks != false) {
-							this.showSubLinks = false;
-							e.target.removeEventListener('mouseup', task, false)
-					}
-
+				if (!theTarget.contains(e.target) && this.showSubLinks != false) {
+					this.showSubLinks = false;
+					e.target.removeEventListener('mouseup', task, false)
 				}
 
-				app.addEventListener('mouseup', task, false);
 			}
 
+			app.addEventListener('mouseup', task, false);
 		}
+
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

@@ -10,26 +10,26 @@
 </template>
 
 <script>
-	export default {
-		name: 'CaptionSection',
-		components: {
-			EntryForm: () => import('@/components/entry-form.vue'),
+export default {
+	name: 'CaptionSection',
+	components: {
+		EntryForm: () => import('@/components/entry-form.vue'),
+	},
+	props: {
+		dateStart: {
+			type: String,
+			default: null
 		},
-		props: {
-			dateStart: {
-				type: String,
-				default: null
-			},
-			prices : {
-				type: Array,
-				default: null
-			},
-			courseName: {
-				type: String,
-			}
+		prices : {
+			type: Array,
+			default: null
 		},
-		data () {
-			return {}
+		courseName: {
+			type: String,
 		}
+	},
+	data () {
+		return {}
 	}
+}
 </script>

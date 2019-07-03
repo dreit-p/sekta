@@ -51,39 +51,39 @@ div.course
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	import Vue from 'vue';
-    import vueHeadful from 'vue-headful';
+import { mapActions } from 'vuex'
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
 
-    Vue.component('vue-headful', vueHeadful);
+Vue.component('vue-headful', vueHeadful);
 
-	const currentId = 5;
+const currentId = 5;
 
-	export default {
-		name: 'S60Men',
-		components: {
-			hero: () => import('@/components/heroes/aside-hero.vue'),
-			CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		computed: {
-			courseInfo: {
-				get () {
-					this.$store.dispatch('updateOnline');
+export default {
+	name: 'S60Men',
+	components: {
+		hero: () => import('@/components/heroes/aside-hero.vue'),
+		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	computed: {
+		courseInfo: {
+			get () {
+				this.$store.dispatch('updateOnline');
 
-					if (this.$store.state.onlineCourseData && this.$store.state.onlineCourseData.length !== 0) {
-						return this.$store.state.onlineCourseData.find((course) => course.id === currentId);
-					} 
-				}
+				if (this.$store.state.onlineCourseData && this.$store.state.onlineCourseData.length !== 0) {
+					return this.$store.state.onlineCourseData.find((course) => course.id === currentId);
+				} 
 			}
-		},
-		data () {
-			return {}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+		}
+	},
+	data () {
+		return {}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">

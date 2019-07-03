@@ -17,55 +17,55 @@
 </template>
 
 <script>
-	export default {
-		name: 'training-quantity',
-		model: {
-			event: 'change'
+export default {
+	name: 'TrainingQuantity',
+	model: {
+		event: 'change'
+	},
+	props: {
+		value: {
+			type: Number,
+			default: 0
 		},
-		props: {
-			value: {
-				type: Number,
-				default: 0
-			},
-			quantityTypes: {
-				type: Array,
-				default: ()=>[]
-			},
+		quantityTypes: {
+			type: Array,
+			default: ()=>[]
 		},
-		created () {
-			this.selectType(this.value);
-		},
-		computed: {
-			groups () {
-				let groups = {};
+	},
+	created () {
+		this.selectType(this.value);
+	},
+	computed: {
+		groups () {
+			let groups = {};
 
-				this.quantityTypes.forEach(function(elem) {
-					if (!groups[elem.group]) groups[elem.group] = []
-					groups[elem.group].push(elem);
-				});
+			this.quantityTypes.forEach(function(elem) {
+				if (!groups[elem.group]) groups[elem.group] = []
+				groups[elem.group].push(elem);
+			});
 
-				let results = Object.keys(groups).map(function(key){
-					let obj = {
-						name: key,
-						elements: groups[key]
-					};
-					return obj;
-				});
-				return results;
-			},
+			let results = Object.keys(groups).map(function(key){
+				let obj = {
+					name: key,
+					elements: groups[key]
+				};
+				return obj;
+			});
+			return results;
 		},
-		methods: {
-			selectType(id) {
-				this.$emit('change', parseInt(id));
-				this.selectedID = id;
-			},
+	},
+	methods: {
+		selectType(id) {
+			this.$emit('change', parseInt(id));
+			this.selectedID = id;
 		},
-		data () {
-			return {
-				selectedID: null,
-			}
+	},
+	data () {
+		return {
+			selectedID: null,
 		}
 	}
+}
 </script>
 
 <style lang="postcss">

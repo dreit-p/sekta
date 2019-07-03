@@ -44,23 +44,23 @@ export default {
 		SvgIcon: () => import("@/components/SvgIcon.vue")
 	},
 	props: {
-			courseName: {
-				type: String,
-				default: 'NoName Course'
-			},
-			progress: {
-				type: String,
-				default: null
-			},
-			dateStart: {
-				type: String,
-				default: null
-			},
-			additionalInfo: {
-				type: String,
-				default: null
-			}
+		courseName: {
+			type: String,
+			default: 'NoName Course'
 		},
+		progress: {
+			type: String,
+			default: null
+		},
+		dateStart: {
+			type: String,
+			default: null
+		},
+		additionalInfo: {
+			type: String,
+			default: null
+		}
+	},
 	data() {
 		return {
 			isDropDownActive: false

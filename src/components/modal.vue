@@ -34,62 +34,62 @@ transition(name='fade')
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
-	/*========================================
-	=            define the forms            =
-	========================================*/
+/*========================================
+=            define the forms            =
+========================================*/
 
-	const formContent = {
-		types: ['login', 'register', 'recovery'],
-		components: {
-			inputs: {},
-			texts: {}
+const formContent = {
+	types: ['login', 'register', 'recovery'],
+	components: {
+		inputs: {},
+		texts: {}
+	}
+}
+
+for (let i = 0; i < formContent.types.length; i++) {
+	let type = formContent.types[i];
+	formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
+		return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
+	};
+	formContent.components.texts['texts-' + formContent.types[i]] = function () {
+		return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
+	};
+}
+
+/*=====  End of define the forms  ======*/
+
+
+export default {
+	name: 'AppModal',
+	components: {
+		AppInput: () => import('@/components/form/input.vue'),
+		AppCheckbox: () => import('@/components/form/checkbox.vue'),
+		...formContent.components.inputs,
+		...formContent.components.texts,
+	},
+	data () {
+		return {
+			emailRepeat: '',
+			passwordRepeat: '',
+			isAdult: false,
+			termsAgree: false,
+			spamAgree: false,
 		}
-	}
-
-	for (let i = 0; i < formContent.types.length; i++) {
-		let type = formContent.types[i];
-		formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
-			return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
-		};
-		formContent.components.texts['texts-' + formContent.types[i]] = function () {
-			return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
-		};
-	}
-
-	/*=====  End of define the forms  ======*/
-
-
-	export default {
-		name: 'AppModal',
-		components: {
-			AppInput: () => import('@/components/form/input.vue'),
-			AppCheckbox: () => import('@/components/form/checkbox.vue'),
-			...formContent.components.inputs,
-			...formContent.components.texts,
+	},
+	computed: {
+		isOpenedModal () {
+			return this.$store.state.appStates.formModal.isOpened;
 		},
-		data () {
-			return {
-				emailRepeat: '',
-				passwordRepeat: '',
-				isAdult: false,
-				termsAgree: false,
-				spamAgree: false,
-			}
-		},
-		computed: {
-			isOpenedModal () {
-				return this.$store.state.appStates.formModal.isOpened;
-			},
-			formModalType () {
-				return this.$store.state.appStates.formModal.type;
-			}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+		formModalType () {
+			return this.$store.state.appStates.formModal.type;
+		}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">

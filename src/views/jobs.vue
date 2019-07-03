@@ -9,12 +9,12 @@ div
 </template>
 
 <script>
-	export default {
-		name: 'Jobs',
-		components: {
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'Jobs',
+	components: {
+	},
+	data () {
+		return {}
 	}
+}
 </script>

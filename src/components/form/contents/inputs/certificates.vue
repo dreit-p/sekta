@@ -60,52 +60,52 @@
 </template>
 <script>
 
-	/*=====================================
-	=            define inputs            =
-	=====================================*/
+/*=====================================
+=            define inputs            =
+=====================================*/
 
-	let globalInputs = {
-		names: ['email', 'password', 'firstname', 'lastname'],
-		list: {}
+let globalInputs = {
+	names: ['email', 'password', 'firstname', 'lastname'],
+	list: {}
+};
+
+for (var i = 0; i < globalInputs.names.length; i++) {
+	let name = globalInputs.names[i];
+	globalInputs.list[name] = {
+		get () {
+			return this.$store.state.inputs[name]
+		},
+		set (value) {
+			this.$store.commit('setInputData', {name: name, data: value})
+		}
 	};
+}
 
-	for (var i = 0; i < globalInputs.names.length; i++) {
-		let name = globalInputs.names[i];
-		globalInputs.list[name] = {
-			get () {
-				return this.$store.state.inputs[name]
-			},
-			set (value) {
-				this.$store.commit('setInputData', {name: name, data: value})
-			}
-		};
-	}
+/*=====  End of define inputs  ======*/
 
-	/*=====  End of define inputs  ======*/
-
-	export default {
-		name: 'form-certificates',
-		components: {
-			AppInput: () => import('@/components/form/input.vue'),
-			AppCheckbox: () => import('@/components/form/checkbox.vue'),
-			AppDropdown: () => import('@/components/form/dropdown.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		computed: {
-			...globalInputs.list
-		},
-		data () {
-			return {
-				cert_costs_options: ['1500', 3500, '7000', 10500],
-				city_options: ['Москва', 'Санкт-Петербург', 'Другой город'],
-				emailRepeat: '',
-				passwordRepeat: '',
-				city: '',
-				cert_costs: '',
-				isAdult: false,
-				termsAgree: false,
-				spamAgree: false,
-			}
-		},
-	}
+export default {
+	name: 'FormCertificates',
+	components: {
+		AppInput: () => import('@/components/form/input.vue'),
+		AppCheckbox: () => import('@/components/form/checkbox.vue'),
+		AppDropdown: () => import('@/components/form/dropdown.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	computed: {
+		...globalInputs.list
+	},
+	data () {
+		return {
+			cert_costs_options: ['1500', 3500, '7000', 10500],
+			city_options: ['Москва', 'Санкт-Петербург', 'Другой город'],
+			emailRepeat: '',
+			passwordRepeat: '',
+			city: '',
+			cert_costs: '',
+			isAdult: false,
+			termsAgree: false,
+			spamAgree: false,
+		}
+	},
+}
 </script>

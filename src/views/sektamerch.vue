@@ -22,22 +22,22 @@ div.course
 </template>
 
 <script>
-	import Vue from 'vue';
-	import vueHeadful from 'vue-headful';
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
 
-	Vue.component('vue-headful', vueHeadful);
+Vue.component('vue-headful', vueHeadful);
 
-	export default {
-		name: 'SektaMerch',
-		components: {
-			hero: () => import('@/components/heroes/fullsize-hero.vue'),
-			CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'SektaMerch',
+	components: {
+		hero: () => import('@/components/heroes/fullsize-hero.vue'),
+		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 

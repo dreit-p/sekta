@@ -4,14 +4,14 @@ div
 </template>
 
 <script>
-	export default {
-		name: 'template',
-		components: {
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'Template',
+	components: {
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss">

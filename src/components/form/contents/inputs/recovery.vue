@@ -20,41 +20,41 @@
 
 <script>
 
-	/*=====================================
-	=            define inputs            =
-	=====================================*/
+/*=====================================
+=            define inputs            =
+=====================================*/
 
-	let globalInputs = {
-		names: ['email'],
-		list: {}
+let globalInputs = {
+	names: ['email'],
+	list: {}
+};
+
+for (var i = 0; i < globalInputs.names.length; i++) {
+	let name = globalInputs.names[i];
+	globalInputs.list[name] = {
+		get () {
+			return this.$store.state.inputs[name]
+		},
+		set (value) {
+			this.$store.commit('setInputData', {name: name, data: value})
+		}
 	};
+}
 
-	for (var i = 0; i < globalInputs.names.length; i++) {
-		let name = globalInputs.names[i];
-		globalInputs.list[name] = {
-			get () {
-				return this.$store.state.inputs[name]
-			},
-			set (value) {
-				this.$store.commit('setInputData', {name: name, data: value})
-			}
-		};
-	}
+/*=====  End of define inputs  ======*/
 
-	/*=====  End of define inputs  ======*/
-
-	export default {
-		name: 'form-recovery',
-		components: {
-			AppInput: () => import('@/components/form/input.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		computed: {
-			...globalInputs.list
-		},
-		data () {
-			return {
-			}
-		},
-	}
+export default {
+	name: 'FormRecovery',
+	components: {
+		AppInput: () => import('@/components/form/input.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	computed: {
+		...globalInputs.list
+	},
+	data () {
+		return {
+		}
+	},
+}
 </script>

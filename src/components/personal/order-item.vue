@@ -23,41 +23,41 @@ div
 </template>
 
 <script>
-	export default {
-		name: 'OrderItem',
-		components: {
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
+export default {
+	name: 'OrderItem',
+	components: {
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	props: {
+		number: {
+			type: String,
+			default: null
 		},
-		props: {
-			number: {
-				type: String,
-				default: null
-			},
-			orderDate: {
-				type: String,
-				default: null
-			},
-				choice : {
-				type: String,
-				default: null
-			},
-			dateStart: {
-				type: Object,
-				default: null,
-			},
-			duration: {
-				type: String,
-				default: null,
-			},
-			paymentInWeeks: {
-				type: String,
-				default: null
-			}
+		orderDate: {
+			type: String,
+			default: null
 		},
-		data () {
-			return {}
+		choice : {
+			type: String,
+			default: null
+		},
+		dateStart: {
+			type: Object,
+			default: null,
+		},
+		duration: {
+			type: String,
+			default: null,
+		},
+		paymentInWeeks: {
+			type: String,
+			default: null
 		}
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

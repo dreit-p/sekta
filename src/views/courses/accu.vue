@@ -63,26 +63,26 @@ div.course
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	import Vue from 'vue';
-    import vueHeadful from 'vue-headful';
+import { mapActions } from 'vuex'
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
 
-	Vue.component('vue-headful', vueHeadful);
+Vue.component('vue-headful', vueHeadful);
 	
-	export default {
-		name: 'Accu',
-		components: {
-			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		data () {
-			return {}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+export default {
+	name: 'Accu',
+	components: {
+		hero: () => import('@/components/heroes/aside-hero.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	data () {
+		return {}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">

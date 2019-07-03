@@ -19,61 +19,61 @@ label.app-dropdown(:class='this.$options.name')
 </template>
 
 <script>
-	export default {
-		name: 'app-input',
-		model: {
-			event: 'change'
+export default {
+	name: 'AppInput',
+	model: {
+		event: 'change'
+	},
+	props: {
+		placeholder: String,
+		caption: String,
+		name: String,
+		type: String,
+		options: {
+			type: Array,
+			default: ()=>[],
 		},
-		props: {
-			placeholder: String,
-			caption: String,
-			name: String,
+		value: {
 			type: String,
-			options: {
-				type: Array,
-				default: ()=>[],
-			},
-			value: {
-				type: String,
-				default: '',
-			},
-			error: {
-				type: String,
-				default: null
-			}
+			default: '',
 		},
-		computed: {
-			computedCaption() {
-				if (this.error) {
-					return this.error
-				} else {
-					if (this.caption) {
-						return this.caption
-					}
-				}
-				return null;
-			}
-		},
-		data (){
-			return {
-				isOpenedSelect: false,
-			};
-		},
-		$_veeValidate: {
-			// value getter
-			value() {
-				return this.$el.value;
-			},
-			// name getter
-			name() {
-				return this.name;
-			}
-		},
-		mounted: function () {
-			// synbc the input to the initial value
-			this.$refs[this.name].value = this.value;
+		error: {
+			type: String,
+			default: null
 		}
+	},
+	computed: {
+		computedCaption() {
+			if (this.error) {
+				return this.error
+			} else {
+				if (this.caption) {
+					return this.caption
+				}
+			}
+			return null;
+		}
+	},
+	data (){
+		return {
+			isOpenedSelect: false,
+		};
+	},
+	$_veeValidate: {
+		// value getter
+		value() {
+			return this.$el.value;
+		},
+		// name getter
+		name() {
+			return this.name;
+		}
+	},
+	mounted: function () {
+		// synbc the input to the initial value
+		this.$refs[this.name].value = this.value;
 	}
+}
 </script>
 
 <style lang="postcss">

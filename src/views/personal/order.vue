@@ -10,20 +10,20 @@ order-item(
 </template>
 
 <script>
-	const dateStart = {
-		vk: 'VK – 08 октября',
-		tg: 'Telegram – 08 октября'
-	};
+const dateStart = {
+	vk: 'VK – 08 октября',
+	tg: 'Telegram – 08 октября'
+};
 
-	export default {
-		name: 'Order',
-		components: {
-			OrderItem: () => import('@/components/personal/order-item.vue')
-		},
-		data () {
-			return {
-				dateStart
-			}
+export default {
+	name: 'Order',
+	components: {
+		OrderItem: () => import('@/components/personal/order-item.vue')
+	},
+	data () {
+		return {
+			dateStart
 		}
 	}
+}
 </script>

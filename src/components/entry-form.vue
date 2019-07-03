@@ -51,74 +51,74 @@
 
 <script>
 
-	/*========================================
-	=            define the forms            =
-	========================================*/
+/*========================================
+=            define the forms            =
+========================================*/
 
-	const formContent = {
-		types: ['login', 'register', 'recovery',
-		 	'certificates', 'online', 'face-to-face',
-			'camp', 'merch', 'bullet'],
-		components: {
-			inputs: {},
-			texts: {}
+const formContent = {
+	types: ['login', 'register', 'recovery',
+		'certificates', 'online', 'face-to-face',
+		'camp', 'merch', 'bullet'],
+	components: {
+		inputs: {},
+		texts: {}
+	}
+}
+
+for (let i = 0; i < formContent.types.length; i++) {
+	let type = formContent.types[i];
+	formContent.components.inputs['inputs-' + formContent.types[i]] = ()=>{
+		return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
+	};
+	formContent.components.texts['texts-' + formContent.types[i]] = ()=>{
+		return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
+	};
+}
+
+/*=====  End of define the forms  ======*/
+
+export default {
+	name: 'EntryForm',
+	components: {
+		AppInput: () => import('@/components/form/input.vue'),
+		AppCheckbox: () => import('@/components/form/checkbox.vue'),
+		...formContent.components.inputs,
+		...formContent.components.texts,
+	},
+	props: {
+		formType: {
+			type: String,
+			default: 'register'
+		},
+		prices: {
+			type: Array,
+			default: null
+		},
+		courseName: {
+			type: String
 		}
-	}
-
-	for (let i = 0; i < formContent.types.length; i++) {
-		let type = formContent.types[i];
-		formContent.components.inputs['inputs-' + formContent.types[i]] = ()=>{
-			return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
-		};
-		formContent.components.texts['texts-' + formContent.types[i]] = ()=>{
-			return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
-		};
-	}
-
-	/*=====  End of define the forms  ======*/
-
-	export default {
-		name: 'EntryForm',
-		components: {
-			AppInput: () => import('@/components/form/input.vue'),
-			AppCheckbox: () => import('@/components/form/checkbox.vue'),
-			...formContent.components.inputs,
-			...formContent.components.texts,
+	},
+	data () {
+		return {
+			backgroundImage: require('@/assets/images/markes-bg_teal.jpg'),
+			entryFormType: this.formType,
+			firstname: '',
+			lastname: '',
+			email: '',
+			emailRepeat: '',
+			password: '',
+			passwordRepeat: '',
+			isAdult: false,
+			termsAgree: false,
+			spamAgree: false,
+		}
+	},
+	methods: {
+		setFormModalState(data) {
+			return this.entryFormType = data.type;
 		},
-		props: {
-			formType: {
-				type: String,
-				default: 'register'
-			},
-			prices: {
-				type: Array,
-				default: null
-			},
-			courseName: {
-				type: String
-			}
-		},
-		data () {
-			return {
-				backgroundImage: require('@/assets/images/markes-bg_teal.jpg'),
-				entryFormType: this.formType,
-				firstname: '',
-				lastname: '',
-				email: '',
-				emailRepeat: '',
-				password: '',
-				passwordRepeat: '',
-				isAdult: false,
-				termsAgree: false,
-				spamAgree: false,
-			}
-		},
-		methods: {
-			setFormModalState(data) {
-				return this.entryFormType = data.type;
-			},
-		},
-	}
+	},
+}
 </script>
 
 <style lang="postcss">

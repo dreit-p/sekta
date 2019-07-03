@@ -30,9 +30,9 @@ export default {
 		return axios
 			.get('https://api.ipgeolocation.io/ipgeo?apiKey=f286a2fe90004550aeadbf0a8ff240d9')
 			.then(response => {
-					// console.log(response);
-					commit('setUserInfo', {type: 'location', data: response.data.state_prov});
-				})
+				// console.log(response);
+				commit('setUserInfo', {type: 'location', data: response.data.state_prov});
+			})
 			.catch(error => console.log(error));
 	},
 	updateUserLocation ({state, dispatch}) {

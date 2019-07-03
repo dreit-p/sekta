@@ -18,12 +18,12 @@
 </template>
 
 <script>
-	export default {
-		name: 'texts-certificates',
-		methods: {
-			setFormModalState(data) {
-				return this.$parent.setFormModalState(data);
-			}
-		},
-	}
+export default {
+	name: 'TextsCertificates',
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	},
+}
 </script>

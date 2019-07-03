@@ -25,14 +25,14 @@ div
 </template>
 
 <script>
-	export default {
-		name: 'SuccessOrder',
-		components: {
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'SuccessOrder',
+	components: {
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

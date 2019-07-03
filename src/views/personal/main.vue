@@ -27,18 +27,18 @@
 </template>
 
 <script>
-	export default {
-		name: 'MainPersonal',
-		components: {
-			ActiveCourse: () => import('@/components/personal/active-course.vue'),
-			AppFooter: () => import('@/components/footer.vue'),
-		},
-		data () {
-			return {
-				isDropDownActive: false
-			}
+export default {
+	name: 'MainPersonal',
+	components: {
+		ActiveCourse: () => import('@/components/personal/active-course.vue'),
+		AppFooter: () => import('@/components/footer.vue'),
+	},
+	data () {
+		return {
+			isDropDownActive: false
 		}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

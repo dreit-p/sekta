@@ -82,25 +82,25 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	import Vue from 'vue';
-    import vueHeadful from 'vue-headful';
+import { mapActions } from 'vuex'
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
 
-    Vue.component('vue-headful', vueHeadful);
+Vue.component('vue-headful', vueHeadful);
 
-	export default {
-		name: 'Courses',
-		components: {
-			// CourseSection: () => courseSection,
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		data () {
-			return {}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+export default {
+	name: 'Courses',
+	components: {
+		// CourseSection: () => courseSection,
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	data () {
+		return {}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">

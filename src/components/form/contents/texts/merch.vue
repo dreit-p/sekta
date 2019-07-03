@@ -23,12 +23,12 @@
 </template>
 
 <script>
-	export default {
-		name: 'texts-merch',
-		methods: {
-			setFormModalState(data) {
-				return this.$parent.setFormModalState(data);
-			}
-		},
-	}
+export default {
+	name: 'TextsMerch',
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	},
+}
 </script>

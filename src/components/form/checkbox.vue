@@ -17,59 +17,59 @@ label.app-checkbox(:class='this.$options.name')
 </template>
 
 <script>
-	export default {
-		name: 'app-checkbox',
-		props: {
-			caption: String,
-			name: String,
-			required: Boolean,
-			value: {
-				type: Boolean,
-				default: null
-			},
-			error: {
-				type: String,
-				default: null
-			}
+export default {
+	name: 'AppCheckbox',
+	props: {
+		caption: String,
+		name: String,
+		required: Boolean,
+		value: {
+			type: Boolean,
+			default: null
 		},
-		computed: {
-			computedCaption() {
-				if (this.error) {
-					return this.error
-				} else {
-					if (this.caption) {
-						return this.caption
-					}
-				}
-				return null;
-			}
-		},
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
-		},
-		methods: {
-			handleChange() {
-				if (!this.disabled) {
-					this.$emit('input', this.value ? false : true);
-				}
-			}
-		},
-		$_veeValidate: {
-			// value getter
-			value() {
-
-				return this.$el.value;
-			},
-			// name getter
-			name() {
-				return this.name;
-			}
-		},
-		mounted: function () {
-			// synbc the input to the initial value
-			this.$refs[this.name].value = this.value;
+		error: {
+			type: String,
+			default: null
 		}
+	},
+	computed: {
+		computedCaption() {
+			if (this.error) {
+				return this.error
+			} else {
+				if (this.caption) {
+					return this.caption
+				}
+			}
+			return null;
+		}
+	},
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	methods: {
+		handleChange() {
+			if (!this.disabled) {
+				this.$emit('input', this.value ? false : true);
+			}
+		}
+	},
+	$_veeValidate: {
+		// value getter
+		value() {
+
+			return this.$el.value;
+		},
+		// name getter
+		name() {
+			return this.name;
+		}
+	},
+	mounted: function () {
+		// synbc the input to the initial value
+		this.$refs[this.name].value = this.value;
 	}
+}
 </script>
 
 <style lang="postcss">

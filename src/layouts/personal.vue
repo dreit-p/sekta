@@ -21,17 +21,17 @@ div.personal-layout
 </template>
 
 <script>
-	export default {
-		name: 'PersonalLayout',
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
-		},
-		data () {
-			return {
-				isDropDownActive: false
-			}
+export default {
+	name: 'PersonalLayout',
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	data () {
+		return {
+			isDropDownActive: false
 		}
 	}
+}
 </script>
 
 <style lang="postcss">

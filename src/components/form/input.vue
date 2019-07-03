@@ -18,53 +18,53 @@ label.app-input(:class='this.$options.name')
 </template>
 
 <script>
-	export default {
-		name: 'app-input',
-		props: {
-			placeholder: String,
-			caption: String,
-			name: String,
+export default {
+	name: 'AppInput',
+	props: {
+		placeholder: String,
+		caption: String,
+		name: String,
+		type: String,
+		value: {
+			default: null
+		},
+		error: {
 			type: String,
-			value: {
-				default: null
-			},
-			error: {
-				type: String,
-				default: null
-			}
-		},
-		computed: {
-			computedCaption() {
-				if (this.error) {
-					return this.error
-				} else {
-					if (this.caption) {
-						return this.caption
-					}
-				}
-				return null;
-			}
-		},
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
-		},
-		methods: {
-		},
-		$_veeValidate: {
-			// value getter
-			value() {
-				return this.$el.value;
-			},
-			// name getter
-			name() {
-				return this.name;
-			}
-		},
-		mounted: function () {
-			// synbc the input to the initial value
-			this.$refs[this.name].value = this.value;
+			default: null
 		}
+	},
+	computed: {
+		computedCaption() {
+			if (this.error) {
+				return this.error
+			} else {
+				if (this.caption) {
+					return this.caption
+				}
+			}
+			return null;
+		}
+	},
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	methods: {
+	},
+	$_veeValidate: {
+		// value getter
+		value() {
+			return this.$el.value;
+		},
+		// name getter
+		name() {
+			return this.name;
+		}
+	},
+	mounted: function () {
+		// synbc the input to the initial value
+		this.$refs[this.name].value = this.value;
 	}
+}
 </script>
 
 <style lang="postcss">

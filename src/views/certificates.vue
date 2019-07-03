@@ -23,26 +23,26 @@ div.course
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	import Vue from 'vue';
-	import vueHeadful from 'vue-headful';
+import { mapActions } from 'vuex'
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
 
-	Vue.component('vue-headful', vueHeadful);
+Vue.component('vue-headful', vueHeadful);
 
-	export default {
-		name: 'for-mums',
-		components: {
-			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'ForMums',
+	components: {
+		hero: () => import('@/components/heroes/aside-hero.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss">

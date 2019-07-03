@@ -24,15 +24,15 @@ div
 </template>
 
 <script>
-	export default {
-		name: 'OrderItem',
-		components: {
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'OrderItem',
+	components: {
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

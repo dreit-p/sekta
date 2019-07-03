@@ -36,319 +36,319 @@
 </template>
 
 <script>
-	export default {
-		name: 'TimeSelector',
-		model: {
-			event: 'change'
+export default {
+	name: 'TimeSelector',
+	model: {
+		event: 'change'
+	},
+	props: {
+		value: {
+			type: Array,
+			default: ()=>[]
 		},
-		props: {
-			value: {
-				type: Array,
-				default: ()=>[]
-			},
-			schedule: {
-				type: Array,
-				default: ()=>[]
-			},
-			bracketing: {
-				type: Number,
-				default: 1
-			},
-			certificateTimes: {
-				type: Array,
-				default: ()=>[]
-			},
+		schedule: {
+			type: Array,
+			default: ()=>[]
 		},
-		data () {
-			return {
-				hoveredIDs: [],
-				selectedIDs: [],
-				mobileWidth: 650,
-				windowWidth: 0,
-				daysNames: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+		bracketing: {
+			type: Number,
+			default: 1
+		},
+		certificateTimes: {
+			type: Array,
+			default: ()=>[]
+		},
+	},
+	data () {
+		return {
+			hoveredIDs: [],
+			selectedIDs: [],
+			mobileWidth: 650,
+			windowWidth: 0,
+			daysNames: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+		}
+	},
+	computed: {
+		availableTimes () {
+			let availableTimes = {};
+			let availableWeeks = [];
+
+			this.schedule.forEach((time)=>{
+				if (this.certificateTimes.includes(+time.id)) {
+					if (availableWeeks[+time.row -1] == undefined) {availableWeeks.push([])}
+					availableWeeks[+time.row -1].push({[time.id]: time});
+				}
+			});
+			availableWeeks.forEach((week)=>{
+				if (week.length >= this.bracketing) {
+					week.forEach((time) =>{
+						Object.assign(availableTimes, time);
+					});
+				}
+			});
+			return availableTimes;
+		},
+		hoverableSiblings () {
+			let timesConnections = {};
+			for (let id in this.availableTimes) {
+				if (this.availableTimes.hasOwnProperty(id)) {
+					timesConnections[id] = this.getHoveredTiles(id);
+				}
 			}
+			return timesConnections;
 		},
-		computed: {
-			availableTimes () {
-				let availableTimes = {};
-				let availableWeeks = [];
+		minimizedGroups () {
 
-				this.schedule.forEach((time)=>{
-						if (this.certificateTimes.includes(+time.id)) {
-							if (availableWeeks[+time.row -1] == undefined) {availableWeeks.push([])}
-							availableWeeks[+time.row -1].push({[time.id]: time});
+			var prevDayArray = [];
+
+			var allRows = {}
+
+			for (let dayId in this.hoverableSiblings) {
+				if (this.hoverableSiblings.hasOwnProperty(dayId)) {
+					let daySiblings = this.hoverableSiblings[dayId].slice().sort((a,b)=>a-b);
+					if (!this.isArrEquals(prevDayArray, daySiblings)) { // Define one row
+
+						prevDayArray = daySiblings;
+
+						/* Define row times */
+						var columnNames = [];
+						var allTimes = {};
+						for (let i = 0; i < daySiblings.length; i++) {
+							let time = this.availableTimes[daySiblings[i]]
+							columnNames.push(+time.column -1);
+							if (!allTimes[time.text]) {allTimes[time.text] = []}
+							allTimes[time.text].push(+time.id)
 						}
-				});
-				availableWeeks.forEach((week)=>{
-					if (week.length >= this.bracketing) {
-						week.forEach((time) =>{
-							Object.assign(availableTimes, time);
-						});
-					}
-				});
-				return availableTimes;
-			},
-			hoverableSiblings () {
-				let timesConnections = {};
-				for (let id in this.availableTimes) {
-					if (this.availableTimes.hasOwnProperty(id)) {
-						timesConnections[id] = this.getHoveredTiles(id);
+
+						columnNames = columnNames.sort((a,b)=>a-b);
+
+						if (!allRows[columnNames]) { allRows[columnNames] = []}
+						allRows[columnNames].push(allTimes);
+
 					}
 				}
-				return timesConnections;
-			},
-			minimizedGroups () {
+			}
 
-				var prevDayArray = [];
+			var results = [];
 
-				var allRows = {}
+			for (let rowKey in allRows) {
+				if (allRows.hasOwnProperty(rowKey)) {
+					let group = {};
 
-				for (let dayId in this.hoverableSiblings) {
-					if (this.hoverableSiblings.hasOwnProperty(dayId)) {
-						let daySiblings = this.hoverableSiblings[dayId].slice().sort((a,b)=>a-b);
-						if (!this.isArrEquals(prevDayArray, daySiblings)) { // Define one row
+					if (!group.rows) {group.rows = []}
+					if (!group.daysTitles) {group.daysTitles = []}
+					group.rows = [];
+					group.width = 0;
 
-							prevDayArray = daySiblings;
+					// allRows[rowKey] contains rows array
 
-							/* Define row times */
-							var columnNames = [];
-							var allTimes = {};
-							for (let i = 0; i < daySiblings.length; i++) {
-								let time = this.availableTimes[daySiblings[i]]
-								columnNames.push(+time.column -1);
-								if (!allTimes[time.text]) {allTimes[time.text] = []}
-								allTimes[time.text].push(+time.id)
-							}
+					for (let rowIndex = 0; rowIndex < allRows[rowKey].length; rowIndex++) { // row content
+						for (let tileTextKey in allRows[rowKey][rowIndex]) {
+							if (allRows[rowKey][rowIndex].hasOwnProperty(tileTextKey)) {
 
-							columnNames = columnNames.sort((a,b)=>a-b);
+								if (!group.rows[rowIndex]) {group.rows[rowIndex] = []}
 
-							if (!allRows[columnNames]) { allRows[columnNames] = []}
-							allRows[columnNames].push(allTimes);
+								let tilesIds = allRows[rowKey][rowIndex][tileTextKey];
 
-						}
-					}
-				}
+								let columnTitle = '';
+								let rowspan = 0;
+								let tileStartPosition = +this.availableTimes[ tilesIds[0] ].row;
+								for (var timeIdIdx = 0; timeIdIdx < tilesIds.length; timeIdIdx++) {
+									columnTitle = columnTitle.concat(
+										this.daysNames[ this.availableTimes[ tilesIds[timeIdIdx] ].column -1 ],
+										timeIdIdx === tilesIds.length-1 ? '' : ', '
+									);
 
-				var results = [];
+									rowspan = Math.max(rowspan, +this.availableTimes[ tilesIds[timeIdIdx] ].rowspan);
 
-				for (let rowKey in allRows) {
-					if (allRows.hasOwnProperty(rowKey)) {
-						let group = {};
+									tileStartPosition = Math.min(tileStartPosition, +this.availableTimes[ tilesIds[timeIdIdx] ].row)
+								}
+								if (!group.daysTitles.includes(columnTitle)) {group.daysTitles.push(columnTitle)}
 
-						if (!group.rows) {group.rows = []}
-						if (!group.daysTitles) {group.daysTitles = []}
-						group.rows = [];
-						group.width = 0;
+								let siblingsIds;
 
-						// allRows[rowKey] contains rows array
+								if (rowspan > 1) {
+									siblingsIds = [];
+									for (var tileRowIndex = 0; tileRowIndex < rowspan; tileRowIndex++) {
+										let times = allRows[rowKey][tileRowIndex];
 
-						for (let rowIndex = 0; rowIndex < allRows[rowKey].length; rowIndex++) { // row content
-							for (let tileTextKey in allRows[rowKey][rowIndex]) {
-								if (allRows[rowKey][rowIndex].hasOwnProperty(tileTextKey)) {
+										for (let timeKey in times) {
+											if (times.hasOwnProperty(timeKey)) {
+												if (!siblingsIds[tileRowIndex]) {siblingsIds[tileRowIndex] = []}
 
-									if (!group.rows[rowIndex]) {group.rows[rowIndex] = []}
-
-									let tilesIds = allRows[rowKey][rowIndex][tileTextKey];
-
-									let columnTitle = '';
-									let rowspan = 0;
-									let tileStartPosition = +this.availableTimes[ tilesIds[0] ].row;
-									for (var timeIdIdx = 0; timeIdIdx < tilesIds.length; timeIdIdx++) {
-										columnTitle = columnTitle.concat(
-											this.daysNames[ this.availableTimes[ tilesIds[timeIdIdx] ].column -1 ],
-											timeIdIdx === tilesIds.length-1 ? '' : ', '
-										);
-
-										rowspan = Math.max(rowspan, +this.availableTimes[ tilesIds[timeIdIdx] ].rowspan);
-
-										tileStartPosition = Math.min(tileStartPosition, +this.availableTimes[ tilesIds[timeIdIdx] ].row)
-									}
-									if (!group.daysTitles.includes(columnTitle)) {group.daysTitles.push(columnTitle)}
-
-									let siblingsIds;
-
-									if (rowspan > 1) {
-										siblingsIds = [];
-										for (var tileRowIndex = 0; tileRowIndex < rowspan; tileRowIndex++) {
-											let times = allRows[rowKey][tileRowIndex];
-
-											for (let timeKey in times) {
-												if (times.hasOwnProperty(timeKey)) {
-													if (!siblingsIds[tileRowIndex]) {siblingsIds[tileRowIndex] = []}
-
-													for (var siblingsIdxOfArr = 0; siblingsIdxOfArr < times[timeKey].length; siblingsIdxOfArr++) {
-														siblingsIds[tileRowIndex].push(times[timeKey][siblingsIdxOfArr])
-													}
-
+												for (var siblingsIdxOfArr = 0; siblingsIdxOfArr < times[timeKey].length; siblingsIdxOfArr++) {
+													siblingsIds[tileRowIndex].push(times[timeKey][siblingsIdxOfArr])
 												}
+
 											}
-
 										}
-									} else {
-										siblingsIds = [this.hoverableSiblings[ tilesIds[0] ]];
-									}
 
-									if (tileStartPosition >= rowIndex+1) {
-										group.rows[rowIndex].push({
-											text: tileTextKey,
-											daysNameNums: tilesIds,
-											row: rowIndex+1,
-											rowspan: rowspan,
-											siblingsIds: siblingsIds,
-										});
 									}
+								} else {
+									siblingsIds = [this.hoverableSiblings[ tilesIds[0] ]];
+								}
 
+								if (tileStartPosition >= rowIndex+1) {
+									group.rows[rowIndex].push({
+										text: tileTextKey,
+										daysNameNums: tilesIds,
+										row: rowIndex+1,
+										rowspan: rowspan,
+										siblingsIds: siblingsIds,
+									});
 								}
 
 							}
-							let lastRow = group.rows[rowIndex]
-							group.width = Math.max(group.width, lastRow.length);
+
 						}
-						results.push(group);
-
+						let lastRow = group.rows[rowIndex]
+						group.width = Math.max(group.width, lastRow.length);
 					}
-				}
+					results.push(group);
 
-				return results;
-			},
+				}
+			}
+
+			return results;
 		},
-		watch: {
-			certificateTimes: function () {
-				this.resetTableStates();
-			},
-			bracketing: function () {
-				this.resetTableStates();
-			},
+	},
+	watch: {
+		certificateTimes: function () {
+			this.resetTableStates();
 		},
-		created () {
-			this.windowWidth = window.innerWidth
-			this.$nextTick(() => {
-				window.addEventListener('resize', () => {
-					this.windowWidth = window.innerWidth
-				});
+		bracketing: function () {
+			this.resetTableStates();
+		},
+	},
+	created () {
+		this.windowWidth = window.innerWidth
+		this.$nextTick(() => {
+			window.addEventListener('resize', () => {
+				this.windowWidth = window.innerWidth
 			});
+		});
+	},
+	methods: {
+		resetTableStates () {
+			this.hoveredIDs = [];
+			this.selectedIDs = [];
 		},
-		methods: {
-			resetTableStates () {
-				this.hoveredIDs = [];
-				this.selectedIDs = [];
-			},
-			getHoveredTiles(id) {
+		getHoveredTiles(id) {
 
-				let tile = this.availableTimes[id];
+			let tile = this.availableTimes[id];
 
-				let availableRowTimes = this.getAvailableRowTimes(tile.available_days, +tile.row);
+			let availableRowTimes = this.getAvailableRowTimes(tile.available_days, +tile.row);
 
-				let startOffset = this.idsInRow(+tile.row).indexOf(+tile.id) - availableRowTimes.indexOf(+tile.id);
+			let startOffset = this.idsInRow(+tile.row).indexOf(+tile.id) - availableRowTimes.indexOf(+tile.id);
 
-				if (availableRowTimes.length >= this.bracketing && availableRowTimes.includes(+tile.id)) {
-					let StartPos = Math.min(  Math.max(0, tile.column-1 - startOffset), availableRowTimes.length - this.bracketing );
-					let FinishPos = Math.max(  Math.min(availableRowTimes.length, tile.column-1 + this.bracketing - startOffset), 0 + this.bracketing  );
+			if (availableRowTimes.length >= this.bracketing && availableRowTimes.includes(+tile.id)) {
+				let StartPos = Math.min(  Math.max(0, tile.column-1 - startOffset), availableRowTimes.length - this.bracketing );
+				let FinishPos = Math.max(  Math.min(availableRowTimes.length, tile.column-1 + this.bracketing - startOffset), 0 + this.bracketing  );
 
-					return availableRowTimes.slice(
-							StartPos,
-							FinishPos
-						)
-				}
+				return availableRowTimes.slice(
+					StartPos,
+					FinishPos
+				)
+			}
 
-			},
-			getAvailableRowTimes(array, row) {
-				let availableRowTimes = [];
-
-				let ids = this.idsInRow(+row);
-
-				for (var i = 0; i < ids.length; i++) {
-					if (array.includes(ids[i]) && this.certificateTimes.includes(ids[i])) {
-						availableRowTimes.push(ids[i]);
-					}
-				}
-				return availableRowTimes;
-			},
-			chackAvailability (index) {
-
-				let checkRow = (row)=>{
-
-					let availableSiblings = [];
-
-					let ids = this.idsInRow(row);
-
-					for (let i = 0; i < ids.length; i++) {
-						if (this.certificateTimes.includes(ids[i])) {
-							availableSiblings.push(ids[i]);
-						}
-					}
-
-					return availableSiblings.length >= this.bracketing
-
-				};
-
-				return this.certificateTimes.includes(+this.schedule[index].id) && checkRow(this.schedule[index].row)
-			},
-			isArrEquals (arr1, arr2) {
-				return arr1.length === arr2.length && arr1.slice().sort((a,b)=>a-b).every((val, i)=>{ return val === arr2.slice().sort((a,b)=>a-b)[i]});
-			},
-			isContainsArray (mainArr, desiredArr) {
-				if (mainArr.length == 0 || desiredArr.length == 0) return false
-				let copyMainArr = [...mainArr];
-				let copyDesiredArr = [...desiredArr];
-
-				for (var i = 0; i < copyDesiredArr.length; i++) {
-					if (this.isArrEquals(copyDesiredArr[i], copyMainArr)) {
-						return true;
-					}
-				}
-				return false;
-
-			},
-			tilesInRow(number) {
-				if (number == undefined) return false
-
-				let row = [];
-
-				this.schedule.forEach(function(elem) {
-					if (+elem.row == +number || +elem.row+ +elem.rowspan >= +number && +elem.row <= +number) {
-						row[+elem.column-1] = elem;
-					}
-				});
-				return row
-			},
-			idsInRow(number) {
-				if (number == undefined) return false
-
-				let IDs = [];
-
-				this.schedule.forEach(function(elem) {
-					if (+elem.row == +number || +elem.row+ +elem.rowspan >= +number && +elem.row <= +number) {
-						IDs[+elem.column-1] = +elem.id;
-					}
-				});
-				return IDs
-			},
-			selectTilesById(id) {
-				this.$emit('change', this.hoveredIDs);
-				if (this.hoveredIDs.length == 0) {
-					this.hoveredIDs = this.hoverableSiblings[id];
-				}
-				this.selectedIDs = this.hoveredIDs;
-			},
-			selectTiles(idsArrs) {
-				const setState = data => {
-					this.$emit('change', data);
-					this.hoveredIDs = data;
-					this.selectedIDs = data;
-				}
-
-				if (idsArrs.length > 1 && this.selectedIDs.length > 0) {
-					for (var i = 0; i < idsArrs.length; i++) {
-						if (this.isArrEquals(idsArrs[i], this.selectedIDs)) {
-							return setState( i < idsArrs.length-1 ? idsArrs[i+1] : idsArrs[0] );
-						}
-					}
-				}
-				return setState(idsArrs[0]);
-			},
 		},
-	}
+		getAvailableRowTimes(array, row) {
+			let availableRowTimes = [];
+
+			let ids = this.idsInRow(+row);
+
+			for (var i = 0; i < ids.length; i++) {
+				if (array.includes(ids[i]) && this.certificateTimes.includes(ids[i])) {
+					availableRowTimes.push(ids[i]);
+				}
+			}
+			return availableRowTimes;
+		},
+		chackAvailability (index) {
+
+			let checkRow = (row)=>{
+
+				let availableSiblings = [];
+
+				let ids = this.idsInRow(row);
+
+				for (let i = 0; i < ids.length; i++) {
+					if (this.certificateTimes.includes(ids[i])) {
+						availableSiblings.push(ids[i]);
+					}
+				}
+
+				return availableSiblings.length >= this.bracketing
+
+			};
+
+			return this.certificateTimes.includes(+this.schedule[index].id) && checkRow(this.schedule[index].row)
+		},
+		isArrEquals (arr1, arr2) {
+			return arr1.length === arr2.length && arr1.slice().sort((a,b)=>a-b).every((val, i)=>{ return val === arr2.slice().sort((a,b)=>a-b)[i]});
+		},
+		isContainsArray (mainArr, desiredArr) {
+			if (mainArr.length == 0 || desiredArr.length == 0) return false
+			let copyMainArr = [...mainArr];
+			let copyDesiredArr = [...desiredArr];
+
+			for (var i = 0; i < copyDesiredArr.length; i++) {
+				if (this.isArrEquals(copyDesiredArr[i], copyMainArr)) {
+					return true;
+				}
+			}
+			return false;
+
+		},
+		tilesInRow(number) {
+			if (number == undefined) return false
+
+			let row = [];
+
+			this.schedule.forEach(function(elem) {
+				if (+elem.row == +number || +elem.row+ +elem.rowspan >= +number && +elem.row <= +number) {
+					row[+elem.column-1] = elem;
+				}
+			});
+			return row
+		},
+		idsInRow(number) {
+			if (number == undefined) return false
+
+			let IDs = [];
+
+			this.schedule.forEach(function(elem) {
+				if (+elem.row == +number || +elem.row+ +elem.rowspan >= +number && +elem.row <= +number) {
+					IDs[+elem.column-1] = +elem.id;
+				}
+			});
+			return IDs
+		},
+		selectTilesById(id) {
+			this.$emit('change', this.hoveredIDs);
+			if (this.hoveredIDs.length == 0) {
+				this.hoveredIDs = this.hoverableSiblings[id];
+			}
+			this.selectedIDs = this.hoveredIDs;
+		},
+		selectTiles(idsArrs) {
+			const setState = data => {
+				this.$emit('change', data);
+				this.hoveredIDs = data;
+				this.selectedIDs = data;
+			}
+
+			if (idsArrs.length > 1 && this.selectedIDs.length > 0) {
+				for (var i = 0; i < idsArrs.length; i++) {
+					if (this.isArrEquals(idsArrs[i], this.selectedIDs)) {
+						return setState( i < idsArrs.length-1 ? idsArrs[i+1] : idsArrs[0] );
+					}
+				}
+			}
+			return setState(idsArrs[0]);
+		},
+	},
+}
 </script>
 
 <style lang="postcss">

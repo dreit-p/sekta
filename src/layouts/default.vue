@@ -7,14 +7,14 @@ div.main-layout
 </template>
 
 <script>
-	export default {
-		name: 'DefaultLayout',
-		components: {
-			AppHeader: () => import('@/components/header.vue'),
-			AppFooter: () => import('@/components/footer.vue'),
-			AppModal: () => import('@/components/modal.vue'),
-		},
-	}
+export default {
+	name: 'DefaultLayout',
+	components: {
+		AppHeader: () => import('@/components/header.vue'),
+		AppFooter: () => import('@/components/footer.vue'),
+		AppModal: () => import('@/components/modal.vue'),
+	},
+}
 </script>
 
 <style lang="postcss">

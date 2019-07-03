@@ -16,27 +16,27 @@ section.fullsize-hero
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		name: 'CoursesHero',
-		components: {
-		},
-		props: {
-			image: String,
-			title: String,
-			sideToRender: String
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-		computed: {
-		},
-		data () {
-			return {
-				backgroundImage: require('@/assets/images/' + this.image)
-			}
+import { mapActions } from 'vuex'
+export default {
+	name: 'CoursesHero',
+	components: {
+	},
+	props: {
+		image: String,
+		title: String,
+		sideToRender: String
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+	computed: {
+	},
+	data () {
+		return {
+			backgroundImage: require('@/assets/images/' + this.image)
 		}
 	}
+}
 </script>
 
 <style lang="postcss">

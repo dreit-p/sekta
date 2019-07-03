@@ -10,8 +10,8 @@ const scrollBehavior = (to, from, savedPosition) => {
 		return savedPosition
 	} else {
 		const position = {}
-			// new navigation.
-			// scroll to anchor by returning the selector
+		// new navigation.
+		// scroll to anchor by returning the selector
 		if (to.hash) {
 			position.selector = to.hash
 		}
@@ -33,7 +33,8 @@ const Router = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	scrollBehavior,
-	routes: [{
+	routes: [
+		{
 			path: '/',
 			name: 'home',
 			component: Home
@@ -83,10 +84,17 @@ const Router = new VueRouter({
 				name: 'router-wrapper',
 				template: `<router-view></router-view>`
 			},
-			children: [{
+			children: [
+				{
 					path: '/',
 					component: () =>
 						import ('./views/courses/main.vue'),
+				},
+				{
+					path: 'evolution',
+					component: () =>
+						import ( /* webpackChunkName: "courses" */ './views/courses/evolution.vue'),
+					meta: { scrollToTop: true }
 				},
 				{
 					path: 's60days',
@@ -145,7 +153,8 @@ const Router = new VueRouter({
 				name: 'router-wrapper',
 				template: `<router-view></router-view>`
 			},
-			children: [{
+			children: [
+				{
 					path: '/',
 					component: () =>
 						import ('./views/gym/main.vue'),
@@ -183,7 +192,8 @@ const Router = new VueRouter({
 				name: 'router-wrapper',
 				template: `<router-view></router-view>`
 			},
-			children: [{
+			children: [
+				{
 					path: 'details',
 					meta: { requiresAuth: true, layout: 'personal' },
 					component: () =>
@@ -231,11 +241,12 @@ const Router = new VueRouter({
 })
 
 Router.beforeEach((to, from, next) => {
+
 	if (to.matched.some(record => record.meta.requiresAuth)) {
 		// этот путь требует авторизации, проверяем залогинен ли
 		// пользователь, и если нет, перенаправляем на страницу логина
-		// if (!auth.loggedIn()) {
-		if (false) {
+		console.dir('store.state.user.isAuth: ', store);
+		if (!store.state.user.isAuth) {
 			next({
 				path: '/login',
 				query: { redirect: to.fullPath }

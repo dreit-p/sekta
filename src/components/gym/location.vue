@@ -37,25 +37,25 @@ div.location
 </template>
 
 <script>
-	export default {
-		name: 'gym-location',
-		components: {
-			GymLocation: () => import('@/components/gym/location.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		computed: {
-			cityId: {
-				get () {
-					this.$store.dispatch('updateCity');
+export default {
+	name: 'GymLocation',
+	components: {
+		GymLocation: () => import('@/components/gym/location.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	computed: {
+		cityId: {
+			get () {
+				this.$store.dispatch('updateCity');
 
-					return this.$store.state.cityId ? this.$store.state.cityId : 3
-				}
+				return this.$store.state.cityId ? this.$store.state.cityId : 3
 			}
-		},
-		data () {
-			return {}
 		}
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

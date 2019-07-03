@@ -13,12 +13,12 @@
 </template>
 
 <script>
-	export default {
-		name: 'texts-online',
-		methods: {
-			setFormModalState(data) {
-				return this.$parent.setFormModalState(data);
-			}
-		},
-	}
+export default {
+	name: 'TextsOnline',
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	},
+}
 </script>

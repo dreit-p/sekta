@@ -36,19 +36,19 @@ div.gym
 
 <script>
  	import Vue from 'vue';
-    import vueHeadful from 'vue-headful';
+import vueHeadful from 'vue-headful';
 
-	Vue.component('vue-headful', vueHeadful);
+Vue.component('vue-headful', vueHeadful);
 	
-	export default {
-		name: 'gym-saint-pitersburg',
-		components: {
-			EntryForm: () => import('@/components/entry-form.vue'),
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'GymSaintPitersburg',
+	components: {
+		EntryForm: () => import('@/components/entry-form.vue'),
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss">
