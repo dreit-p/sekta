@@ -80,7 +80,7 @@ const Router = new VueRouter({
 				import ('./views/requisites.vue')
 		},
 		{
-			path: '/online-courses',
+			path: '/online',
 			component: {
 				name: 'router-wrapper',
 				template: `<router-view></router-view>`
@@ -92,7 +92,7 @@ const Router = new VueRouter({
 						import ('./views/courses/main.vue'),
 				},
 				{
-					path: 'evolution',
+					path: 'evo',
 					component: () =>
 						import ( /* webpackChunkName: "courses" */ './views/courses/evolution.vue'),
 					meta: { scrollToTop: true }
@@ -237,7 +237,8 @@ const Router = new VueRouter({
 			path: '*',
 			component: () =>
 				import ('./views/404.vue'),
-		}
+		},
+		{ path: '/evo', redirect: '/online-courses/evo' }
 	]
 })
 

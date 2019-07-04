@@ -19,31 +19,31 @@ let state = {
 	],
 	additionalLinks: [
 		{
-			link: '/online-courses',
+			link: '/online',
 			name: 'Онлайн курсы',
 			subLinks: [
 				{
-					link: '/online-courses/s60days',
-					name: 'Курс #s60days'
+					link: '/online/evo',
+					name: 'Курс Evolution'
 				},
 				{
-					link: '/online-courses/sektamama',
+					link: '/online/sektamama',
 					name: 'Курс для мам'
 				},
 				{
-					link: '/online-courses/SektaCare',
+					link: '/online/SektaCare',
 					name: 'Курс #SektaCare'
 				},
 				{
-					link: '/online-courses/sektavip',
+					link: '/online/sektavip',
 					name: 'VIP программа'
 				},
 				{
-					link: '/online-courses/pregnant',
+					link: '/online/pregnant',
 					name: 'Курсы для беременных'
 				},
 				{
-					link: '/online-courses/s60days-men',
+					link: '/online/s60days-men',
 					name: 'Курс #s60days для мужчин'
 				},
 			]
