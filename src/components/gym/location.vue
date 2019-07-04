@@ -45,10 +45,11 @@ export default {
 	},
 	computed: {
 		cityId: {
-			get () {
-				this.$store.dispatch('updateCity');
-
-				return this.$store.state.cityId ? this.$store.state.cityId : 3
+			get() {
+				if (!this.$store.state.user.city) {
+					this.$store.dispatch('updateCity');
+				}
+				return this.$store.state.user.cityId ? this.$store.state.user.cityId : 3
 			}
 		}
 	},

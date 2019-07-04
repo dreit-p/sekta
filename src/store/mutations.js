@@ -1,17 +1,23 @@
 export default {
-	setFormModalState (state, modalState) {
+	setFormModalState(state, modalState) {
 		state.appStates.formModal.isOpened = modalState;
 	},
-	setModalType (state, modalType) {
+	setModalType(state, modalType) {
 		state.appStates.formModal.type = modalType;
 	},
-	setScrollLock (state, payload) {
+	setScrollLock(state, payload) {
 		state.appStates.isScrollLocked = payload;
 	},
-	setInputData(state, {name, data}) {
+	setInputData(state, { name, data }) {
 		state.inputs[name] = data;
 	},
-	setUserInfo(state, {type, data}) {
+	setUserInfo(state, { type, data }) {
 		state.user[type] = data;
 	},
+	setCity(state, { city }) {
+		state.user.cityId = city.id;
+	},
+	setOnlineDate(state, data) {
+		state.onlineCourseData = data;
+	}
 }

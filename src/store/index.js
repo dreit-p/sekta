@@ -28,8 +28,8 @@ export default new Vuex.Store({
 		},
 		inputs: {},
 		user: {
-			isAuth: false,
-			location: null,
+			isAuth: true,
+			cityId: null,
 		}
 	},
 	actions,

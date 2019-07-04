@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
+
 export default {
 	setFormModalState ({dispatch, commit}, {modalState, type}) {
 		if (modalState !== undefined) {
@@ -26,19 +28,38 @@ export default {
 		}
 		commit('setScrollLock', payload);
 	},
-	requestIPInfo ({commit}) {
-		return axios
-			.get('https://api.ipgeolocation.io/ipgeo?apiKey=f286a2fe90004550aeadbf0a8ff240d9')
-			.then(response => {
-				// console.log(response);
-				commit('setUserInfo', {type: 'location', data: response.data.state_prov});
-			})
-			.catch(error => console.log(error));
-	},
 	updateUserLocation ({state, dispatch}) {
 		if (!state.user.location) {
 			dispatch('requestIPInfo');
 		}
 		return state.user.location;
 	},
+	requestOnlineCourse({ commit }) {
+		return axios
+			.get(`${TEST_URL}/api/online-courses`)
+			.then(response => {
+				// eslint-disable-next-line
+				console.log(response.data.data)
+				commit('setOnlineDate', response.data.data);
+			})
+			.catch(error => console.error(error));
+	},
+	requestIPInfo({ commit }) {
+		return axios
+			.get(`${TEST_URL}/api/define-city`)
+			.then(response => {
+				commit('setCity', { city: response.data.data });
+			})
+			.catch(error => console.error(error));
+	},
+	updateOnline({ state, dispatch }) {
+		if (state.onlineCourseData === null) {
+			dispatch('requestOnlineCourse');
+		}
+	},
+	updateCity({ state, dispatch }) {
+		if (!state.user.cityId) {
+			dispatch('requestIPInfo');
+		}
+	}
 }
