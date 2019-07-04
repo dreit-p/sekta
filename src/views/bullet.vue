@@ -80,4 +80,3 @@ div.course
 		}
 	}
 </script>
-
