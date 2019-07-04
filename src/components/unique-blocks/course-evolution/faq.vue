@@ -91,10 +91,11 @@ export default {
 <style lang="postcss">
 section.faq {
 	position: relative;
-	min-height: 940px;
+	height: 940px;
 	overflow: hidden;
 	@media (max-width: 768px) {
 		min-height: 0;
+		height: auto;
 	}
 	.background {
 		position: absolute;
@@ -105,8 +106,7 @@ section.faq {
 		margin: auto;
 		z-index: -1;
 		background-image: url(~@/assets/images/evolution/bg-pic-qa.jpg);
-		background-position: 35% 20%;
-		background-size: cover;
+		background-position: 35% top;
 		.lines {
 			position: absolute;
 			display: none;
