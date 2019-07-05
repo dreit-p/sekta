@@ -15,12 +15,13 @@ div
 	faq
 
 	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="online", :prices='courseInfo.prices', :courseName='courseInfo.name')
+
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 
-const CURRENT_ID = 999;
+const COURSE_TAG = 'VIP';
 
 export default {
 	name: 'Evolution',
@@ -32,17 +33,15 @@ export default {
 		DecoratedList: () => import( /* webpackChunkName: "evolution" */ '@/components/unique-blocks/course-evolution/decorated-list.vue'),
 		Appeal: () => import( /* webpackChunkName: "evolution" */ '@/components/unique-blocks/course-evolution/appeal.vue'),
 		faq: () => import( /* webpackChunkName: "evolution" */ '@/components/unique-blocks/course-evolution/faq.vue'),
+		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
 	},
-	computed: {
-		courseInfo: {
-			get () {
-				this.$store.dispatch('updateOnline');
-
-				if (this.$store.state.onlineCourseData && this.$store.state.onlineCourseData.length !== 0) {
-					return this.$store.state.onlineCourseData.find((course) => course.id === CURRENT_ID);
-				}
-				return false;
-			}
+	asyncComputed: {
+		courseInfo() {
+			return this.$store.dispatch('updateOnlineCourses').then(()=>{
+				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
+				return currentCourseData;
+			});
 		}
 	},
 	data () {

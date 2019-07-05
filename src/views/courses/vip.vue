@@ -38,11 +38,9 @@ div.course
 
 
 	caption-section(v-if='courseInfo'
-		v-bind:dateStart='courseInfo.last_start_date',
-		v-bind:prices='courseInfo.prices'
-		v-bind:courseName='courseInfo.name'
+		:dateStart='courseInfo.last_start_date',
 	)
-	caption-section(v-else)
+	entry-form(v-if='courseInfo', formType="online", :prices='courseInfo.prices', :courseName='courseInfo.name')
 </template>
 
 <script>
@@ -52,25 +50,22 @@ import vueHeadful from 'vue-headful';
 
 Vue.component('vue-headful', vueHeadful);
 
-
-const currentId = 4;
+const COURSE_TAG = 'VIP';
 
 export default {
 	name: 'Vip',
 	components: {
 		hero: () => import('@/components/heroes/aside-hero.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
 	},
-	computed: {
-		courseInfo: {
-			get () {
-				this.$store.dispatch('updateOnline');
-
-				if (this.$store.state.onlineCourseData && this.$store.state.onlineCourseData.length !== 0) {
-					return this.$store.state.onlineCourseData.find((course) => course.id === currentId);
-				} 
-			}
+	asyncComputed: {
+		courseInfo() {
+			return this.$store.dispatch('updateOnlineCourses').then(()=>{
+				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
+				return currentCourseData;
+			});
 		}
 	},
 	data () {

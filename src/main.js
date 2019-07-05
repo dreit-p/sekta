@@ -5,6 +5,8 @@ import store from './store/'
 import 'normalize.css'
 import '@/assets/common.css'
 
+import AsyncComputed from 'vue-async-computed'
+Vue.use(AsyncComputed)
 
 /*=================================
 =            Validator            =

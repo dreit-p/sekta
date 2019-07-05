@@ -247,7 +247,6 @@ Router.beforeEach((to, from, next) => {
 	if (to.matched.some(record => record.meta.requiresAuth)) {
 		// этот путь требует авторизации, проверяем залогинен ли
 		// пользователь, и если нет, перенаправляем на страницу логина
-		console.dir('store.state.user.isAuth: ', store);
 		if (!store.state.user.isAuth) {
 			next({
 				path: '/login',

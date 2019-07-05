@@ -17,7 +17,7 @@ export default {
 	setCity(state, { city }) {
 		state.user.cityId = city.id;
 	},
-	setOnlineDate(state, data) {
-		state.onlineCourseData = data;
+	setOnlineCourses(state, data) {
+		state.onlineCourses = data;
 	}
 }

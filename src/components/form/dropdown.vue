@@ -11,7 +11,7 @@ label.app-dropdown(:class='this.$options.name')
 			@blur='isOpenedSelect = false'
 		)
 			option(value="" v-if='placeholder != undefined' disabled selected) {{this.placeholder}}
-			option(v-for='(element, index) in options', :value="index") {{element}}
+			option(v-for='(point, index) in preparedOptions', :value="point.value") {{point.text}}
 		.dropdown-icon
 			svg(viewBox='0 0 18 9')
 				polygon.triangle(fill='currentColor' points='0,9 9,0 18,9')
@@ -20,7 +20,7 @@ label.app-dropdown(:class='this.$options.name')
 
 <script>
 export default {
-	name: 'AppInput',
+	name: 'AppDropdown',
 	model: {
 		event: 'change'
 	},
@@ -52,6 +52,21 @@ export default {
 				}
 			}
 			return null;
+		},
+		preparedOptions() {
+			return this.options.map((point, index)=>{
+				if (typeof point === 'object' && point.hasOwnProperty('id')) {
+					return {
+						value: point.id,
+						text: point.name
+					}
+				} else {
+					return {
+						value: index,
+						text: point
+					}
+				}
+			})
 		}
 	},
 	data (){

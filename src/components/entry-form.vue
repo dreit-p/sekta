@@ -25,7 +25,7 @@
 					texts-bullet(v-if='entryFormType == "bullet"')
 
 		.half
-			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
+			form
 
 				transition(name='fade-flip', mode='out-in')
 
@@ -130,7 +130,7 @@ export default {
 </script>
 
 <style lang="postcss">
-	section > .entry-form {
+	.entry-form {
 
 		/*====================================
 		=            Construction            =

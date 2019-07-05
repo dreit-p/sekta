@@ -34,15 +34,16 @@ export default {
 		}
 		return state.user.location;
 	},
-	requestOnlineCourse({ commit }) {
-		return axios
-			.get(`${TEST_URL}/api/online-courses`)
-			.then(response => {
-				// eslint-disable-next-line
-				console.log(response.data.data)
-				commit('setOnlineDate', response.data.data);
-			})
-			.catch(error => console.error(error));
+	requestOnlineCourses({ commit }) {
+		return new Promise((resolve)=>{
+			return axios
+				.get(`${TEST_URL}/api/online-courses`)
+				.then(response => {
+					commit('setOnlineCourses', response.data.data);
+					resolve();
+				})
+				.catch(error => console.error(error));
+		});
 	},
 	requestIPInfo({ commit }) {
 		return axios
@@ -52,10 +53,16 @@ export default {
 			})
 			.catch(error => console.error(error));
 	},
-	updateOnline({ state, dispatch }) {
-		if (state.onlineCourseData === null) {
-			dispatch('requestOnlineCourse');
-		}
+	updateOnlineCourses({ state, dispatch }) {
+		return new Promise((resolve)=>{
+			if (state.onlineCourses === null) {
+				dispatch('requestOnlineCourses').then(()=>{
+					resolve();
+				});
+			} else {
+				resolve();
+			}
+		})
 	},
 	updateCity({ state, dispatch }) {
 		if (!state.user.cityId) {

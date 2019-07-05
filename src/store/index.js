@@ -30,7 +30,8 @@ export default new Vuex.Store({
 		user: {
 			isAuth: true,
 			cityId: null,
-		}
+		},
+		onlineCourses: null,
 	},
 	actions,
 	getters,

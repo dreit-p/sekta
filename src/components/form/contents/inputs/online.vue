@@ -95,6 +95,7 @@ export default {
 	props: {
 		prices: {
 			type: Array,
+			default: ['Продажа невозможна']
 		},
 		courseName: {
 			type: String
@@ -106,7 +107,7 @@ export default {
 	data () {
 		return {
 			platform_options: ['ВКонтакте', 'Telegram'],
-			weeks_options: this.prices ? this.prices.map(({name}) => name) : ['Продажа невозможна'],
+			weeks_options: this.prices,
 			termsAgree: false,
 		}
 	},
