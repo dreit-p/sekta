@@ -14,6 +14,7 @@ div
 	appeal
 	faq
 
+	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="online", :prices='courseInfo.prices', :courseName='courseInfo.name')
 </template>
 
 <script>

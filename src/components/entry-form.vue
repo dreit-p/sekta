@@ -1,8 +1,8 @@
 <template lang="pug">
 .entry-form
 	.wrapper.clearfix
-		.half.with-bg
-			img(class='background', src='@/assets/images/markes-bg_teal.jpg')
+		.half.with-bg(:data-color='bgColor')
+			img(class='background', :src='backgroundImage')
 			.text-blocks
 				// Login
 
@@ -92,15 +92,23 @@ export default {
 		},
 		prices: {
 			type: Array,
-			default: null
+			default: []
 		},
 		courseName: {
 			type: String
+		},
+		bgImage: {
+			type: String,
+			default: 'markes-bg_teal.jpg'
+		},
+		bgColor: {
+			type: String,
+			default: 'cyan'
 		}
 	},
 	data () {
 		return {
-			backgroundImage: require('@/assets/images/markes-bg_teal.jpg'),
+			backgroundImage: require('@/assets/images/' + this.bgImage),
 			entryFormType: this.formType,
 			firstname: '',
 			lastname: '',
@@ -251,6 +259,12 @@ export default {
 					position: relative;
 					@media (min-width: 1800px) {
 						background: linear-gradient(to right, rgb(38, 70, 65) 49%, transparent, rgb(97, 147, 139) 51%);
+					}
+					&[data-color="purple"] {
+						background: linear-gradient(to right, #402858 25%, transparent, #83634e 75%);
+						@media (min-width: 1800px) {
+							background: linear-gradient(to right, #402858 49%, transparent, #83634e 51%);
+						}
 					}
 					img.background {
 						position: absolute;
