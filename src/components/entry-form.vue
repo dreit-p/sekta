@@ -332,7 +332,8 @@ export default {
 					.content {
 						padding: 19px 40px 19px 20px;
 					}
-					.app-input {
+					.app-input,
+					.app-dropdown {
 						margin: 7px 0;
 						display: inline-block;
 					}
