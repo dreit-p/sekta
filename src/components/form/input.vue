@@ -53,7 +53,7 @@ export default {
 	$_veeValidate: {
 		// value getter
 		value() {
-			return this.$el.value;
+			return this.$refs[this.name].value;
 		},
 		// name getter
 		name() {

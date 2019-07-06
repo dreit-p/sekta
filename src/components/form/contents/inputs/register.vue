@@ -28,7 +28,7 @@
 		v-validate='"required|email"'
 		:error='errors.first("email")'
 		:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
-		ref='asdasd'
+		ref='sameEmail'
 		name='email'
 		type='email')
 
@@ -38,7 +38,7 @@
 		caption='Вы не представляете, как часто люди ошибаются :)'
 		v-model.trim='emailRepeat'
 		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		v-validate='"required|email|confirmed:$asdasd"'
+		v-validate='"required|email|confirmed:sameEmail"'
 		:error='errors.first("emailRepeat")'
 		name='emailRepeat'
 		type='email')
@@ -51,17 +51,17 @@
 		v-validate='"required|alpha_dash:en"'
 		:error='errors.first("password")'
 		:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
-		ref='asdasd'
+		ref='samePassword'
 		name='password'
 		caption='Только латинские символы и цифры'
 		type='password')
 
 	app-input(
 		placeholder='пароль еще раз'
-		data-vv-as='Повтор пароль'
+		data-vv-as='Повтор пароля'
 		v-model.trim='passwordRepeat'
 		:class="{ 'error': errors.has('passwordRepeat'), 'success': fields.passwordRepeat && fields.passwordRepeat.valid}"
-		v-validate='"required|alpha_dash:en"'
+		v-validate='"required|alpha_dash:en|confirmed:samePassword"'
 		:error='errors.first("passwordRepeat")'
 		name='passwordRepeat'
 		type='password')
