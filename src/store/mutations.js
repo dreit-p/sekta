@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export default {
 	setFormModalState(state, modalState) {
 		state.appStates.formModal.isOpened = modalState;
@@ -9,10 +11,10 @@ export default {
 		state.appStates.isScrollLocked = payload;
 	},
 	setInputData(state, { name, data }) {
-		state.inputs[name] = data;
+		Vue.set(state.inputs, name, data)
 	},
 	setUserInfo(state, { type, data }) {
-		state.user[type] = data;
+		Vue.set(state.user, type, data)
 	},
 	setCity(state, { city }) {
 		state.user.cityId = city.id;
