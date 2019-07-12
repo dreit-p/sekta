@@ -1,22 +1,24 @@
 <template lang="pug">
 div.personal-layout
+	.veil(:class='{disabled: user.info != null}')
 	header.main-header
 		.limit
-			router-link(class='logo', title='Sekta school logo', to='/personal')
+			router-link(class='logo', title='Sekta school logo', to='/')
 				svg-icon(name='logo-sekta')
 			.dropdown-wrapper(
+				v-if='user.info'
 				v-bind:class="{ dropdown_active: isDropDownActive }"
 				@click='isDropDownActive = !isDropDownActive'
 			)
 				.dropdown-menu
 					svg-icon(name='icon-login')
-					.text Анастасия Фадеева
+					.text {{user.info.first_name}} {{user.info.last_name}}
 					svg-icon(name='down-arrow')
 				ul.dropdown-list
 					li.dropdown-item
-						a.dropdown-link(href="/personal/details/") Личные данные
+						router-link(class='dropdown-link', title='Пользовательские данные', to='/personal/details/') Личные данные
 					li.dropdown-item
-						a.dropdown-link(href="#") Выход
+						.dropdown-link(@click='$store.dispatch("logOut")') Выход
 	slot
 </template>
 
@@ -25,6 +27,19 @@ export default {
 	name: 'PersonalLayout',
 	components: {
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	computed: {
+		user() {
+			return this.$store.state.user;
+		},
+	},
+	created() {
+		if (!this.$store.state.user.info) {
+			this.$store.dispatch('userDetailsRequest', this.user.token).then((resp)=>{
+				console.log(resp);
+				console.dir(this.user.info);
+			});
+		}
 	},
 	data () {
 		return {
@@ -45,8 +60,23 @@ export default {
 		}
 		.limit {
 			max-width: 1170px;
-
 			overflow: visible;
+		}
+		.veil {
+			z-index: 100;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			background-color: white;
+			opacity: .8;
+			transition: opacity .5;
+			&.disabled {
+				opacity: 0;
+				pointer-events: none;
+			}
 		}
 		.svg-icon--down-arrow {
 			width: 10px;
@@ -87,12 +117,10 @@ export default {
 		}
 		.dropdown-link {
 			display: block;
-
 			padding: 0 20px;
-
 			text-decoration: none;
 			line-height: 40px;
-
+			cursor: pointer;
 			transition: all .3s ease;
 			&:hover {
 				background-color: rgba(0, 0, 0, 0.12);

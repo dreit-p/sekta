@@ -22,6 +22,45 @@
 						dateStart='19.09.19',
 						additionalInfo='#SektaBootCamp2 – это тренировочный интенсив, который настроен под тебя и твои цели.'
 					)
+					h2.section-title Сертфикаты
+					.tile.certificate
+						.img(:style="{ backgroundImage: `url('${require('@/assets/images/aside-hero/certificates_bg.jpg')}')` }")
+						.text СЕРТИФИКАТ НА СУММУ 10 900руб.
+
+
+					h2.section-title Рекомендуем
+					.tile.simple
+						.img-side
+							svg-icon(name='logo-sekta')
+						.text-side
+							.title #s60lite
+							.description
+								| Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
+							.btns
+								a.btn Демо
+				section.column.sidebar
+					h2.section-title Статистика
+					.tile
+						.content
+							h2.title.green Курсы
+							hr
+							.text Завершенных курсов:
+								span.green 2
+							hr
+							.text Активных курсов:
+								span.green 3
+							hr
+							h2.title.green Прогресс
+							hr
+							.text.heavy #sekta bootcamp3
+								span.green 0%
+							hr
+							.text.heavy #sekta bootcamp3 vol.2
+								span.green 84%
+							hr
+							.text.heavy oldschool
+								span.green 0%
+							hr
 
 		app-footer
 </template>
@@ -30,8 +69,14 @@
 export default {
 	name: 'MainPersonal',
 	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
 		ActiveCourse: () => import('@/components/personal/active-course.vue'),
 		AppFooter: () => import('@/components/footer.vue'),
+	},
+	computed: {
+		user() {
+			return this.$store.state.user;
+		},
 	},
 	data () {
 		return {

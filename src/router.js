@@ -202,6 +202,7 @@ const Router = new VueRouter({
 				},
 				{
 					path: '',
+					name: 'personal',
 					meta: { requiresAuth: true, layout: 'personal' },
 					component: () =>
 						import ('./views/personal/main.vue'),

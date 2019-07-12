@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '@/router'
 
 const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
 
@@ -7,6 +8,18 @@ const postReq = (path, data) => {
 		url: `${TEST_URL}${path}`,
 		data: data,
 		method: 'POST'
+	})
+		.then(resp=>resp)
+		.catch(err => {
+			console.warn(path, ': ', err);
+			throw err;
+		})
+}
+const getReq = (path, data) => {
+	return axios({
+		url: `${TEST_URL}${path}`,
+		params: data,
+		method: 'get'
 	})
 		.then(resp=>resp)
 		.catch(err => {
@@ -85,6 +98,21 @@ export default {
 			.catch(regErr=>{
 				throw regErr.response;
 			});
+	},
+	userDetailsRequest({ commit }, token) {
+		return getReq('/api/personal/details', {api_token: token})
+			.then((resp)=>{
+				commit('setUserInfo', { type: 'info', data: resp.data.data })
+				return resp;
+			})
+			.catch(detailsErr=>{
+				throw detailsErr.response;
+			});
+	},
+	logOut({commit}) {
+		commit('setUserInfo', { type: 'info', data: null })
+		commit('setUserInfo', { type: 'token', data: '' })
+		router.push({name: 'home'});
 	},
 	updateOnlineCourses({ state, dispatch }) {
 		return new Promise((resolve)=>{

@@ -162,12 +162,12 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-  .main-body {
-    background-color: #e8e8e8;
-    flex-grow: 1;
-    padding-bottom: 60px;
-    border-top: 1px solid transparent;
-  }
+	.main-body {
+		background-color: #e8e8e8;
+		flex-grow: 1;
+		padding-bottom: 60px;
+		border-top: 1px solid transparent;
+	}
 	.profile-block_data {
 		padding-bottom: 50px;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.12);
@@ -178,12 +178,12 @@ export default {
 			padding-bottom: 30px;
 		}
 	}
-  .limit {
+	.limit {
 		margin-top: 25px;
 		padding: 0;
-    background-color: white;
+		background-color: white;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  }
+	}
 	.profile-header {
 		border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 	}
@@ -212,11 +212,11 @@ export default {
 		margin-top: 5px;
 		margin-bottom: 5px;
 	}
-  .app-input {
-    display: block;
-    margin-bottom: 10px;
-    max-width: 400px;
-  }
+	.app-input {
+		display: block;
+		margin-bottom: 10px;
+		max-width: 400px;
+	}
 	.fieldset {
 		padding: 0;
 		margin-bottom: 20px;

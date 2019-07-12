@@ -15,7 +15,7 @@ export default new Vuex.Store({
 	plugins: [createPersistedState({
 		paths: [
 			'inputs',
-			// 'user'
+			'user'
 		],
 	})],
 	modules: {
@@ -32,6 +32,7 @@ export default new Vuex.Store({
 		inputs: {},
 		user: {
 			token: '',
+			info: null,
 			cityId: null,
 		},
 		onlineCourses: null,
