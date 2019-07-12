@@ -3,19 +3,19 @@
 
 	p.heavy-text Восстановление пароля
 
-	app-input(
-		placeholder='e-mail'
-		data-vv-as='E-mail'
-		v-model.trim='email'
-		v-validate='"required|email"'
-		:error='errors.first("email")'
-		:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
-		ref='asdasd'
-		name='email'
-		type='email')
+	form
+		app-input(
+			placeholder='e-mail'
+			data-vv-as='E-mail'
+			v-model.trim='email'
+			v-validate='"required|email"'
+			:error='errors.first("email")'
+			:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
+			name='email'
+			type='email')
 
-	green-btn(@click.prevent)
-		| Получить ссылку
+		green-btn(@click.prevent)
+			| Получить ссылку
 </template>
 
 <script>

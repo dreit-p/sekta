@@ -1,112 +1,113 @@
 <template lang="pug">
 .content.register
 
-	app-input(
-		placeholder='Фамилия'
-		data-vv-as='Фамилия'
-		:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
-		:error='errors.first("lastname")'
-		name='lastname')
+	form
+		app-input(
+			placeholder='Фамилия'
+			data-vv-as='Фамилия'
+			:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
+			:error='errors.first("lastname")'
+			name='lastname')
 
-	app-input(
-		placeholder='Имя'
-		data-vv-as='Имя'
-		:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
-		:error='errors.first("lastname")'
-		name='lastname')
+		app-input(
+			placeholder='Имя'
+			data-vv-as='Имя'
+			:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
+			:error='errors.first("lastname")'
+			name='lastname')
 
-	app-input(
-		placeholder='Отчество'
-		data-vv-as='Отчество'
-		:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
-		:error='errors.first("lastname")'
-		name='lastname')
+		app-input(
+			placeholder='Отчество'
+			data-vv-as='Отчество'
+			:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
+			:error='errors.first("lastname")'
+			name='lastname')
 
-	app-input(
-		placeholder='Телефон'
-		data-vv-as='Телефон'
-		:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
-		:error='errors.first("lastname")'
-		name='lastname')
+		app-input(
+			placeholder='Телефон'
+			data-vv-as='Телефон'
+			:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
+			:error='errors.first("lastname")'
+			name='lastname')
 
-	app-input(
-		placeholder='E-mail'
-		data-vv-as='E-mail'
-		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		:error='errors.first("emailRepeat")'
-		name='email'
-		caption='*на указанный адрес будет анправлен чек об оплате'
-		type='email')
+		app-input(
+			placeholder='E-mail'
+			data-vv-as='E-mail'
+			:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+			:error='errors.first("emailRepeat")'
+			name='email'
+			caption='*на указанный адрес будет анправлен чек об оплате'
+			type='email')
 
-	app-dropdown(
-		placeholder='Выберите товар'
-		data-vv-as='Товар'
-		:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
-		:error='errors.first("weeks")'
-		name='weeks')
+		app-dropdown(
+			placeholder='Выберите товар'
+			data-vv-as='Товар'
+			:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
+			:error='errors.first("weeks")'
+			name='weeks')
 
-	app-dropdown(
-		placeholder='Выберите способ получения заказа'
-		data-vv-as='Способ получения'
-		:options='getFeed_options'
-		:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
-		:error='errors.first("weeks")'
-		caption='Забрать заказ можно по адресу: Невский пр., 11/2, офис 42 с понедельника по пятницу с 10:00 до 19:00.'
-		name='getFeed')
+		app-dropdown(
+			placeholder='Выберите способ получения заказа'
+			data-vv-as='Способ получения'
+			:options='getFeed_options'
+			:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
+			:error='errors.first("weeks")'
+			caption='Забрать заказ можно по адресу: Невский пр., 11/2, офис 42 с понедельника по пятницу с 10:00 до 19:00.'
+			name='getFeed')
 
-	app-input(
-		placeholder='Город'
-		data-vv-as='Город'
-		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		:error='errors.first("emailRepeat")'
-		name='city'
-		type='city')
+		app-input(
+			placeholder='Город'
+			data-vv-as='Город'
+			:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+			:error='errors.first("emailRepeat")'
+			name='city'
+			type='city')
 
-	app-input(
-		placeholder='Индекс'
-		data-vv-as='Индекс'
-		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		:error='errors.first("emailRepeat")'
-		name='index'
-		type='index')
+		app-input(
+			placeholder='Индекс'
+			data-vv-as='Индекс'
+			:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+			:error='errors.first("emailRepeat")'
+			name='index'
+			type='index')
 
-	app-input(
-		placeholder='Адрес доставки'
-		data-vv-as='Адрес доставки'
-		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		:error='errors.first("emailRepeat")'
-		name='address'
-		type='address')
+		app-input(
+			placeholder='Адрес доставки'
+			data-vv-as='Адрес доставки'
+			:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+			:error='errors.first("emailRepeat")'
+			name='address'
+			type='address')
 
-	app-input(
-		placeholder='ФИО получателя'
-		data-vv-as='ФИО'
-		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		:error='errors.first("emailRepeat")'
-		name='FIO'
-		type='FIO')
+		app-input(
+			placeholder='ФИО получателя'
+			data-vv-as='ФИО'
+			:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+			:error='errors.first("emailRepeat")'
+			name='FIO'
+			type='FIO')
 
-	app-input(
-		placeholder='Промокод'
-		data-vv-as='Промокод'
-		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		:error='errors.first("emailRepeat")'
-		name='promocode'
-		caption='Если у вас есть промокод, введите его в это поле'
-	)
+		app-input(
+			placeholder='Промокод'
+			data-vv-as='Промокод'
+			:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+			:error='errors.first("emailRepeat")'
+			name='promocode'
+			caption='Если у вас есть промокод, введите его в это поле'
+		)
 
-	app-checkbox(
-		name='termsAgree'
-		data-vv-as='обработка персональных данных'
-		:required='true'
-		:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
-		:error='errors.first("termsAgree")'
-	)
-		| Ознакомлен и согласен с условиями
-		a(href='#') обработки персональных данных
+		app-checkbox(
+			name='termsAgree'
+			data-vv-as='обработка персональных данных'
+			:required='true'
+			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+			:error='errors.first("termsAgree")'
+		)
+			| Ознакомлен и согласен с условиями
+			a(href='#') обработки персональных данных
 
-	green-btn(@click.prevent)
-		| Перейти к оплате
+		green-btn(@click.prevent)
+			| Перейти к оплате
 </template>
 <script>
 

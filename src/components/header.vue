@@ -18,7 +18,10 @@ header.main-header
 				.mobile-elems
 					a.icon(href='tel:+78005006882')
 						svg-icon(name='icon-phone')
-					a.icon.switcher.cross(:class='{active: isOpenedModal}', @click.prevent='toggleModal()')
+					a.icon.switcher.cross(:class='{active: isOpenedModal}', v-if='!isUserAuth || isOpenedModal', @click.prevent='toggleModal()')
+						svg-icon(name='icon-login')
+						.x
+					router-link.icon.switcher.cross(tag='a', :class='{active: isOpenedModal}', title='Мои курсы', v-if='isUserAuth && !isOpenedModal', to='/personal')
 						svg-icon(name='icon-login')
 						.x
 					a.icon.cross(:class='{active: isOpenedMenu}', href='#', @click.prevent='toggleMenu()')
@@ -28,19 +31,23 @@ header.main-header
 			nav.bottom
 				ul.additional-links(v-if='additionalLinks.length > 0')
 					router-link(
-						tag='li', 
-						class='link', 
-						v-for='(link, index) in additionalLinks', 
-						:key='link.id', 
+						tag='li',
+						class='link',
+						v-for='(link, index) in additionalLinks',
+						:key='link.id',
 						:to='link.link',
 						@mouseenter.native='changeDropdownContent(!!link.subLinks ? `${link.name}-${index}` : showSubLinks, !!link.subLinks)'
 						@mouseleave.native='setDropdownTimer'
 					)
 						a {{ link.name }}
-				a(class='account', title='Личный кабинет', @click.prevent='toggleModal()')
+				a(class='account', title='Личный кабинет', v-if='!isUserAuth', @click.prevent='toggleModal()')
 					.icon
 						svg-icon(name='icon-login')
 					.text Личный кабинет
+				router-link.account(tag='a', title='Мои курсы', v-if='isUserAuth', to='/personal')
+					.icon
+						svg-icon(name='icon-login')
+					.text Мои курсы
 
 		transition(
 			@before-enter='dropdownBeforeEnter'
@@ -55,10 +62,10 @@ header.main-header
 						transition(name='links-fade', in-out, @enter="setHeightForDropdown")
 							ul.category(v-if='showSubLinks==`${link.name}-${index}`')
 								router-link(
-									tag='li', 
-									class='link sub-link', 
-									v-for='(subLink, index) in link.subLinks', 
-									:key='`${link.name}-${index}`', 
+									tag='li',
+									class='link sub-link',
+									v-for='(subLink, index) in link.subLinks',
+									:key='`${link.name}-${index}`',
 									:to='subLink.link',
 									:data-index="index"
 								)
@@ -74,10 +81,10 @@ header.main-header
 			nav.mobile-menu(v-if='isOpenedMenu')
 				ul.additional-links(v-if='additionalLinks.length > 0')
 					router-link(
-						tag='li', 
-						class='link', 
-						v-for='(link, index, id) in additionalLinks', 
-						:key='`addLink-${index}`', 
+						tag='li',
+						class='link',
+						v-for='(link, index, id) in additionalLinks',
+						:key='`addLink-${index}`',
 						:to='link.link',
 						:data-index='index',
 						@click.native='setMenuState(false)'
@@ -85,10 +92,10 @@ header.main-header
 						a.animated-underline {{ link.name }}
 						ul.sub-links(v-if='link.subLinks')
 							router-link(
-								tag='li', 
-								class='sub-link', 
-								v-for='(subLink, index) in link.subLinks', 
-								:key='`subLink-${index}`', 
+								tag='li',
+								class='sub-link',
+								v-for='(subLink, index) in link.subLinks',
+								:key='`subLink-${index}`',
 								:to='subLink.link',
 								:data-index='index',
 								@click.native='setMenuState(false)'
@@ -116,11 +123,14 @@ export default {
 		}
 	},
 	computed: {
+		isUserAuth () {
+			return this.$store.getters.isUserAuth;
+		},
 		isOpenedMenu () {
 			return this.$store.state.header.isOpenedMenu;
 		},
 		isOpenedModal () {
-			return this.$store.state.appStates.formModal.isOpened;
+			return this.$store.getters.isOpenedModal;
 		},
 		formModalType () {
 			return this.$store.state.appStates.formModal.type;
@@ -207,7 +217,7 @@ export default {
 			this.setHeightForDropdown();
 			Velocity(el, { opacity: 1}, { duration: 300 })
 			el.querySelectorAll('.link').forEach(function(link) {
-				Velocity(link, 
+				Velocity(link,
 					{
 						opacity: 1
 					}, {
@@ -228,8 +238,8 @@ export default {
 
 
 		/*======================================
-			=            Menu animation            =
-			======================================*/
+		=            Menu animation            =
+		======================================*/
 
 		menuBeforeEnter: function (el) {
 			el.style.opacity = 0;
@@ -241,7 +251,7 @@ export default {
 		menuEnter: function (el, done) {
 			Velocity(el, { opacity: 1}, { duration: 300 })
 			el.querySelectorAll('.link').forEach(function(link) {
-				Velocity(link, 
+				Velocity(link,
 					{
 						opacity: 1
 					}, {
@@ -257,7 +267,7 @@ export default {
 			Velocity(el, { opacity: 0}, { duration: 300 })
 			let links = el.querySelectorAll('.link');
 			links.forEach(function(link) {
-				Velocity(link, 
+				Velocity(link,
 					{
 						opacity: 0
 					}, {

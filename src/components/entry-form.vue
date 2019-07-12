@@ -25,8 +25,7 @@
 					texts-bullet(v-if='entryFormType == "bullet"')
 
 		.half
-			form
-
+			.inputs-wrapper
 				transition(name='fade-flip', mode='out-in')
 
 					inputs-login(v-if='entryFormType == "login"', :key='entryFormType')
@@ -46,7 +45,7 @@
 					inputs-merch(v-if='entryFormType == "merch"', :key='entryFormType')
 
 					inputs-bullet(v-if='entryFormType == "bullet"', :key='entryFormType')
-					
+
 </template>
 
 <script>
@@ -153,7 +152,7 @@ export default {
 						float: right;
 					}
 				}
-				form .content {
+				.inputs-wrapper .content {
 					max-width: calc(315px + var(--col-space) * 2);
 				}
 			}
@@ -311,7 +310,7 @@ export default {
 					}
 				}
 
-				form {
+				.inputs-wrapper {
 					.close-btn {
 						display: none;
 					}

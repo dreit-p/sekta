@@ -3,60 +3,61 @@
 
 	p.heavy-text Купить сертификат
 
-	app-input(
-		placeholder='Имя и Фамилия получателя'
-		data-vv-as='Имя и Фамилия'
-		v-model.trim='firstname'
-		v-validate='"required"'
-		:class="{ 'error': errors.has('firstname'), 'success': fields.firstname && fields.firstname.valid}"
-		:error='errors.first("firstname")'
-		name='firstname')
+	form
+		app-input(
+			placeholder='Имя и Фамилия получателя'
+			data-vv-as='Имя и Фамилия'
+			v-model.trim='firstname'
+			v-validate='"required"'
+			:class="{ 'error': errors.has('firstname'), 'success': fields.firstname && fields.firstname.valid}"
+			:error='errors.first("firstname")'
+			name='firstname')
 
-	app-input(
-		placeholder='E-mail получателя'
-		data-vv-as='e-mail'
-		v-model.trim='email'
-		v-validate='"required|email"'
-		:error='errors.first("email")'
-		:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
-		ref='asdasd'
-		name='email'
-		type='email')
+		app-input(
+			placeholder='E-mail получателя'
+			data-vv-as='e-mail'
+			v-model.trim='email'
+			v-validate='"required|email"'
+			:error='errors.first("email")'
+			:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
+			ref='asdasd'
+			name='email'
+			type='email')
 
-	app-dropdown(
-		placeholder='Сумма сертификата'
-		data-vv-as='Сумма сертификата'
-		:options='cert_costs_options'
-		v-model.trim='cert_costs'
-		v-validate='"required"'
-		:class="{ 'error': errors.has('cert_costs'), 'success': fields.cert_costs && fields.cert_costs.valid}"
-		:error='errors.first("cert_costs")'
-		name='cert_costs')
+		app-dropdown(
+			placeholder='Сумма сертификата'
+			data-vv-as='Сумма сертификата'
+			:options='cert_costs_options'
+			v-model.trim='cert_costs'
+			v-validate='"required"'
+			:class="{ 'error': errors.has('cert_costs'), 'success': fields.cert_costs && fields.cert_costs.valid}"
+			:error='errors.first("cert_costs")'
+			name='cert_costs')
 
-	app-dropdown(
-		placeholder='Ваш город'
-		data-vv-as='Ваш город'
-		:options='city_options'
-		v-model.trim='city'
-		v-validate='"required"'
-		:class="{ 'error': errors.has('city'), 'success': fields.city && fields.city.valid}"
-		:error='errors.first("city")'
-		name='city')
+		app-dropdown(
+			placeholder='Ваш город'
+			data-vv-as='Ваш город'
+			:options='city_options'
+			v-model.trim='city'
+			v-validate='"required"'
+			:class="{ 'error': errors.has('city'), 'success': fields.city && fields.city.valid}"
+			:error='errors.first("city")'
+			name='city')
 
-	app-checkbox(
-		name='termsAgree'
-		data-vv-as='обработка персональных данных'
-		v-model.trim='termsAgree'
-		v-validate='"required:true"'
-		:required='true'
-		:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
-		:error='errors.first("termsAgree")'
-	)
-		| Ознакомлен и согласен с условиями 
-		a(href='#') публичной оферты
+		app-checkbox(
+			name='termsAgree'
+			data-vv-as='обработка персональных данных'
+			v-model.trim='termsAgree'
+			v-validate='"required:true"'
+			:required='true'
+			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+			:error='errors.first("termsAgree")'
+		)
+			| Ознакомлен и согласен с условиями
+			a(href='#') публичной оферты
 
-	green-btn(@click.prevent)
-		| Перейти к оплате
+		green-btn(@click.prevent)
+			| Перейти к оплате
 </template>
 <script>
 

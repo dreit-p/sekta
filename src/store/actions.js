@@ -2,6 +2,19 @@ import axios from 'axios'
 
 const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
 
+const postReq = (path, data) => {
+	return axios({
+		url: `${TEST_URL}${path}`,
+		data: data,
+		method: 'POST'
+	})
+		.then(resp=>resp)
+		.catch(err => {
+			console.warn(path, ': ', err);
+			throw err;
+		})
+}
+
 export default {
 	setFormModalState ({dispatch, commit}, {modalState, type}) {
 		if (modalState !== undefined) {
@@ -52,6 +65,26 @@ export default {
 				commit('setCity', { city: response.data.data });
 			})
 			.catch(error => console.error(error));
+	},
+	authRequest({ commit }, {email, password}) {
+		return postReq('/api/auth/login', {email, password})
+			.then(resp=>{
+				commit('setUserInfo', { type: 'token', data: resp.data.token })
+				axios.defaults.headers.common = {'Authorization': `Bearer ${resp.data.token}`}
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	regRequest({ dispatch }, data) {
+		return postReq('/api/register', data)
+			.then(()=>{
+				return dispatch('authRequest', data).then(authResp=>authResp);
+			})
+			.catch(regErr=>{
+				throw regErr.response;
+			});
 	},
 	updateOnlineCourses({ state, dispatch }) {
 		return new Promise((resolve)=>{

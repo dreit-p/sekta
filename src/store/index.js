@@ -13,7 +13,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	strict: process.env.NODE_ENV !== 'production',
 	plugins: [createPersistedState({
-		paths: ['inputs', 'user'],
+		paths: [
+			'inputs',
+			// 'user'
+		],
 	})],
 	modules: {
 		header
@@ -28,7 +31,7 @@ export default new Vuex.Store({
 		},
 		inputs: {},
 		user: {
-			isAuth: true,
+			token: '',
 			cityId: null,
 		},
 		onlineCourses: null,

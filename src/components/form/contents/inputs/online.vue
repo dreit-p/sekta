@@ -4,58 +4,63 @@
 	p.light-text Вы выбрали курс
 	p.heavy-text {{ this.courseName }}
 
-	app-dropdown(
-		placeholder='Платформа обучения'
-		data-vv-as='Платформа обучения'
-		:options='platform_options'
-		:class="{ 'error': errors.has('platform'), 'success': fields.platform && fields.platform.valid}"
-		:error='errors.first("platform")'
-		name='platform')
+	form
+		app-dropdown(
+			placeholder='Платформа обучения'
+			data-vv-as='Платформа обучения'
+			:options='platform_options'
+			v-validate='"required"'
+			:class="{ 'error': errors.has('platform'), 'success': fields.platform && fields.platform.valid}"
+			:error='errors.first("platform")'
+			name='platform')
 
-	app-input(
-		placeholder='Введите ссылку на ваш аккаунт'
-		data-vv-as='Фамилия'
-		:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
-		:error='errors.first("lastname")'
-		name='lastname')
+		app-input(
+			placeholder='Введите ссылку на ваш аккаунт'
+			data-vv-as='Фамилия'
+			v-model.trim='lastname'
+			v-validate='"required"'
+			:class="{ 'error': errors.has('lastname'), 'success': fields.lastname && fields.lastname.valid}"
+			:error='errors.first("lastname")'
+			name='lastname')
 
-	app-dropdown(
-		placeholder='Сколько недель вы хотите оплатить?'
-		data-vv-as='Количество недель'
-		:options='weeks_options'
-		:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
-		:error='errors.first("weeks")'
-		name='weeks')
+		app-dropdown(
+			placeholder='Сколько недель вы хотите оплатить?'
+			data-vv-as='Количество недель'
+			:options='weeks_options'
+			v-validate='"required"'
+			:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
+			:error='errors.first("weeks")'
+			name='weeks')
 
-	app-input(
-		placeholder='Промокод (если есть)'
-		data-vv-as='Повтор e-mail'
-		:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
-		:error='errors.first("emailRepeat")'
-		name='emailRepeat'
-		type='email')
+		app-input(
+			placeholder='Промокод (если есть)'
+			data-vv-as='Промокод'
+			:class="{ 'error': errors.has('emailRepeat'), 'success': fields.emailRepeat && fields.emailRepeat.valid}"
+			:error='errors.first("emailRepeat")'
+			name='emailRepeat'
+			type='email')
 
-	app-input(
-		placeholder='Ваш город'
-		data-vv-as='пароль'
-		:error='errors.first("password")'
-		:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
-		ref='asdasd'
-		name='password'
-		type='password')
+		app-input(
+			placeholder='Ваш город'
+			data-vv-as='пароль'
+			:error='errors.first("password")'
+			:class="{ 'error': errors.has('password'), 'success': fields.password && fields.password.valid}"
+			ref='asdasd'
+			name='password'
+			type='password')
 
-	app-checkbox(
-		name='termsAgree'
-		data-vv-as='обработка персональных данных'
-		:required='true'
-		:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
-		:error='errors.first("termsAgree")'
-	)
-		| Ознакомлен и согласен с условиями
-		a(href='#') обработки персональных данных
+		app-checkbox(
+			name='termsAgree'
+			data-vv-as='обработка персональных данных'
+			:required='true'
+			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+			:error='errors.first("termsAgree")'
+		)
+			| Ознакомлен и согласен с условиями
+			a(href='#') обработки персональных данных
 
-	green-btn(@click.prevent)
-		| Перейти к оплате
+		green-btn(@click.prevent)
+			| Перейти к оплате
 </template>
 <script>
 
@@ -80,7 +85,7 @@ for (var i = 0; i < globalInputs.names.length; i++) {
 	};
 }
 
-	
+
 
 /*=====  End of define inputs  ======*/
 

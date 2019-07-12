@@ -5,10 +5,11 @@ label.app-input(:class='this.$options.name')
 			:placeholder='placeholder'
 			:name='name'
 			:ref='name'
+			:value='reactiveValue'
 			:type='type'
 			autocomplete="off"
-			@input="$emit('input', $event.target.value);"
-			@change="$emit('change', $event.target.value);"
+			@input="onInput($event)"
+			@change="onChange($event)"
 		)
 		.icon.checked
 			svg-icon(name='icon-check')
@@ -26,7 +27,7 @@ export default {
 		name: String,
 		type: String,
 		value: {
-			default: null
+			default: ''
 		},
 		error: {
 			type: String,
@@ -49,20 +50,29 @@ export default {
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
 	},
 	methods: {
+		onInput(event) {
+			this.$emit('input', event.target.value);
+			this.reactiveValue = event.target.value;
+		},
+		onChange(event) {
+			this.$emit('change', event.target.value);
+			this.reactiveValue = event.target.value;
+		},
 	},
 	$_veeValidate: {
 		// value getter
 		value() {
-			return this.$refs[this.name].value;
+			return this.reactiveValue;
 		},
 		// name getter
 		name() {
 			return this.name;
 		}
 	},
-	mounted: function () {
-		// synbc the input to the initial value
-		this.$refs[this.name].value = this.value;
+	data() {
+		return {
+			reactiveValue: this.value,
+		}
 	}
 }
 </script>
@@ -90,10 +100,10 @@ export default {
 				color: var(--accent_color);
 				border-color: var(--accent_color);
 			}
-			.caption {
+			/* .caption {
 				color: var(--accent_color);
 				display: none;
-			}
+			} */
 			.icon.checked {
 				display: block;
 			}

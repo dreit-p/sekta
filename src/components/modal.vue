@@ -1,6 +1,6 @@
 <template lang="pug">
 transition(name='fade')
-	section.modal-auth(v-show='$store.state.appStates.formModal.isOpened')
+	section.modal-auth(v-show='isOpenedModal')
 		.veil(@click='setFormModalState({modalState: false})')
 		.modal-wrapper
 			.modal-content
@@ -19,7 +19,7 @@ transition(name='fade')
 						texts-register
 
 
-				form(:class='{left: formModalType == "register", right: formModalType != "register"}')
+				.inputs-wrapper(:class='{left: formModalType == "register", right: formModalType != "register"}')
 					.close-btn(@click='setFormModalState({modalState: false})')
 
 					transition(name='fade-flip', mode='out-in')
@@ -80,7 +80,7 @@ export default {
 	},
 	computed: {
 		isOpenedModal () {
-			return this.$store.state.appStates.formModal.isOpened;
+			return this.$store.getters.isOpenedModal;
 		},
 		formModalType () {
 			return this.$store.state.appStates.formModal.type;
@@ -151,6 +151,9 @@ export default {
 			min-height: 100%;
 		}
 		.content {
+			.red {
+				color: red;
+			}
 			p.heavy-text {
 				line-height: 1;
 				font-size: 20px;
@@ -286,7 +289,7 @@ export default {
 			}
 		}
 	}
-	form {
+	.inputs-wrapper {
 		min-height: 100%;
 		background-color: #e8e8e8;
 		width: calc(50% - 36px - var(--col-space));

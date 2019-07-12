@@ -55,7 +55,7 @@ import vueHeadful from 'vue-headful';
 
 Vue.component('vue-headful', vueHeadful);
 
-const currentId = 5;
+const COURSE_TAG = 'CARE';
 
 export default {
 	name: 'S60Men',

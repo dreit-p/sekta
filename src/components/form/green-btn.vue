@@ -78,5 +78,12 @@ export default {
 			transition-duration: .1s, .1s;
 			color: white;
 		}
+		&:disabled {
+			border-color: #ccc !important;
+			background-color: #ccc !important;
+			color: #b3b3b3 !important;
+			cursor: default;
+			pointer-events: none;
+		}
 	}
 </style>

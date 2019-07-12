@@ -3,40 +3,41 @@
 
 	p.heavy-text Запишись сейчас
 
-	app-dropdown(
-		placeholder='Выберите тип размещения'
-		data-vv-as='Курс'
-		:options='course_options'
-		name='course')
+	form
+		app-dropdown(
+			placeholder='Выберите тип размещения'
+			data-vv-as='Курс'
+			:options='course_options'
+			name='course')
 
-	app-input(
-		placeholder='Промокод'
-		data-vv-as='Промокод'
-		name='promocode'
-		type='promocode')
+		app-input(
+			placeholder='Промокод'
+			data-vv-as='Промокод'
+			name='promocode'
+			type='promocode')
 
-	app-input(
-		placeholder='Ваш город'
-		data-vv-as='Ваш город'
-		name='city'
-		type='city')
+		app-input(
+			placeholder='Ваш город'
+			data-vv-as='Ваш город'
+			name='city'
+			type='city')
 
-	app-checkbox(
-		name='termsAgree'
-		data-vv-as='обработка персональных данных'
-		v-model.trim='termsAgree'
-		v-validate='"required:true"'
-		:required='true'
-		:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
-		:error='errors.first("termsAgree")'
-	)
-		| Ознакомлен и согласен с условиями
-		a(href='#') обработки персональных данных
+		app-checkbox(
+			name='termsAgree'
+			data-vv-as='обработка персональных данных'
+			v-model.trim='termsAgree'
+			v-validate='"required:true"'
+			:required='true'
+			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+			:error='errors.first("termsAgree")'
+		)
+			| Ознакомлен и согласен с условиями
+			a(href='#') обработки персональных данных
 
-	p Итого к оплате: 3555 рублей	
+		p Итого к оплате: 3555 рублей
 
-	green-btn(@click.prevent)
-		| Оплатить
+		green-btn(@click.prevent)
+			| Оплатить
 </template>
 <script>
 
