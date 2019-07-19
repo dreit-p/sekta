@@ -1,5 +1,5 @@
 <template lang="pug">
-.entry-form
+.entry-form(id='entry-form')
 	.wrapper.clearfix
 		.half.with-bg(:data-color='bgColor')
 			img(class='background', :src='backgroundImage')

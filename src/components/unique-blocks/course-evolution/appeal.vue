@@ -5,7 +5,7 @@ section.appeal
 			.big-text запишитесь сейчас
 			.medium-text ближайший старт
 			.highlighted-text 22 июля
-			a.purple-btn
+			a.purple-btn(@click='scrollTo("entry-form")')
 				.border
 				.btn Записаться на курс
 		.img-side
@@ -20,6 +20,27 @@ section.appeal
 <script>
 export default {
 	name: 'EvoAppeal',
+	methods: {
+		scrollTo(id) {
+			window.scrollTo({
+				top: getPosition(document.getElementById(id)).y -65,
+				behavior: "smooth"
+			});
+			function getPosition(el) {
+
+				var x = 0,
+					y = 0;
+
+				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
+					x += el.offsetLeft || 0; 
+					y += el.offsetTop || 0;
+					el = el.offsetParent;
+				}
+
+				return { x: parseInt(x, 10), y: parseInt(y, 10) };
+			}
+		}
+	},
 }
 </script>
 

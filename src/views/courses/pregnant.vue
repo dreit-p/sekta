@@ -37,7 +37,8 @@ div.course
 	caption-section(v-if='courseInfo'
 		:dateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType="online", :prices='courseInfo.prices', :courseName='courseInfo.name')
+	//formType="online"
+	entry-form(v-if='courseInfo', formType="register", :prices='courseInfo.prices', :courseName='courseInfo.name')
 </template>
 
 <script>

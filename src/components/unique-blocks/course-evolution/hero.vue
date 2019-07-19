@@ -23,7 +23,7 @@ section.evo-hero
 				br
 				| старт каждый понедельник
 			img.pair(src='@/assets/images/evolution/img-pair-flip.png' alt='')
-			purple-btn Записаться на курс
+			purple-btn(@click='scrollTo("entry-form")') Записаться на курс
 		.img-side
 			img.pair(src='@/assets/images/evolution/img-pair-flip.png' alt='')
 
@@ -35,7 +35,28 @@ export default {
 	name: 'EvolutionHero',
 	components: {
 		PurpleBtn: () => import('@/components/form/purple-btn.vue'),
-	}
+	},
+	methods: {
+		scrollTo(id) {
+			window.scrollTo({
+				top: getPosition(document.getElementById(id)).y -65,
+				behavior: "smooth"
+			});
+			function getPosition(el) {
+
+				var x = 0,
+					y = 0;
+
+				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
+					x += el.offsetLeft || 0; 
+					y += el.offsetTop || 0;
+					el = el.offsetParent;
+				}
+
+				return { x: parseInt(x, 10), y: parseInt(y, 10) };
+			}
+		}
+	},
 }
 </script>
 
