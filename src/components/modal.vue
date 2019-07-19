@@ -1,6 +1,6 @@
 <template lang="pug">
 transition(name='fade')
-	section.modal-auth(v-show='$store.state.appStates.formModal.isOpened')
+	section.modal-auth(v-show='isOpenedModal')
 		.veil(@click='setFormModalState({modalState: false})')
 		.modal-wrapper
 			.modal-content
@@ -19,7 +19,7 @@ transition(name='fade')
 						texts-register
 
 
-				form(:class='{left: formModalType == "register", right: formModalType != "register"}')
+				.inputs-wrapper(:class='{left: formModalType == "register", right: formModalType != "register"}')
 					.close-btn(@click='setFormModalState({modalState: false})')
 
 					transition(name='fade-flip', mode='out-in')
@@ -34,62 +34,62 @@ transition(name='fade')
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
-	/*========================================
-	=            define the forms            =
-	========================================*/
+/*========================================
+=            define the forms            =
+========================================*/
 
-	const formContent = {
-		types: ['login', 'register', 'recovery'],
-		components: {
-			inputs: {},
-			texts: {}
+const formContent = {
+	types: ['login', 'register', 'recovery'],
+	components: {
+		inputs: {},
+		texts: {}
+	}
+}
+
+for (let i = 0; i < formContent.types.length; i++) {
+	let type = formContent.types[i];
+	formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
+		return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
+	};
+	formContent.components.texts['texts-' + formContent.types[i]] = function () {
+		return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
+	};
+}
+
+/*=====  End of define the forms  ======*/
+
+
+export default {
+	name: 'AppModal',
+	components: {
+		AppInput: () => import('@/components/form/input.vue'),
+		AppCheckbox: () => import('@/components/form/checkbox.vue'),
+		...formContent.components.inputs,
+		...formContent.components.texts,
+	},
+	data () {
+		return {
+			emailRepeat: '',
+			passwordRepeat: '',
+			isAdult: false,
+			termsAgree: false,
+			spamAgree: false,
 		}
-	}
-
-	for (let i = 0; i < formContent.types.length; i++) {
-		let type = formContent.types[i];
-		formContent.components.inputs['inputs-' + formContent.types[i]] = function () {
-			return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
-		};
-		formContent.components.texts['texts-' + formContent.types[i]] = function () {
-			return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
-		};
-	}
-
-	/*=====  End of define the forms  ======*/
-
-
-	export default {
-		name: 'AppModal',
-		components: {
-			AppInput: () => import('@/components/form/input.vue'),
-			AppCheckbox: () => import('@/components/form/checkbox.vue'),
-			...formContent.components.inputs,
-			...formContent.components.texts,
+	},
+	computed: {
+		isOpenedModal () {
+			return this.$store.getters.isOpenedModal;
 		},
-		data () {
-			return {
-				emailRepeat: '',
-				passwordRepeat: '',
-				isAdult: false,
-				termsAgree: false,
-				spamAgree: false,
-			}
-		},
-		computed: {
-			isOpenedModal () {
-				return this.$store.state.appStates.formModal.isOpened;
-			},
-			formModalType () {
-				return this.$store.state.appStates.formModal.type;
-			}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+		formModalType () {
+			return this.$store.state.appStates.formModal.type;
+		}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">
@@ -151,6 +151,9 @@ transition(name='fade')
 			min-height: 100%;
 		}
 		.content {
+			.red {
+				color: red;
+			}
 			p.heavy-text {
 				line-height: 1;
 				font-size: 20px;
@@ -286,7 +289,7 @@ transition(name='fade')
 			}
 		}
 	}
-	form {
+	.inputs-wrapper {
 		min-height: 100%;
 		background-color: #e8e8e8;
 		width: calc(50% - 36px - var(--col-space));

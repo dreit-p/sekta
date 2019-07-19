@@ -11,14 +11,14 @@ section.not-found-page
 </template>
 
 <script>
-	export default {
-		name: 'NotFoundPage',
-		components: {
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'NotFoundPage',
+	components: {
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss">

@@ -1,6 +1,6 @@
 <template lang="pug">
 section.fullsize-hero
-	.hero-content
+	.hero-content(v-bind:class="{ right: this.sideToRender === 'right' }")
 		.background(:style="{ backgroundImage: `url(' ${backgroundImage} ')`}")
 		.content
 			.limit
@@ -16,26 +16,27 @@ section.fullsize-hero
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		name: 'CoursesHero',
-		components: {
-		},
-		props: {
-			image: String,
-			title: String,
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-		computed: {
-		},
-		data () {
-			return {
-				backgroundImage: require('@/assets/images/' + this.image)
-			}
+import { mapActions } from 'vuex'
+export default {
+	name: 'CoursesHero',
+	components: {
+	},
+	props: {
+		image: String,
+		title: String,
+		sideToRender: String
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+	computed: {
+	},
+	data () {
+		return {
+			backgroundImage: require('@/assets/images/' + this.image)
 		}
 	}
+}
 </script>
 
 <style lang="postcss">
@@ -55,6 +56,33 @@ section.fullsize-hero
 			@media (max-width: 500px) {
 				height: auto;
 				max-height: none;
+			}
+		}
+		.right {
+			.background {
+				background-position:center;
+				@media (max-width: 1024px) {
+					background-position-x: -200px;
+				}
+			}
+			.limit {
+				width: 50%;
+				margin-left: 50%;
+				@media (max-width: 480px) {
+					width: 100%;
+					margin-left: 0;
+				}
+			}
+			.merch__list li {
+				line-height: 1;
+				font-weight: normal;
+			}
+		}
+		.right + .mobile-content {
+			.hero-text p {
+				@media (max-width: 1024px) {
+					max-width: 445px;
+				}
 			}
 		}
 		.background {

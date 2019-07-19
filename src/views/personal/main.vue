@@ -1,145 +1,87 @@
 <template lang="pug">
-div
-	article.main-body
-		.limit
-			section.column
-				h2.section-title Активные курсы
-				.tile.course
-					.main-content
-						.top-content
-							.img-side
-								svg-icon(name='logo-sekta')
-							.text-side
-								.title Oldschool
-								.info
-									.line
-										svg-icon(name='icon-graph')
-										| Прогресс:
-										span.green 0%
-									.line
-										svg-icon(name='icon-calendar')
-										| Старт: 13.12.2018
-						.progress-bar
-							.border
-							.fill(style='max-width: 0%')
-						.progress-caption Курс полностью оплачен
-						.btns
-							button.btn Открыть курс
-							button.btn Оплатить курс
-					.additional-content
-						.open-btn Подробнее о курсе
-							.arrow-icon
+	div
+		article.main-body
+			.limit
+				section.column
+					h2.section-title Активные курсы
+					active-course(
+						courseName='CourseNumber 1',
+						progress='50%',
+						dateStart='26.05.2019'
+						additionalInfo='#SektaBootCamp2 – это тренировочный интенсив, который настроен под тебя и твои цели.'
+					)
+					active-course(
+						courseName='CourseNumber 2',
+						progress='100%',
+						dateStart='26.05.2019',
+						additionalInfo='#SektaBootCamp2 – это тренировочный интенсив, который настроен под тебя и твои цели.'
+					)
+					active-course(
+						courseName='Sekta BOOT Camp',
+						progress='23%',
+						dateStart='19.09.19',
+						additionalInfo='#SektaBootCamp2 – это тренировочный интенсив, который настроен под тебя и твои цели.'
+					)
+					h2.section-title Сертфикаты
+					.tile.certificate
+						.img(:style="{ backgroundImage: `url('${require('@/assets/images/aside-hero/certificates_bg.jpg')}')` }")
+						.text СЕРТИФИКАТ НА СУММУ 10 900руб.
 
 
-				.tile.course
-					.main-content
-						.top-content
-							.img-side
-								svg-icon(name='logo-sekta')
-							.text-side
-								.title Oldschool
-								.info
-									.line
-										svg-icon(name='icon-graph')
-										| Прогресс:
-										span.green 0%
-									.line
-										svg-icon(name='icon-calendar')
-										| Старт: 13.12.2018
-						.progress-bar
-							.border
-							.fill(style='max-width: 34%')
-						.progress-caption Курс полностью оплачен
-						.btns
-							button.btn Открыть курс
-							button.btn Оплатить курс
+					h2.section-title Рекомендуем
+					.tile.simple
+						.img-side
+							svg-icon(name='logo-sekta')
+						.text-side
+							.title #s60lite
+							.description
+								| Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
+							.btns
+								a.btn Демо
+				section.column.sidebar
+					h2.section-title Статистика
+					.tile
+						.content
+							h2.title.green Курсы
+							hr
+							.text Завершенных курсов:
+								span.green 2
+							hr
+							.text Активных курсов:
+								span.green 3
+							hr
+							h2.title.green Прогресс
+							hr
+							.text.heavy #sekta bootcamp3
+								span.green 0%
+							hr
+							.text.heavy #sekta bootcamp3 vol.2
+								span.green 84%
+							hr
+							.text.heavy oldschool
+								span.green 0%
+							hr
 
-					.additional-content
-						.open-btn Подробнее о курсе
-							.arrow-icon
-
-
-				.tile.course
-					.main-content
-						.top-content
-							.img-side
-								svg-icon(name='logo-sekta')
-							.text-side
-								.title Oldschool
-								.info
-									.line
-										svg-icon(name='icon-ruble')
-										| 3900 руб/месяц (3 тренировки/нед.)
-									.line
-										svg-icon(name='icon-calendar')
-										| Старт: 13.12.2018
-						.progress-caption Курс полностью оплачен
-						.btns
-							button.btn Открыть курс
-							button.btn Оплатить курс
-
-					.additional-content
-						.open-btn Подробнее о курсе
-							.arrow-icon
-
-
-				h2.section-title Сертфикаты
-				.tile.certificate
-					.img(:style="{ backgroundImage: `url('${require('@/assets/images/aside-hero/certificates_bg.jpg')}')` }")
-					.text СЕРТИФИКАТ НА СУММУ 10 900руб.
-
-
-				h2.section-title Рекомендуем
-				.tile.simple
-					.img-side
-						svg-icon(name='logo-sekta')
-					.text-side
-						.title #s60lite
-						.description
-							| Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
-						.btns
-							a.btn Демо
-
-
-
-			section.column.sidebar
-				h2.section-title Статистика
-				.tile
-					.content
-						h2.title.green Курсы
-						hr
-						.text Завершенных курсов:
-							span.green 2
-						hr
-						.text Активных курсов:
-							span.green 3
-						hr
-						h2.title.green Прогресс
-						hr
-						.text.heavy #sekta bootcamp3
-							span.green 0%
-						hr
-						.text.heavy #sekta bootcamp3 vol.2
-							span.green 84%
-						hr
-						.text.heavy oldschool
-							span.green 0%
-						hr
-
-	app-footer
 </template>
 
 <script>
-	export default {
-		name: 'MainPersonal',
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
-			AppFooter: () => import('@/components/footer.vue'),
+export default {
+	name: 'MainPersonal',
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+		ActiveCourse: () => import('@/components/personal/active-course.vue'),
+	},
+	computed: {
+		user() {
+			return this.$store.state.user;
 		},
-		data () {
-			return {}
+	},
+	data () {
+		return {
+			isDropDownActive: false
 		}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>
@@ -378,13 +320,32 @@ div
 		.additional-content {
 			border-top: 1px solid #cbcbcb;
 			.open-btn {
+				display: block;
+				position: relative;
+
+				margin: 10px auto;
+				padding-right: 15px;
+
+				background-color: transparent;
+				border: none;
+
+				cursor: pointer;
+
 				font-size: 11px;
 				font-weight: bold;
 				color: #6a6a6a;
-				display: flex;
-				justify-content: center;
-				padding: 21px;
-				align-items: center;
+				&:focus {
+					outline: none;
+				}
+				&:hover {
+					color: #0ab6a1;
+				}
+				.svg-icon--down-arrow {
+					position: absolute;
+					right: 0;
+					color: inherit;
+					margin-left: 5px;
+				}
 				@media (max-width: 500px) {
 					padding: 10px;
 				}
@@ -396,6 +357,24 @@ div
 						width: 15px;
 					}
 				}
+			}
+		}
+
+		.additional-content {
+			.more-dropdown {
+				margin: 0 30px;
+
+				max-height: 0;
+
+				overflow: hidden;
+				transition: all .5s ease;
+				font-size: 16px;
+			}
+		}
+
+		.dropdown_active {
+			.more-dropdown {
+				max-height: 200px;
 			}
 		}
 

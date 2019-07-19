@@ -15,14 +15,14 @@ section.not-found-page
 </template>
 
 <script>
-	export default {
-		name: 'SuccessMessage',
-		components: {
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'SuccessMessage',
+	components: {
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss">

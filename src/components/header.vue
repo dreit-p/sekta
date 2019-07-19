@@ -18,7 +18,10 @@ header.main-header
 				.mobile-elems
 					a.icon(href='tel:+78005006882')
 						svg-icon(name='icon-phone')
-					a.icon.switcher.cross(:class='{active: isOpenedModal}', @click.prevent='toggleModal()')
+					a.icon.switcher.cross(:class='{active: isOpenedModal}', v-if='!isUserAuth || isOpenedModal', @click.prevent='toggleModal()')
+						svg-icon(name='icon-login')
+						.x
+					router-link.icon.switcher.cross(tag='a', :class='{active: isOpenedModal}', title='Мои курсы', v-if='isUserAuth && !isOpenedModal', to='/personal')
 						svg-icon(name='icon-login')
 						.x
 					a.icon.cross(:class='{active: isOpenedMenu}', href='#', @click.prevent='toggleMenu()')
@@ -28,19 +31,23 @@ header.main-header
 			nav.bottom
 				ul.additional-links(v-if='additionalLinks.length > 0')
 					router-link(
-						tag='li', 
-						class='link', 
-						v-for='(link, index) in additionalLinks', 
-						:key='link.id', 
+						tag='li',
+						class='link',
+						v-for='(link, index) in additionalLinks',
+						:key='link.id',
 						:to='link.link',
 						@mouseenter.native='changeDropdownContent(!!link.subLinks ? `${link.name}-${index}` : showSubLinks, !!link.subLinks)'
 						@mouseleave.native='setDropdownTimer'
 					)
 						a {{ link.name }}
-				a(class='account', title='Личный кабинет', @click.prevent='toggleModal()')
+				a(class='account', title='Личный кабинет', v-if='!isUserAuth', @click.prevent='toggleModal()')
 					.icon
 						svg-icon(name='icon-login')
 					.text Личный кабинет
+				router-link.account(tag='a', title='Мои курсы', v-if='isUserAuth', to='/personal')
+					.icon
+						svg-icon(name='icon-login')
+					.text Мои курсы
 
 		transition(
 			@before-enter='dropdownBeforeEnter'
@@ -55,10 +62,10 @@ header.main-header
 						transition(name='links-fade', in-out, @enter="setHeightForDropdown")
 							ul.category(v-if='showSubLinks==`${link.name}-${index}`')
 								router-link(
-									tag='li', 
-									class='link sub-link', 
-									v-for='(subLink, index) in link.subLinks', 
-									:key='`${link.name}-${index}`', 
+									tag='li',
+									class='link sub-link',
+									v-for='(subLink, index) in link.subLinks',
+									:key='`${link.name}-${index}`',
 									:to='subLink.link',
 									:data-index="index"
 								)
@@ -74,10 +81,10 @@ header.main-header
 			nav.mobile-menu(v-if='isOpenedMenu')
 				ul.additional-links(v-if='additionalLinks.length > 0')
 					router-link(
-						tag='li', 
-						class='link', 
-						v-for='(link, index, id) in additionalLinks', 
-						:key='`addLink-${index}`', 
+						tag='li',
+						class='link',
+						v-for='(link, index, id) in additionalLinks',
+						:key='`addLink-${index}`',
 						:to='link.link',
 						:data-index='index',
 						@click.native='setMenuState(false)'
@@ -85,10 +92,10 @@ header.main-header
 						a.animated-underline {{ link.name }}
 						ul.sub-links(v-if='link.subLinks')
 							router-link(
-								tag='li', 
-								class='sub-link', 
-								v-for='(subLink, index) in link.subLinks', 
-								:key='`subLink-${index}`', 
+								tag='li',
+								class='sub-link',
+								v-for='(subLink, index) in link.subLinks',
+								:key='`subLink-${index}`',
 								:to='subLink.link',
 								:data-index='index',
 								@click.native='setMenuState(false)'
@@ -101,194 +108,202 @@ header.main-header
 </template>
 
 <script>
-	import Velocity from 'velocity-animate'
-	import { mapState, mapActions } from 'vuex'
+import Velocity from 'velocity-animate'
+import { mapState, mapActions } from 'vuex'
 
-	export default {
-		name: 'AppHeader',
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
+export default {
+	name: 'AppHeader',
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	data () {
+		return {
+			showSubLinks: false,
+			dropdownTimer: null,
+		}
+	},
+	computed: {
+		isUserAuth () {
+			return this.$store.getters.isUserAuth;
 		},
-		data () {
-			return {
-				showSubLinks: false,
-				dropdownTimer: null,
-			}
+		isOpenedMenu () {
+			return this.$store.state.header.isOpenedMenu;
 		},
-		computed: {
-			isOpenedMenu () {
-				return this.$store.state.appStates.isOpenedMenu;
-			},
-			isOpenedModal () {
-				return this.$store.state.appStates.formModal.isOpened;
-			},
-			formModalType () {
-				return this.$store.state.appStates.formModal.type;
-			},
-			...mapState([
-				'mainLinks',
-				'formModal',
-				'appStates',
-				'additionalLinks'
-			])
+		isOpenedModal () {
+			return this.$store.getters.isOpenedModal;
 		},
-		methods: {
-			toggleMenu () {
-				this.setMenuState(!this.isOpenedMenu)
-			},
-			toggleModal () {
-				this.setFormModalState({modalState: !this.isOpenedModal})
-			},
-			...mapActions(['setMenuState', 'setFormModalState']),
+		formModalType () {
+			return this.$store.state.appStates.formModal.type;
+		},
+		mainLinks () {
+			return this.$store.state.header.mainLinks;
+		},
+		additionalLinks () {
+			return this.$store.state.header.additionalLinks;
+		},
+		...mapState([
+			'formModal',
+			'appStates'
+		])
+	},
+	methods: {
+		toggleMenu () {
+			this.setMenuState(!this.isOpenedMenu)
+		},
+		toggleModal () {
+			this.setFormModalState({modalState: !this.isOpenedModal})
+		},
+		...mapActions('header', {setMenuState: 'setMenuState'}),
+		...mapActions(['setFormModalState']),
 
-			/*================================
+		/*================================
 			=            Dropdown            =
 			================================*/
 
-			clearDropdownTimer () {
-				if (this.dropdownTimer) {
-					clearTimeout(this.dropdownTimer);
-					this.dropdownTimer = null;
-				}
-			},
-
-			setDropdownTimer () {
+		clearDropdownTimer () {
+			if (this.dropdownTimer) {
 				clearTimeout(this.dropdownTimer);
-				this.dropdownTimer = setTimeout(()=>{
-					this.showSubLinks = false;
-				}, 400);
-			},
+				this.dropdownTimer = null;
+			}
+		},
 
-			changeDropdownContent (type, clearTimer) {
+		setDropdownTimer () {
+			clearTimeout(this.dropdownTimer);
+			this.dropdownTimer = setTimeout(()=>{
+				this.showSubLinks = false;
+			}, 400);
+		},
 
-				if (clearTimer) {
-					this.clearDropdownTimer();
-				}
-				this.showSubLinks = type;
-				this.setOutsideClickListener();
-			},
+		changeDropdownContent (type, clearTimer) {
 
-			theHighestElement: function (elem) {
-				let theBiggest = 0;
-				document.querySelectorAll(elem).forEach(function(elem) {
-					if (elem.offsetHeight > theBiggest) {
-						theBiggest = elem.offsetHeight;
-					}
-				});
-				return theBiggest;
-			},
-			setHeightForDropdown: function () {
-				let elems = document.querySelectorAll('.sub-links.outside .category');
-				let height = 0 + 'px';
-				if (elems.length > 0) {
-					if (elems.length > 1) {
-						height = this.theHighestElement('.sub-links.outside .links-fade-enter-active') + 'px';
-					} else {
-						height = elems[0].offsetHeight + 'px';
-					}
-				}
-				document.querySelector('.sub-links.outside .limit').style.height = height;
-			},
-
-			dropdownBeforeEnter: function (el) {
+			if (clearTimer) {
 				this.clearDropdownTimer();
-				el.style.opacity = 0;
-				let links = el.querySelectorAll('.link');
-				links.forEach(function(link) {
-					Velocity(link, { opacity: 0}, {queue: false} )
-				});
-			},
-			dropdownEnter: function (el, done) {
-				this.setHeightForDropdown();
-				Velocity(el, { opacity: 1}, { duration: 300 })
-				el.querySelectorAll('.link').forEach(function(link) {
-					Velocity(link, 
-						{
-							opacity: 1
-						}, {
-							duration: 300,
-							delay: 200 + (link.dataset.index * 60),
-							easing: 'ease-out',
-							queue: false,
-							complete: done
-						} )
-				});
-			},
-			dropdownLeave: function (el, done) {
-				Velocity(el, { opacity: 0}, { duration: 300, complete: done});
-				document.querySelector('.sub-links.outside .limit').style.height = '0px';
-			},
+			}
+			this.showSubLinks = type;
+			this.setOutsideClickListener();
+		},
 
-			/*=====  End of Dropdown  ======*/
+		theHighestElement: function (elem) {
+			let theBiggest = 0;
+			document.querySelectorAll(elem).forEach(function(elem) {
+				if (elem.offsetHeight > theBiggest) {
+					theBiggest = elem.offsetHeight;
+				}
+			});
+			return theBiggest;
+		},
+		setHeightForDropdown: function () {
+			let elems = document.querySelectorAll('.sub-links.outside .category');
+			let height = 0 + 'px';
+			if (elems.length > 0) {
+				if (elems.length > 1) {
+					height = this.theHighestElement('.sub-links.outside .links-fade-enter-active') + 'px';
+				} else {
+					height = elems[0].offsetHeight + 'px';
+				}
+			}
+			document.querySelector('.sub-links.outside .limit').style.height = height;
+		},
+
+		dropdownBeforeEnter: function (el) {
+			this.clearDropdownTimer();
+			el.style.opacity = 0;
+			let links = el.querySelectorAll('.link');
+			links.forEach(function(link) {
+				Velocity(link, { opacity: 0}, {queue: false} )
+			});
+		},
+		dropdownEnter: function (el, done) {
+			this.setHeightForDropdown();
+			Velocity(el, { opacity: 1}, { duration: 300 })
+			el.querySelectorAll('.link').forEach(function(link) {
+				Velocity(link,
+					{
+						opacity: 1
+					}, {
+						duration: 300,
+						delay: 200 + (link.dataset.index * 60),
+						easing: 'ease-out',
+						queue: false,
+						complete: done
+					} )
+			});
+		},
+		dropdownLeave: function (el, done) {
+			Velocity(el, { opacity: 0}, { duration: 300, complete: done});
+			document.querySelector('.sub-links.outside .limit').style.height = '0px';
+		},
+
+		/*=====  End of Dropdown  ======*/
 
 
-			/*======================================
-			=            Menu animation            =
-			======================================*/
+		/*======================================
+		=            Menu animation            =
+		======================================*/
 
-			menuBeforeEnter: function (el) {
-				el.style.opacity = 0;
-				let links = el.querySelectorAll('.link');
-				links.forEach(function(link) {
-					Velocity(link, { opacity: 0}, {queue: false} )
-				});
-			},
-			menuEnter: function (el, done) {
-				Velocity(el, { opacity: 1}, { duration: 300 })
-				el.querySelectorAll('.link').forEach(function(link) {
-					Velocity(link, 
-						{
-							opacity: 1
-						}, {
-							duration: 300,
-							delay: 200 + (link.dataset.index * 60),
-							easing: 'ease-out',
-							queue: false,
-							complete: done
-						} )
-				});
-			},
-			menuLeave: function (el, done) {
-				Velocity(el, { opacity: 0}, { duration: 300 })
-				let links = el.querySelectorAll('.link');
-				links.forEach(function(link) {
-					Velocity(link, 
-						{
-							opacity: 0
-						}, {
-							duration: 300,
-							delay: 0,
-							easing: 'ease-in',
-							queue: false,
-							complete: done
-						} )
-				});
-			},
+		menuBeforeEnter: function (el) {
+			el.style.opacity = 0;
+			let links = el.querySelectorAll('.link');
+			links.forEach(function(link) {
+				Velocity(link, { opacity: 0}, {queue: false} )
+			});
+		},
+		menuEnter: function (el, done) {
+			Velocity(el, { opacity: 1}, { duration: 300 })
+			el.querySelectorAll('.link').forEach(function(link) {
+				Velocity(link,
+					{
+						opacity: 1
+					}, {
+						duration: 300,
+						delay: 200 + (link.dataset.index * 60),
+						easing: 'ease-out',
+						queue: false,
+						complete: done
+					} )
+			});
+		},
+		menuLeave: function (el, done) {
+			Velocity(el, { opacity: 0}, { duration: 300 })
+			let links = el.querySelectorAll('.link');
+			links.forEach(function(link) {
+				Velocity(link,
+					{
+						opacity: 0
+					}, {
+						duration: 300,
+						delay: 0,
+						easing: 'ease-in',
+						queue: false,
+						complete: done
+					} )
+			});
+		},
 
-			/*=====  End of Menu animation  ======*/
+		/*=====  End of Menu animation  ======*/
 
-			setOutsideClickListener: function () {
+		setOutsideClickListener: function () {
 
-				let app = document.getElementById('app');
+			let app = document.getElementById('app');
 
-				let theTarget = app.querySelector('header.main-header');
+			let theTarget = app.querySelector('header.main-header');
 
-				app.removeEventListener('mouseup', task, false);
+			app.removeEventListener('mouseup', task, false);
 
-				let task = (e)=>{
+			let task = (e)=>{
 
-					if (!theTarget.contains(e.target) && this.showSubLinks != false) {
-							this.showSubLinks = false;
-							e.target.removeEventListener('mouseup', task, false)
-					}
-
+				if (!theTarget.contains(e.target) && this.showSubLinks != false) {
+					this.showSubLinks = false;
+					e.target.removeEventListener('mouseup', task, false)
 				}
 
-				app.addEventListener('mouseup', task, false);
 			}
 
+			app.addEventListener('mouseup', task, false);
 		}
+
 	}
+}
 </script>
 
 <style lang="postcss" scoped>
@@ -638,6 +653,7 @@ header.main-header
 		right: 0;
 		background-color: var(--bt-dark_elems);
 		padding: 20px 15px;
+		padding-bottom: calc(20% + 15px);
 		height: 120%;
 		width: 100%;
 		min-width: 320px;

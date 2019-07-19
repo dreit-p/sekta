@@ -6,12 +6,13 @@ label.app-dropdown(:class='this.$options.name')
 			:class='{opened: isOpenedSelect}'
 			:name='name'
 			:ref='name'
-			@change="$emit('change', $event.target.value);"
+			v-model='reactiveValue'
+			v-bind="$attrs"
 			@click='isOpenedSelect = !isOpenedSelect'
 			@blur='isOpenedSelect = false'
 		)
-			option(value="" v-if='placeholder != undefined' disabled selected) {{this.placeholder}}
-			option(v-for='(element, index) in options', :value="index") {{element}}
+			option(value="" v-if='placeholder != undefined' disabled :selected='!value') {{this.placeholder}}
+			option(v-for='(point, index) in preparedOptions', :value="point.value", :selected='reactiveValue == point.value') {{point.text}}
 		.dropdown-icon
 			svg(viewBox='0 0 18 9')
 				polygon.triangle(fill='currentColor' points='0,9 9,0 18,9')
@@ -19,61 +20,90 @@ label.app-dropdown(:class='this.$options.name')
 </template>
 
 <script>
-	export default {
-		name: 'app-input',
-		model: {
-			event: 'change'
+export default {
+	name: 'AppDropdown',
+	model: {
+		event: 'change'
+	},
+	props: {
+		placeholder: String,
+		caption: String,
+		name: String,
+		type: String,
+		options: {
+			type: Array,
+			default: ()=>[],
 		},
-		props: {
-			placeholder: String,
-			caption: String,
-			name: String,
+		value: {
 			type: String,
-			options: {
-				type: Array,
-				default: ()=>[],
-			},
-			value: {
-				type: String,
-				default: '',
-			},
-			error: {
-				type: String,
-				default: null
-			}
+			default: '',
 		},
-		computed: {
-			computedCaption() {
-				if (this.error) {
-					return this.error
+		error: {
+			type: String,
+			default: null
+		}
+	},
+	methods: {
+		onChange(data) {
+			this.$emit('change', data);
+		},
+	},
+	computed: {
+		computedCaption() {
+			if (this.error) {
+				return this.error
+			} else {
+				if (this.caption) {
+					return this.caption
+				}
+			}
+			return null;
+		},
+		preparedOptions() {
+			return this.options.map((point, index)=>{
+				if (typeof point === 'object' && point.hasOwnProperty('id')) {
+					return {
+						value: point.id,
+						text: point.name
+					}
 				} else {
-					if (this.caption) {
-						return this.caption
+					return {
+						value: index,
+						text: point
 					}
 				}
-				return null;
-			}
+			})
 		},
-		data (){
-			return {
-				isOpenedSelect: false,
-			};
+	},
+	watch: {
+		value() {
+			this.reactiveValue = this.value ? this.value : ''
 		},
-		$_veeValidate: {
-			// value getter
-			value() {
-				return this.$el.value;
-			},
-			// name getter
-			name() {
-				return this.name;
-			}
+		reactiveValue() {
+			this.onChange(this.reactiveValue);
 		},
-		mounted: function () {
-			// synbc the input to the initial value
-			this.$refs[this.name].value = this.value;
+	},
+	data (){
+		return {
+			isOpenedSelect: false,
+			reactiveValue: this.value ? this.value : ''
+		};
+	},
+	$_veeValidate: {
+		// value getter
+		value() {
+			return this.$el.value;
+		},
+		// name getter
+		name() {
+			return this.name;
 		}
+	},
+	mounted: function () {
+		// synbc the input to the initial value
+		// this.$refs[this.name].value = this.value;
 	}
+}
 </script>
 
 <style lang="postcss">
@@ -155,7 +185,7 @@ label.app-dropdown(:class='this.$options.name')
 		}
 		option {
 			color: black;
-			font-size: 16px;
+			/* font-size: 16px; */
 			cursor: pointer;
 		}
 		option[disabled] { display: none; }

@@ -1,8 +1,8 @@
 <template lang="pug">
-.entry-form
+.entry-form(id='entry-form')
 	.wrapper.clearfix
-		.half.with-bg
-			img(class='background', src='@/assets/images/markes-bg_teal.jpg')
+		.half.with-bg(:data-color='bgColor')
+			img(class='background', :src='backgroundImage')
 			.text-blocks
 				// Login
 
@@ -16,9 +16,16 @@
 
 					texts-certificates(v-if='entryFormType == "certificates"')
 
-		.half
-			form(:class='{left: entryFormType == "register", right: entryFormType != "register"}')
+					texts-online(v-if='entryFormType == "online"')
 
+					texts-camp(v-if='entryFormType == "camp"')
+
+					texts-merch(v-if='entryFormType == "merch"')
+
+					texts-bullet(v-if='entryFormType == "bullet"')
+
+		.half
+			.inputs-wrapper
 				transition(name='fade-flip', mode='out-in')
 
 					inputs-login(v-if='entryFormType == "login"', :key='entryFormType')
@@ -29,78 +36,105 @@
 
 					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType')
 
+					inputs-online(v-if='entryFormType == "online"', :key='entryFormType', v-bind:prices='this.prices', v-bind:courseName='this.courseName')
+
+					inputs-face-to-face(v-if='entryFormType == "faceToFace"', :key='entryFormType')
+
+					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType')
+
+					inputs-merch(v-if='entryFormType == "merch"', :key='entryFormType')
+
+					inputs-bullet(v-if='entryFormType == "bullet"', :key='entryFormType')
+
 </template>
 
 <script>
 
-	/*========================================
-	=            define the forms            =
-	========================================*/
+/*========================================
+=            define the forms            =
+========================================*/
 
-	const formContent = {
-		types: ['login', 'register', 'recovery', 'certificates'],
-		components: {
-			inputs: {},
-			texts: {}
+const formContent = {
+	types: ['login', 'register', 'recovery',
+		'certificates', 'online', 'face-to-face',
+		'camp', 'merch', 'bullet'],
+	components: {
+		inputs: {},
+		texts: {}
+	}
+}
+
+for (let i = 0; i < formContent.types.length; i++) {
+	let type = formContent.types[i];
+	formContent.components.inputs['inputs-' + formContent.types[i]] = ()=>{
+		return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
+	};
+	formContent.components.texts['texts-' + formContent.types[i]] = ()=>{
+		return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
+	};
+}
+
+/*=====  End of define the forms  ======*/
+
+export default {
+	name: 'EntryForm',
+	components: {
+		AppInput: () => import('@/components/form/input.vue'),
+		AppCheckbox: () => import('@/components/form/checkbox.vue'),
+		...formContent.components.inputs,
+		...formContent.components.texts,
+	},
+	props: {
+		formType: {
+			type: String,
+			default: 'register'
+		},
+		prices: {
+			type: Array,
+			default: []
+		},
+		courseName: {
+			type: String
+		},
+		bgImage: {
+			type: String,
+			default: 'markes-bg_teal.jpg'
+		},
+		bgColor: {
+			type: String,
+			default: 'cyan'
 		}
-	}
-
-	for (let i = 0; i < formContent.types.length; i++) {
-		let type = formContent.types[i];
-		formContent.components.inputs['inputs-' + formContent.types[i]] = ()=>{
-			return import(/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`)
-		};
-		formContent.components.texts['texts-' + formContent.types[i]] = ()=>{
-			return import(/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`)
-		};
-	}
-
-	/*=====  End of define the forms  ======*/
-
-	export default {
-		name: 'EntryForm',
-		components: {
-			AppInput: () => import('@/components/form/input.vue'),
-			AppCheckbox: () => import('@/components/form/checkbox.vue'),
-			...formContent.components.inputs,
-			...formContent.components.texts,
+	},
+	data () {
+		return {
+			backgroundImage: require('@/assets/images/' + this.bgImage),
+			entryFormType: this.formType,
+			firstname: '',
+			lastname: '',
+			email: '',
+			emailRepeat: '',
+			password: '',
+			passwordRepeat: '',
+			isAdult: false,
+			termsAgree: false,
+			spamAgree: false,
+		}
+	},
+	methods: {
+		setFormModalState(data) {
+			return this.entryFormType = data.type;
 		},
-		props: {
-			formType: {
-				type: String,
-				default: 'register'
-			},
-		},
-		data () {
-			return {
-				backgroundImage: require('@/assets/images/markes-bg_teal.jpg'),
-				entryFormType: this.formType,
-				firstname: '',
-				lastname: '',
-				email: '',
-				emailRepeat: '',
-				password: '',
-				passwordRepeat: '',
-				isAdult: false,
-				termsAgree: false,
-				spamAgree: false,
-			}
-		},
-		methods: {
-			setFormModalState(data) {
-				return this.entryFormType = data.type;
-			},
-		},
-	}
+	},
+}
 </script>
 
 <style lang="postcss">
-	section > .entry-form {
+	.entry-form {
 
 		/*====================================
 		=            Construction            =
 		====================================*/
-		
+
 		.wrapper {
 			display: flex;
 			.half {
@@ -118,7 +152,7 @@
 						float: right;
 					}
 				}
-				form .content {
+				.inputs-wrapper .content {
 					max-width: calc(315px + var(--col-space) * 2);
 				}
 			}
@@ -132,7 +166,7 @@
 				}
 			}
 		}
-		
+
 		/*=====  End of Construction  ======*/
 
 		.wrapper {
@@ -147,6 +181,10 @@
 						font-family: var(--font-second);
 						font-weight: bold;
 						margin: 13px 0;
+						&_face {
+							margin: 0;
+							margin-bottom: 20px;
+						}
 					}
 					p {
 						font-size: 16px;
@@ -160,6 +198,18 @@
 							margin: 7px *;
 							font-size: 12px;
 							line-height: 1.33;
+							&_face {
+								color: grey;
+								margin-bottom: 5px;
+							}
+							&_long {
+								width: 385px;
+								margin-bottom: 10px;
+								margin-top: 5px;
+								@media (max-width: 992px) {
+									width: auto;
+								}
+							}
 						}
 					}
 					hr {
@@ -209,6 +259,12 @@
 					@media (min-width: 1800px) {
 						background: linear-gradient(to right, rgb(38, 70, 65) 49%, transparent, rgb(97, 147, 139) 51%);
 					}
+					&[data-color="purple"] {
+						background: linear-gradient(to right, #402858 25%, transparent, #83634e 75%);
+						@media (min-width: 1800px) {
+							background: linear-gradient(to right, #402858 49%, transparent, #83634e 51%);
+						}
+					}
 					img.background {
 						position: absolute;
 						top: 0;
@@ -254,7 +310,7 @@
 					}
 				}
 
-				form {
+				.inputs-wrapper {
 					.close-btn {
 						display: none;
 					}
@@ -275,7 +331,8 @@
 					.content {
 						padding: 19px 40px 19px 20px;
 					}
-					.app-input {
+					.app-input,
+					.app-dropdown {
 						margin: 7px 0;
 						display: inline-block;
 					}

@@ -9,12 +9,12 @@
 </template>
 
 <script>
-	export default {
-		name: 'texts-register',
-		methods: {
-			setFormModalState(data) {
-				return this.$parent.setFormModalState(data);
-			}
-		},
-	}
+export default {
+	name: 'TextsRegister',
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	},
+}
 </script>

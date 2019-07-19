@@ -19,21 +19,21 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 
-	export default {
-		name: 'first_screen',
-		data() {
-			return {
-			};
-		},
-		components: {
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+export default {
+	name: 'FirstScreen',
+	data() {
+		return {
+		};
+	},
+	components: {
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss" scoped>

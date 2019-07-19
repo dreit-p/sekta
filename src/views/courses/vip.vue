@@ -1,6 +1,9 @@
 <template lang="pug">
 div.course
-
+	vue-headful(
+            title="#SektaVip индивидуальный онлайн-курс"
+            description="Индивидуальная онлайн-программа один на один с куратором. Составим уникальную программу питания и тренировок с учетом вашего опыта, распорядка дня и целей."
+    )
 	hero(image='course_bg-sectavip.jpg', title='VIP ПРОГРАММА', horizontal, inversed)
 		p Индивидуальная коучинговая программа с самыми актуальными разработками нашей Школы. Мы поможем вам выстроить эффективную систему питания и тренировок с учетом ваших особенностей, жизненного графика, свободного времени, предпочитаемой платформы (VK, Facebook, Viber, WhatsApp, Telegram, Skype, Email) и подберем куратора, исходя из ваших запросов.
 		template(v-slot:buttons)
@@ -34,30 +37,44 @@ div.course
 				| .
 
 
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form
-
+	caption-section(v-if='courseInfo'
+		:dateStart='courseInfo.last_start_date',
+	)
+	entry-form(v-if='courseInfo', formType="register", :prices='courseInfo.prices', :courseName='courseInfo.name')
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		name: 'Vip',
-		components: {
-			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		data () {
-			return {}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+import { mapActions } from 'vuex'
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
+
+Vue.component('vue-headful', vueHeadful);
+
+const COURSE_TAG = 'VIP';
+
+export default {
+	name: 'Vip',
+	components: {
+		hero: () => import('@/components/heroes/aside-hero.vue'),
+		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	asyncComputed: {
+		courseInfo() {
+			return this.$store.dispatch('updateOnlineCourses').then(()=>{
+				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
+				return currentCourseData;
+			});
+		}
+	},
+	data () {
+		return {}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">

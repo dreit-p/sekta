@@ -1,55 +1,55 @@
 
 <script>
-	export default {
-		name: 'green-btn',
-		render: function (h) {
-			let typeOfElement = this.href ? 'a' : 'button';
-			var self = this;
-			return h(
-				typeOfElement,
-				{
-					class: {
-						'green-btn': true,
-					},
-					attrs: {
-						href: self.href
-					},
-					on: {
-						click (e) {
-							if (self.href == '#') {
-								e.preventDefault();
-							}
-							self.$emit('click', e);
-						},
-						focus (e) {
-							self.$emit('focus', e);
-						},
-						blur (e) {
-							self.$emit('blur', e);
-						},
-						hover (e) {
-							self.$emit('hover', e);
-						}
-					}
+export default {
+	name: 'GreenBtn',
+	render: function (h) {
+		let typeOfElement = this.href ? 'a' : 'button';
+		var self = this;
+		return h(
+			typeOfElement,
+			{
+				class: {
+					'green-btn': true,
 				},
-				self.$slots.default
-			)
-		},
-		computed: {
-			type () {
-				if (this.href) {
-					return 'a'
-				} else {
-					return 'button'
+				attrs: {
+					href: self.href
+				},
+				on: {
+					click (e) {
+						if (self.href == '#') {
+							e.preventDefault();
+						}
+						self.$emit('click', e);
+					},
+					focus (e) {
+						self.$emit('focus', e);
+					},
+					blur (e) {
+						self.$emit('blur', e);
+					},
+					hover (e) {
+						self.$emit('hover', e);
+					}
 				}
-			}
-		},
-		props: {
-			href: {
-				type: String
+			},
+			self.$slots.default
+		)
+	},
+	computed: {
+		type () {
+			if (this.href) {
+				return 'a'
+			} else {
+				return 'button'
 			}
 		}
+	},
+	props: {
+		href: {
+			type: String
+		}
 	}
+}
 </script>
 
 <style lang="postcss">
@@ -77,6 +77,13 @@
 			background: #078675;
 			transition-duration: .1s, .1s;
 			color: white;
+		}
+		&:disabled {
+			border-color: #ccc !important;
+			background-color: #ccc !important;
+			color: #b3b3b3 !important;
+			cursor: default;
+			pointer-events: none;
 		}
 	}
 </style>

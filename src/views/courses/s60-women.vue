@@ -43,31 +43,40 @@ div.course
 					li возможность отслеживать свой прогресс;
 					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
-
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form
-
+	caption-section(v-if='courseInfo'
+		:dateStart='courseInfo.last_start_date'
+	)
+	entry-form(v-if='courseInfo', formType="register", :prices='courseInfo.prices', :courseName='courseInfo.name')
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		name: 'S60Women',
-		components: {
-			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		data () {
-			return {}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+import { mapActions } from 'vuex'
+
+const COURSE_TAG = 'CARE';
+
+export default {
+	name: 'S60Women',
+	components: {
+		hero: () => import('@/components/heroes/aside-hero.vue'),
+		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	asyncComputed: {
+		courseInfo() {
+			return this.$store.dispatch('updateOnlineCourses').then(()=>{
+				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
+				return currentCourseData;
+			});
+		}
+	},
+	data () {
+		return {}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">

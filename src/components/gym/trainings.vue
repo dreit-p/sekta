@@ -19,59 +19,59 @@
 </template>
 
 <script>
-	export default {
-		name: 'TrainingPlans',
-		model: {
-			event: 'change'
+export default {
+	name: 'TrainingPlans',
+	model: {
+		event: 'change'
+	},
+	props: {
+		value: {
+			type: Number,
+			default: 0
 		},
-		props: {
-			value: {
-				type: Number,
-				default: 0
-			},
-			plans: {
-				type: Array,
-				default: ()=>[]
-			},
+		plans: {
+			type: Array,
+			default: ()=>[]
 		},
-		data () {
-			return {
-				selectedID: null,
-			}
-		},
-		computed: {
-			groups () {
-				let groups = {};
+	},
+	data () {
+		return {
+			selectedID: null,
+		}
+	},
+	computed: {
+		groups () {
+			let groups = {};
 
-				this.plans.forEach(function(elem) {
-					if (!groups[elem.group]) groups[elem.group] = []
-					groups[elem.group].push(elem);
-				});
+			this.plans.forEach(function(elem) {
+				if (!groups[elem.group]) groups[elem.group] = []
+				groups[elem.group].push(elem);
+			});
 
-				let results = Object.keys(groups).map(function(key){
-					let obj = {
-						name: key,
-						elements: groups[key]
-					};
-					return obj;
-				});
+			let results = Object.keys(groups).map(function(key){
+				let obj = {
+					name: key,
+					elements: groups[key]
+				};
+				return obj;
+			});
 
-				return results;
-			},
+			return results;
 		},
-		created () {
-			this.selectPlan(this.value);
+	},
+	created () {
+		this.selectPlan(this.value);
+	},
+	methods: {
+		selectPlan(id) {
+			this.$emit('change', parseInt(id));
+			this.selectedID = id;
 		},
-		methods: {
-			selectPlan(id) {
-				this.$emit('change', parseInt(id));
-				this.selectedID = id;
-			},
-			click() {
-				this.$emit('click');
-			},
+		click() {
+			this.$emit('click');
 		},
-	}
+	},
+}
 </script>
 
 <style lang="postcss">

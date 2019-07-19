@@ -1,6 +1,9 @@
 <template lang="pug">
 div.course
-
+	vue-headful(
+            title="#SektaCare онлайн-курс"
+            description="Онлайн-курс правильного питания и программы видео тренировок для людей с противопоказаниями. Если болят суставы, большая масса тела, или вы новичок в спорте - #SektaCare поможет плавно войти в тренировочный режим и программу правильного питания."
+    )
 	hero(image='course_bg-sectacare.jpg', title='Курс #SektaCare')
 		p В #SEKTACARE мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вы давно не тренировались или только начинаете?
 		p Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
@@ -43,31 +46,44 @@ div.course
 					li возможность отслеживать свой прогресс;
 					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
-
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form
-
+	caption-section(v-if='courseInfo'
+		:dateStart='courseInfo.last_start_date',
+	)
+	entry-form(v-if='courseInfo', formType="register", :prices='courseInfo.prices', :courseName='courseInfo.name')
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		name: 'SektaCare',
-		components: {
-			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		data () {
-			return {}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+import { mapActions } from 'vuex'
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
+
+Vue.component('vue-headful', vueHeadful);
+
+const COURSE_TAG = 'CARE';
+
+export default {
+	name: 'SektaCare',
+	components: {
+		hero: () => import('@/components/heroes/aside-hero.vue'),
+		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	asyncComputed: {
+		courseInfo() {
+			return this.$store.dispatch('updateOnlineCourses').then(()=>{
+				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
+				return currentCourseData;
+			});
+		}
+	},
+	data () {
+		return {}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">

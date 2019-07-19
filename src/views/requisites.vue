@@ -36,14 +36,14 @@ div
 </template>
 
 <script>
-	export default {
-		name: 'Requisites',
-		components: {
-		},
-		data () {
-			return {}
-		}
+export default {
+	name: 'Requisites',
+	components: {
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

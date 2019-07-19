@@ -13,33 +13,33 @@ transition(name='fade')
 </template>
 
 <script>
-	export default {
-		name: 'video-modal',
-		components: {
+export default {
+	name: 'VideoModal',
+	components: {
+	},
+	props: {
+		iframeLink: {
+			type: String,
+		}
+	},
+	computed: {
+	},
+	methods: {
+		closeModal () {
+			this.$emit('close');
 		},
-		props: {
-			iframeLink: {
-				type: String,
-			}
-		},
-		computed: {
-		},
-		methods: {
-			closeModal () {
-				this.$emit('close');
-			},
-		},
-		created () {
-		},
-		watch: {
-		},
-		mounted () {
-		},
-		data () {
-			return {
-			}
+	},
+	created () {
+	},
+	watch: {
+	},
+	mounted () {
+	},
+	data () {
+		return {
 		}
 	}
+}
 </script>
 
 <style lang="postcss">

@@ -1,5 +1,9 @@
 <template lang="pug">
 div
+	vue-headful(
+		title="Контакты"
+		description="Связь с #sektaoffice"
+	)
 	.article-limit
 		.text-typography
 			h2 Контакты
@@ -23,14 +27,19 @@ div
 </template>
 
 <script>
-	export default {
-		name: 'Contacts',
-		components: {
-		},
-		data () {
-			return {}
-		}
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
+
+Vue.component('vue-headful', vueHeadful);
+	
+export default {
+	name: 'Contacts',
+	components: {
+	},
+	data () {
+		return {}
 	}
+}
 </script>
 
 <style lang="postcss">

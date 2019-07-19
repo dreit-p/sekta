@@ -1,6 +1,9 @@
 <template lang="pug">
 div.course
-
+	vue-headful(
+            title="#SektaAccuchek онлайн-курс для людей с диабетом"
+            description="Программа #SektaAccuСhek разработана для людей с диабетом 1 и 2 типа и их родственников."
+    )
 	hero(image='course_bg-accu.jpg', title='#SektaAccuСhek Программа для людей с диабетом', no-mobile, horizontal)
 		p Программа #SektaAccuСhek разработана для людей с диабетом 1 и 2 типа и их родственников.
 		p Проходите курс сами или помогайте в его прохождении родным с диабетом: детям или пожилым родителям.
@@ -60,21 +63,26 @@ div.course
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		name: 'Accu',
-		components: {
-			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		data () {
-			return {}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+import { mapActions } from 'vuex'
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
+
+Vue.component('vue-headful', vueHeadful);
+	
+export default {
+	name: 'Accu',
+	components: {
+		hero: () => import('@/components/heroes/aside-hero.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	data () {
+		return {}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">

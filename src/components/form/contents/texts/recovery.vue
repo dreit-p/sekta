@@ -8,15 +8,15 @@
 </template>
 
 <script>
-	export default {
-		name: 'texts-recovery',
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue')
-		},
-		methods: {
-			setFormModalState(data) {
-				return this.$parent.setFormModalState(data);
-			}
-		},
-	}
+export default {
+	name: 'TextsRecovery',
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue')
+	},
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	},
+}
 </script>

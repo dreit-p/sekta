@@ -13,29 +13,29 @@ section.photo-gallery
 </template>
 
 <script>
-	export default {
-		name: 'photo-gallery',
-		props: {
-			photos: {
-				type: Array,
-				default: ()=>[]
-			},
+export default {
+	name: 'PhotoGallery',
+	props: {
+		photos: {
+			type: Array,
+			default: ()=>[]
 		},
-		components: {
-			WebpImg: () => import('@/components/webp-img.vue'),
-		},
-		created () {
-		},
-		computed: {
-		},
-		methods: {
-		},
-		data () {
-			return {
-				photosHeight: 200,
-			}
+	},
+	components: {
+		WebpImg: () => import('@/components/webp-img.vue'),
+	},
+	created () {
+	},
+	computed: {
+	},
+	methods: {
+	},
+	data () {
+		return {
+			photosHeight: 200,
 		}
 	}
+}
 </script>
 
 <style lang="postcss">

@@ -10,15 +10,15 @@
 </template>
 
 <script>
-	export default {
-		name: 'texts-login',
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue')
-		},
-		methods: {
-			setFormModalState(data) {
-				return this.$parent.setFormModalState(data);
-			}
-		},
-	}
+export default {
+	name: 'TextsLogin',
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue')
+	},
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	},
+}
 </script>

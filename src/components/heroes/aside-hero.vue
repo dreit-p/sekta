@@ -22,41 +22,41 @@ section.aside-hero
 </template>
 
 <script>
-	export default {
-		name: 'CoursesHero',
-		components: {
+export default {
+	name: 'CoursesHero',
+	components: {
+	},
+	props: {
+		image: {
+			type: String,
+			default: ''
 		},
-		props: {
-			image: {
-				type: String,
-				default: ''
-			},
-			horizontal: {
-				type: Boolean,
-				default: false
-			},
-			inversed: {
-				type: Boolean,
-				default: false
-			},
-			noMobile: {
-				type: Boolean,
-				default: false
-			},
-			title: {
-				type: String,
-				default: ''
-			},
+		horizontal: {
+			type: Boolean,
+			default: false
 		},
-		data () {
-			return {
-				backgroundImage: require('@/assets/images/aside-hero/' + this.image),
-				backgroundImage_mobile: require('@/assets/images/aside-hero/mobile-' + this.image)
-			}
+		inversed: {
+			type: Boolean,
+			default: false
 		},
-		computed: {
+		noMobile: {
+			type: Boolean,
+			default: false
 		},
-	}
+		title: {
+			type: String,
+			default: ''
+		},
+	},
+	data () {
+		return {
+			backgroundImage: require('@/assets/images/aside-hero/' + this.image),
+			backgroundImage_mobile: require('@/assets/images/aside-hero/mobile-' + this.image)
+		}
+	},
+	computed: {
+	},
+}
 </script>
 
 <style lang="postcss">

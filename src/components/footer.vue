@@ -28,34 +28,34 @@ div
 </template>
 
 <script>
-	export default {
-		name: 'app-footer',
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
-		},
-		data () {
-			return {
-				networks: [
-					{
-						name: 'instagram',
-						link: 'https://instagram.com/sektaschool'
-					},
-					{
-						name: 'vkontakte',
-						link: 'https://vk.com/sektaschool'
-					},
-					{
-						name: 'facebook',
-						link: 'https://www.facebook.com/sektaschool'
-					},
-					{
-						name: 'youtube',
-						link: 'https://www.youtube.com/user/sektaschool'
-					},
-				]
-			}
+export default {
+	name: 'AppFooter',
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	data () {
+		return {
+			networks: [
+				{
+					name: 'instagram',
+					link: 'https://instagram.com/sektaschool'
+				},
+				{
+					name: 'vkontakte',
+					link: 'https://vk.com/sektaschool'
+				},
+				{
+					name: 'facebook',
+					link: 'https://www.facebook.com/sektaschool'
+				},
+				{
+					name: 'youtube',
+					link: 'https://www.youtube.com/user/sektaschool'
+				},
+			]
 		}
 	}
+}
 </script>
 
 <style lang="postcss" scoped>

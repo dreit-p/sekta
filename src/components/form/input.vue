@@ -5,9 +5,11 @@ label.app-input(:class='this.$options.name')
 			:placeholder='placeholder'
 			:name='name'
 			:ref='name'
+			v-model='reactiveValue'
 			:type='type'
-			@input="$emit('input', $event.target.value);"
-			@change="$emit('change', $event.target.value);"
+			autocomplete="off"
+			v-bind="$attrs"
+			@change="onChange($event.target.value)"
 		)
 		.icon.checked
 			svg-icon(name='icon-check')
@@ -17,53 +19,70 @@ label.app-input(:class='this.$options.name')
 </template>
 
 <script>
-	export default {
-		name: 'app-input',
-		props: {
-			placeholder: String,
-			caption: String,
-			name: String,
+export default {
+	name: 'AppInput',
+	props: {
+		placeholder: String,
+		caption: String,
+		name: String,
+		type: String,
+		value: {
+			default: ''
+		},
+		error: {
 			type: String,
-			value: {
-				default: null
-			},
-			error: {
-				type: String,
-				default: null
-			}
-		},
-		computed: {
-			computedCaption() {
-				if (this.error) {
-					return this.error
-				} else {
-					if (this.caption) {
-						return this.caption
-					}
+			default: null
+		}
+	},
+	computed: {
+		computedCaption() {
+			if (this.error) {
+				return this.error
+			} else {
+				if (this.caption) {
+					return this.caption
 				}
-				return null;
 			}
+			return null;
 		},
-		components: {
-			SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	watch: {
+		value () {
+			this.reactiveValue = this.value
 		},
-		methods: {
+		reactiveValue() {
+			this.onInput(this.reactiveValue)
+		}
+	},
+	components: {
+		SvgIcon: () => import('@/components/SvgIcon.vue'),
+	},
+	methods: {
+		onInput(data) {
+			this.$emit('input', data);
+			// this.reactiveValue = data;
 		},
-		$_veeValidate: {
-			// value getter
-			value() {
-				return this.$el.value;
-			},
-			// name getter
-			name() {
-				return this.name;
-			}
+		onChange(data) {
+			this.$emit('change', data);
+			this.reactiveValue = data;
 		},
-		mounted: function () {
-			// synbc the input to the initial value
-			this.$refs[this.name].value = this.value;
+	},
+	$_veeValidate: {
+		// value getter
+		value() {
+			return this.reactiveValue;
+		},
+		// name getter
+		name() {
+			return this.name;
+		}
+	},
+	data() {
+		return {
+			reactiveValue: this.value,
 		}
 	}
+}
 </script>
 
 <style lang="postcss">
@@ -72,7 +91,7 @@ label.app-input(:class='this.$options.name')
 		width: 100%;
 		.input-wrapper {
 			position: relative;
-			min-width: 150px;
+			/* min-width: 150px; */
 		}
 		input {
 			background-color: white;
@@ -89,10 +108,10 @@ label.app-input(:class='this.$options.name')
 				color: var(--accent_color);
 				border-color: var(--accent_color);
 			}
-			.caption {
+			/* .caption {
 				color: var(--accent_color);
 				display: none;
-			}
+			} */
 			.icon.checked {
 				display: block;
 			}

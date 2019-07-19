@@ -1,6 +1,9 @@
 <template lang="pug">
 div.course
-
+	vue-headful(
+            title="#SektaMama онлайн-курс"
+            description="Онлайн-курс правильного питания и программы видео тренировок для женщин с детьми от 0 до 7 лет. Постороение семейного рациона и рациона на ГВ, тренировки после КС и естественных родов, компенсация диастаза и многое другое на онлайн-курсе #sektamama."
+    )
 	hero(image='course_bg-sectamama.jpg', title='ИДЕАЛЬНОЕ ТЕЛО ДЛЯ МАМ')
 		p Пришло время обновить тело, которое с достоинством прошло испытание на прочность. Мы создали программу «Идеальное тело для мамы», чтобы вы могли успевать по максимуму: заниматься ребенком, собой, отдыхать и находить силы и время для тренировок.
 		p С вас — желание любоваться собой в зеркале и стать примером для своего малыша. С нас — детально проработанная программа, сбалансированный рацион, консультации и поддержка команды профессиональных кураторов и экспертов, которые не понаслышке знают, какой путь вы сейчас проходите. Ведь они тоже мамы.
@@ -45,31 +48,45 @@ div.course
 					li Забота о здоровье — возможность обсудить вопросы со специалистами (акушер-гинеколог, консультант по грудному вскармливанию)
 					li Готовое меню, книги рецептов, полезные советы — всё, чтобы облегчить путь к новому телу.
 
-
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form
-
+	caption-section(v-if='courseInfo'
+		:dateStart='courseInfo.last_start_date',
+	)
+	entry-form(v-if='courseInfo', formType="register", :prices='courseInfo.prices', :courseName='courseInfo.name')
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		name: 'SektaMama',
-		components: {
-			hero: () => import('@/components/heroes/aside-hero.vue'),
-			EntryForm: () => import('@/components/entry-form.vue'),
-			GreenBtn: () => import('@/components/form/green-btn.vue'),
-		},
-		data () {
-			return {}
-		},
-		methods: {
-			...mapActions(['setFormModalState'])
-		},
-	}
+import { mapActions } from 'vuex'
+import Vue from 'vue';
+import vueHeadful from 'vue-headful';
+
+Vue.component('vue-headful', vueHeadful);
+
+const COURSE_TAG = 'MAMA';
+
+export default {
+	name: 'SektaMama',
+	components: {
+		hero: () => import('@/components/heroes/aside-hero.vue'),
+		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		EntryForm: () => import('@/components/entry-form.vue'),
+		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	asyncComputed: {
+		courseInfo() {
+			return this.$store.dispatch('updateOnlineCourses').then(()=>{
+				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
+				return currentCourseData;
+			});
+		}
+	},
+	data () {
+		return {
+		}
+	},
+	methods: {
+		...mapActions(['setFormModalState'])
+	},
+}
 </script>
 
 <style lang="postcss">
