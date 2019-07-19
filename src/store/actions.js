@@ -99,20 +99,41 @@ export default {
 				throw regErr.response;
 			});
 	},
-	userDetailsRequest({ commit }, token) {
-		return getReq('/api/personal/details', {api_token: token})
+	userDetailsRequest({ state, dispatch, commit }) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return getReq('/api/personal/details')
 			.then((resp)=>{
 				commit('setUserInfo', { type: 'info', data: resp.data.data })
 				return resp;
 			})
-			.catch(detailsErr=>{
-				throw detailsErr.response;
+			.catch(requestError=>{
+				console.log('postingErr.response.status: ', requestError.response.status);
+				if (requestError.response.status == 403) {
+					dispatch('logOut');
+				}
+				throw requestError.response;
 			});
 	},
-	logOut({commit}) {
-		commit('setUserInfo', { type: 'info', data: null })
-		commit('setUserInfo', { type: 'token', data: '' })
-		router.push({name: 'home'});
+	userDetailsPosting({ state, dispatch }, data) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq('/api/personal/details', data)
+			.then(()=>{
+				return dispatch('userDetailsRequest').then(authResp=>authResp);
+			})
+			.catch(postingErr=>{
+				throw postingErr.response;
+			});
+	},
+	logOut({state, commit}) {
+		if (state.user.token) {
+			return postReq('/api/auth/logout', {api_token: state.user.token})
+				.then(()=>{
+					commit('setUserInfo', { type: 'info', data: null })
+					commit('setUserInfo', { type: 'token', data: '' })
+					axios.defaults.headers.common = {}
+					router.push({name: 'home'});
+				})
+		}
 	},
 	updateOnlineCourses({ state, dispatch }) {
 		return new Promise((resolve)=>{

@@ -6,12 +6,13 @@ label.app-dropdown(:class='this.$options.name')
 			:class='{opened: isOpenedSelect}'
 			:name='name'
 			:ref='name'
-			@change="$emit('change', $event.target.value);"
+			v-model='reactiveValue'
+			v-bind="$attrs"
 			@click='isOpenedSelect = !isOpenedSelect'
 			@blur='isOpenedSelect = false'
 		)
-			option(value="" v-if='placeholder != undefined' disabled selected) {{this.placeholder}}
-			option(v-for='(point, index) in preparedOptions', :value="point.value") {{point.text}}
+			option(value="" v-if='placeholder != undefined' disabled :selected='!value') {{this.placeholder}}
+			option(v-for='(point, index) in preparedOptions', :value="point.value", :selected='reactiveValue == point.value') {{point.text}}
 		.dropdown-icon
 			svg(viewBox='0 0 18 9')
 				polygon.triangle(fill='currentColor' points='0,9 9,0 18,9')
@@ -42,6 +43,11 @@ export default {
 			default: null
 		}
 	},
+	methods: {
+		onChange(data) {
+			this.$emit('change', data);
+		},
+	},
 	computed: {
 		computedCaption() {
 			if (this.error) {
@@ -67,11 +73,20 @@ export default {
 					}
 				}
 			})
-		}
+		},
+	},
+	watch: {
+		value() {
+			this.reactiveValue = this.value ? this.value : ''
+		},
+		reactiveValue() {
+			this.onChange(this.reactiveValue);
+		},
 	},
 	data (){
 		return {
 			isOpenedSelect: false,
+			reactiveValue: this.value ? this.value : ''
 		};
 	},
 	$_veeValidate: {
@@ -86,7 +101,7 @@ export default {
 	},
 	mounted: function () {
 		// synbc the input to the initial value
-		this.$refs[this.name].value = this.value;
+		// this.$refs[this.name].value = this.value;
 	}
 }
 </script>

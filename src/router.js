@@ -239,6 +239,11 @@ const Router = new VueRouter({
 			component: () =>
 				import ('./views/404.vue'),
 		},
+		{
+			path: '/login',
+			name: 'login',
+			component: Home
+		},
 		{ path: '/evo', redirect: '/online-courses/evo' }
 	]
 })

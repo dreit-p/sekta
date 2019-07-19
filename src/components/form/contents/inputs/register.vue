@@ -47,7 +47,7 @@
 			placeholder='придумайте пароль'
 			data-vv-as='пароль'
 			v-model.trim='password'
-			v-validate='"required|alpha_dash:en"'
+			v-validate='"required|alpha_dash:en|min:6"'
 			:error='getInputError("password")'
 			:class="{ 'error': getInputError('password'), 'success': !getInputError('password') && fields.password && fields.password.valid }"
 			ref='samePassword'
@@ -229,7 +229,6 @@ export default {
 			.then(()=>{
 				this.unlockForm();
 				this.$store.dispatch('setFormModalState', {modalState: false});
-				this.$router.push({name: 'personal'});
 			})
 			.catch((err)=>{
 				this.receivedErrors.watchers = {};

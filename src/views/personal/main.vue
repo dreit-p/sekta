@@ -62,7 +62,6 @@
 								span.green 0%
 							hr
 
-		app-footer
 </template>
 
 <script>
@@ -71,7 +70,6 @@ export default {
 	components: {
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
 		ActiveCourse: () => import('@/components/personal/active-course.vue'),
-		AppFooter: () => import('@/components/footer.vue'),
 	},
 	computed: {
 		user() {

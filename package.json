@@ -9,10 +9,11 @@
   },
   "dependencies": {
     "axios": "^0.18.1",
+    "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
     "prerender-spa-plugin": "^3.4.0",
     "rellax": "^1.10.0",
-    "vee-validate": "^2.2.6",
+    "vee-validate": "^2.2.13",
     "velocity-animate": "^1.5.2",
     "vue": "^2.6.10",
     "vue-async-computed": "^3.7.0",

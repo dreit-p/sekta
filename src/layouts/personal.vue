@@ -16,16 +16,19 @@ div.personal-layout
 					svg-icon(name='down-arrow')
 				ul.dropdown-list
 					li.dropdown-item
-						router-link(class='dropdown-link', title='Пользовательские данные', to='/personal/details/') Личные данные
+						router-link(v-if="this.$route.name == 'personal'", class='dropdown-link', title='Пользовательские данные', to='/personal/details/') Личные данные
+						router-link(v-if="this.$route.name != 'personal'", class='dropdown-link', title='Курсы', to='/personal/') Мои курсы
 					li.dropdown-item
 						.dropdown-link(@click='$store.dispatch("logOut")') Выход
 	slot
+	app-footer
 </template>
 
 <script>
 export default {
 	name: 'PersonalLayout',
 	components: {
+		AppFooter: () => import('@/components/footer.vue'),
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
 	},
 	computed: {
@@ -34,12 +37,7 @@ export default {
 		},
 	},
 	created() {
-		if (!this.$store.state.user.info) {
-			this.$store.dispatch('userDetailsRequest', this.user.token).then((resp)=>{
-				console.log(resp);
-				console.dir(this.user.info);
-			});
-		}
+		this.$store.dispatch('userDetailsRequest', this.user.token);
 	},
 	data () {
 		return {
@@ -93,7 +91,8 @@ export default {
 			top:54px;
 			z-index: 55;
 
-			height: 0;
+			pointer-events: none;
+			opacity: 0;
 			width: 100%;
 
 			margin-top: 0;
@@ -102,7 +101,7 @@ export default {
 			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 
 			overflow: hidden;
-			transition: all .5s ease;
+			transition: opacity .2s ease;
 			@media (max-width: 500px) {
 				top: 36px;
 			}
@@ -117,14 +116,13 @@ export default {
 		}
 		.dropdown-link {
 			display: block;
-			padding: 0 20px;
+			padding: 10px 20px;
 			text-decoration: none;
-			line-height: 40px;
+			line-height: 20px;
 			cursor: pointer;
-			transition: all .3s ease;
+			font-size: 14px;
 			&:hover {
-				background-color: rgba(0, 0, 0, 0.12);
-				color: #0ab69f;
+				color: var(--accent_color);
 			}
 			@media (max-width: 500px) {
 				line-height: 30px;
@@ -166,7 +164,9 @@ export default {
 			align-items: center;
 			cursor: pointer;
 			user-select: none;
+			min-width: 155px;
 			@media (max-width: 500px) {
+				min-width: 130px;
 				padding: 11px;
 			}
 			&:hover {
@@ -186,6 +186,7 @@ export default {
 				font-size: 14px;
 				font-weight: bold;
 				white-space: nowrap;
+				flex-grow: 1;
 				@media (max-width: 500px) {
 					padding: * 5px;
 					font-size: 11px;
@@ -206,13 +207,11 @@ export default {
 			border-top-left-radius: 5px;
 			border-top-right-radius: 5px;
 			.dropdown-list {
-				height: 81px;
-				@media (max-width: 500px) {
-					height: 62px;
-				}
+				pointer-events: auto;
+				opacity: 1;
 			}
 			.svg-icon--down-arrow {
-				transform: rotate(-180deg);
+				transform: rotateX(-180deg);
 			}
 		}
 	

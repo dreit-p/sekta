@@ -156,7 +156,7 @@ export default {
 			.then(()=>{
 				this.unlockForm();
 				this.$store.dispatch('setFormModalState', {modalState: false});
-				this.$router.push({name: 'personal'});
+				
 			})
 			.catch((err)=>{
 				this.receivedErrors.watchers = {};

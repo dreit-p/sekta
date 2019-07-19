@@ -5,11 +5,11 @@ label.app-input(:class='this.$options.name')
 			:placeholder='placeholder'
 			:name='name'
 			:ref='name'
-			:value='reactiveValue'
+			v-model='reactiveValue'
 			:type='type'
 			autocomplete="off"
-			@input="onInput($event)"
-			@change="onChange($event)"
+			v-bind="$attrs"
+			@change="onChange($event.target.value)"
 		)
 		.icon.checked
 			svg-icon(name='icon-check')
@@ -44,19 +44,27 @@ export default {
 				}
 			}
 			return null;
+		},
+	},
+	watch: {
+		value () {
+			this.reactiveValue = this.value
+		},
+		reactiveValue() {
+			this.onInput(this.reactiveValue)
 		}
 	},
 	components: {
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
 	},
 	methods: {
-		onInput(event) {
-			this.$emit('input', event.target.value);
-			this.reactiveValue = event.target.value;
+		onInput(data) {
+			this.$emit('input', data);
+			// this.reactiveValue = data;
 		},
-		onChange(event) {
-			this.$emit('change', event.target.value);
-			this.reactiveValue = event.target.value;
+		onChange(data) {
+			this.$emit('change', data);
+			this.reactiveValue = data;
 		},
 	},
 	$_veeValidate: {

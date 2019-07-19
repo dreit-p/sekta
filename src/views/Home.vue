@@ -12,6 +12,11 @@ export default {
 	components: {
 		FirstScreen: () => import('@/components/unique-blocks/main_page/first_screen.vue'),
 		SecondScreen: () => import('@/components/unique-blocks/main_page/second_screen.vue')
+	},
+	mounted() {
+		if (this.$route.name == 'login') {
+			this.$store.dispatch('setFormModalState', {modalState: true, type: 'login'});
+		}
 	}
 }
 </script>
