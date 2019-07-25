@@ -4,7 +4,7 @@ div.gym
             title="Москва курс #sekta"
             description="Покупая абонемент в #sekta на месяц, вы получаете не просто групповые тренировки в залах, а полноценную комплексную программу, направленную на ваш лучший результат. Здоврое питание, новые тренировочные задания каждый месяц, уход за кожей и поддержка и помощь куратороской команды каждый день."
     )
-	gym-hero(class='huge-content', image='gym_bg.jpg')
+	gym-hero(class='huge-content', image='gym_msk.jpg')
 		template(v-slot:another)
 			.huge-hero-text
 				h1.main Москва

@@ -184,7 +184,7 @@ export default {
 				.additional {
 					font-size: 60px;
 					font-weight: 900;
-					color: #252525;
+					color: #dcdcdc;
 					font-family: var(--font-second);
 					line-height: 1;
 					@media (max-width: 980px) {
