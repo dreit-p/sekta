@@ -98,9 +98,9 @@ export default {
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
 	},
 	props: {
-		prices: {
+		formData: {
 			type: Array,
-			default: ['Продажа невозможна']
+			default: ()=>['Продажа невозможна']
 		},
 		courseName: {
 			type: String
@@ -112,7 +112,7 @@ export default {
 	data () {
 		return {
 			platform_options: ['ВКонтакте', 'Telegram'],
-			weeks_options: this.prices,
+			weeks_options: this.formData,
 			termsAgree: false,
 		}
 	},

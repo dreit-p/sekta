@@ -3,7 +3,7 @@
 
 	p.heavy-text Вход
 
-	form(@submit.prevent="validateBeforeSubmit", novalidate="true")
+	form(@submit.prevent="onSubmit", novalidate="true")
 		app-input(
 			placeholder='e-mail'
 			data-vv-as='e-mail'
@@ -89,6 +89,12 @@ export default {
 			return result;
 		}
 	},
+	mounted () {
+		if (this.$store.getters.isUserAuth) {
+			this.$emit('submit', 'login');
+			console.info('User is logged in already');
+		}
+	},
 	methods: {
 		setFormModalState(data) {
 			return this.$parent.setFormModalState(data);
@@ -138,10 +144,10 @@ export default {
 				this.$set(this.receivedErrors, this.getNameServerToClient(key), errorsArr[key])
 			}
 		},
-		validateBeforeSubmit() {
+		ifValid(cb) {
 			this.$validator.validateAll().then((result) => {
 				if (result) {
-					this.onSubmit();
+					cb();
 					return;
 				}
 			});
@@ -150,25 +156,29 @@ export default {
 			if (this.isFormLocked) {
 				return false;
 			}
-			this.isFormLocked = true;
 
-			this.$store.dispatch('authRequest', this.inputsDataList)
-			.then(()=>{
-				this.unlockForm();
-				this.$store.dispatch('setFormModalState', {modalState: false});
-				
-			})
-			.catch((err)=>{
-				this.receivedErrors.watchers = {};
-				if (err.data.errors) {
-					this.createErrorsList(err.data.errors);
-				}
-				if (err.data.message) {
-					this.receivedErrors.message = err.data.message;
-				} else {
-					delete this.receivedErrors.message;
-				}
-				this.unlockForm();
+			this.ifValid(()=>{
+				this.isFormLocked = true;
+
+				this.$store.dispatch('authRequest', this.inputsDataList)
+				.then(()=>{
+					this.unlockForm();
+					this.$emit('submit', 'login');
+					this.$store.dispatch('setFormModalState', {modalState: false});
+					
+				})
+				.catch((err)=>{
+					this.receivedErrors.watchers = {};
+					if (err.data.errors) {
+						this.createErrorsList(err.data.errors);
+					}
+					if (err.data.message) {
+						this.receivedErrors.message = err.data.message;
+					} else {
+						delete this.receivedErrors.message;
+					}
+					this.unlockForm();
+				});
 			});
 		}
 	},

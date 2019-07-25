@@ -4,7 +4,6 @@
 		.half.with-bg(:data-color='bgColor')
 			img(class='background', :src='backgroundImage')
 			.text-blocks
-				// Login
 
 				transition(name='fade-flip', mode='out-in')
 
@@ -24,27 +23,29 @@
 
 					texts-bullet(v-if='entryFormType == "bullet"')
 
+					texts-face-to-face(v-if='entryFormType == "face-to-face"')
+
 		.half
 			.inputs-wrapper
 				transition(name='fade-flip', mode='out-in')
 
-					inputs-login(v-if='entryFormType == "login"', :key='entryFormType')
+					inputs-login(v-if='entryFormType == "login"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-recovery(v-if='entryFormType == "recovery"', :key='entryFormType')
+					inputs-recovery(v-if='entryFormType == "recovery"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-register(v-if='entryFormType == "register"', :key='entryFormType')
+					inputs-register(v-if='entryFormType == "register"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType')
+					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-online(v-if='entryFormType == "online"', :key='entryFormType', v-bind:prices='this.prices', v-bind:courseName='this.courseName')
+					inputs-online(v-if='entryFormType == "online"', :key='entryFormType', @submit='onSubmit($event)', v-bind:formData='this.formData', v-bind:courseName='this.courseName')
 
-					inputs-face-to-face(v-if='entryFormType == "faceToFace"', :key='entryFormType')
+					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType')
+					inputs-merch(v-if='entryFormType == "merch"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-merch(v-if='entryFormType == "merch"', :key='entryFormType')
+					inputs-bullet(v-if='entryFormType == "bullet"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-bullet(v-if='entryFormType == "bullet"', :key='entryFormType')
+					inputs-face-to-face(v-if='entryFormType == "face-to-face"', :key='entryFormType', @submit='onSubmit($event)', v-bind:formData='this.formData')
 
 </template>
 
@@ -89,9 +90,9 @@ export default {
 			type: String,
 			default: 'register'
 		},
-		prices: {
+		formData: {
 			type: Array,
-			default: []
+			default: ()=>[]
 		},
 		courseName: {
 			type: String
@@ -108,7 +109,7 @@ export default {
 	data () {
 		return {
 			backgroundImage: require('@/assets/images/' + this.bgImage),
-			entryFormType: this.formType,
+			entryFormType: this.$store.getters.isUserAuth ? this.formType : 'register',
 			firstname: '',
 			lastname: '',
 			email: '',
@@ -123,6 +124,14 @@ export default {
 	methods: {
 		setFormModalState(data) {
 			return this.entryFormType = data.type;
+		},
+		onSubmit (type) {
+			switch (type) {
+				case 'login':
+					this.entryFormType = this.formType;
+				case 'register':
+					this.entryFormType = this.formType;
+			}
 		},
 	},
 }
