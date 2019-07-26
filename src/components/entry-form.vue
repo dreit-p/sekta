@@ -92,7 +92,7 @@ export default {
 		},
 		formData: {
 			type: Array,
-			default: ()=>[]
+			default: ()=>{}
 		},
 		courseName: {
 			type: String
