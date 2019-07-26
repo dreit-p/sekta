@@ -19,22 +19,26 @@ div.gym
 			| назад
 		.gym-section(:class='{available: section === 0}')
 			section#plan
-				.section-caption Выберите программу тренировок
-				training-plans(v-model='selected.planID', @click='setSection(1)', :plans='cityData.plans')
+				template(v-if='courses')
+					.section-caption Выберите программу тренировок
+					courses(v-model='selected.courseID', @click='setSection(1)', :courses='courses')
 
 
 		.gym-section(:class='{available: section === 1}')
 			section#gym
-				.section-caption Выберите расположение зала
-				gym-map(v-model='selected.gymID', :locations='cityData.locations')
+				template(v-if='gyms')
+					.section-caption Выберите расположение зала
+					gym-map(v-model='selected.gymID', :gyms='gyms')
 
 			section#quantityType
-				.section-caption Выберите количество тренировок
-				training-quantities(v-model='selected.quantityTypeID', :quantityTypes='cityData.quantityTypes')
+				template(v-if='selected.gymID && selected.courseID && practices.length > 0')
+					.section-caption Выберите количество тренировок
+					practices(v-model='selected.practices', :practices='practices')
 
 			section#time
-				.section-caption Время занятий
-				time-selector(v-model='selected.timeIDs', :schedule='cityData.schedule', :certificateTimes='getCertificateData("available_days")', :bracketing='+getCertificateData("quantity")')
+				template(v-if='schedules && selected.practices')
+					.section-caption Время занятий
+					practice-selector(v-model='selected.practiceID', :schedules='schedules', :practices='selected.practices')
 
 
 			section
@@ -45,7 +49,7 @@ div.gym
 				.section-caption
 					| Оформление заказа
 					.highlight старт занятий – 01 декабря
-				entry-form
+				//entry-form(formType='face-to-face', :formData='{plan: this.planInfo, location: this.locationInfo, quantity: 1, trainingTimes: []}')
 
 	.gym-section(:class='{available: section === 1}')
 		article.main-content
@@ -93,9 +97,9 @@ export default {
 		EntryForm: () => import('@/components/entry-form.vue'),
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
 		PhotoGallery: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/photo-gallery.vue'),
-		TrainingPlans: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/trainings.vue'),
-		TrainingQuantities: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/quantities.vue'),
-		TimeSelector: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/time-selector.vue'),
+		Courses: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/courses.vue'),
+		Practices: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/practices.vue'),
+		PracticeSelector: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/practice-selector.vue'),
 		GymMap: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/map.vue'),
 		GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 	},
@@ -108,10 +112,10 @@ export default {
 	data () {
 		return {
 			selected: {
-				planID: 1,
-				gymID: 1,
-				quantityTypeID: 1,
-				timeIDs: [],
+				courseID: null,
+				gymID: null,
+				practices: null,
+				practiceID: null,
 			},
 			nextBtn: {
 				scrollEvent: null,
@@ -121,158 +125,6 @@ export default {
 			},
 			section: 0,
 			cityData: {
-				plans: [
-					{
-						id: '1',
-						name: 'Sektacare',
-						image: 'aside-hero/course_bg-sectamama.jpg',
-						group: 'Программы для всех',
-						title: 'Основное направление',
-						description: 'Интенсивная тренировочная программа для мужчин с рекомендациями по набору мышечной массы и снижению веса. Доступна онлайн и в залах Москвы и Санкт-Петербурга.',
-					},
-					{
-						id: '2',
-						name: 'SectaLite',
-						image: 'aside-hero/course_bg-sectacare.jpg',
-						group: 'Программы для всех',
-						title: 'Какой-то еще один заголовок',
-						description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты.',
-					},
-					{
-						id: '33',
-						name: 'Sektacare',
-						image: 'aside-hero/course_bg-sectamama.jpg',
-						group: 'Программы для всех',
-						title: 'Основное направление',
-						description: 'Интенсивная тренировочная программа для мужчин с рекомендациями по набору мышечной массы и снижению веса. Доступна онлайн и в залах Москвы и Санкт-Петербурга.',
-					},
-					{
-						id: '4',
-						name: 'SectaLite',
-						image: 'aside-hero/course_bg-sectacare.jpg',
-						group: 'Программы для всех',
-						title: 'Какой-то еще один заголовок',
-						description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты. Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты.',
-					},
-					{
-						id: '5',
-						name: 'SectaMen',
-						image: 'markes-main.jpg',
-						group: 'Программы для всех',
-						title: 'Только для настоящих мужчин',
-						description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Себя рот маленький, обеспечивает речью имеет, переписали повстречался букв инициал лучше меня которой точках, вопрос большой свою последний журчит это.',
-					},
-					{
-						id: '6',
-						name: 'Sektacare',
-						image: 'aside-hero/course_bg-sectamama.jpg',
-						group: 'Программы для выпускников',
-						title: 'Основное направление',
-						description: 'Интенсивная тренировочная программа для мужчин с рекомендациями по набору мышечной массы и снижению веса. Доступна онлайн и в залах Москвы и Санкт-Петербурга.',
-					},
-					{
-						id: '7',
-						name: 'SectaLite',
-						image: 'aside-hero/course_bg-sectacare.jpg',
-						group: 'Программы для выпускников',
-						title: 'Какой-то еще один заголовок',
-						description: 'Далеко-далеко за словесными горами в стране, гласных и согласных живут рыбные тексты. Переулка его прямо то живет приставка парадигматическая, над великий ты.',
-					},
-				],
-				quantityTypes: [
-					{
-						id: '1',
-						type: '6 тренировок в неделю (утро)',
-						caption: '6500 руб. за месяц',
-						group: 'Групповые занятия',
-						quantity: '6',
-						available_days: [1,2,3,4,5,6,7,10,13,15],
-					},
-					{
-						id: '2',
-						type: '3 тренировок в неделю (утро)',
-						caption: '3900 руб. за месяц',
-						group: 'Групповые занятия',
-						quantity: '3',
-						available_days: [1,3,5,6,7,8,9,11,15],
-					},
-					{
-						id: '33',
-						type: '2 тренировок в неделю (утро)',
-						caption: '3000 руб. за месяц',
-						group: 'Групповые занятия',
-						quantity: '2',
-						available_days: [3,5,6,8,9,11,15],
-					},
-					{
-						id: '4',
-						type: '5 тренировок в неделю (вечер)',
-						caption: '7500 руб. за месяц',
-						group: 'Групповые занятия',
-						quantity: '5',
-						available_days: [1,5,8,13,15,16],
-					},
-					{
-						id: '5',
-						type: '4 тренировок в неделю (вечер)',
-						caption: '4900 руб. за месяц',
-						group: 'Групповые занятия',
-						quantity: '4',
-						available_days: [1,5,8,13,15,16],
-					},
-					{
-						id: '6',
-						type: '1 тренировка в неделю (вечер)',
-						caption: '4000 руб. за месяц',
-						group: 'Групповые занятия',
-						quantity: '1',
-						available_days: [1,5,8,13,15,16],
-					},
-					{
-						id: '7',
-						type: 'Дневной абонемент',
-						caption: '2500 руб. за 6 тренировок в месяц',
-						group: 'Абонементы (доступны для выпускников)',
-						quantity: '3',
-						available_days: [1,5,8,13,15,16],
-					},
-					{
-						id: '8',
-						type: 'Вечерний абонемент',
-						caption: '3000 руб. за 6 тренировок в месяц',
-						group: 'Абонементы (доступны для выпускников)',
-						quantity: '2',
-						available_days: [1,5,8,13,15,16],
-					},
-				],
-				locations: [
-					{
-						id: '1',
-						firstLine: 'м. Кропоткинская',
-						secondLine: 'Малый Власьевский переулок дом 12',
-						video: 'https://www.youtube.com/embed/1L6AaH3rFlQ',
-						coords: [55.746709, 37.593381],
-					},{
-						id: '23',
-						firstLine: 'м. Курская',
-						secondLine: 'Нижний Cусальный переулок 5/4',
-						video: 'https://www.youtube.com/embed/9lX1OAsN868',
-						description: 'Спортивную форму, кроссовки для тренинга или бега, банные принадлежности (если в выбранном вами зале есть душ), бутылку с водой. Коврики и нужный инвентарь для тренировок есть в зале.',
-						coords: [55.760201, 37.663889],
-					},{
-						id: '3',
-						firstLine: 'м. Сокол',
-						secondLine: 'Ул. Балтийская 9',
-						description: 'Перенос и восстановление тренировок возможен только по медицинской справке или больничному листу. В других форс-мажорных обстоятельствах вопрос переноса решается в индивидуальном порядке.',
-						coords: [55.809176, 37.512955],
-					},{
-						id: '4',
-						firstLine: 'м. Бауманская',
-						secondLine: '(Старокирочный переулок,2 )',
-						video: 'https://www.youtube.com/embed/Qb_QlMs5TfU',
-						coords: [55.768522, 37.680490],
-					},
-				],
 				photos: [
 					{
 						file: 'gym-photo-example.jpg',
@@ -305,148 +157,66 @@ export default {
 						height: '1065'
 					},
 				],
-				schedule: [
-					{
-						id: '1',
-						text: '8:30',
-						row: '1',
-						column: '1',
-						rowspan: 0,
-						available_days: [1,2,3,4,5,6],
-					},
-					{
-						id: '2',
-						text: '8:30',
-						row: '1',
-						column: '2',
-						rowspan: 0,
-						available_days: [1,2,3,4,5,6],
-					},
-					{
-						id: '3',
-						text: '8:30',
-						row: '1',
-						column: '3',
-						rowspan: 0,
-						available_days: [1,2,3,4,5,6],
-					},
-					{
-						id: '4',
-						text: '8:30',
-						row: '1',
-						column: '4',
-						rowspan: 0,
-						available_days: [1,2,3,4,5,6],
-					},
-					{
-						id: '5',
-						text: '8:30',
-						row: '1',
-						column: '5',
-						rowspan: 0,
-						available_days: [1,2,3,4,5,6],
-					},
-					{
-						id: '6',
-						text: '8:30 10:30',
-						row: '1',
-						column: '6',
-						rowspan: 2,
-						available_days: [1,2,3,4,5,6],
-					},
-					{
-						id: '7',
-						text: '10:30',
-						row: '2',
-						column: '1',
-						rowspan: 0,
-						available_days: [6,7,8,9,10,11],
-					},
-					{
-						id: '8',
-						text: '10:30',
-						row: '2',
-						column: '2',
-						rowspan: 0,
-						available_days: [6,7,8,9,10,11],
-					},
-					{
-						id: '9',
-						text: '10:30',
-						row: '2',
-						column: '3',
-						rowspan: 0,
-						available_days: [6,7,8,9,10,11],
-					},
-					{
-						id: '10',
-						text: '10:30',
-						row: '2',
-						column: '4',
-						rowspan: 0,
-						available_days: [6,7,8,9,10,11],
-					},
-					{
-						id: '11',
-						text: '10:30',
-						row: '2',
-						column: '5',
-						rowspan: 0,
-						available_days: [6,7,8,9,10,11],
-					},
-					{
-						id: '12',
-						text: '12:00',
-						row: '3',
-						column: '1',
-						rowspan: 0,
-						available_days: [12,13,14,15,16,17],
-					},
-					{
-						id: '13',
-						text: '12:00',
-						row: '3',
-						column: '2',
-						rowspan: 0,
-						available_days: [12,13,14,15,16,17],
-					},
-					{
-						id: '14',
-						text: '12:00',
-						row: '3',
-						column: '3',
-						rowspan: 0,
-						available_days: [12,13,14,15,16,17],
-					},
-					{
-						id: '15',
-						text: '12:00',
-						row: '3',
-						column: '4',
-						rowspan: 0,
-						available_days: [12,13,14,15,16,17],
-					},
-					{
-						id: '16',
-						text: '12:00',
-						row: '3',
-						column: '5',
-						rowspan: 0,
-						available_days: [12,13,14,15,16,17],
-					},
-					{
-						id: '17',
-						text: '12:00',
-						row: '3',
-						column: '6',
-						rowspan: 0,
-						available_days: [12,13,14,15,16,17],
-					},
-				],
 			},
 		}
 	},
+	asyncComputed: {
+		gyms() {
+			return this.$store.dispatch('gyms/reqGyms').then(()=>{
+				return this.$store.state.gyms.gyms
+			});
+		},
+		courses() {
+			return this.$store.dispatch('gyms/reqCourses').then(()=>{
+				return this.$store.state.gyms.courses
+			});
+		},
+		practices() {
+			return this.$store.dispatch('gyms/reqPractices', {gymID: this.selected.gymID, courseID: this.selected.courseID}).then(()=>{
+				return this.$store.state.gyms.practices
+			});
+		},
+		schedules() {
+			return this.$store.dispatch('gyms/reqSchedules').then(()=>{
+				return this.$store.state.gyms.schedules
+			});
+		},
+	},
 	computed: {
+		// planInfo: function(id) {
+		// 	let result = {};
+		// 	result.id = id;
+		// 	for (var i = this.cityData.courses.length - 1; i >= 0; i--) {
+		// 		if (+this.cityData.courses[i].id === +this.selected.courseID) {
+		// 			result.name = this.cityData.courses[i].name;
+		// 			break;
+		// 		}
+		// 	}
+		// 	return result
+		// },
+		// locationInfo: function(id) {
+		// 	let result = {};
+		// 	result.id = id;
+		// 	for (var i = this.cityData.gyms.length - 1; i >= 0; i--) {
+		// 		if (+this.cityData.gyms[i].id === +this.selected.gymID) {
+		// 			result.name = this.cityData.gyms[i].firstLine;
+		// 			break;
+		// 		}
+		// 	}
+		// 	return result
+		// },
+		// quantityTypeInfo: function(id) {
+		// 	let result = {};
+		// 	result.id = id;
+		// 	for (var i = this.cityData.practices.length - 1; i >= 0; i--) {
+		// 		if (+this.cityData.practices[i].id === +this.selected.practiceID) {
+		// 			result.name = this.cityData.practices[i].type;
+		// 			result.priceText = this.cityData.practices[i].type;
+		// 			break;
+		// 		}
+		// 	}
+		// 	return result
+		// },
 	},
 	watch: {
 		'selected.gymID' () {
@@ -456,7 +226,7 @@ export default {
 				text: 'Выбрать количество тренировок'
 			})
 		},
-		'selected.quantityTypeID' () {
+		'selected.practiceID' () {
 			this.activateNextBtn({
 				elemId: 'quantityType',
 				destId: 'time',
@@ -519,9 +289,9 @@ export default {
 			window.addEventListener('scroll', this.nextBtn.scrollEvent, false);
 		},
 		getCertificateData (dataType) {
-			for (var i = 0; i < this.cityData.quantityTypes.length; i++) {
-				if (+this.cityData.quantityTypes[i].id == +this.selected.quantityTypeID) {
-					return this.cityData.quantityTypes[i][dataType]
+			for (var i = 0; i < this.cityData.practices.length; i++) {
+				if (+this.cityData.practices[i].id == +this.selected.practiceID) {
+					return this.cityData.practices[i][dataType]
 				}
 			}
 		},
@@ -613,7 +383,7 @@ export default {
 	}
 	.section-btns {
 		position: fixed;
-		 -webkit-overflow-scrolling: touch;
+		-webkit-overflow-scrolling: touch;
 		z-index: 2;
 		left: 0;
 		bottom: 0;

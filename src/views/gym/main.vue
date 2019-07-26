@@ -14,7 +14,7 @@ div.course
 				li индивидуальные рекомендации спортивного врача на основе медицинской анкеты;
 				li новые друзья и единомышленники.
 		template(v-slot:another)
-			gym-location
+			gyms
 
 	article.main-content
 		.article-limit
@@ -61,7 +61,7 @@ export default {
 	name: 'Gym',
 	components: {
 		CoursesHero: () => import('@/components/heroes/fullsize-hero.vue'),
-		GymLocation: () => import('@/components/gym/location.vue'),
+		Gyms: () => import('@/components/gym/gyms.vue'),
 	},
 	data () {
 		return {}

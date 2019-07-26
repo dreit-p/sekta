@@ -1,26 +1,26 @@
 <template lang="pug">
-.training-plans
+.courses
 	.group.limit(v-for='(group, index) in groups')
 		.group-title {{group.name}}
 		.tiles
 			a.tile(
 				href='#'
-				v-for='(plan, index) in group.elements'
-				:class='{checked: selectedID == plan.id}'
-				@click.prevent='selectPlan(plan.id); click()'
+				v-for='(course, index) in group.elements'
+				:class='{checked: selectedCourse === course}'
+				@click.prevent='selectCourse(course); click()'
 			)
-				.image(:style="{ backgroundImage: `url(' ${require('@/assets/images/'+plan.image)} ')`}")
-					.caption {{plan.name}}
+				.image(:style="{ backgroundImage: `url(' ${publicPath}${course.image} ')`}")
+					.caption {{course.name}}
 				.description
-					.desc-title {{plan.title}}
-					.desc-text {{plan.description}}
+					.desc-title {{course.name}}
+					.desc-text {{course.description}}
 			.tile.fake
 			.tile.fake
 </template>
 
 <script>
 export default {
-	name: 'TrainingPlans',
+	name: 'Courses',
 	model: {
 		event: 'change'
 	},
@@ -29,23 +29,30 @@ export default {
 			type: Number,
 			default: 0
 		},
-		plans: {
+		courses: {
 			type: Array,
 			default: ()=>[]
 		},
 	},
 	data () {
 		return {
-			selectedID: null,
+			selectedCourse: null,
+			publicPath: 'http://api.sektaschool.ru.dev.immelman.ru'
 		}
 	},
 	computed: {
 		groups () {
 			let groups = {};
 
-			this.plans.forEach(function(elem) {
-				if (!groups[elem.group]) groups[elem.group] = []
-				groups[elem.group].push(elem);
+			this.courses.forEach(function(elem) {
+				let groupName = '';
+				if (elem.is_for_all) {
+					groupName = 'Программы для всех'
+				} else {
+					groupName = 'Программы для выпускников'
+				}
+				if (!groups[groupName]) groups[groupName] = []
+				groups[groupName].push(elem);
 			});
 
 			let results = Object.keys(groups).map(function(key){
@@ -60,12 +67,12 @@ export default {
 		},
 	},
 	created () {
-		this.selectPlan(this.value);
+		this.selectCourse(this.courses[0]);
 	},
 	methods: {
-		selectPlan(id) {
-			this.$emit('change', parseInt(id));
-			this.selectedID = id;
+		selectCourse(course) {
+			this.$emit('change', course.id);
+			this.selectedCourse = course;
 		},
 		click() {
 			this.$emit('click');
@@ -75,7 +82,7 @@ export default {
 </script>
 
 <style lang="postcss">
-	.training-plans {
+	.courses {
 		.group {
 			overflow: visible;
 			margin-bottom: 50px;

@@ -107,7 +107,6 @@ export default {
 				return resp;
 			})
 			.catch(requestError=>{
-				console.log('postingErr.response.status: ', requestError.response.status);
 				if (requestError.response.status == 403) {
 					dispatch('logOut');
 				}

@@ -21,7 +21,7 @@ div
 <script>
 import { mapActions } from 'vuex'
 
-const COURSE_TAG = 'VIP';
+const COURSE_TAG = 'EVO';
 
 export default {
 	name: 'Evolution',

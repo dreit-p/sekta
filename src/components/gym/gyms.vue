@@ -38,9 +38,9 @@ div.location
 
 <script>
 export default {
-	name: 'GymLocation',
+	name: 'Gyms',
 	components: {
-		GymLocation: () => import('@/components/gym/location.vue'),
+		Gyms: () => import('@/components/gym/gyms.vue'),
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
 	},
 	computed: {

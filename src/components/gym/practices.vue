@@ -1,75 +1,96 @@
 <template lang="pug">
-.training-quantity
-	.group.limit(v-for='(group, index) in groups')
-		.group-title {{group.name}}
+.practices
+	.group.limit(v-for='currentGroup in groupedPractices')
+		.group-title {{ {practice: 'Групповые занятия', ticket: 'Абонементы для выпусников'}[currentGroup.type] }}
 		.tiles
 			a.tile(
 				href='#'
-				v-for='(quantityType, index) in group.elements'
-				:class='{checked: selectedID == quantityType.id}'
-				@click.prevent='selectType(quantityType.id)'
+				v-for='(currentQty, qtyIndex) in currentGroup.quantities'
+				:class='{checked: selectedQty == currentQty}'
+				@click.prevent='selectQty(currentQty)'
 			)
 				.description
-					.desc-title {{quantityType.type}}
-					.desc-caption {{quantityType.caption}}
+					.desc-title {{currentQty.quantity}} тренировки в неделю
+					.desc-caption {{isFinite(currentQty.min_price) ? currentQty.min_price + ' руб.' : 'недостуно'}}
 			.tile.fake
 			.tile.fake
 </template>
 
 <script>
 export default {
-	name: 'TrainingQuantity',
+	name: 'Practices',
 	model: {
 		event: 'change'
 	},
 	props: {
-		value: {
-			type: Number,
-			default: 0
-		},
-		quantityTypes: {
+		practices: {
 			type: Array,
 			default: ()=>[]
 		},
 	},
-	created () {
-		this.selectType(this.value);
+	mounted() {
+		this.selectQty(this.groupedPractices[0].quantities[0]);
 	},
 	computed: {
-		groups () {
-			let groups = {};
+		groupedPractices () {
+			let groups = [];
 
-			this.quantityTypes.forEach(function(elem) {
-				if (!groups[elem.group]) groups[elem.group] = []
-				groups[elem.group].push(elem);
+			this.practices.forEach(function(practice) {
+				let type = practice.is_ticket ? 'ticket' : 'practice';
+				let quantity = practice.schedules.length;
+
+
+				let types = groups.filter((t) => t.type === type);
+				let currentType = null;
+				if (! types.length) {
+					currentType = {
+						type: type,
+						quantities: []
+					};
+					groups.push(currentType);
+				} else {
+					currentType = types[0];
+				}
+
+
+				let quantities = currentType.quantities.filter((t) => t.quantity === quantity);
+				let currentQty = null;
+				if (! quantities.length) {
+					currentQty = {
+						quantity: quantity,
+						objects: [],
+						min_price: Infinity,
+					};
+					currentType.quantities.push(currentQty);
+				} else {
+					currentQty = quantities[0];
+				}
+
+				currentQty.objects.push(practice);
+				if (practice.prices.length) {
+					currentQty.min_price = Math.min(currentQty.min_price, practice.prices[0].value);
+				}
 			});
 
-			let results = Object.keys(groups).map(function(key){
-				let obj = {
-					name: key,
-					elements: groups[key]
-				};
-				return obj;
-			});
-			return results;
+			return groups;
 		},
 	},
 	methods: {
-		selectType(id) {
-			this.$emit('change', parseInt(id));
-			this.selectedID = id;
+		selectQty(qty) {
+			this.$emit('change', qty.objects);
+			this.selectedQty = qty;
 		},
 	},
 	data () {
 		return {
-			selectedID: null,
+			selectedQty: null,
 		}
 	}
 }
 </script>
 
 <style lang="postcss">
-	.training-quantity {
+	.practices {
 		.group {
 			overflow: visible;
 			margin-bottom: 40px;

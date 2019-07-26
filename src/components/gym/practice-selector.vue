@@ -3,10 +3,10 @@
 	.limit
 		p.description Это небольшое описание. Например, текст про то, что есть несколько групп на выбор и для каждого свое время, а в субботу время общее для всех программ. А если это абонемент на 6 занятий, то на выбор любое время до 18:00 или после 20:00.
 
-		.grid(v-if='windowWidth > mobileWidth')
+		//.grid(v-if='windowWidth > mobileWidth')
 			.day(v-for='name in daysNames') {{name}}
 			button.tile(
-				v-for='(tile, index) in schedule'
+				v-for='(tile, index) in schedules'
 				:class='{hovered: hoveredIDs.includes(+tile.id), available: chackAvailability(index), selected: selectedIDs.includes(+tile.id)}'
 				:disabled='!chackAvailability(index)'
 				:style='{gridRow: tile.rowspan > 0 ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tile.column }'
@@ -16,7 +16,7 @@
 				@blur='hoveredIDs = []'
 				@click='selectTilesById(+tile.id)'
 			) {{tile.text}}
-		.mobile-grid(v-if='windowWidth <= mobileWidth')
+		//.mobile-grid(v-if='windowWidth <= mobileWidth')
 			.empty-msg(v-if='minimizedGroups.length == 0') 
 				b Нет доступного времени.
 				p Выберите другое количество тренировок.
@@ -37,24 +37,20 @@
 
 <script>
 export default {
-	name: 'TimeSelector',
+	name: 'PracticeSelector',
 	model: {
 		event: 'change'
 	},
 	props: {
 		value: {
-			type: Array,
-			default: ()=>[]
-		},
-		schedule: {
-			type: Array,
-			default: ()=>[]
-		},
-		bracketing: {
 			type: Number,
-			default: 1
+			default: ()=> -1
 		},
-		certificateTimes: {
+		schedules: {
+			type: Array,
+			default: ()=>[]
+		},
+		practices: {
 			type: Array,
 			default: ()=>[]
 		},
@@ -73,7 +69,7 @@ export default {
 			let availableTimes = {};
 			let availableWeeks = [];
 
-			this.schedule.forEach((time)=>{
+			this.schedules.forEach((time)=>{
 				if (this.certificateTimes.includes(+time.id)) {
 					if (availableWeeks[+time.row -1] == undefined) {availableWeeks.push([])}
 					availableWeeks[+time.row -1].push({[time.id]: time});
@@ -282,7 +278,7 @@ export default {
 
 			};
 
-			return this.certificateTimes.includes(+this.schedule[index].id) && checkRow(this.schedule[index].row)
+			return this.certificateTimes.includes(+this.schedules[index].id) && checkRow(this.schedules[index].row)
 		},
 		isArrEquals (arr1, arr2) {
 			return arr1.length === arr2.length && arr1.slice().sort((a,b)=>a-b).every((val, i)=>{ return val === arr2.slice().sort((a,b)=>a-b)[i]});
@@ -305,7 +301,7 @@ export default {
 
 			let row = [];
 
-			this.schedule.forEach(function(elem) {
+			this.schedules.forEach(function(elem) {
 				if (+elem.row == +number || +elem.row+ +elem.rowspan >= +number && +elem.row <= +number) {
 					row[+elem.column-1] = elem;
 				}
@@ -317,7 +313,7 @@ export default {
 
 			let IDs = [];
 
-			this.schedule.forEach(function(elem) {
+			this.schedules.forEach(function(elem) {
 				if (+elem.row == +number || +elem.row+ +elem.rowspan >= +number && +elem.row <= +number) {
 					IDs[+elem.column-1] = +elem.id;
 				}
