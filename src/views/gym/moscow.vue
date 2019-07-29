@@ -181,20 +181,22 @@ export default {
 	},
 	watch: {
 		'selected.gymID' () {
+			this.selected.practices = null;
 			this.activateNextBtn({
 				elemId: 'gym',
 				destId: 'quantityType',
 				text: 'Выбрать количество тренировок'
 			})
 		},
-		'selected.practiceID' () {
+		'selected.practices' () {
+			this.selected.practiceID = null;
 			this.activateNextBtn({
 				elemId: 'quantityType',
 				destId: 'time',
 				text: 'Выбрать время занятий'
 			})
 		},
-		'selected.timeIDs' () {
+		'selected.practiceID' () {
 			this.activateNextBtn({
 				elemId: 'time',
 				destId: 'form',

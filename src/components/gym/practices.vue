@@ -28,6 +28,11 @@ export default {
 			default: ()=>[]
 		},
 	},
+	watch: {
+		practices () {
+			this.selectQty(this.groupedPractices[0].quantities[0]);
+		},
+	},
 	mounted() {
 		this.selectQty(this.groupedPractices[0].quantities[0]);
 	},
