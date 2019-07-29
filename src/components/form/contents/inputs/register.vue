@@ -228,6 +228,7 @@ export default {
 			this.$store.dispatch('regRequest', this.inputsDataList)
 			.then(()=>{
 				this.unlockForm();
+				this.$emit('submit', 'register');
 				this.$store.dispatch('setFormModalState', {modalState: false});
 			})
 			.catch((err)=>{

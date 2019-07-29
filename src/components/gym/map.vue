@@ -8,12 +8,12 @@
 		.tiles(:class='{hidden: isChoseMap}')
 			a.tile(
 				href='#'
-				v-for='(gym, index) in locations'
-				:class='{checked: selectedIndex == index}'
-				@click.prevent='selectGym(index)'
+				v-for='gym in gyms'
+				:class='{checked: selectedGym === gym}'
+				@click.prevent='selectGym(gym)'
 			)
-				p.bold {{gym.firstLine}}
-				p {{gym.secondLine}}
+				p.bold {{gym.name}}
+				p gym.secondLine
 		.map(:class='{hidden: !isShowingMap}')
 			.preloader
 				webp-img(src='map-preloader.jpg')
@@ -28,18 +28,18 @@
 				map-link='https://api-maps.yandex.ru/2.1/?apikey=32d7c971-fea9-41f9-ba2c-5c2aaade6810&lang=ru_RU'
 				@map-was-initialized='initHandler'
 			)
-	.limit
+	.limit(v-if='selectedGym')
 		.additional-info
 			.links
 				span Не знаете как пройти в зал? 
-				a(href='#', v-if='locations[selectedIndex].video', @click.prevent='showVideoModal = !showVideoModal') Посмотрите видео
-				span(v-if='locations[selectedIndex].video && locations[selectedIndex].description')  или 
-				a(href='#', v-if='locations[selectedIndex].description', @click.prevent='showDescriptionText = !showDescriptionText') Прочитайте описание 
-			.description-text(v-if='showDescriptionText && locations[selectedIndex].description') {{locations[selectedIndex].description}}
-	transition(name='fade')
-		video-modal(:iframe-link='locations[selectedIndex].video', v-if='showVideoModal && locations[selectedIndex].video', @close='showVideoModal = false')
-			p.bold {{locations[selectedIndex].firstLine}}
-			p {{locations[selectedIndex].secondLine}}
+				a(href='#', v-if='selectedGym.video_url', @click.prevent='showVideoModal = !showVideoModal') Посмотрите видео
+				span(v-if='selectedGym.video_url && selectedGym.description')  или 
+				a(href='#', v-if='selectedGym.description', @click.prevent='showDescriptionText = !showDescriptionText') Прочитайте описание 
+			.description-text(v-if='showDescriptionText && selectedGym.description') {{selectedGym.description}}
+	transition(v-if='selectedGym', name='fade')
+		video-modal(v-if='selectedGym.video_url && showVideoModal', :iframe-link='selectedGym.video_url', @close='showVideoModal = false')
+			p.bold {{selectedGym.name}}
+			p selectedGym.secondLine
 
 
 </template>
@@ -61,7 +61,7 @@ export default {
 			type: Number,
 			default: 0
 		},
-		locations: {
+		gyms: {
 			type: Array,
 			default: ()=>[]
 		},
@@ -74,7 +74,7 @@ export default {
 			isChoseMap: false,
 			showVideoModal: false,
 			showDescriptionText: false,
-			selectedIndex: null,
+			selectedGym: null,
 			clusterOptions: {
 				gyms: {
 					useMapMargin: true,
@@ -92,33 +92,29 @@ export default {
 			return this.windowWidth >= 700 && this.mounted || this.isChoseMap
 		},
 		placemarks () {
-			var marks = [];
-			for (let i = 0; i < this.locations.length; i++) {
-				let address = this.locations[i];
-				var theOne = {
-					coords: address.coords,
+			return this.gyms.map((gym, i)=>{
+				return {
+					coords: [gym.geo_point_lat, gym.geo_point_lon],
 					properties: {
-						firstLine: address.firstLine,
-						secondLine: address.secondLine,
-						hintContent: address.secondLine,
+						name: gym.name,
+						secondLine: 'gym.secondLine',
+						hintContent: 'gym.secondLine',
 					},
 					callbacks: {
 						click: () => {
-							this.selectGym(i);
+							this.selectGym(gym);
 						}
 					},
 					clusterName: 'gyms',
 					options: {
-						fillColor: this.marksColor(i),
-						iconColor: this.marksColor(i),
+						fillColor: this.marksColor(gym),
+						iconColor: this.marksColor(gym),
 					},
 					markerType: 'placemark',
-					icon: {layout: 'islands#darkBlueCircleDotIcon',iconContent: i},
+					icon: {layout: 'islands#darkBlueCircleDotIcon', iconContent: i},
 					markerId: i
-				}
-				marks.push(theOne);
-			}
-			return marks;
+				};
+			});
 		},
 	},
 	watch: {
@@ -130,12 +126,7 @@ export default {
 		}
 	},
 	created () {
-		this.locations.some((elem, index)=>{
-			if (elem.id == this.value) {
-				this.selectGym(index);
-				return true;
-			}
-		});
+		this.selectGym(this.gyms[0]);
 	},
 	mounted () {
 		this.mounted = true;
@@ -146,13 +137,12 @@ export default {
 		});
 	},
 	methods: {
-		marksColor (index) {
-			return this.selectedIndex == index ? '#0ab6a1' : '#000'
+		marksColor (gym) {
+			return this.selectedGym === gym ? '#0ab6a1' : '#000'
 		},
-		selectGym (index) {
-			index = +index
-			this.$emit('change', parseInt(this.locations[index].id));
-			this.selectedIndex = index;
+		selectGym (gym) {
+			this.$emit('change', gym.id);
+			this.selectedGym = gym;
 		},
 		initHandler(map) {
 			this.map = map;

@@ -38,7 +38,7 @@ div.course
 		:dateStart='courseInfo.last_start_date',
 	)
 	//formType="online"
-	entry-form(v-if='courseInfo', formType="register", :prices='courseInfo.prices', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType="online", :formData='courseInfo.prices', :courseName='courseInfo.name')
 </template>
 
 <script>

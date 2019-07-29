@@ -25,7 +25,7 @@
 
 		app-checkbox(
 			name='termsAgree'
-			data-vv-as='обработка персональных данных'
+			data-vv-as='Согласие с публичной офертой'
 			:required='true'
 			:error='errors.first("termsAgree")'
 		)
@@ -66,6 +66,15 @@ export default {
 		AppInput: () => import('@/components/form/input.vue'),
 		AppCheckbox: () => import('@/components/form/checkbox.vue'),
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
+	},
+	props: {
+		formData: {
+			type: Array,
+			default: ()=>[]
+		},
+		courseName: {
+			type: String
+		}
 	},
 	computed: {
 		...globalInputs.list

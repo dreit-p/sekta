@@ -1,6 +1,6 @@
 <template lang="pug">
 transition(name='fade')
-	section.modal-auth(v-show='isOpenedModal')
+	section.modal-auth(v-if='isOpenedModal')
 		.veil(@click='setFormModalState({modalState: false})')
 		.modal-wrapper
 			.modal-content
@@ -24,11 +24,11 @@ transition(name='fade')
 
 					transition(name='fade-flip', mode='out-in')
 
-						inputs-login(v-if='formModalType == "login"', :key='formModalType')
+						inputs-login(v-if='formModalType == "login"', :key='formModalType', @submit='onSubmit($event)')
 
-						inputs-recovery(v-if='formModalType == "recovery"', :key='formModalType')
+						inputs-recovery(v-if='formModalType == "recovery"', :key='formModalType', @submit='onSubmit($event)')
 
-						inputs-register(v-if='formModalType == "register"', :key='formModalType')
+						inputs-register(v-if='formModalType == "register"', :key='formModalType', @submit='onSubmit($event)')
 
 
 </template>
@@ -87,7 +87,15 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['setFormModalState'])
+		...mapActions(['setFormModalState']),
+		onSubmit (type) {
+			switch (type) {
+				case 'login':
+					this.$router.push({name: 'personal'});
+				case 'register':
+					this.$router.push({name: 'personal'});
+			}
+		},
 	},
 }
 </script>

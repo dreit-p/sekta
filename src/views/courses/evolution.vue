@@ -14,14 +14,14 @@ div
 	appeal
 	faq
 
-	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="register", :prices='courseInfo.prices', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="online", :formData='courseInfo.prices', :courseName='courseInfo.name')
 
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 
-const COURSE_TAG = 'VIP';
+const COURSE_TAG = 'EVO';
 
 export default {
 	name: 'Evolution',

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import header from './modules/header'
+import gyms from './modules/gyms'
 import createPersistedState from 'vuex-persistedstate'
 
 import actions from './actions';
@@ -18,7 +19,8 @@ export default new Vuex.Store({
 		],
 	})],
 	modules: {
-		header
+		header,
+		gyms,
 	},
 	state: {
 		appStates: {
