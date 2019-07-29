@@ -36,9 +36,9 @@ div.gym
 					practices(v-model='selected.practices', :practices='practices')
 
 			section#time
-				template(v-if='schedules && selected.practices')
+				template(v-if='selected.practices')
 					.section-caption Время занятий
-					practice-selector(v-model='selected.practiceID', :schedules='schedules', :practices='selected.practices')
+					schedule(v-model='selected.practiceID', :practices='selected.practices')
 
 
 			section
@@ -86,7 +86,7 @@ div.gym
 </template>
 
 <script>
- 	import Vue from 'vue';
+	import Vue from 'vue';
 import vueHeadful from 'vue-headful';
 
 Vue.component('vue-headful', vueHeadful);
@@ -99,7 +99,7 @@ export default {
 		PhotoGallery: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/photo-gallery.vue'),
 		Courses: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/courses.vue'),
 		Practices: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/practices.vue'),
-		PracticeSelector: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/practice-selector.vue'),
+		Schedule: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/schedule.vue'),
 		GymMap: () => import(/* webpackChunkName: "gym-elems" */ '@/components/gym/map.vue'),
 		GymHero: () => import('@/components/heroes/fullsize-hero.vue'),
 	},
@@ -176,47 +176,8 @@ export default {
 				return this.$store.state.gyms.practices
 			});
 		},
-		schedules() {
-			return this.$store.dispatch('gyms/reqSchedules').then(()=>{
-				return this.$store.state.gyms.schedules
-			});
-		},
 	},
 	computed: {
-		// planInfo: function(id) {
-		// 	let result = {};
-		// 	result.id = id;
-		// 	for (var i = this.cityData.courses.length - 1; i >= 0; i--) {
-		// 		if (+this.cityData.courses[i].id === +this.selected.courseID) {
-		// 			result.name = this.cityData.courses[i].name;
-		// 			break;
-		// 		}
-		// 	}
-		// 	return result
-		// },
-		// locationInfo: function(id) {
-		// 	let result = {};
-		// 	result.id = id;
-		// 	for (var i = this.cityData.gyms.length - 1; i >= 0; i--) {
-		// 		if (+this.cityData.gyms[i].id === +this.selected.gymID) {
-		// 			result.name = this.cityData.gyms[i].firstLine;
-		// 			break;
-		// 		}
-		// 	}
-		// 	return result
-		// },
-		// quantityTypeInfo: function(id) {
-		// 	let result = {};
-		// 	result.id = id;
-		// 	for (var i = this.cityData.practices.length - 1; i >= 0; i--) {
-		// 		if (+this.cityData.practices[i].id === +this.selected.practiceID) {
-		// 			result.name = this.cityData.practices[i].type;
-		// 			result.priceText = this.cityData.practices[i].type;
-		// 			break;
-		// 		}
-		// 	}
-		// 	return result
-		// },
 	},
 	watch: {
 		'selected.gymID' () {

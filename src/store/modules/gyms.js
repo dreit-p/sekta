@@ -31,7 +31,6 @@ let state = {
 	courses: [],
 	practices: [],
 	gyms: [],
-	schedules: [],
 };
 
 let actions = {
@@ -69,16 +68,6 @@ let actions = {
 				throw requestError.response;
 			});
 	},
-	reqSchedules({ commit }) {
-		return getReq('/api/gym-schedules')
-			.then((resp)=>{
-				commit('setSchedules', resp.data.data);
-				return resp;
-			})
-			.catch(requestError=>{
-				throw requestError.response;
-			});
-	},
 };
 
 
@@ -91,9 +80,6 @@ let mutations = {
 	},
 	setGyms (state, payload) {
 		state.gyms = payload;
-	},
-	setSchedules (state, payload) {
-		state.schedules = payload;
 	},
 };
 

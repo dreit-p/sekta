@@ -40,30 +40,24 @@ export default {
 				let quantity = practice.schedules.length;
 
 
-				let types = groups.filter((t) => t.type === type);
-				let currentType = null;
-				if (! types.length) {
+				let currentType = groups.find(t => t.type === type);
+				if (! currentType) {
 					currentType = {
 						type: type,
 						quantities: []
 					};
 					groups.push(currentType);
-				} else {
-					currentType = types[0];
 				}
 
 
-				let quantities = currentType.quantities.filter((t) => t.quantity === quantity);
-				let currentQty = null;
-				if (! quantities.length) {
+				let currentQty = currentType.quantities.find(t => t.quantity === quantity);
+				if (! currentQty) {
 					currentQty = {
 						quantity: quantity,
 						objects: [],
 						min_price: Infinity,
 					};
 					currentType.quantities.push(currentQty);
-				} else {
-					currentQty = quantities[0];
 				}
 
 				currentQty.objects.push(practice);
