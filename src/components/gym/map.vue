@@ -13,7 +13,7 @@
 				@click.prevent='selectGym(gym); clickHandler()'
 			)
 				p.bold {{gym.name}}
-				p gym.secondLine
+				p(v-if='gym.address') {{gym.address}}
 		.map(:class='{hidden: !isShowingMap}')
 			.preloader
 				webp-img(src='map-preloader.jpg')
