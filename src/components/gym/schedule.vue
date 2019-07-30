@@ -11,7 +11,7 @@
 					v-if='tile.rowspan !== 0'
 					:disabled='tile.practiceIDs.length < 1'
 					:class='{available: tile.practiceIDs.length > 0, selected: tile.practiceIDs.includes(selectedPracticeID), hovered: tile.practiceIDs.includes(hoveredPracticeID)}'
-					:style='{gridRow: tile.rowspan > 1 ? `${rowIndex+2} / ${rowIndex+2 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
+					:style='{gridRow: tile.rowspan > 1 ? `${rowIndex+2} / ${rowIndex+2 + tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
 					@click='selectTile(tile); hoverTile(tile);'
 
 					@mouseenter='hoverTile(tile)'
@@ -21,22 +21,21 @@
 					@blur='leaveTile()'
 
 				) {{tile.title}}
-		//.mobile-grid(v-else)
-			.empty-msg(v-if='minimizedGroups.length == 0') 
+		.mobile-grid(v-else)
+			.empty-msg(v-if='mobileGroups.length == 0') 
 				b Нет доступного времени.
 				p Выберите другое количество тренировок.
 			.grid(
-				v-for='(group) in minimizedGroups'
-				:style='{gridTemplateColumns: `repeat(${group.width}, 1fr [col-start])`}'
+				v-for='(group) in mobileGroups'
+				:style='{gridTemplateColumns: `repeat(${group.days.length}, 1fr [col-start])`}'
 			)
-				.day(v-for='(dayTitle) in group.daysTitles') {{dayTitle}}
+				.day(v-for='(dayIdxs) in group.days') {{dayIdxs}}
 				template(v-for='(row, rowIndex) in group.rows')
 					.tile.available(
-						v-for='(tile, tileIndex) in row'
-						:class='{selected: isContainsArray(selectedIDs, tile.siblingsIds)}'
-						:style='{gridRow: tile.rowspan > 0 && group.rows.length >= tile.rowspan ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
+						v-for='(tile, tileIndex) in row.tiles'
+						:style='{gridRow: tile.practiceIDs.length > 0 && group.rows.length >= tile.practiceIDs.length ? `${rowIndex+2} / ${rowIndex+2 + tile.practiceIDs.length}` : "auto", gridColumn: tileIndex+1 }'
 						@click='selectTiles(tile.siblingsIds)'
-					) {{tile.text}}
+					) {{tile.time}}
 
 </template>
 
@@ -58,6 +57,7 @@ export default {
 	},
 	mounted () {
 		this.selectFirstTile();
+		console.log('this.mobileGroups', this.mobileGroups);
 	},
 	data () {
 		return {
@@ -119,6 +119,93 @@ export default {
 
 			return schedules;
 		},
+		mobileGroups() {
+			let groups = [];
+			let group = {
+				days: [],
+				rows: [],
+			};
+
+			let timeObj = {};
+			this.practices.forEach(practice => {
+				let row = {
+					days: [],
+					practiceIDs: [],
+					// times: [],
+				};
+
+				practice.schedules.forEach(practiceSchedule => {
+
+					if (timeObj.hasOwnProperty(practiceSchedule.time)) {
+						let uniqTime = timeObj[practiceSchedule.time];
+						// if (!uniqTime.times.find(time => time === practiceSchedule.time)) {
+						// 	uniqTime.times.push(practiceSchedule.time);
+						// }
+						if (!uniqTime.practiceIDs.find(id => id === practice.id)) {
+							uniqTime.practiceIDs.push(practice.id);
+						}
+						if (!uniqTime.days.find(dayId => dayId === practiceSchedule.week_day)) {
+							uniqTime.days.push(practiceSchedule.week_day);
+						}
+					} else {
+						timeObj[practiceSchedule.time] = {
+							// times: [practiceSchedule.time],
+							practiceIDs: [practice.id],
+							days: [practiceSchedule.week_day]
+						}
+					}
+				});
+			});
+
+			let rows = {};
+			for (let time in timeObj) {
+				if (timeObj.hasOwnProperty(time)) {
+					timeObj[time].practiceIDs.forEach(function(id) {
+						if (!rows.hasOwnProperty(id)) {
+							rows[id] = {
+								days: [],
+								key: [],
+								tiles: [],
+							}
+						}
+						rows[id].days.push(timeObj[time].days);
+						rows[id].key = [...rows[id].key,...timeObj[time].days];
+						rows[id].tiles.push({
+							time: time,
+							practiceIDs: timeObj[time].practiceIDs,
+						});
+					});
+				}
+			}
+
+			function compareArrs(arr1, arr2) {
+				return arr1.length === arr2.length && arr1.sort().every((value, index)=>{ return value === arr2.sort()[index]});
+			}
+
+			for (let practiceId in rows) {
+				if (rows.hasOwnProperty(practiceId)) {
+					let row = rows[practiceId];
+					if (!groups.find(group => compareArrs(group.key, row.key))) {
+						groups.push({
+							days: row.days,
+							key: row.key,
+							rows: [{tiles: row.tiles}],
+						});
+					} else {
+						let groupIdx = groups.findIndex(group => compareArrs(group.key, row.key));
+						groups[groupIdx].rows.push({tiles: row.tiles});
+					}
+				}
+			}
+
+
+
+
+
+
+
+			return groups;
+		},
 	},
 	watch: {
 		selectedPracticeID () {
@@ -126,6 +213,7 @@ export default {
 		},
 		practices () {
 			this.selectFirstTile();
+			console.log('this.mobileGroups', this.mobileGroups);
 		},
 	},
 	created () {
