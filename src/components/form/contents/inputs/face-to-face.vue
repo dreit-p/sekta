@@ -15,7 +15,7 @@
 		p.heavy-text.heavy-text_face(v-if='formData.practice') {{formData.practice.schedules.length}}
 
 		p.tiny-text.tiny-text_face Время тренировок
-		p.heavy-text.heavy-text_face 
+		p.heavy-text.heavy-text_face
 			template(v-for='string in getTrainingTimes') {{string}}
 				br
 
@@ -89,8 +89,8 @@ export default {
 
 	},
 	methods: {
-		getDiscountedPrice (priceId, code, cb) {
-			this.$store.dispatch('reqDiscountedPrice', {priceId, code}).then((resp)=>{
+		getDiscountedPrice (price_id, code, cb) {
+			this.$store.dispatch('reqDiscountedPrice', {price_id, code}).then((resp)=>{
 				cb(resp);
 			}).catch(()=>{
 				this.promoprice = Infinity
@@ -116,12 +116,15 @@ export default {
 			this.ifValid(()=>{
 				this.isFormLocked = true;
 
-				this.$store.dispatch('sendPersonalOrder', this.price.id)
+				this.$store.dispatch('sendGymOrder', this.price.id)
 				.then((resp)=>{
 					this.unlockForm();
 					this.$emit('submit', 'face-to-face');
 					this.$store.dispatch('setFormModalState', {modalState: false});
-					
+					let gymOrderID = resp.data.order_id;
+					this.$store.dispatch('reqGymPayment', {gymOrderId: gymOrderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
+						console.log(resp);
+					});
 				})
 				.catch((err)=>{
 					alert(err.data.message);
@@ -168,7 +171,7 @@ export default {
 						let conDaysIdx = 0;
 						uniqByTime[time].reduce((prev, current)=>{
 							if (prev+1 === current) {
-								!!consecutiveDays[conDaysIdx] 
+								!!consecutiveDays[conDaysIdx]
 									? consecutiveDays[conDaysIdx].push(current)
 									: consecutiveDays[conDaysIdx] = currentIndex === 0 ? [prev, current] : [current]
 								currentIndex++;

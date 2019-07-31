@@ -51,6 +51,7 @@ export default {
 		handleChange() {
 			if (!this.disabled) {
 				this.$emit('input', this.value ? false : true);
+				this.$emit('change', this.value ? false : true);
 			}
 		}
 	},

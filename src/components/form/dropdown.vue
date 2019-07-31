@@ -92,7 +92,7 @@ export default {
 	$_veeValidate: {
 		// value getter
 		value() {
-			return this.$el.value;
+			return this.reactiveValue;
 		},
 		// name getter
 		name() {

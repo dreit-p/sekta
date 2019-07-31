@@ -90,9 +90,39 @@ export default {
 				throw err.response;
 			});
 	},
-	sendPersonalOrder({state}, priceId) {
+	sendGymOrder({state}, price_id) {
 		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
-		return postReq('/api/personal/gym-orders', {priceId})
+		return postReq('/api/personal/gym-orders', {price_id})
+			.then(resp=>{
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	sendOnlineOrder({state}, data) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq('/api/personal/online-orders', data)
+			.then(resp=>{
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	reqGymPayment({state}, {gymOrderId, price_id, promocode}) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq(`/api/personal/gym-orders/${gymOrderId}/payments`, {price_id, promocode})
+			.then(resp=>{
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	reqOnlinePayment({state}, {orderId, price_id, promocode}) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq(`/api/personal/online-orders/${orderId}/payments`, {price_id, promocode})
 			.then(resp=>{
 				return resp
 			})
@@ -144,12 +174,12 @@ export default {
 				})
 		}
 	},
-	reqDiscountedPrice(context, {priceId, code}) {
-		if (! priceId || !code) {
+	reqDiscountedPrice(context, {price_id, code}) {
+		if (! price_id || !code) {
 			return;
 		}
 
-		return getReq(`/api/prices/${priceId}/calc-with-promocode/${code}`)
+		return getReq(`/api/prices/${price_id}/calc-with-promocode/${code}`)
 			.then((resp)=>{
 				return resp.data;
 			})

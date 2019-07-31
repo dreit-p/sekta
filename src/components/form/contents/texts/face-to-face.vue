@@ -15,7 +15,7 @@
 
 	div(style='margin-top: 20px')
 		p.tiny-text Оплата производится на сайте Яндекс.Кассы
-		p.tiny-text Оказание услуг осуществляется ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА *ГОРОД*»
+		p.tiny-text Оказание услуг осуществляется ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[userCity]  }}»
 </template>
 
 <script>
@@ -25,6 +25,17 @@ export default {
 		setFormModalState(data) {
 			return this.$parent.setFormModalState(data);
 		}
+	},
+	computed: {
+		userCity() {
+			if (this.$store.state.user.info) {
+				return JSON.parse(JSON.stringify(this.$store.state.user)).info.city.id
+			}
+			if (this.$store.state.user.cityId) {
+				return this.$store.state.user.cityId;
+			}
+			return false;
+		},
 	},
 }
 </script>
