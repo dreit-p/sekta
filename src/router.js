@@ -56,6 +56,11 @@ const Router = new VueRouter({
 				import ( /* webpackChunkName: "about" */ './views/certificates.vue')
 		},
 		{
+			path: '/results',
+			name: 'results',
+			component: () => import ('./views/results.vue')
+		},
+		{
 			path: '/contacts',
 			name: 'contacts',
 			component: () =>

@@ -17,6 +17,7 @@
     "velocity-animate": "^1.5.2",
     "vue": "^2.6.10",
     "vue-async-computed": "^3.7.0",
+    "vue-carousel": "^0.18.0",
     "vue-headful": "^2.0.1",
     "vue-router": "^3.0.6",
     "vue-yandex-maps": "^0.8.9",
