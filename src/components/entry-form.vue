@@ -91,7 +91,7 @@ export default {
 			default: 'register'
 		},
 		formData: {
-			type: Array,
+			type: Object,
 			default: ()=>{}
 		},
 		courseName: {

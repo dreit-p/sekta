@@ -90,6 +90,16 @@ export default {
 				throw err.response;
 			});
 	},
+	sendPersonalOrder({state}, priceId) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq('/api/personal/gym-orders', {priceId})
+			.then(resp=>{
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
 	regRequest({ dispatch }, data) {
 		return postReq('/api/register', data)
 			.then(()=>{
@@ -133,6 +143,19 @@ export default {
 					router.push({name: 'home'});
 				})
 		}
+	},
+	reqDiscountedPrice(context, {priceId, code}) {
+		if (! priceId || !code) {
+			return;
+		}
+
+		return getReq(`/api/prices/${priceId}/calc-with-promocode/${code}`)
+			.then((resp)=>{
+				return resp.data;
+			})
+			.catch(requestError=>{
+				throw requestError.response;
+			});
 	},
 	updateOnlineCourses({ state, dispatch }) {
 		return new Promise((resolve)=>{

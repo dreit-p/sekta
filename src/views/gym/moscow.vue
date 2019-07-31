@@ -49,7 +49,7 @@ div.gym
 				.section-caption
 					| Оформление заказа
 					.highlight старт занятий – 01 декабря
-				//entry-form(formType='face-to-face', :formData='{plan: this.planInfo, location: this.locationInfo, quantity: 1, trainingTimes: []}')
+				entry-form(formType='face-to-face', v-if='formData', :formData='formData')
 
 	.gym-section(:class='{available: section === 1}')
 		article.main-content
@@ -178,6 +178,31 @@ export default {
 		},
 	},
 	computed: {
+		courseInfo() {
+			if (!this.courses) return
+			let course = this.courses.find(course => course.id === this.selected.courseID);
+			return course;
+		},
+		locationInfo() {
+			if (!this.gyms) return
+			let gym = this.gyms.find(gym => gym.id === this.selected.gymID);
+			return gym;
+		},
+		practiceInfo() {
+			if (!this.practices) return
+			let practice = this.practices.find(practice => practice.id === this.selected.practiceID);
+			return practice;
+		},
+		formData() {
+			if (!this.courseInfo || !this.locationInfo || !this.practiceInfo) {
+				return false;
+			}
+			return {
+				course: this.courseInfo, 
+				location: this.locationInfo, 
+				practice: this.practiceInfo
+			}
+		},
 	},
 	watch: {
 		'selected.gymID' () {

@@ -57,7 +57,6 @@ export default {
 	},
 	mounted () {
 		this.selectFirstTile();
-		console.log('this.mobileGroups', this.mobileGroups);
 	},
 	data () {
 		return {
@@ -213,7 +212,6 @@ export default {
 		},
 		practices () {
 			this.selectFirstTile();
-			console.log('this.mobileGroups', this.mobileGroups);
 		},
 	},
 	created () {
