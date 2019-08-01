@@ -12,7 +12,7 @@
             .limit
                 .results__cards-block
                     result-card(v-for="card in visibleResults" :result="card" @clickHandler="toggleResultModal")
-                .results__carousel-block    
+                .results__carousel-block
                     .results__carousel(@mouseup="slideClick" @mousedown="saveMousePosition")
                         carousel(:perPage="1"  v-model="currentSlide" :paginationEnabled="false")
                             slide.results__carousel-item(v-for="card in visibleResults")
@@ -20,15 +20,15 @@
                                 .results__carousel-overlay
                                     .results__carousel-title {{card.name}}
                     .results__carousel-menu
-                        .carousel-menu__prev(v-if="currentSlide !== 0" @click="changeSlide(-1)") 
-                            svg-icon(name='down-arrow')         
-                        .carousel-menu__counter  {{currentSlide + 1}} / {{visibleResults.length}}       
-                        .carousel-menu__next(v-if="currentSlide !== visibleResults.length -1" @click="changeSlide(1)")  
-                            svg-icon(name='down-arrow')        
+                        .carousel-menu__prev(v-if="currentSlide !== 0" @click="changeSlide(-1)")
+                            svg-icon(name='down-arrow')
+                        .carousel-menu__counter  {{currentSlide + 1}} / {{visibleResults.length}}
+                        .carousel-menu__next(v-if="currentSlide !== visibleResults.length -1" @click="changeSlide(1)")
+                            svg-icon(name='down-arrow')
             .results__sub-block
                 button.green-btn(v-if="currentResultsNum < results.length" @click="showMore()") Показать еще
-                router-link.online-link(to="/online") Перейти на страницу Online тренировки  
-                    
+                router-link.online-link(to="/online") Перейти на страницу Online тренировки
+
 </template>
 
 <script>
@@ -65,10 +65,8 @@ export default {
         api.getResults().then(
             res => {
                 this.results = res.data.data
-                console.log(this.results)
             },
             rej => {
-                console.log(rej)
             }
         )
     },
@@ -104,6 +102,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.result-page {
+	flex:1;
+}
 .limit{
     &_small {
         @media (max-width: 1009px) {
@@ -175,11 +176,11 @@ export default {
         padding-right: 26px;
         max-width: 315px;
         &::after {
-            content: ''; 
-            position: absolute; 
-            right: 5px; top: 8px; 
-            border: 4px solid transparent; 
-            border-top: 7px solid #0ab69f; 
+            content: '';
+            position: absolute;
+            right: 5px; top: 8px;
+            border: 4px solid transparent;
+            border-top: 7px solid #0ab69f;
             @media (max-width: 767px) {
                 top: 12px;
             }
@@ -193,6 +194,7 @@ export default {
     }
 }
 .results  {
+	min-height: 100%;
     padding-top: 20px;
     background: url(~@/assets/images/bg_pattern_results.jpg);
     @media (max-width: 1009px) {
