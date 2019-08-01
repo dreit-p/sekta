@@ -75,7 +75,7 @@ export default {
 		return axios
 			.get(`${TEST_URL}/api/define-city`)
 			.then(response => {
-				commit('setCity', { city: response.data.data });
+				commit('setCity', response.data.data.id);
 			})
 			.catch(error => console.error(error));
 	},

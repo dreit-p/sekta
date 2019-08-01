@@ -5,14 +5,14 @@
 	p.heavy-text {{ this.courseName }}
 
 	form(@submit.prevent="onSubmit", novalidate="true")
-		app-checkbox(
+		//app-checkbox(
 			name='no_curator'
 			data-vv-as='Без куратора'
 			:value='inputsData.no_curator'
 			@change='inputsData.no_curator = $event'
 			:class="{ 'error': errors.has('no_curator'), 'success': fields.no_curator && fields.no_curator.valid}"
 			:error='errors.first("no_curator")'
-		) Без куратора
+			) Без куратора
 
 		app-dropdown(
 			placeholder='Платформа обучения'
@@ -75,8 +75,8 @@
 			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
 			:error='errors.first("termsAgree")'
 		)
-			| Ознакомлен и согласен с условиями
-			a(href='#') обработки персональных данных
+			| Ознакомлен и согласен с условиями 
+			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]', target='_BLANK', rel='noopener noreferrer') публичной оферты
 
 		green-btn(:disabled='!price || isFormLocked')
 			| Перейти к оплате
@@ -180,12 +180,18 @@ export default {
 			if (this.promocode) {
 				this.defineDiscountedPrice(this.price.id, this.promocode);
 			}
-		}
+		},
+		'inputsData.city_id'(newData) {
+			this.$store.commit('setCity', newData)
+		},
 	},
 	mounted() {
 		this.inputsData.city_id = this.userCity;
 	},
 	computed: {
+		userCity() {
+			return this.$store.getters.getUserCity;
+		},
 		...globalInputs.list,
 		price() {
 			if (this.formData.prices.length < 1) {
@@ -193,20 +199,11 @@ export default {
 			}
 			return this.formData.prices.find(price => price.id === this.inputsData.price_id);
 		},
-		userCity() {
-			if (this.$store.state.user.info) {
-				return JSON.parse(JSON.stringify(this.$store.state.user)).info.city.id
-			}
-			if (this.$store.state.user.cityId) {
-				return this.$store.state.user.cityId;
-			}
-			return false;
-		},
 	},
 	data () {
 		return {
 			inputsData: {
-				no_curator: false,
+				// no_curator: false,
 				channel_link: null,
 				channel_type: null,
 				price_id: null,

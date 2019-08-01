@@ -79,7 +79,7 @@ export default {
 	},
 	data() {
 		return {
-			reactiveValue: this.value,
+			reactiveValue: this.value  && this.value != 'null' ? this.value : '',
 		}
 	}
 }

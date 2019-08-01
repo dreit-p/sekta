@@ -41,8 +41,8 @@
 			:class="{ 'error': errors.first('termsAgree'), 'success': !errors.first('termsAgree')}"
 			:error='errors.first("termsAgree")'
 		)
-			| Ознакомлен и согласен с условиями
-			a(href='#')  публичной оферты
+			| Ознакомлен и согласен с условиями 
+			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]', target='_BLANK', rel='noopener noreferrer') публичной оферты
 
 		green-btn(:disabled='!price || isFormLocked')
 			| Перейти к оплате
@@ -142,6 +142,9 @@ export default {
 	},
 	computed: {
 		...globalInputs.list,
+		userCity() {
+			return this.$store.getters.getUserCity;
+		},
 		price() {
 			if (this.formData.practice.prices.length < 1) {
 				return false;

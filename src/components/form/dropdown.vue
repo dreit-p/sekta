@@ -77,7 +77,7 @@ export default {
 	},
 	watch: {
 		value() {
-			this.reactiveValue = this.value ? this.value : ''
+			this.reactiveValue = this.value && this.value != 'null' ? this.value : ''
 		},
 		reactiveValue() {
 			this.onChange(this.reactiveValue);
@@ -86,7 +86,7 @@ export default {
 	data (){
 		return {
 			isOpenedSelect: false,
-			reactiveValue: this.value ? this.value : ''
+			reactiveValue: this.value && this.value != 'null' ? this.value : ''
 		};
 	},
 	$_veeValidate: {

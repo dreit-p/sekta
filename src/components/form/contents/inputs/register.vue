@@ -85,7 +85,7 @@
 			:error='getInputError("termsAgree")'
 		)
 			| Ознакомлен и согласен с условиями
-			a(href='#') обработки персональных данных
+			a(href='../docs/privacy_policy.pdf', target='_BLANK', rel='noopener noreferrer') обработки персональных данных
 
 		app-checkbox(
 			name='spamAgree'
@@ -113,7 +113,7 @@ const FIELDS_NAMES_RATIO = {
 	client: [
 		'firstname',
 		'lastname',
-		'email', 
+		'email',
 		'password',
 		'passwordRepeat',
 		'isAdult',
