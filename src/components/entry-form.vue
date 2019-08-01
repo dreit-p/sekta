@@ -95,7 +95,8 @@ export default {
 			default: ()=>{}
 		},
 		courseName: {
-			type: String
+			type: String,
+			default: ''
 		},
 		bgImage: {
 			type: String,
@@ -127,10 +128,12 @@ export default {
 		},
 		onSubmit (type) {
 			switch (type) {
-				case 'login':
-					this.entryFormType = this.formType;
-				case 'register':
-					this.entryFormType = this.formType;
+			case 'login':
+				this.entryFormType = this.formType;
+				break;
+			case 'register':
+				this.entryFormType = this.formType;
+				break;
 			}
 		},
 	},

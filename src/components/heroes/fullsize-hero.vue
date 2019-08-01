@@ -22,9 +22,18 @@ export default {
 	components: {
 	},
 	props: {
-		image: String,
-		title: String,
-		sideToRender: String
+		image: {
+			type: String,
+			default: ''
+		},
+		title: {
+			type: String,
+			default: ''
+		},
+		sideToRender: {
+			type: String,
+			default: ''
+		},
 	},
 	methods: {
 		...mapActions(['setFormModalState'])

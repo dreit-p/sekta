@@ -1,4 +1,4 @@
-module.exports = ({ file, options, env }) => ({
+module.exports = () => ({
 	syntax: 'postcss-scss',
 	sourceMap: true,
 	plugins: {

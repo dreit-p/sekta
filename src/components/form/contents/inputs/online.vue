@@ -75,7 +75,7 @@
 			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
 			:error='errors.first("termsAgree")'
 		)
-			| Ознакомлен и согласен с условиями 
+			| Ознакомлен и согласен с условиями&nbsp;
 			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]', target='_BLANK', rel='noopener noreferrer') публичной оферты
 
 		green-btn(:disabled='!price || isFormLocked')
@@ -122,7 +122,8 @@ export default {
 			default: ()=>{}
 		},
 		courseName: {
-			type: String
+			type: String,
+			default: ''
 		}
 	},
 	methods: {
@@ -154,19 +155,19 @@ export default {
 				this.isFormLocked = true;
 
 				this.$store.dispatch('sendOnlineOrder', this.inputsData)
-				.then((resp)=>{
-					this.unlockForm();
-					this.$emit('submit', 'online');
-					this.$store.dispatch('setFormModalState', {modalState: false});
-					let orderID = resp.data.order_id;
-					this.$store.dispatch('reqOnlinePayment', {orderId: orderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
-						console.log(resp);
+					.then((resp)=>{
+						this.unlockForm();
+						this.$emit('submit', 'online');
+						this.$store.dispatch('setFormModalState', {modalState: false});
+						let orderID = resp.data.order_id;
+						this.$store.dispatch('reqOnlinePayment', {orderId: orderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
+							console.log(resp);
+						});
+					})
+					.catch((err)=>{
+						alert(err.data.message);
+						this.unlockForm();
 					});
-				})
-				.catch((err)=>{
-					alert(err.data.message);
-					this.unlockForm();
-				});
 			});
 		},
 	},

@@ -41,7 +41,7 @@
 			:class="{ 'error': errors.first('termsAgree'), 'success': !errors.first('termsAgree')}"
 			:error='errors.first("termsAgree")'
 		)
-			| Ознакомлен и согласен с условиями 
+			| Ознакомлен и согласен с условиями&nbsp;
 			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]', target='_BLANK', rel='noopener noreferrer') публичной оферты
 
 		green-btn(:disabled='!price || isFormLocked')
@@ -117,19 +117,19 @@ export default {
 				this.isFormLocked = true;
 
 				this.$store.dispatch('sendGymOrder', this.price.id)
-				.then((resp)=>{
-					this.unlockForm();
-					this.$emit('submit', 'face-to-face');
-					this.$store.dispatch('setFormModalState', {modalState: false});
-					let gymOrderID = resp.data.order_id;
-					this.$store.dispatch('reqGymPayment', {gymOrderId: gymOrderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
-						console.log(resp);
+					.then((resp)=>{
+						this.unlockForm();
+						this.$emit('submit', 'face-to-face');
+						this.$store.dispatch('setFormModalState', {modalState: false});
+						let gymOrderID = resp.data.order_id;
+						this.$store.dispatch('reqGymPayment', {gymOrderId: gymOrderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
+							console.log(resp);
+						});
+					})
+					.catch((err)=>{
+						alert(err.data.message);
+						this.unlockForm();
 					});
-				})
-				.catch((err)=>{
-					alert(err.data.message);
-					this.unlockForm();
-				});
 			});
 		},
 	},
@@ -174,7 +174,7 @@ export default {
 						let conDaysIdx = 0;
 						uniqByTime[time].reduce((prev, current)=>{
 							if (prev+1 === current) {
-								!!consecutiveDays[conDaysIdx]
+								consecutiveDays[conDaysIdx]
 									? consecutiveDays[conDaysIdx].push(current)
 									: consecutiveDays[conDaysIdx] = currentIndex === 0 ? [prev, current] : [current]
 								currentIndex++;

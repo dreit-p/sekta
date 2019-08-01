@@ -20,6 +20,7 @@ export default {
 	props: {
 		iframeLink: {
 			type: String,
+			default: ''
 		}
 	},
 	computed: {

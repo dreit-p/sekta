@@ -26,10 +26,22 @@ export default {
 		event: 'change'
 	},
 	props: {
-		placeholder: String,
-		caption: String,
-		name: String,
-		type: String,
+		placeholder: {
+			type: String,
+			default: ''
+		},
+		caption: {
+			type: String,
+			default: ''
+		},
+		name: {
+			type: String,
+			default: ''
+		},
+		type: {
+			type: String,
+			default: ''
+		},
 		options: {
 			type: Array,
 			default: ()=>[],

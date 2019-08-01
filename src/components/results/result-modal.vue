@@ -14,15 +14,15 @@
 
 <script>
 export default {
-    name: '',
-    props: {
-        result: Object
-    },
-    methods: {
-        closeHandler() {
-            this.$emit('close')
-        }
-    }
+	name: '',
+	props: {
+		result: Object
+	},
+	methods: {
+		closeHandler() {
+			this.$emit('close')
+		}
+	}
 }
 </script>
 

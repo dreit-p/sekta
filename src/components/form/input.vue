@@ -22,11 +22,24 @@ label.app-input(:class='this.$options.name')
 export default {
 	name: 'AppInput',
 	props: {
-		placeholder: String,
-		caption: String,
-		name: String,
-		type: String,
+		placeholder: {
+			type: String,
+			default: ''
+		},
+		caption: {
+			type: String,
+			default: ''
+		},
+		name: {
+			type: String,
+			default: ''
+		},
+		type: {
+			type: String,
+			default: ''
+		},
 		value: {
+			type: String,
 			default: ''
 		},
 		error: {

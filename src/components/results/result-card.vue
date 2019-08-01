@@ -8,15 +8,15 @@
 
 <script>
 export default {
-    name: 'ResultCard',
-    props: {
-        result: Object,
-    },
-    methods: {
-        clickHandler() {
-            this.$emit('clickHandler', this.result)
-        }
-    }
+	name: 'ResultCard',
+	props: {
+		result: Object,
+	},
+	methods: {
+		clickHandler() {
+			this.$emit('clickHandler', this.result)
+		}
+	}
 }
 </script>
 

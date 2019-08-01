@@ -86,7 +86,7 @@ div.gym
 </template>
 
 <script>
-	import Vue from 'vue';
+import Vue from 'vue';
 import vueHeadful from 'vue-headful';
 
 Vue.component('vue-headful', vueHeadful);

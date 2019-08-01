@@ -37,7 +37,6 @@ export default {
 	computed: {
 		user() {
 			if (this.$store.state.user.info) {
-				console.log('this.user.info: ', this.$store.state.user.info);
 				return JSON.parse(JSON.stringify(this.$store.state.user))
 			}
 			return false;
@@ -52,7 +51,7 @@ export default {
 		getInputError(name) {
 			if (this.errors.first(name)) {
 				return this.errors.first(name)
-			};
+			}
 			if (this.receivedErrors[name]) {
 				let errorString = '';
 				if (Array.isArray(this.receivedErrors[name])) {
@@ -95,21 +94,21 @@ export default {
 			this.ifValid(()=>{
 				this.isFormLocked = true;
 				this.$store.dispatch('userDetailsPosting', data)
-				.then(()=>{
-					this.unlockForm();
-				})
-				.catch((err)=>{
-					this.receivedErrors.watchers = {};
-					if (err.data.errors) {
-						this.createErrorsList(err.data.errors);
-					}
-					if (err.data.message) {
-						this.receivedErrors.message = err.data.message;
-					} else {
-						delete this.receivedErrors.message;
-					}
-					this.unlockForm();
-				});
+					.then(()=>{
+						this.unlockForm();
+					})
+					.catch((err)=>{
+						this.receivedErrors.watchers = {};
+						if (err.data.errors) {
+							this.createErrorsList(err.data.errors);
+						}
+						if (err.data.message) {
+							this.receivedErrors.message = err.data.message;
+						} else {
+							delete this.receivedErrors.message;
+						}
+						this.unlockForm();
+					});
 			})
 
 		}

@@ -27,7 +27,6 @@ export default {
 	computed: {
 		user() {
 			if (this.$store.state.user.info) {
-				console.log('this.user.info: ', this.$store.state.user.info);
 				return JSON.parse(JSON.stringify(this.$store.state.user))
 			}
 			return false;
@@ -55,12 +54,12 @@ export default {
 			this.ifValid(dataName, ()=>{
 				this.isFormLocked = true;
 				this.$store.dispatch('userDetailsPosting', this[dataName])
-				.then(()=>{
-					this.unlockForm();
-				})
-				.catch((err)=>{
-					this.unlockForm();
-				});
+					.then(()=>{
+						this.unlockForm();
+					})
+					.catch((err)=>{
+						this.unlockForm();
+					});
 			})
 
 		}
@@ -147,7 +146,7 @@ export default {
 	.fieldset-inner {
 		display: flex;
 		align-items: center;
-	
+
 		.app-input {
 			width: 20px;
 			height: 15px;

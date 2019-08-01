@@ -35,69 +35,69 @@
 import { Carousel, Slide } from 'vue-carousel';
 import api from '@/assets/api/index.js'
 export default {
-    name: 'Result',
-    components: {
-        Carousel,
-        Slide,
-        ResultCard: () => import('@/components/results/result-card.vue'),
-        ResultModal: () => import('@/components/results/result-modal.vue'),
-        SvgIcon: () => import("@/components/SvgIcon.vue")
-    },
+	name: 'Result',
+	components: {
+		Carousel,
+		Slide,
+		ResultCard: () => import('@/components/results/result-card.vue'),
+		ResultModal: () => import('@/components/results/result-modal.vue'),
+		SvgIcon: () => import("@/components/SvgIcon.vue")
+	},
 	data() {
-        return {
-            showResultModal: false,
-            tabs: [{name: 'Все'}, {name:'BOOTCAMP'}],
-            activeTabIndex: 0,
-            selectedTab: 'Все',
-            results: [],
-            mousePosition: {x: 0, y: 0},
-            currentResultsNum: 10,
-            resultInModal: {},
-            currentSlide: 0,
-        }
-    },
-    computed: {
-        visibleResults() {
-            return this.results.slice(0, this.currentResultsNum)
-        }
-    },
-    created() {
-        api.getResults().then(
-            res => {
-                this.results = res.data.data
-            },
-            rej => {
-            }
-        )
-    },
-    methods: {
-        changeActiveTab(index, tab) {
-            this.activeTabIndex = index
-            this.selectedTab = tab.name
-        },
-        changeSlide(number) {
-            this.currentSlide +=number
-        },
-        slideClick(e) {
-            if (this.mousePosition.x !== e.pageX || this.mousePosition.y !== e.pageY ) return
-            this.toggleResultModal(this.visibleResults[this.currentSlide])
-        },
-        saveMousePosition(e) {
-            this.mousePosition = {x: e.pageX, y: e.pageY}
-        },
-        toggleResultModal(result) {
-            this.showResultModal = !this.showResultModal
-            if (this.showResultModal && result) {
-                this.resultInModal = result
-                this.$store.dispatch('lockScroll', true);
-            } else {
-                this.$store.dispatch('lockScroll', false);
-            }
-        },
-        showMore() {
-            this.currentResultsNum += 10
-        }
-    }
+		return {
+			showResultModal: false,
+			tabs: [{name: 'Все'}, {name:'BOOTCAMP'}],
+			activeTabIndex: 0,
+			selectedTab: 'Все',
+			results: [],
+			mousePosition: {x: 0, y: 0},
+			currentResultsNum: 10,
+			resultInModal: {},
+			currentSlide: 0,
+		}
+	},
+	computed: {
+		visibleResults() {
+			return this.results.slice(0, this.currentResultsNum)
+		}
+	},
+	created() {
+		api.getResults().then(
+			res => {
+				this.results = res.data.data
+			},
+			rej => {
+			}
+		)
+	},
+	methods: {
+		changeActiveTab(index, tab) {
+			this.activeTabIndex = index
+			this.selectedTab = tab.name
+		},
+		changeSlide(number) {
+			this.currentSlide +=number
+		},
+		slideClick(e) {
+			if (this.mousePosition.x !== e.pageX || this.mousePosition.y !== e.pageY ) return
+			this.toggleResultModal(this.visibleResults[this.currentSlide])
+		},
+		saveMousePosition(e) {
+			this.mousePosition = {x: e.pageX, y: e.pageY}
+		},
+		toggleResultModal(result) {
+			this.showResultModal = !this.showResultModal
+			if (this.showResultModal && result) {
+				this.resultInModal = result
+				this.$store.dispatch('lockScroll', true);
+			} else {
+				this.$store.dispatch('lockScroll', false);
+			}
+		},
+		showMore() {
+			this.currentResultsNum += 10
+		}
+	}
 }
 </script>
 

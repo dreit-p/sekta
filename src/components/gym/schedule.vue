@@ -22,7 +22,7 @@
 
 				) {{tile.title}}
 		.mobile-grid(v-else)
-			.empty-msg(v-if='mobileGroups.length == 0') 
+			.empty-msg(v-if='mobileGroups.length == 0')
 				b Нет доступного времени.
 				p Выберите другое количество тренировок.
 			.grid(
@@ -120,18 +120,9 @@ export default {
 		},
 		mobileGroups() {
 			let groups = [];
-			let group = {
-				days: [],
-				rows: [],
-			};
 
 			let timeObj = {};
 			this.practices.forEach(practice => {
-				let row = {
-					days: [],
-					practiceIDs: [],
-					// times: [],
-				};
 
 				practice.schedules.forEach(practiceSchedule => {
 

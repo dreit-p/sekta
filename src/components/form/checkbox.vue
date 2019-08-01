@@ -20,8 +20,14 @@ label.app-checkbox(:class='this.$options.name')
 export default {
 	name: 'AppCheckbox',
 	props: {
-		caption: String,
-		name: String,
+		caption: {
+			type: String,
+			default: ''
+		},
+		name: {
+			type: String,
+			default: ''
+		},
 		required: Boolean,
 		value: {
 			type: Boolean,

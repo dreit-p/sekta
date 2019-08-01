@@ -2,18 +2,18 @@ import axios from 'axios'
 
 const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
 
-const postReq = (path, data) => {
-	return axios({
-		url: `${TEST_URL}${path}`,
-		data: data,
-		method: 'POST'
-	})
-		.then(resp=>resp)
-		.catch(err => {
-			console.warn(path, ': ', err);
-			throw err;
-		})
-}
+// const postReq = (path, data) => {
+// 	return axios({
+// 		url: `${TEST_URL}${path}`,
+// 		data: data,
+// 		method: 'POST'
+// 	})
+// 		.then(resp=>resp)
+// 		.catch(err => {
+// 			console.warn(path, ': ', err);
+// 			throw err;
+// 		})
+// }
 const getReq = (path, data) => {
 	return axios({
 		url: `${TEST_URL}${path}`,

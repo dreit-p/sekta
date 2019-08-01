@@ -90,10 +90,12 @@ export default {
 		...mapActions(['setFormModalState']),
 		onSubmit (type) {
 			switch (type) {
-				case 'login':
-					this.$router.push({name: 'personal'});
-				case 'register':
-					this.$router.push({name: 'personal'});
+			case 'login':
+				this.$router.push({name: 'personal'});
+				break;
+			case 'register':
+				this.$router.push({name: 'personal'});
+				break;
 			}
 		},
 	},
