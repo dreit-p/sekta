@@ -41,9 +41,9 @@
 
 					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-merch(v-if='entryFormType == "merch"', :key='entryFormType', @submit='onSubmit($event)')
+					inputs-product(v-if='entryFormType == "merch"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-bullet(v-if='entryFormType == "bullet"', :key='entryFormType', @submit='onSubmit($event)')
+					inputs-product(v-if='entryFormType == "bullet"', :key='entryFormType', @submit='onSubmit($event)')
 
 					inputs-face-to-face(v-if='entryFormType == "face-to-face"', :key='entryFormType', @submit='onSubmit($event)', v-bind:formData='this.formData')
 
@@ -58,7 +58,7 @@
 const formContent = {
 	types: ['login', 'register', 'recovery',
 		'certificates', 'online', 'face-to-face',
-		'camp', 'merch', 'bullet'],
+		'camp', 'merch', 'bullet', 'product'],
 	components: {
 		inputs: {},
 		texts: {}

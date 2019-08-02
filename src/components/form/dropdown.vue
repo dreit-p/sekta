@@ -46,10 +46,7 @@ export default {
 			type: Array,
 			default: ()=>[],
 		},
-		value: {
-			type: String,
-			default: '',
-		},
+		value: {},
 		error: {
 			type: String,
 			default: null

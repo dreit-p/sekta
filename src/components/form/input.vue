@@ -10,6 +10,8 @@ label.app-input(:class='this.$options.name')
 			autocomplete="off"
 			v-bind="$attrs"
 			@change="onChange($event.target.value)"
+			@keydown.enter="onEnterKey"
+			@blur="onBlurHandler($event.target.value)"
 		)
 		.icon.checked
 			svg-icon(name='icon-check')
@@ -45,6 +47,9 @@ export default {
 		error: {
 			type: String,
 			default: null
+		},
+		prevent: {
+			default: false
 		}
 	},
 	computed: {
@@ -79,6 +84,16 @@ export default {
 			this.$emit('change', data);
 			this.reactiveValue = data;
 		},
+		onBlurHandler(data) {
+			this.$emit('blur', data);
+			this.reactiveValue = data;
+		},
+		onEnterKey(e) {
+			if (this.prevent) {
+				e.preventDefault()
+				this.$emit('enterKey');
+			}
+		}
 	},
 	$_veeValidate: {
 		// value getter

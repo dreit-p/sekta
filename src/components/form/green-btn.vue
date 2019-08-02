@@ -9,6 +9,7 @@ export default {
 			typeOfElement,
 			{
 				class: {
+					'inverted': this.inverted,
 					'green-btn': true,
 				},
 				attrs: {
@@ -48,6 +49,9 @@ export default {
 		href: {
 			type: String,
 			default: ''
+		},
+		inverted: {
+			type: Boolean
 		}
 	}
 }
@@ -85,6 +89,12 @@ export default {
 			color: #b3b3b3 !important;
 			cursor: default;
 			pointer-events: none;
+		}
+
+		&.inverted {
+			background-color: white;
+			color: #0ab6a1;
+			border: solid 1px #0ab6a1;
 		}
 	}
 </style>
