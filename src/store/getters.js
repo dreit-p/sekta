@@ -11,6 +11,6 @@ export default {
 		if (state.user.cityId) {
 			return state.user.cityId;
 		}
-		return state.user.info.city.id;
+		return state.user.info ? state.user.info.city.id : undefined;
 	},
 }

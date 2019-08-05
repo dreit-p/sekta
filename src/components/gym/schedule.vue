@@ -12,10 +12,10 @@
 					:disabled='tile.practiceIDs.length < 1'
 					:class='{available: tile.practiceIDs.length > 0, selected: tile.practiceIDs.includes(selectedPracticeID), hovered: tile.practiceIDs.includes(hoveredPracticeID)}'
 					:style='{gridRow: tile.rowspan > 1 ? `${rowIndex+2} / ${rowIndex+2 + tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
-					@click='selectTile(tile); hoverTile(tile);'
+					@click='selectTile(tile.practiceIDs); hoverTile(tile.practiceIDs);'
 
-					@mouseenter='hoverTile(tile)'
-					@focus='hoverTile(tile)'
+					@mouseenter='hoverTile(tile.practiceIDs)'
+					@focus='hoverTile(tile.practiceIDs)'
 
 					@mouseleave='leaveTile()'
 					@blur='leaveTile()'
@@ -33,8 +33,9 @@
 				template(v-for='(row, rowIndex) in group.rows')
 					.tile.available(
 						v-for='(tile, tileIndex) in row.tiles'
-						:style='{gridRow: tile.practiceIDs.length > 0 && group.rows.length >= tile.practiceIDs.length ? `${rowIndex+2} / ${rowIndex+2 + tile.practiceIDs.length}` : "auto", gridColumn: tileIndex+1 }'
-						@click='selectTiles(tile.siblingsIds)'
+						:class='{selected: ((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices).includes(selectedPracticeID) }'
+						:style='{gridRow: tile.practiceIDs.length > 0 ? `${rowIndex+2} / ${rowIndex+2 + (tile.practiceIDs.length <= 1 ? 1 : group.practices.length) }` : "auto", gridColumn: tileIndex+1 }'
+						@click='selectTile((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices)'
 					) {{tile.time}}
 
 </template>
@@ -100,7 +101,7 @@ export default {
 					let row = findOrPushRow(times[0]);
 
 					let tile = row.tiles.find(t => t.weekDay === +practiceSchedule.week_day - 1);
-					tile.practiceIDs.push(practice.id);
+					tile.practiceIDs.push(+practice.id);
 					tile.rowspan = times.length; // fixme
 					tile.title = practiceSchedule.time;
 
@@ -128,19 +129,15 @@ export default {
 
 					if (timeObj.hasOwnProperty(practiceSchedule.time)) {
 						let uniqTime = timeObj[practiceSchedule.time];
-						// if (!uniqTime.times.find(time => time === practiceSchedule.time)) {
-						// 	uniqTime.times.push(practiceSchedule.time);
-						// }
-						if (!uniqTime.practiceIDs.find(id => id === practice.id)) {
-							uniqTime.practiceIDs.push(practice.id);
+						if (!uniqTime.practiceIDs.find(id => id === +practice.id)) {
+							uniqTime.practiceIDs.push(+practice.id);
 						}
 						if (!uniqTime.days.find(dayId => dayId === practiceSchedule.week_day)) {
 							uniqTime.days.push(practiceSchedule.week_day);
 						}
 					} else {
 						timeObj[practiceSchedule.time] = {
-							// times: [practiceSchedule.time],
-							practiceIDs: [practice.id],
+							practiceIDs: [+practice.id],
 							days: [practiceSchedule.week_day]
 						}
 					}
@@ -150,7 +147,7 @@ export default {
 			let rows = {};
 			for (let time in timeObj) {
 				if (timeObj.hasOwnProperty(time)) {
-					timeObj[time].practiceIDs.forEach(function(id) {
+					timeObj[time].practiceIDs.forEach((id)=>{
 						if (!rows.hasOwnProperty(id)) {
 							rows[id] = {
 								days: [],
@@ -158,13 +155,48 @@ export default {
 								tiles: [],
 							}
 						}
-						rows[id].days.push(timeObj[time].days);
-						rows[id].key = [...rows[id].key,...timeObj[time].days];
-						rows[id].tiles.push({
-							time: time,
-							practiceIDs: timeObj[time].practiceIDs,
-						});
+
+						let sameDayIdx = rows[id].tiles.findIndex(tile=>compareArrs(tile.days,timeObj[time].days));
+						if (sameDayIdx === -1) {
+							let index = rows[id].tiles.findIndex(tile => {
+								return tile.days[0] > timeObj[time].days[0]
+							});
+
+							let tileData = {
+									time: time,
+									days: timeObj[time].days,
+									practiceIDs: timeObj[time].practiceIDs,
+								}
+
+							if (index === -1) {
+								rows[id].days.push(timeObj[time].days);
+								rows[id].tiles.push(tileData);
+							} else {
+								rows[id].days.splice(index, 0, timeObj[time].days);
+								rows[id].tiles.splice(index, 0, tileData);
+							}
+
+							rows[id].key = [...rows[id].key,...timeObj[time].days];
+						} else {
+							let timeToInt = (t) => { let d = t.split(':'); return +d[0] * 60 + +d[1]; };
+
+							if (timeToInt(rows[id].tiles[sameDayIdx].time) < timeToInt(time)) {
+								rows[id].tiles[sameDayIdx].time += ', ' + time;
+							} else {
+								rows[id].tiles[sameDayIdx].time = time + ', ' + rows[id].tiles[sameDayIdx].time;
+							}
+						}
 					});
+				}
+			}
+
+
+			function addSorted(targetArr, element, comparingFn) {
+				let index = targetArr.findIndex(dayTime => comparingFn(dayTime));
+				if (index === -1) {
+					targetArr.push(element);
+				} else {
+					targetArr.splice(index, 0, element);
 				}
 			}
 
@@ -172,18 +204,63 @@ export default {
 				return arr1.length === arr2.length && arr1.sort().every((value, index)=>{ return value === arr2.sort()[index]});
 			}
 
+			let getHumanisedDays = (daysArr)=>{
+				let keyName = "";
+				let currentIndex = 0;
+
+				for (var timeIdx = daysArr.length - 1; timeIdx > currentIndex; timeIdx--) {
+					let consecutiveDays = [];
+					let conDaysIdx = 0;
+					daysArr.reduce((prev, current)=>{
+						if (prev+1 === current) {
+							consecutiveDays[conDaysIdx]
+								? consecutiveDays[conDaysIdx].push(current)
+								: consecutiveDays[conDaysIdx] = currentIndex === 0 ? [prev, current] : [current]
+							currentIndex++;
+						} else {
+							consecutiveDays[conDaysIdx] = currentIndex === 0 ? [prev, current] : [current]
+							conDaysIdx++;
+						}
+						return current;
+					});
+					for (var i = 0; i < consecutiveDays.length; i++) {
+						if (consecutiveDays[i].length > 2) {
+							keyName = keyName + this.daysNames[-1+ consecutiveDays[i][0]] +"-"+ this.daysNames[-1+ consecutiveDays[i][consecutiveDays[i].length-1]] + (i+1 < consecutiveDays.length ? ", " : "");
+						} else {
+							for (var j = 0; j < consecutiveDays[i].length; j++) {
+								keyName = keyName + this.daysNames[-1+ consecutiveDays[i][j]] + (j+1 < consecutiveDays[i].length ? ", " : "");
+							}
+						}
+					}
+				}
+
+				if (daysArr.length <=1) {
+					keyName = this.daysNames[daysArr[0]-1]
+				}
+				return keyName;
+			}
+
+			console.log('rows: ', rows);
 			for (let practiceId in rows) {
-				if (rows.hasOwnProperty(practiceId)) {
-					let row = rows[practiceId];
+				if (rows.hasOwnProperty(+practiceId)) {
+					let row = rows[+practiceId];
 					if (!groups.find(group => compareArrs(group.key, row.key))) {
+
 						groups.push({
-							days: row.days,
+							days: row.days.map(daysRow => getHumanisedDays(daysRow)),
 							key: row.key,
+							practices: [+practiceId],
 							rows: [{tiles: row.tiles}],
 						});
 					} else {
 						let groupIdx = groups.findIndex(group => compareArrs(group.key, row.key));
-						groups[groupIdx].rows.push({tiles: row.tiles});
+
+						let tiles = row.tiles.filter((tile)=>{
+							return +tile.practiceIDs[0] === +practiceId
+						});
+
+						groups[groupIdx].practices.push(+practiceId);
+						groups[groupIdx].rows.push({tiles: tiles});
 					}
 				}
 			}
@@ -216,22 +293,22 @@ export default {
 	methods: {
 		selectFirstTile() {
 			let tile = this.schedules[0].tiles.find(tile => tile.practiceIDs.length > 0);
-			this.selectTile(tile);
+			this.selectTile(tile.practiceIDs);
 		},
-		selectTile(tile) {
-			this.selectedPracticeID = this.getNextTile(tile);
+		selectTile(practiceIDs) {
+			this.selectedPracticeID = this.getNextTile(practiceIDs);
 		},
-		hoverTile(tile) {
-			this.hoveredPracticeID =  this.getNextTile(tile);
+		hoverTile(practiceIDs) {
+			this.hoveredPracticeID =  this.getNextTile(practiceIDs);
 		},
 		leaveTile() {
 			this.hoveredPracticeID = null;
 		},
-		getNextTile(tile) {
-			let seletedIndex = tile.practiceIDs.findIndex(id => id === this.selectedPracticeID);
-			let nextIndex = (seletedIndex + 1) % (tile.practiceIDs.length);
+		getNextTile(practiceIDs) {
+			let seletedIndex = practiceIDs.indexOf(this.selectedPracticeID);
+			let nextIndex = (seletedIndex + 1) % (practiceIDs.length);
 
-			return tile.practiceIDs[nextIndex];
+			return +practiceIDs[nextIndex];
 		},
 	},
 }
