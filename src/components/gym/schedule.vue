@@ -206,24 +206,25 @@ export default {
 
 			let getHumanisedDays = (daysArr)=>{
 				let keyName = "";
-				let currentIndex = 0;
+				let currentPairIndex = 0;
 
-				for (var timeIdx = daysArr.length - 1; timeIdx > currentIndex; timeIdx--) {
+				for (var timeIdx = daysArr.length - 1; timeIdx > currentPairIndex; timeIdx--) {
 					let consecutiveDays = [];
 					let conDaysIdx = 0;
 					daysArr.reduce((prev, current)=>{
 						if (prev+1 === current) {
 							consecutiveDays[conDaysIdx]
 								? consecutiveDays[conDaysIdx].push(current)
-								: consecutiveDays[conDaysIdx] = currentIndex === 0 ? [prev, current] : [current]
-							currentIndex++;
+								: consecutiveDays[conDaysIdx] = currentPairIndex === 0 ? [prev, current] : [current]
 						} else {
-							consecutiveDays[conDaysIdx] = currentIndex === 0 ? [prev, current] : [current]
+							consecutiveDays[conDaysIdx] = currentPairIndex === 0 ? [prev, current] : [current]
 							conDaysIdx++;
 						}
+						currentPairIndex++;
 						return current;
 					});
 					for (var i = 0; i < consecutiveDays.length; i++) {
+						if (i>0) {keyName += ', '}
 						if (consecutiveDays[i].length > 2) {
 							keyName = keyName + this.daysNames[-1+ consecutiveDays[i][0]] +"-"+ this.daysNames[-1+ consecutiveDays[i][consecutiveDays[i].length-1]] + (i+1 < consecutiveDays.length ? ", " : "");
 						} else {
@@ -263,13 +264,6 @@ export default {
 					}
 				}
 			}
-
-
-
-
-
-
-
 			return groups;
 		},
 	},
