@@ -12,7 +12,7 @@
 					:disabled='tile.practiceIDs.length < 1'
 					:class='{available: tile.practiceIDs.length > 0, selected: tile.practiceIDs.includes(selectedPracticeID), hovered: tile.practiceIDs.includes(hoveredPracticeID)}'
 					:style='{gridRow: tile.rowspan > 1 ? `${rowIndex+2} / ${rowIndex+2 + tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
-					@click='selectTile(tile.practiceIDs); hoverTile(tile.practiceIDs);'
+					@click='selectTile(tile.practiceIDs); hoverTile(tile.practiceIDs); clickHandler()'
 
 					@mouseenter='hoverTile(tile.practiceIDs)'
 					@focus='hoverTile(tile.practiceIDs)'
@@ -35,7 +35,7 @@
 						v-for='(tile, tileIndex) in row.tiles'
 						:class='{selected: ((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices).includes(selectedPracticeID) }'
 						:style='{gridRow: tile.practiceIDs.length > 0 ? `${rowIndex+2} / ${rowIndex+2 + (tile.practiceIDs.length <= 1 ? 1 : group.practices.length) }` : "auto", gridColumn: tileIndex+1 }'
-						@click='selectTile((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices)'
+						@click='selectTile((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices); clickHandler()'
 					) {{tile.time}}
 
 </template>
@@ -302,6 +302,9 @@ export default {
 			let nextIndex = (seletedIndex + 1) % (practiceIDs.length);
 
 			return +practiceIDs[nextIndex];
+		},
+		clickHandler() {
+			this.$emit('click');
 		},
 	},
 }

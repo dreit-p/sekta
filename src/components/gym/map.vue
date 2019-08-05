@@ -10,7 +10,7 @@
 				href='#'
 				v-for='gym in gyms'
 				:class='{checked: selectedGym === gym}'
-				@click.prevent='selectGym(gym)'
+				@click.prevent='selectGym(gym); clickHandler()'
 			)
 				p.bold {{gym.name}}
 				p gym.secondLine
@@ -31,10 +31,10 @@
 	.limit(v-if='selectedGym')
 		.additional-info
 			.links
-				span Не знаете как пройти в зал? 
+				span Не знаете как пройти в зал?
 				a(href='#', v-if='selectedGym.video_url', @click.prevent='showVideoModal = !showVideoModal') Посмотрите видео
-				span(v-if='selectedGym.video_url && selectedGym.description')  или 
-				a(href='#', v-if='selectedGym.description', @click.prevent='showDescriptionText = !showDescriptionText') Прочитайте описание 
+				span(v-if='selectedGym.video_url && selectedGym.description')  или
+				a(href='#', v-if='selectedGym.description', @click.prevent='showDescriptionText = !showDescriptionText') Прочитайте описание
 			.description-text(v-if='showDescriptionText && selectedGym.description') {{selectedGym.description}}
 	transition(v-if='selectedGym', name='fade')
 		video-modal(v-if='selectedGym.video_url && showVideoModal', :iframe-link='selectedGym.video_url', @close='showVideoModal = false')
@@ -103,6 +103,7 @@ export default {
 					callbacks: {
 						click: () => {
 							this.selectGym(gym);
+							this.clickHandler();
 						}
 					},
 					clusterName: 'gyms',
@@ -161,7 +162,10 @@ export default {
 				zoomMargin: [10, 10, 10, offsetLeft]
 			});
 			this.defaultPosition = map.getCenter();
-		}
+		},
+		clickHandler() {
+			this.$emit('click');
+		},
 	},
 }
 </script>
