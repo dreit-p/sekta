@@ -93,8 +93,13 @@ export default {
 
 		&.inverted {
 			background-color: white;
-			color: #0ab6a1;
-			border: solid 1px #0ab6a1;
+			color: var(--accent_color);
+			border: solid 1px var(--accent_color);
+			&:hover {
+				transition-duration: 0.2s, 0.2s;
+				background-color: var(--accent_color);
+				color: white;
+			}
 		}
 	}
 </style>
