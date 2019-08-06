@@ -26,11 +26,11 @@
 
 <script>
 export default {
-  name: "TextsMerch",
-  methods: {
-    setFormModalState(data) {
-      return this.$parent.setFormModalState(data);
-    }
-  }
+	name: "TextsMerch",
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	}
 };
 </script>

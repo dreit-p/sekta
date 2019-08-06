@@ -163,10 +163,10 @@ export default {
 							});
 
 							let tileData = {
-									time: time,
-									days: timeObj[time].days,
-									practiceIDs: timeObj[time].practiceIDs,
-								}
+								time: time,
+								days: timeObj[time].days,
+								practiceIDs: timeObj[time].practiceIDs,
+							}
 
 							if (index === -1) {
 								rows[id].days.push(timeObj[time].days);

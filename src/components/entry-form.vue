@@ -55,102 +55,102 @@
 ========================================*/
 
 const formContent = {
-  types: [
-    "login",
-    "register",
-    "recovery",
-    "certificates",
-    "online",
-    "face-to-face",
-    "camp",
-    "merch",
-    "bullet",
-    "product"
-  ],
-  components: {
-    inputs: {},
-    texts: {}
-  }
+	types: [
+		"login",
+		"register",
+		"recovery",
+		"certificates",
+		"online",
+		"face-to-face",
+		"camp",
+		"merch",
+		"bullet",
+		"product"
+	],
+	components: {
+		inputs: {},
+		texts: {}
+	}
 };
 
 for (let i = 0; i < formContent.types.length; i++) {
-  let type = formContent.types[i];
-  formContent.components.inputs["inputs-" + formContent.types[i]] = () => {
-    return import(
-      /* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`
-    );
-  };
-  formContent.components.texts["texts-" + formContent.types[i]] = () => {
-    return import(
-      /* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`
-    );
-  };
+	let type = formContent.types[i];
+	formContent.components.inputs["inputs-" + formContent.types[i]] = () => {
+		return import(
+			/* webpackChunkName: "form" */ `@/components/form/contents/inputs/${type}.vue`
+		);
+	};
+	formContent.components.texts["texts-" + formContent.types[i]] = () => {
+		return import(
+			/* webpackChunkName: "form" */ `@/components/form/contents/texts/${type}.vue`
+		);
+	};
 }
 
 /*=====  End of define the forms  ======*/
 
 export default {
-  name: "EntryForm",
-  components: {
-    AppInput: () => import("@/components/form/input.vue"),
-    AppCheckbox: () => import("@/components/form/checkbox.vue"),
-    ...formContent.components.inputs,
-    ...formContent.components.texts
-  },
-  props: {
-    formType: {
-      type: String,
-      default: "register"
-    },
-    formData: {
-      type: Object,
-      default: () => {}
-    },
-    courseName: {
-      type: String,
-      default: ""
-    },
-    bgImage: {
-      type: String,
-      default: "markes-bg_teal.jpg"
-    },
-    bgColor: {
-      type: String,
-      default: "cyan"
-    }
-  },
-  data() {
-    return {
-      backgroundImage: require("@/assets/images/" + this.bgImage),
-      entryFormType: this.$store.getters.isUserAuth
-        ? this.formType
-        : "register",
-      firstname: "",
-      lastname: "",
-      email: "",
-      emailRepeat: "",
-      password: "",
-      passwordRepeat: "",
-      isAdult: false,
-      termsAgree: false,
-      spamAgree: false
-    };
-  },
-  methods: {
-    setFormModalState(data) {
-      return (this.entryFormType = data.type);
-    },
-    onSubmit(type) {
-      switch (type) {
-        case "login":
-          this.entryFormType = this.formType;
-          break;
-        case "register":
-          this.entryFormType = this.formType;
-          break;
-      }
-    }
-  }
+	name: "EntryForm",
+	components: {
+		AppInput: () => import("@/components/form/input.vue"),
+		AppCheckbox: () => import("@/components/form/checkbox.vue"),
+		...formContent.components.inputs,
+		...formContent.components.texts
+	},
+	props: {
+		formType: {
+			type: String,
+			default: "register"
+		},
+		formData: {
+			type: Object,
+			default: () => {}
+		},
+		courseName: {
+			type: String,
+			default: ""
+		},
+		bgImage: {
+			type: String,
+			default: "markes-bg_teal.jpg"
+		},
+		bgColor: {
+			type: String,
+			default: "cyan"
+		}
+	},
+	data() {
+		return {
+			backgroundImage: require("@/assets/images/" + this.bgImage),
+			entryFormType: this.$store.getters.isUserAuth
+				? this.formType
+				: "register",
+			firstname: "",
+			lastname: "",
+			email: "",
+			emailRepeat: "",
+			password: "",
+			passwordRepeat: "",
+			isAdult: false,
+			termsAgree: false,
+			spamAgree: false
+		};
+	},
+	methods: {
+		setFormModalState(data) {
+			return (this.entryFormType = data.type);
+		},
+		onSubmit(type) {
+			switch (type) {
+			case "login":
+				this.entryFormType = this.formType;
+				break;
+			case "register":
+				this.entryFormType = this.formType;
+				break;
+			}
+		}
+	}
 };
 </script>
 
