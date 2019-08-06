@@ -54,7 +54,7 @@
 				v-validate='"required"'
 				:class="{ 'error': myErrors.index || errors.has('index'), 'success': index && !errors.has('index')}"
 				:error='errors.first("index")'
-				@input="() => inputHandler('index')"
+				@input="inputHandler('index')"
 				name='index'
 				type='index')
 
@@ -131,7 +131,7 @@
 			|&nbsp;
 			a(href='https://sektaschool.ru/site/docs/return_policy_merch.pdf', target='_BLANK', rel='noopener noreferrer') правилами возврата товара
 			|  и
-			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]' , target='_BLANK', rel='noopener noreferrer') публичной офертой
+			a(href="/docs/publicoffer_msk_new.pdf", target='_BLANK', rel='noopener noreferrer') публичной офертой
 
 		green-btn.green-btn_center(@click.prevent="makeOrder")
 			| Перейти к оплате

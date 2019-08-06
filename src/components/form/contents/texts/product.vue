@@ -9,26 +9,28 @@
 
 	p(style='margin-top: 20px')
 		b Доставка
-	p Доставляем курьером по России или отдаем в руки в Санкт-Петербурге по адресу: Невский пр., 11/2, офис 42 (пн—пт, с 11:00 до 19:00). 
-		| Если вашего города нет в списке или вы хотите заказать доставку за пределы РФ, пишите на 
+	p Доставляем курьером по России или отдаем в руки в Санкт-Петербурге по адресу: Невский пр., 11/2, офис 42 (пн—пт, с 11:00 до 19:00).
+		| Если вашего города нет в списке или вы хотите заказать доставку за пределы РФ, пишите на
 		a(href="mailto:info@sektaschool.ru") info@sektaschool.ru
 	hr
 	p.small-text В течение 24 часов после оплаты вам придет чек и письмо от нас, подтверждающее бронирование (не забудьте проверить папки “спам” и “промоакции”).
-		| Если вы не получили письмо в указанные сроки, напишите нам: 
+		| Если вы не получили письмо в указанные сроки, напишите нам:
 		a(href="mailto:info@sektaschool.ru") info@sektaschool.ru.u.
 	p.small-text(style="margin-top: 10px") При выборе варианта “Предоплата...” вторую часть оплаты необходимо внести до 1 июля. Ссылка на вторую оплату придет вам в письме
 	div(style='margin-top: 37px')
-		p.tiny-text Оплата производится на сайте Яндекс.Кассы
-		p.tiny-text Оказание услуг осуществляется ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА *ГОРОД*»
+		p.tiny-text Оплата производится на сайте&nbsp;
+			a(href='https://kassa.yandex.ru/') Яндекс.Кассы
+		p.tiny-text Оказание услуг осуществляется&nbsp;
+			a(:href='"/docs/publicoffer_msk_new.pdf"', target='_BLANK', rel='noopener noreferrer') ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА Москва»
 </template>
 
 <script>
 export default {
-	name: 'TextsMerch',
-	methods: {
-		setFormModalState(data) {
-			return this.$parent.setFormModalState(data);
-		}
-	},
-}
+  name: "TextsMerch",
+  methods: {
+    setFormModalState(data) {
+      return this.$parent.setFormModalState(data);
+    }
+  }
+};
 </script>
