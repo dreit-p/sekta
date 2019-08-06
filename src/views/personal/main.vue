@@ -13,9 +13,10 @@
 						:courseName="course.course_name"
 						:payStatus="course.pay_status"
 						:group="course.group"
+						:url="course.approve_payment_url"
 						additionalInfo='#SektaBootCamp2 – это тренировочный интенсив, который настроен под тебя и твои цели.'
 						@goToCourse="goToCourse"
-						@pay="payCourse('info')"
+						@pay="redirect(course.approve_payment_url)"
 					)
 				template(v-if="gymCourses.length > 0")
 					h2.section-title Активные очные курсы
@@ -26,7 +27,7 @@
 						:group="course.group"
 						additionalInfo='#SektaBootCamp – это тренировочный интенсив, который настроен под тебя и твои цели.'
 						@goToCourse="goToCourse"
-						@pay="payCourse('info')"
+						@pay="redirect(course.approve_payment_url)"
 					)
 				h2.section-title Сертфикаты
 				.tile.goods
@@ -135,7 +136,8 @@ export default {
 		sendMailConfirm() {
 			this.isMailSent = true
 		},
-		payCourse(ttttt) {
+		redirect(url) {
+			window.location = url
 		},
 		goToCourse() {
 		},

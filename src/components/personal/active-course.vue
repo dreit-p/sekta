@@ -28,7 +28,7 @@
 
 			.btns
 				green-btn(inverted v-if="group").btn Открыть курс
-				green-btn.btn.btn-green(@click="payHandler") Оплатить курс
+				green-btn.btn.btn-green(v-if="url" @click="payHandler") Оплатить курс
 		.additional-content(
 			v-bind:class="{ dropdown_active: isDropDownActive }"
 		)
@@ -64,6 +64,10 @@ export default {
 			type: String,
 			default: null
 		},
+		url: {
+			type: String,
+			default: null
+		}
 	},
 	data() {
 		return {
