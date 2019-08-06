@@ -30,10 +30,10 @@ div.course
 				p Чтобы тренировки укрепляли здоровье и способствовали похудению, они должны быть сложными, но выполнимыми и приносить вам радость. Наш курс состоит из таких тренировок, поэтому вы не бросите его после первого занятия.
 				p Курс доступен онлайн и в залах Москвы и Санкт-Петербурга.
 				p
-					b Длительность курса: 
+					b Длительность курса:
 					| 9 недель.
 				p
-					b Стоимость одной недели обучения: 
+					b Стоимость одной недели обучения:
 					| 1 350 рублей.
 				h5
 					b Особенности программы:
@@ -49,7 +49,7 @@ div.course
 	caption-section(v-if='courseInfo'
 		:dateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType="online", :formData='courseInfo.prices', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType="online", :formData='{prices: courseInfo.prices}', :courseName='courseInfo.name')
 </template>
 
 <script>
@@ -87,5 +87,5 @@ export default {
 </script>
 
 <style lang="postcss">
-	
+
 </style>

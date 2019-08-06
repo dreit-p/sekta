@@ -32,10 +32,10 @@ div.course
 				p После беременности бывает диастаз, и это нормально. Если он не проходит, мы поможем справиться с ним постепенно — убрать полностью или сократить его проявление.
 
 				p
-					b Длительность курса: 
+					b Длительность курса:
 					| 9 недель.
 				p
-					b Стоимость одной недели обучения: 
+					b Стоимость одной недели обучения:
 					| 1 350 рублей.
 				h5
 					b Особенности программы:
@@ -51,7 +51,7 @@ div.course
 	caption-section(v-if='courseInfo'
 		:dateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType='online', :formData='courseInfo.prices', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType='online', :formData='{prices: courseInfo.prices}', :courseName='courseInfo.name')
 </template>
 
 <script>
@@ -90,5 +90,5 @@ export default {
 </script>
 
 <style lang="postcss">
-	
+
 </style>

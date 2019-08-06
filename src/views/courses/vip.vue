@@ -14,10 +14,10 @@ div.course
 			.text-typography
 				h3.center #SEKTAVIP
 				p
-					b Длительность любого VIP курса: 
+					b Длительность любого VIP курса:
 					| столько, сколько нужно для достижения целей каждого отдельного ученика
 				p
-					b Стоимость: 
+					b Стоимость:
 					| Базовый курс – 3500 рублей в неделю
 				hr
 				h5
@@ -30,9 +30,9 @@ div.course
 					li индивидуальная тренировочная программа с учетом вашего свободного времени, жизненного графика, состояния здоровья, уровня вашей физической подготовки;
 					li анализ рациона, пищевых привычек и построение актуального для ваших целей режима питания (мы учитываем все ваши предпочтения);
 					li возможность бесплатно посещать наши очные групповые занятия (3 раза в неделю) при наличии филиала в вашем городе.
-				p На любой ваш вопрос мы ответим по телефону 
-				a(href='tel:8 800 500 68 82') 8 800 500 68 82 
-				| или по почте 
+				p На любой ваш вопрос мы ответим по телефону
+				a(href='tel:8 800 500 68 82') 8 800 500 68 82
+				| или по почте
 				a(href='mailto: vip@sektaschool.ru') vip@sektaschool.ru
 				| .
 
@@ -40,7 +40,7 @@ div.course
 	caption-section(v-if='courseInfo'
 		:dateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType='online', :formData='courseInfo.prices', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType='online', :formData='{prices: courseInfo.prices}', :courseName='courseInfo.name')
 </template>
 
 <script>
@@ -78,5 +78,5 @@ export default {
 </script>
 
 <style lang="postcss">
-	
+
 </style>
