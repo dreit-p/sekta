@@ -3,7 +3,7 @@ section.interractive_desc
 	.limit
 		.other-section-text
 			.notice
-				| Длится 10 недель 
+				| Длится 10 недель
 				br
 				| старт каждый понедельник
 			p
@@ -18,7 +18,7 @@ section.interractive_desc
 				| хотелось идти вперед.
 		.info-canvas
 			h1.title
-				| что такое онлайн‑Курс 
+				| что такое онлайн‑Курс
 				br
 				| #sektaevolution?
 			.main-image(:data-selected-index='activeSectionIdx')
@@ -111,14 +111,14 @@ export default {
 				data.throttled = true;
 				setTimeout(()=>{
 					data.throttled = false;
-				}, data.delay); 
+				}, data.delay);
 			}
 			clearTimeout(data.forLastExec);
 			data.forLastExec = setTimeout(cb, data.delay);
 		},
 		onElementView(elem, cb) {
 			let screenHeight = document.documentElement.clientHeight;
-			if (elem.getBoundingClientRect().top < ( screenHeight/2 ) 
+			if (elem.getBoundingClientRect().top < ( screenHeight/2 )
 				&& elem.getBoundingClientRect().bottom > ( screenHeight/2 )
 			) {
 				cb();
@@ -138,14 +138,14 @@ export default {
 
 				let floatPosition = (-container.getBoundingClientRect().top - sectionHeight *2) /sectionHeight;
 
-				let debug = ()=>{
-					console.log({
-						'elementHeight ': elementHeight, 
-						// 'stepHeight ': stepHeight, 
-						'sectionHeight ': sectionHeight,
-						'floatPosition ': floatPosition
-					});
-				}
+				// let debug = ()=>{
+				// 	console.log({
+				// 		'elementHeight ': elementHeight,
+				// 		// 'stepHeight ': stepHeight,
+				// 		'sectionHeight ': sectionHeight,
+				// 		'floatPosition ': floatPosition
+				// 	});
+				// }
 
 				// debug();
 
@@ -448,7 +448,7 @@ export default {
 		/*=======================================
 		=            More then 900px            =
 		=======================================*/
-		
+
 		@media (min-width: 901px) {
 			.text-blocks {
 				.left,
@@ -558,14 +558,14 @@ export default {
 				padding-left: 85px;
 			}
 		}
-		
+
 		/*=====  End of More then 900px  ======*/
-		
+
 
 		/*======================================================
 		=            Tablet (between 650 and 900px)            =
 		======================================================*/
-		
+
 		@media (max-width: 900px) and (min-width: 651px) {
 			min-height: 695px;
 			margin-bottom: 60px;
@@ -641,14 +641,14 @@ export default {
 				}
 			}
 		}
-		
+
 		/*=====  End of Tablet (between 425 and 900px)  ======*/
-		
+
 
 		/*============================================
 		=            Mobile (until 650px)            =
 		============================================*/
-		
+
 		@media (max-width: 650px) {
 			min-height: 430px;
 			margin-bottom: 40px;
@@ -820,9 +820,9 @@ export default {
 				}
 			}
 		}
-		
+
 		/*=====  End of Mobile (until 650px)  ======*/
-		
+
 
 		@media (max-width: 450px) {
 			.main-image {

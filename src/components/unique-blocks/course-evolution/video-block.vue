@@ -10,7 +10,7 @@ section.video_block
 			img.notebook(src='@/assets/images/evolution/notebook_mockup.png' alt='')
 			img.video-picture(src='@/assets/images/evolution/video_frame.jpg' alt='')
 			.video-frame
-				iframe(width='560' height='315' src='https://www.youtube.com/embed/J5Ng4480qq4' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+				iframe(width='560' height='315' src='https://player.vimeo.com/video/349415802' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 				.play-btn(@click='isEnabled = true')
 					img(src='@/assets/images/evolution/play-btn.png' alt='')
 		.phone
@@ -132,6 +132,7 @@ section.video_block {
 					bottom: 0;
 				}
 				iframe {
+					background-color: #111;
 					width: 100%;
 					height: 100%;
 					display: none;

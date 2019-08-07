@@ -20,8 +20,14 @@ label.app-checkbox(:class='this.$options.name')
 export default {
 	name: 'AppCheckbox',
 	props: {
-		caption: String,
-		name: String,
+		caption: {
+			type: String,
+			default: ''
+		},
+		name: {
+			type: String,
+			default: ''
+		},
 		required: Boolean,
 		value: {
 			type: Boolean,
@@ -51,6 +57,7 @@ export default {
 		handleChange() {
 			if (!this.disabled) {
 				this.$emit('input', this.value ? false : true);
+				this.$emit('change', this.value ? false : true);
 			}
 		}
 	},

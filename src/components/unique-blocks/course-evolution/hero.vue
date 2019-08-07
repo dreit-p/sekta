@@ -4,7 +4,7 @@ section.evo-hero
 		.text-side
 			img.evo-logo(src='@/assets/images/evolution/logo-evolution.svg' alt='')
 			.colored-caption
-				| онлайн фитнес-курс 
+				| онлайн фитнес-курс
 				br
 				| у вас дома
 			.text
@@ -19,7 +19,7 @@ section.evo-hero
 					| Постарались сделать всё, чтобы вам всегда
 					| хотелось идти вперед.
 			.notice
-				| Длится 10 недель 
+				| Длится 10 недель
 				br
 				| старт каждый понедельник
 			img.pair(src='@/assets/images/evolution/img-pair-flip.png' alt='')
@@ -48,7 +48,7 @@ export default {
 					y = 0;
 
 				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
-					x += el.offsetLeft || 0; 
+					x += el.offsetLeft || 0;
 					y += el.offsetTop || 0;
 					el = el.offsetParent;
 				}
@@ -66,7 +66,7 @@ section.evo-hero {
 	overflow: hidden;
 	.limit {
 		display: flex;
-		max-height: calc(var(--col-total) * 6);
+		max-height: 890px;
 		width: 100%;
 		height: 100vw;
 		align-items: center;

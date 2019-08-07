@@ -9,6 +9,7 @@ export default {
 			typeOfElement,
 			{
 				class: {
+					'inverted': this.inverted,
 					'green-btn': true,
 				},
 				attrs: {
@@ -46,7 +47,11 @@ export default {
 	},
 	props: {
 		href: {
-			type: String
+			type: String,
+			default: ''
+		},
+		inverted: {
+			type: Boolean
 		}
 	}
 }
@@ -84,6 +89,17 @@ export default {
 			color: #b3b3b3 !important;
 			cursor: default;
 			pointer-events: none;
+		}
+
+		&.inverted {
+			background-color: white;
+			color: var(--accent_color);
+			border: solid 1px var(--accent_color);
+			&:hover {
+				transition-duration: 0.2s, 0.2s;
+				background-color: var(--accent_color);
+				color: white;
+			}
 		}
 	}
 </style>

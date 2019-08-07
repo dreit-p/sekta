@@ -16,7 +16,7 @@ div
 				.icons
 					a(v-for='network in networks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
 						svg-icon(:name='"network-" + network.name')
-				router-link(class='link smaller animated-underline', to='/privacy_policy') Политика конфиденциальности
+				a(class='link smaller animated-underline', href='../docs/privacy_policy.pdf', target='_BLANK', rel='noopener noreferrer') Политика конфиденциальности
 			section.contacts
 				a.phone.animated-underline(href='callto: +78005006882') 8 (800) 500–68–82
 				a.mail.animated-underline(href='mailto: info@sektaschool.ru') info@sektaschool.ru

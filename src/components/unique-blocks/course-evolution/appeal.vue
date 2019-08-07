@@ -4,7 +4,8 @@ section.appeal
 		.text-side
 			.big-text запишитесь сейчас
 			.medium-text ближайший старт
-			.highlighted-text 22 июля
+			.highlighted-text 22 июля – VK
+			.highlighted-text 22 июля – Telegram
 			a.purple-btn(@click='scrollTo("entry-form")')
 				.border
 				.btn Записаться на курс
@@ -32,7 +33,7 @@ export default {
 					y = 0;
 
 				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
-					x += el.offsetLeft || 0; 
+					x += el.offsetLeft || 0;
 					y += el.offsetTop || 0;
 					el = el.offsetParent;
 				}
@@ -98,7 +99,6 @@ section.appeal {
 			}
 		}
 		.highlighted-text {
-			text-transform: uppercase;
 			color: #ff6a00;
 			font-size: 36px;
 			margin: 10px *;

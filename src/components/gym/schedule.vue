@@ -1,7 +1,9 @@
 <template lang="pug">
 .time-selector
 	.limit
-		p.description Это небольшое описание. Например, текст про то, что есть несколько групп на выбор и для каждого свое время, а в субботу время общее для всех программ. А если это абонемент на 6 занятий, то на выбор любое время до 18:00 или после 20:00.
+		p.description Чтобы записаться на курс #sekta в зале, в таблице ниже вам нужно выбрать группу — конкретные дни недели и время, в которые вы будете заниматься. Например: понедельник, среда и пятница в 18:00.
+		p Чтобы выбрать конкретное расписание нажмите на удобные дни, вся группа загорится зеленым.
+		p Если в ячейке несколько вариантов времени для одного дня - значит, в этот день вы можете выбирать, в какое время посещать тренировки.
 
 		.grid(v-if='windowWidth > mobileWidth')
 			.day(v-for='name in daysNames') {{name}}
@@ -11,32 +13,32 @@
 					v-if='tile.rowspan !== 0'
 					:disabled='tile.practiceIDs.length < 1'
 					:class='{available: tile.practiceIDs.length > 0, selected: tile.practiceIDs.includes(selectedPracticeID), hovered: tile.practiceIDs.includes(hoveredPracticeID)}'
-					:style='{gridRow: tile.rowspan > 1 ? `${rowIndex+2} / ${rowIndex+2 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
-					@click='selectTile(tile); hoverTile(tile);'
+					:style='{gridRow: tile.rowspan > 1 ? `${rowIndex+2} / ${rowIndex+2 + tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
+					@click='selectTile(tile.practiceIDs); hoverTile(tile.practiceIDs); clickHandler()'
 
-					@mouseenter='hoverTile(tile)'
-					@focus='hoverTile(tile)'
+					@mouseenter='hoverTile(tile.practiceIDs)'
+					@focus='hoverTile(tile.practiceIDs)'
 
 					@mouseleave='leaveTile()'
 					@blur='leaveTile()'
 
 				) {{tile.title}}
-		//.mobile-grid(v-else)
-			.empty-msg(v-if='minimizedGroups.length == 0') 
+		.mobile-grid(v-else)
+			.empty-msg(v-if='mobileGroups.length == 0')
 				b Нет доступного времени.
 				p Выберите другое количество тренировок.
 			.grid(
-				v-for='(group) in minimizedGroups'
-				:style='{gridTemplateColumns: `repeat(${group.width}, 1fr [col-start])`}'
+				v-for='(group) in mobileGroups'
+				:style='{gridTemplateColumns: `repeat(${group.days.length}, 1fr [col-start])`}'
 			)
-				.day(v-for='(dayTitle) in group.daysTitles') {{dayTitle}}
+				.day(v-for='(dayIdxs) in group.days') {{dayIdxs}}
 				template(v-for='(row, rowIndex) in group.rows')
 					.tile.available(
-						v-for='(tile, tileIndex) in row'
-						:class='{selected: isContainsArray(selectedIDs, tile.siblingsIds)}'
-						:style='{gridRow: tile.rowspan > 0 && group.rows.length >= tile.rowspan ? `${+tile.row+1} / ${+tile.row+1 + +tile.rowspan}` : "auto", gridColumn: tileIndex+1 }'
-						@click='selectTiles(tile.siblingsIds)'
-					) {{tile.text}}
+						v-for='(tile, tileIndex) in row.tiles'
+						:class='{selected: ((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices).includes(selectedPracticeID) }'
+						:style='{gridRow: tile.practiceIDs.length > 0 ? `${rowIndex+2} / ${rowIndex+2 + (tile.practiceIDs.length <= 1 ? 1 : group.practices.length) }` : "auto", gridColumn: tileIndex+1 }'
+						@click='selectTile((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices); clickHandler()'
+					) {{tile.time}}
 
 </template>
 
@@ -101,7 +103,7 @@ export default {
 					let row = findOrPushRow(times[0]);
 
 					let tile = row.tiles.find(t => t.weekDay === +practiceSchedule.week_day - 1);
-					tile.practiceIDs.push(practice.id);
+					tile.practiceIDs.push(+practice.id);
 					tile.rowspan = times.length; // fixme
 					tile.title = practiceSchedule.time;
 
@@ -118,6 +120,153 @@ export default {
 			});
 
 			return schedules;
+		},
+		mobileGroups() {
+			let groups = [];
+
+			let timeObj = {};
+			this.practices.forEach(practice => {
+
+				practice.schedules.forEach(practiceSchedule => {
+
+					if (timeObj.hasOwnProperty(practiceSchedule.time)) {
+						let uniqTime = timeObj[practiceSchedule.time];
+						if (!uniqTime.practiceIDs.find(id => id === +practice.id)) {
+							uniqTime.practiceIDs.push(+practice.id);
+						}
+						if (!uniqTime.days.find(dayId => dayId === practiceSchedule.week_day)) {
+							uniqTime.days.push(practiceSchedule.week_day);
+						}
+					} else {
+						timeObj[practiceSchedule.time] = {
+							practiceIDs: [+practice.id],
+							days: [practiceSchedule.week_day]
+						}
+					}
+				});
+			});
+
+			let rows = {};
+			for (let time in timeObj) {
+				if (timeObj.hasOwnProperty(time)) {
+					timeObj[time].practiceIDs.forEach((id)=>{
+						if (!rows.hasOwnProperty(id)) {
+							rows[id] = {
+								days: [],
+								key: [],
+								tiles: [],
+							}
+						}
+
+						let sameDayIdx = rows[id].tiles.findIndex(tile=>compareArrs(tile.days,timeObj[time].days));
+						if (sameDayIdx === -1) {
+							let index = rows[id].tiles.findIndex(tile => {
+								return tile.days[0] > timeObj[time].days[0]
+							});
+
+							let tileData = {
+								time: time,
+								days: timeObj[time].days,
+								practiceIDs: timeObj[time].practiceIDs,
+							}
+
+							if (index === -1) {
+								rows[id].days.push(timeObj[time].days);
+								rows[id].tiles.push(tileData);
+							} else {
+								rows[id].days.splice(index, 0, timeObj[time].days);
+								rows[id].tiles.splice(index, 0, tileData);
+							}
+
+							rows[id].key = [...rows[id].key,...timeObj[time].days];
+						} else {
+							let timeToInt = (t) => { let d = t.split(':'); return +d[0] * 60 + +d[1]; };
+
+							if (timeToInt(rows[id].tiles[sameDayIdx].time) < timeToInt(time)) {
+								rows[id].tiles[sameDayIdx].time += ', ' + time;
+							} else {
+								rows[id].tiles[sameDayIdx].time = time + ', ' + rows[id].tiles[sameDayIdx].time;
+							}
+						}
+					});
+				}
+			}
+
+
+			function addSorted(targetArr, element, comparingFn) {
+				let index = targetArr.findIndex(dayTime => comparingFn(dayTime));
+				if (index === -1) {
+					targetArr.push(element);
+				} else {
+					targetArr.splice(index, 0, element);
+				}
+			}
+
+			function compareArrs(arr1, arr2) {
+				return arr1.length === arr2.length && arr1.sort().every((value, index)=>{ return value === arr2.sort()[index]});
+			}
+
+			let getHumanisedDays = (daysArr)=>{
+				let keyName = "";
+				let currentPairIndex = 0;
+
+				for (var timeIdx = daysArr.length - 1; timeIdx > currentPairIndex; timeIdx--) {
+					let consecutiveDays = [];
+					let conDaysIdx = 0;
+					daysArr.reduce((prev, current)=>{
+						if (prev+1 === current) {
+							consecutiveDays[conDaysIdx]
+								? consecutiveDays[conDaysIdx].push(current)
+								: consecutiveDays[conDaysIdx] = currentPairIndex === 0 ? [prev, current] : [current]
+						} else {
+							consecutiveDays[conDaysIdx] = currentPairIndex === 0 ? [prev, current] : [current]
+							conDaysIdx++;
+						}
+						currentPairIndex++;
+						return current;
+					});
+					for (var i = 0; i < consecutiveDays.length; i++) {
+						if (i>0) {keyName += ', '}
+						if (consecutiveDays[i].length > 2) {
+							keyName = keyName + this.daysNames[-1+ consecutiveDays[i][0]] +"-"+ this.daysNames[-1+ consecutiveDays[i][consecutiveDays[i].length-1]] + (i+1 < consecutiveDays.length ? ", " : "");
+						} else {
+							for (var j = 0; j < consecutiveDays[i].length; j++) {
+								keyName = keyName + this.daysNames[-1+ consecutiveDays[i][j]] + (j+1 < consecutiveDays[i].length ? ", " : "");
+							}
+						}
+					}
+				}
+
+				if (daysArr.length <=1) {
+					keyName = this.daysNames[daysArr[0]-1]
+				}
+				return keyName;
+			}
+
+			for (let practiceId in rows) {
+				if (rows.hasOwnProperty(+practiceId)) {
+					let row = rows[+practiceId];
+					if (!groups.find(group => compareArrs(group.key, row.key))) {
+
+						groups.push({
+							days: row.days.map(daysRow => getHumanisedDays(daysRow)),
+							key: row.key,
+							practices: [+practiceId],
+							rows: [{tiles: row.tiles}],
+						});
+					} else {
+						let groupIdx = groups.findIndex(group => compareArrs(group.key, row.key));
+
+						let tiles = row.tiles.filter((tile)=>{
+							return +tile.practiceIDs[0] === +practiceId
+						});
+
+						groups[groupIdx].practices.push(+practiceId);
+						groups[groupIdx].rows.push({tiles: tiles});
+					}
+				}
+			}
+			return groups;
 		},
 	},
 	watch: {
@@ -139,22 +288,25 @@ export default {
 	methods: {
 		selectFirstTile() {
 			let tile = this.schedules[0].tiles.find(tile => tile.practiceIDs.length > 0);
-			this.selectTile(tile);
+			this.selectTile(tile.practiceIDs);
 		},
-		selectTile(tile) {
-			this.selectedPracticeID = this.getNextTile(tile);
+		selectTile(practiceIDs) {
+			this.selectedPracticeID = this.getNextTile(practiceIDs);
 		},
-		hoverTile(tile) {
-			this.hoveredPracticeID =  this.getNextTile(tile);
+		hoverTile(practiceIDs) {
+			this.hoveredPracticeID =  this.getNextTile(practiceIDs);
 		},
 		leaveTile() {
 			this.hoveredPracticeID = null;
 		},
-		getNextTile(tile) {
-			let seletedIndex = tile.practiceIDs.findIndex(id => id === this.selectedPracticeID);
-			let nextIndex = (seletedIndex + 1) % (tile.practiceIDs.length);
+		getNextTile(practiceIDs) {
+			let seletedIndex = practiceIDs.indexOf(this.selectedPracticeID);
+			let nextIndex = (seletedIndex + 1) % (practiceIDs.length);
 
-			return tile.practiceIDs[nextIndex];
+			return +practiceIDs[nextIndex];
+		},
+		clickHandler() {
+			this.$emit('click');
 		},
 	},
 }

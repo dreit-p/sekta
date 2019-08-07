@@ -75,7 +75,7 @@ export default {
 		return axios
 			.get(`${TEST_URL}/api/define-city`)
 			.then(response => {
-				commit('setCity', { city: response.data.data });
+				commit('setCity', response.data.data.id);
 			})
 			.catch(error => console.error(error));
 	},
@@ -84,6 +84,46 @@ export default {
 			.then(resp=>{
 				commit('setUserInfo', { type: 'token', data: resp.data.token })
 				axios.defaults.headers.common = {'Authorization': `Bearer ${resp.data.token}`}
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	sendGymOrder({state}, price_id) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq('/api/personal/gym-orders', {price_id})
+			.then(resp=>{
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	sendOnlineOrder({state}, data) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq('/api/personal/online-orders', data)
+			.then(resp=>{
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	reqGymPayment({state}, {gymOrderId, price_id, promocode}) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq(`/api/personal/gym-orders/${gymOrderId}/payments`, {price_id, promocode})
+			.then(resp=>{
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	reqOnlinePayment({state}, {orderId, price_id, promocode}) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return postReq(`/api/personal/online-orders/${orderId}/payments`, {price_id, promocode})
+			.then(resp=>{
 				return resp
 			})
 			.catch(err=>{
@@ -133,6 +173,19 @@ export default {
 					router.push({name: 'home'});
 				})
 		}
+	},
+	reqDiscountedPrice(context, {price_id, code}) {
+		if (! price_id || !code) {
+			return;
+		}
+
+		return getReq(`/api/prices/${price_id}/calc-with-promocode/${code}`)
+			.then((resp)=>{
+				return resp.data;
+			})
+			.catch(requestError=>{
+				throw requestError.response;
+			});
 	},
 	updateOnlineCourses({ state, dispatch }) {
 		return new Promise((resolve)=>{

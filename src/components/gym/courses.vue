@@ -55,19 +55,24 @@ export default {
 				groups[groupName].push(elem);
 			});
 
-			let results = Object.keys(groups).map(function(key){
+			let results = [];
+			Object.keys(groups).forEach((groupKey)=>{
 				let obj = {
-					name: key,
-					elements: groups[key]
+					name: groupKey,
+					elements: groups[groupKey]
 				};
-				return obj;
+				if (groups[groupKey][0].is_for_all) {
+					results.unshift(obj)
+				} else {
+					results.push(obj)
+				}
 			});
 
 			return results;
 		},
 	},
 	created () {
-		this.selectCourse(this.courses[0]);
+		this.selectCourse(this.groups[0].elements[0]);
 	},
 	methods: {
 		selectCourse(course) {

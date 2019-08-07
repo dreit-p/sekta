@@ -47,37 +47,42 @@ const Router = new VueRouter({
 			// this generates a separate chunk (about.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
 			component: () =>
-				import ( /* webpackChunkName: "about" */ './views/template.vue')
+				import( /* webpackChunkName: "about" */ './views/template.vue')
 		},
 		{
 			path: '/gift-cert',
 			name: 'gift-cert',
 			component: () =>
-				import ( /* webpackChunkName: "about" */ './views/certificates.vue')
+				import( /* webpackChunkName: "about" */ './views/certificates.vue')
+		},
+		{
+			path: '/results',
+			name: 'results',
+			component: () => import('./views/results.vue')
 		},
 		{
 			path: '/contacts',
 			name: 'contacts',
 			component: () =>
-				import ('./views/contacts.vue')
+				import('./views/contacts.vue')
 		},
 		{
 			path: '/jobs',
 			name: 'jobs',
 			component: () =>
-				import ('./views/jobs.vue')
+				import('./views/jobs.vue')
 		},
 		{
 			path: '/success-message',
 			name: 'success-message',
 			component: () =>
-				import ('./views/success-message.vue')
+				import('./views/success-message.vue')
 		},
 		{
 			path: '/requisites',
 			name: 'requisites',
 			component: () =>
-				import ('./views/requisites.vue')
+				import('./views/requisites.vue')
 		},
 		{
 			path: '/online',
@@ -89,60 +94,61 @@ const Router = new VueRouter({
 				{
 					path: '/',
 					component: () =>
-						import ('./views/courses/main.vue'),
+						import('./views/courses/main.vue'),
 				},
 				{
 					path: 'evo',
+					name: 'sektaevo',
 					component: () =>
-						import ( /* webpackChunkName: "courses" */ './views/courses/evolution.vue'),
+						import( /* webpackChunkName: "courses" */ './views/courses/evolution.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
 					path: 's60days',
-					// name: 's60-women',
+					name: 's60-women',
 					component: () =>
-						import ( /* webpackChunkName: "courses" */ './views/courses/s60-women.vue'),
+						import( /* webpackChunkName: "courses" */ './views/courses/s60-women.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
 					path: 'accu',
 					component: () =>
-						import ( /* webpackChunkName: "courses" */ './views/courses/accu.vue'),
+						import( /* webpackChunkName: "courses" */ './views/courses/accu.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
 					path: 's60days-men',
-					// name: 's60-men',
+					name: 's60-men',
 					component: () =>
-						import ( /* webpackChunkName: "courses" */ './views/courses/s60-men.vue'),
+						import( /* webpackChunkName: "courses" */ './views/courses/s60-men.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
 					path: 'sektacare',
-					name: 'SektaCare',
+					name: 'sektacare',
 					component: () =>
-						import ( /* webpackChunkName: "courses" */ './views/courses/sektacare.vue'),
+						import( /* webpackChunkName: "courses" */ './views/courses/sektacare.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
-					path: 'pregnant',
+					path: 'pregnancy',
 					name: 'pregnant',
 					component: () =>
-						import ( /* webpackChunkName: "courses" */ './views/courses/pregnant.vue'),
+						import( /* webpackChunkName: "courses" */ './views/courses/pregnant.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
 					path: 'sektavip',
 					name: 'sektavip',
 					component: () =>
-						import ( /* webpackChunkName: "courses" */ './views/courses/vip.vue'),
+						import( /* webpackChunkName: "courses" */ './views/courses/vip.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
-					path: 'sektamama',
-					name: 'SektaMama',
+					path: 'smama',
+					name: 'sektamama',
 					component: () =>
-						import ( /* webpackChunkName: "courses" */ './views/courses/sektamama.vue'),
+						import( /* webpackChunkName: "courses" */ './views/courses/sektamama.vue'),
 					meta: { scrollToTop: true }
 				},
 			]
@@ -158,19 +164,19 @@ const Router = new VueRouter({
 				{
 					path: '/',
 					component: () =>
-						import ('./views/gym/main.vue'),
+						import('./views/gym/main.vue'),
 				},
 				{
 					path: 'moscow',
 					name: 'gym-moscow',
 					component: () =>
-						import ( /* webpackChunkName: "gym" */ './views/gym/moscow.vue'),
+						import( /* webpackChunkName: "gym" */ './views/gym/moscow.vue'),
 				},
 				{
 					path: 'saint-pitersburg',
 					name: 'gym-saint-pitersburg',
 					component: () =>
-						import ( /* webpackChunkName: "gym" */ './views/gym/saint-pitersburg.vue'),
+						import( /* webpackChunkName: "gym" */ './views/gym/saint-pitersburg.vue'),
 				},
 			]
 		},
@@ -178,13 +184,19 @@ const Router = new VueRouter({
 			path: '/camp',
 			name: 'camp',
 			component: () =>
-				import ( /* webpackChunkName: "gym" */ './views/camp.vue'),
+				import( /* webpackChunkName: "gym" */ './views/camp.vue'),
 		},
 		{
 			path: '/sektabullet',
-			name: 'bullet',
+			name: 'sektabullet',
 			component: () =>
-				import ( /* webpackChunkName: "gym" */ './views/bullet.vue'),
+				import( /* webpackChunkName: "gym" */ './views/bullet.vue'),
+		},
+		{
+			path: '/sektamerch',
+			name: 'sektamerch',
+			component: () =>
+				import('./views/sektamerch.vue'),
 		},
 		{
 			path: '/personal',
@@ -198,53 +210,50 @@ const Router = new VueRouter({
 					path: 'details',
 					meta: { requiresAuth: true, layout: 'personal' },
 					component: () =>
-						import ('./views/personal/details.vue'),
+						import('./views/personal/details.vue'),
 				},
 				{
 					path: '',
 					name: 'personal',
 					meta: { requiresAuth: true, layout: 'personal' },
 					component: () =>
-						import ('./views/personal/main.vue'),
+						import('./views/personal/main.vue'),
 				},
 				{
 					path: 'details',
 					meta: { requiresAuth: true, layout: 'personal' },
 					component: () =>
-						import ('./views/personal/details.vue'),
+						import('./views/personal/details.vue'),
 				},
 				{
 					path: 'success-order',
 					meta: { requiresAuth: true, layout: 'personal' },
 					component: () =>
-						import ('./views/personal/success_order.vue'),
+						import('./views/personal/success_order.vue'),
 				},
 				{
 					path: 'order',
 					meta: { requiresAuth: true, layout: 'personal' },
 					component: () =>
-						import ('./views/personal/order.vue'),
+						import('./views/personal/order.vue'),
 				},
 			]
-		},
-		{
-			path: '/sektamerch',
-			name: 'sektamerch',
-			component: () =>
-				import ('./views/sektamerch.vue'),
 		},
 		{
 			// 404
 			path: '*',
 			component: () =>
-				import ('./views/404.vue'),
+				import('./views/404.vue'),
 		},
 		{
 			path: '/login',
 			name: 'login',
 			component: Home
 		},
-		{ path: '/evo', redirect: '/online-courses/evo' }
+		{ path: '/evo', redirect: { name: 'sektaevo' } },
+		{ path: '/care', redirect: { name: 'sektacare' } },
+		{ path: '/mama', redirect: { name: 'sektamama' } },
+		{ path: '/pregnant', redirect: { name: 'pregnant' } },
 	]
 })
 

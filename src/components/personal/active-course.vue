@@ -6,26 +6,29 @@
 					svg-icon(name='logo-sekta')
 				.text-side
 					.title {{ this.courseName }}
-					.info
+					.info(v-if="group")
+						.line(v-if="group.curator")
+							svg-icon(name='icon-user')
+							| Куратор:&nbsp;
+							span.green {{ this.group.curator.name }}
+						.line
+							svg-icon(name='icon-chat')
+							| Номер чата: 223
 						.line
 							svg-icon(name='icon-graph')
-							| Прогресс: &nbsp;
-							span.green {{ this.progress }}
-						.line
+							| Прогресс:&nbsp;
+							span.green 20
+						.line(v-if="group.start_date")
 							svg-icon(name='icon-calendar')
-							| Старт: {{ this.dateStart }}
-			.progress-bar
+							| Старт: {{ this.group.start_date }}
+			.progress-bar(v-if="group")
 				.border
-				.fill(v-bind:style="{ width: this.progress }")
-
-			.progress-caption(v-if='this.progress === "100%"') 
-					| Курс полностью оплачен
-			.progress-caption(v-else) 
-					| Курс оплачен на {{ this.progress }}
+				.fill(v-bind:style="{ width: '20%' }")
+			.progress-caption {{this.payStatus}}
 
 			.btns
-				button.btn Открыть курс
-				button.btn Оплатить курс
+				green-btn(inverted v-if="group").btn Открыть курс
+				green-btn.btn.btn-green(v-if="url" @click="payHandler") Оплатить курс
 		.additional-content(
 			v-bind:class="{ dropdown_active: isDropDownActive }"
 		)
@@ -41,22 +44,27 @@
 export default {
 	name: "ActiveCourse",
 	components: {
-		SvgIcon: () => import("@/components/SvgIcon.vue")
+		SvgIcon: () => import("@/components/SvgIcon.vue"),
+		GreenBtn: () => import("@/components/form/green-btn.vue")
 	},
 	props: {
 		courseName: {
 			type: String,
 			default: 'NoName Course'
 		},
-		progress: {
-			type: String,
-			default: null
-		},
-		dateStart: {
-			type: String,
+		group: {
+			type: Object,
 			default: null
 		},
 		additionalInfo: {
+			type: String,
+			default: null
+		},
+		payStatus: {
+			type: String,
+			default: null
+		},
+		url: {
 			type: String,
 			default: null
 		}
@@ -65,77 +73,22 @@ export default {
 		return {
 			isDropDownActive: false
 		};
-	}
+	},
+	methods: {
+		payHandler() {
+			this.$emit('pay', this.url);
+		},
+		goToCourseHandler() {
+			this.$emit('goToCourse');
+		}
+	},
 };
 </script>
 
 <style lang="postcss" scoped>
-.arrow-icon {
-	position: relative;
-	width: 20px;
-	margin: 0;
-	margin-left: -10px;
-	height: 1em;
-	transform: translateY(-1px);
-	&:before,
-	&:after {
-		content: "";
-		position: absolute;
-		display: block;
-		right: 0px;
-		top: 0;
-		bottom: 0;
-		margin: auto;
-		height: 5%;
-		width: 50%;
-		border-radius: 1px;
-		background-color: currentColor;
-		backface-visibility: hidden;
-		transform: rotateZ(45deg) rotateY(45deg);
-		transform-origin: center left;
-		transition: transform 0.2s;
-	}
-	&:after {
-		transform-origin: center right;
-		transform: rotateZ(-45deg) rotateY(45deg);
-	}
-}
-
 article.main-body {
-	background-color: #e8e8e8;
-	flex-grow: 1;
-	padding-bottom: 60px;
-	.limit {
-		display: grid;
-		grid-auto-columns: auto 361px;
-		grid-gap: 30px;
-		@media (max-width: 850px) {
-			grid-gap: 0;
-		}
-		@media (max-width: 500px) {
-			padding: 0;
-		}
-	}
 	.green {
 		color: var(--accent_color);
-	}
-	section.column {
-		&.sidebar {
-			grid-column: 2;
-			@media (max-width: 850px) {
-				grid-column: 1;
-			}
-		}
-	}
-	.section-title {
-		margin: 60px 0.125rem 24px;
-		font-size: 22px;
-		font-weight: 800;
-		text-transform: uppercase;
-		@media (max-width: 500px) {
-			font-size: 16px;
-			margin: 30px var(--col-space) 20px;
-		}
 	}
 	.tile {
 		min-width: 100%;
@@ -276,33 +229,24 @@ article.main-body {
 		margin: -10px;
 	}
 	.btn {
-		background-color: white;
 		border-radius: 5px;
-		display: inline-block;
-		text-decoration: none;
-		text-align: center;
 		border: 1px solid var(--accent_color);
 		padding: 15px 18px;
-		min-width: 145px;
 		margin: 10px;
-		font-size: 15px;
 		font-weight: bold;
-		color: var(--accent_color);
-		transition: background-color 0.3s, color 0.3s;
+		&.btn-green:hover {
+			border: 1px solid #078675;
+		}
 		@media (max-width: 500px) {
 			padding: 10px 14px;
 			font-size: 11px;
 			min-width: 110px;
 		}
-		&:hover {
-			transition-duration: 0.2s, 0.2s;
-			background-color: var(--accent_color);
-			color: white;
-		}
 	}
 
 	.additional-content {
 		border-top: 1px solid #cbcbcb;
+		padding-bottom: 10px;
 		.open-btn {
 			display: block;
 			position: relative;
@@ -333,14 +277,6 @@ article.main-body {
 			@media (max-width: 500px) {
 				padding: 10px;
 			}
-			.arrow-icon {
-				width: 20px;
-				height: 1em;
-				margin: 0;
-				@media (max-width: 500px) {
-					width: 15px;
-				}
-			}
 		}
 	}
 
@@ -360,109 +296,6 @@ article.main-body {
 	.dropdown_active {
 		.more-dropdown {
 			max-height: 200px;
-		}
-	}
-
-	.tile.certificate {
-		display: flex;
-		align-items: center;
-		.img {
-			background-position: center center;
-			background-size: cover;
-			flex-basis: 47%;
-			max-width: 310px;
-			height: 30vw;
-			max-height: 226px;
-		}
-		.text {
-			flex-shrink: 1;
-			flex-basis: 57%;
-			padding: 20px;
-			font-size: 18px;
-			font-weight: bold;
-			text-align: center;
-			@media (max-width: 500px) {
-				font-size: 12px;
-			}
-		}
-	}
-
-	.tile.simple {
-		display: flex;
-		align-items: stretch;
-		padding: 20px 30px;
-		@media (max-width: 500px) {
-			display: block;
-			padding: 14px 18px;
-		}
-		.img-side {
-			margin-right: 30px;
-			min-width: 145px;
-			float: left;
-			img,
-			svg {
-				height: auto;
-				width: auto;
-			}
-		}
-		.text-side {
-			.title {
-				font-size: 18px;
-				font-weight: bold;
-				text-transform: uppercase;
-				@media (max-width: 500px) {
-					font-size: 13px;
-				}
-			}
-			.description {
-				margin: 23px * 15px;
-				line-height: 1.5;
-				font-size: 14px;
-				@media (max-width: 500px) {
-					float: left;
-					font-size: 13px;
-					line-height: 1.38;
-					margin: 18px * 10px;
-				}
-			}
-		}
-	}
-
-	.sidebar {
-		.content {
-			margin: 27px 30px;
-			@media (max-width: 500px) {
-				margin: 20px 30px;
-			}
-		}
-		.title {
-			font-size: 18px;
-			margin: 35px * 20px;
-			font-weight: bold;
-			text-transform: uppercase;
-			@media (max-width: 500px) {
-				font-size: 14px;
-				margin: 18px * 15px;
-			}
-		}
-		hr {
-			height: 1px;
-			width: 100%;
-			margin: 20px *;
-			border: none;
-			background-color: #cbcbcb;
-			@media (max-width: 500px) {
-				margin: 15px *;
-			}
-		}
-		.text {
-			font-size: 14px;
-			font-weight: bold;
-			&.heavy {
-				text-transform: uppercase;
-				font-size: 15px;
-				font-weight: 800;
-			}
 		}
 	}
 }

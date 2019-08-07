@@ -14,7 +14,7 @@ div.gym
 		.btn.next(v-if='nextBtn.isVisible', @click='scrollTo(nextBtn.destination); nextBtn.isVisible = false') {{ nextBtn.text }}
 
 	#training-params
-		.back-btn(v-if='section > 0', @click='section = 0; nextBtn.isVisible = false')
+		.back-btn(v-if='section > 0', @click='setSection(0); nextBtn.isVisible = false')
 			svg-icon(name='icon-arrow').to-left
 			| назад
 		.gym-section(:class='{available: section === 0}')
@@ -28,17 +28,17 @@ div.gym
 			section#gym
 				template(v-if='gyms')
 					.section-caption Выберите расположение зала
-					gym-map(v-model='selected.gymID', :gyms='gyms')
+					gym-map(v-model='selected.gymID', @click='activateNextBtn({ elemId: "gym", destId: "quantityType", text: "Выбрать количество тренировок" })', :gyms='gyms')
 
 			section#quantityType
 				template(v-if='selected.gymID && selected.courseID && practices.length > 0')
 					.section-caption Выберите количество тренировок
-					practices(v-model='selected.practices', :practices='practices')
+					practices(v-model='selected.practices', @click='activateNextBtn({ elemId: "quantityType", destId: "time", text: "Выбрать время занятий" })', :practices='practices')
 
 			section#time
 				template(v-if='selected.practices')
 					.section-caption Время занятий
-					schedule(v-model='selected.practiceID', :practices='selected.practices')
+					schedule(v-model='selected.practiceID', @click='activateNextBtn({ elemId: "time", destId: "form", text: "Начать оформление" })', :practices='selected.practices')
 
 
 			section
@@ -49,7 +49,7 @@ div.gym
 				.section-caption
 					| Оформление заказа
 					.highlight старт занятий – 01 декабря
-				//entry-form(formType='face-to-face', :formData='{plan: this.planInfo, location: this.locationInfo, quantity: 1, trainingTimes: []}')
+				entry-form(formType='face-to-face', v-if='formData', :formData='formData')
 
 	.gym-section(:class='{available: section === 1}')
 		article.main-content
@@ -60,7 +60,7 @@ div.gym
 					p Курс #sekta в зале включает:
 					ul
 						li 4 недели групповых тренировок от 2 до 6 раз в неделю (количество тренировок вы выбираете при подаче заявки на курс);
-						li работу с личной страницей на сайте, где размещаются задания по питанию, видео коротких утренних тренировок и полезные материалы; 
+						li работу с личной страницей на сайте, где размещаются задания по питанию, видео коротких утренних тренировок и полезные материалы;
 						li трекер целей и полезных привычек на личной странице на сайте.
 
 					h5 Какие будут тренировки?
@@ -86,11 +86,11 @@ div.gym
 </template>
 
 <script>
-	import Vue from 'vue';
+import Vue from 'vue';
 import vueHeadful from 'vue-headful';
 
 Vue.component('vue-headful', vueHeadful);
-	
+
 export default {
 	name: 'GymMoscow',
 	components: {
@@ -178,31 +178,56 @@ export default {
 		},
 	},
 	computed: {
+		courseInfo() {
+			if (!this.courses) return
+			let course = this.courses.find(course => course.id === this.selected.courseID);
+			return course;
+		},
+		locationInfo() {
+			if (!this.gyms) return
+			let gym = this.gyms.find(gym => gym.id === this.selected.gymID);
+			return gym;
+		},
+		practiceInfo() {
+			if (!this.practices) return
+			let practice = this.practices.find(practice => practice.id === this.selected.practiceID);
+			return practice;
+		},
+		formData() {
+			if (!this.courseInfo || !this.locationInfo || !this.practiceInfo) {
+				return false;
+			}
+			return {
+				course: this.courseInfo,
+				location: this.locationInfo,
+				practice: this.practiceInfo
+			}
+		},
 	},
 	watch: {
-		'selected.gymID' () {
-			this.selected.practices = null;
-			this.activateNextBtn({
-				elemId: 'gym',
-				destId: 'quantityType',
-				text: 'Выбрать количество тренировок'
-			})
-		},
-		'selected.practices' () {
-			this.selected.practiceID = null;
-			this.activateNextBtn({
-				elemId: 'quantityType',
-				destId: 'time',
-				text: 'Выбрать время занятий'
-			})
-		},
-		'selected.practiceID' () {
-			this.activateNextBtn({
-				elemId: 'time',
-				destId: 'form',
-				text: 'Начать оформление'
-			})
-		},
+		// 'selected.gymID' () {
+		// 	this.selected.practices = null;
+		// 	this.activateNextBtn({
+		// 		elemId: 'gym',
+		// 		destId: 'quantityType',
+		// 		text: 'Выбрать количество тренировок'
+		// 	})
+		// },
+		// 'selected.practices' () {
+		// 	this.selected.practiceID = null;
+		// 	this.activateNextBtn({
+		// 		elemId: 'quantityType',
+		// 		destId: 'time',
+		// 		text: 'Выбрать время занятий'
+		// 	})
+		// },
+		// 'selected.practiceID' () {
+		// 	this.activateNextBtn({
+		// 		elemId: 'time',
+		// 		destId: 'form',
+		// 		text: 'Начать оформление'
+		// 	})
+		// },
 	},
 	methods: {
 		setSection (num) {
@@ -229,7 +254,7 @@ export default {
 					// set a timeout to un-throttle
 					setTimeout(()=>{
 						throttled = false;
-					}, delay); 
+					}, delay);
 				}
 				// last exec on resize end
 				clearTimeout(forLastExec);
@@ -292,7 +317,7 @@ export default {
 					y = 0;
 
 				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
-					x += el.offsetLeft || 0; 
+					x += el.offsetLeft || 0;
 					y += el.offsetTop || 0;
 					el = el.offsetParent;
 				}

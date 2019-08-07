@@ -10,7 +10,9 @@ header.main-header
 					svg-icon(name='logo-sekta')
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
-						router-link(tag='li', class='link', :to='link.link')
+						li.link(v-if='isURL(link.link)')
+							a.animated-underline(:href='link.link', target='_BLANK', rel='noopener noreferrer') {{ link.name }}
+						router-link(v-else, tag='li', class='link', :to='link.link')
 							a.animated-underline {{ link.name }}
 				.contacts
 					a.phone.animated-underline.left(href='tel:+78005006882') 8 (800) 500–68–82
@@ -114,31 +116,31 @@ import { mapState, mapActions } from 'vuex'
 export default {
 	name: 'AppHeader',
 	components: {
-		SvgIcon: () => import('@/components/SvgIcon.vue'),
+		SvgIcon:() => import('@/components/SvgIcon.vue'),
 	},
-	data () {
+	data() {
 		return {
 			showSubLinks: false,
 			dropdownTimer: null,
 		}
 	},
 	computed: {
-		isUserAuth () {
+		isUserAuth() {
 			return this.$store.getters.isUserAuth;
 		},
-		isOpenedMenu () {
+		isOpenedMenu() {
 			return this.$store.state.header.isOpenedMenu;
 		},
-		isOpenedModal () {
+		isOpenedModal() {
 			return this.$store.getters.isOpenedModal;
 		},
-		formModalType () {
+		formModalType() {
 			return this.$store.state.appStates.formModal.type;
 		},
-		mainLinks () {
+		mainLinks() {
 			return this.$store.state.header.mainLinks;
 		},
-		additionalLinks () {
+		additionalLinks() {
 			return this.$store.state.header.additionalLinks;
 		},
 		...mapState([
@@ -147,10 +149,13 @@ export default {
 		])
 	},
 	methods: {
-		toggleMenu () {
+		isURL (link) {
+			return /^https?:\/\//i.test(link);
+		},
+		toggleMenu() {
 			this.setMenuState(!this.isOpenedMenu)
 		},
-		toggleModal () {
+		toggleModal() {
 			this.setFormModalState({modalState: !this.isOpenedModal})
 		},
 		...mapActions('header', {setMenuState: 'setMenuState'}),
@@ -160,14 +165,14 @@ export default {
 			=            Dropdown            =
 			================================*/
 
-		clearDropdownTimer () {
+		clearDropdownTimer() {
 			if (this.dropdownTimer) {
 				clearTimeout(this.dropdownTimer);
 				this.dropdownTimer = null;
 			}
 		},
 
-		setDropdownTimer () {
+		setDropdownTimer() {
 			clearTimeout(this.dropdownTimer);
 			this.dropdownTimer = setTimeout(()=>{
 				this.showSubLinks = false;
@@ -192,7 +197,7 @@ export default {
 			});
 			return theBiggest;
 		},
-		setHeightForDropdown: function () {
+		setHeightForDropdown: function() {
 			let elems = document.querySelectorAll('.sub-links.outside .category');
 			let height = 0 + 'px';
 			if (elems.length > 0) {
@@ -282,7 +287,7 @@ export default {
 
 		/*=====  End of Menu animation  ======*/
 
-		setOutsideClickListener: function () {
+		setOutsideClickListener: function() {
 
 			let app = document.getElementById('app');
 

@@ -7,7 +7,7 @@
 				href='#'
 				v-for='(currentQty, qtyIndex) in currentGroup.quantities'
 				:class='{checked: selectedQty == currentQty}'
-				@click.prevent='selectQty(currentQty)'
+				@click.prevent='selectQty(currentQty); clickHandler()'
 			)
 				.description
 					.desc-title {{currentQty.quantity}} тренировки в неделю
@@ -78,6 +78,9 @@ export default {
 		selectQty(qty) {
 			this.$emit('change', qty.objects);
 			this.selectedQty = qty;
+		},
+		clickHandler() {
+			this.$emit('click');
 		},
 	},
 	data () {

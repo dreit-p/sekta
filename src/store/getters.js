@@ -7,4 +7,10 @@ export default {
 	isOpenedModal(state) {
 		return state.appStates.formModal.isOpened;
 	},
+	getUserCity(state) {
+		if (state.user.cityId) {
+			return state.user.cityId;
+		}
+		return state.user.info ? state.user.info.city.id : undefined;
+	},
 }

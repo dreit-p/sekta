@@ -7,13 +7,19 @@ section.course_info
 				.text.big 10 недель
 				.text.small длительность курса
 			.block
+				.text.groups
+					.group
+						.data 22 июля
+						.caption VK
+					.group
+						.data 22 июля
+						.caption Telegram
+				.text.small ближайший старт
+			.block
 				.text.big
 					| 1500
 					span(style='font-size: .8em') ₽
 				.text.small стоимость одной недели
-			.block
-				.text.big 22 июля
-				.text.small ближайший старт
 		a.purple-btn(@click='scrollTo("entry-form")')
 			.border
 			.btn Записаться на курс
@@ -35,7 +41,7 @@ export default {
 					y = 0;
 
 				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
-					x += el.offsetLeft || 0; 
+					x += el.offsetLeft || 0;
 					y += el.offsetTop || 0;
 					el = el.offsetParent;
 				}
@@ -86,6 +92,22 @@ section.course_info {
 					}
 					&.small {
 						font-size: 14px;
+					}
+				}
+				&.groups {
+					display: flex;
+					.group {
+						text-transform: none;
+						border-left: 1px solid #5f1ab3;
+						padding: * 7px;
+						font-weight: 500;
+						margin: 7px *;
+						flex-grow: 1;
+						text-align: left;
+						&:first-child {
+							border: none;
+							text-align: right;
+						}
 					}
 				}
 				&.big {

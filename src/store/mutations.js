@@ -16,8 +16,8 @@ export default {
 	setUserInfo(state, { type, data }) {
 		Vue.set(state.user, type, data)
 	},
-	setCity(state, { city }) {
-		state.user.cityId = city.id;
+	setCity(state, cityId) {
+		state.user.cityId = cityId;
 	},
 	setOnlineCourses(state, data) {
 		state.onlineCourses = data;

@@ -7,17 +7,17 @@ div.course
 	hero(image='course_bg-sectavip.jpg', title='VIP ПРОГРАММА', horizontal, inversed)
 		p Индивидуальная коучинговая программа с самыми актуальными разработками нашей Школы. Мы поможем вам выстроить эффективную систему питания и тренировок с учетом ваших особенностей, жизненного графика, свободного времени, предпочитаемой платформы (VK, Facebook, Viber, WhatsApp, Telegram, Skype, Email) и подберем куратора, исходя из ваших запросов.
 		template(v-slot:buttons)
-			green-btn(@click.prevent='setFormModalState({modalState: true})') Записаться на обучение
+			green-btn(@click='scrollTo("entry-form")') Записаться на обучение
 
 	article.main-content
 		.article-limit
 			.text-typography
 				h3.center #SEKTAVIP
 				p
-					b Длительность любого VIP курса: 
+					b Длительность любого VIP курса:&ensp;
 					| столько, сколько нужно для достижения целей каждого отдельного ученика
 				p
-					b Стоимость: 
+					b Стоимость:&ensp;
 					| Базовый курс – 3500 рублей в неделю
 				hr
 				h5
@@ -30,17 +30,18 @@ div.course
 					li индивидуальная тренировочная программа с учетом вашего свободного времени, жизненного графика, состояния здоровья, уровня вашей физической подготовки;
 					li анализ рациона, пищевых привычек и построение актуального для ваших целей режима питания (мы учитываем все ваши предпочтения);
 					li возможность бесплатно посещать наши очные групповые занятия (3 раза в неделю) при наличии филиала в вашем городе.
-				p На любой ваш вопрос мы ответим по телефону 
-				a(href='tel:8 800 500 68 82') 8 800 500 68 82 
-				| или по почте 
+				p На любой ваш вопрос мы ответим по телефону
+				a(href='tel:8 800 500 68 82') 8 800 500 68 82
+				| &ensp;или по почте&ensp;
 				a(href='mailto: vip@sektaschool.ru') vip@sektaschool.ru
 				| .
 
 
 	caption-section(v-if='courseInfo'
-		:dateStart='courseInfo.last_start_date',
+		dateStart='каждый день',
+		:TEMPdateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType='online', :formData='courseInfo.prices', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType='online', :formData='{prices: courseInfo.prices}', :courseName='courseInfo.name')
 </template>
 
 <script>
@@ -72,11 +73,30 @@ export default {
 		return {}
 	},
 	methods: {
-		...mapActions(['setFormModalState'])
+		...mapActions(['setFormModalState']),
+		scrollTo(id) {
+			window.scrollTo({
+				top: getPosition(document.getElementById(id)).y -65,
+				behavior: "smooth"
+			});
+			function getPosition(el) {
+
+				var x = 0,
+					y = 0;
+
+				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
+					x += el.offsetLeft || 0;
+					y += el.offsetTop || 0;
+					el = el.offsetParent;
+				}
+
+				return { x: parseInt(x, 10), y: parseInt(y, 10) };
+			}
+		}
 	},
 }
 </script>
 
 <style lang="postcss">
-	
+
 </style>

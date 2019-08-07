@@ -26,18 +26,27 @@ export default {
 		event: 'change'
 	},
 	props: {
-		placeholder: String,
-		caption: String,
-		name: String,
-		type: String,
+		placeholder: {
+			type: String,
+			default: ''
+		},
+		caption: {
+			type: String,
+			default: ''
+		},
+		name: {
+			type: String,
+			default: ''
+		},
+		type: {
+			type: String,
+			default: ''
+		},
 		options: {
 			type: Array,
 			default: ()=>[],
 		},
-		value: {
-			type: String,
-			default: '',
-		},
+		value: {},
 		error: {
 			type: String,
 			default: null
@@ -77,7 +86,7 @@ export default {
 	},
 	watch: {
 		value() {
-			this.reactiveValue = this.value ? this.value : ''
+			this.reactiveValue = this.value && this.value != 'null' ? this.value : ''
 		},
 		reactiveValue() {
 			this.onChange(this.reactiveValue);
@@ -86,13 +95,13 @@ export default {
 	data (){
 		return {
 			isOpenedSelect: false,
-			reactiveValue: this.value ? this.value : ''
+			reactiveValue: this.value && this.value != 'null' ? this.value : ''
 		};
 	},
 	$_veeValidate: {
 		// value getter
 		value() {
-			return this.$el.value;
+			return this.reactiveValue;
 		},
 		// name getter
 		name() {

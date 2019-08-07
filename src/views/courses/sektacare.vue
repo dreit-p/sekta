@@ -8,13 +8,13 @@ div.course
 		p В #SEKTACARE мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вы давно не тренировались или только начинаете?
 		p Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
 		template(v-slot:buttons)
-			green-btn(@click.prevent='setFormModalState({modalState: true})') Записаться на обучение
+			green-btn(@click='scrollTo("entry-form")') Записаться на обучение
 
 	article.main-content
 		.article-limit
 			.text-typography
 				h3.center #SEKTACARE
-				h4.center ДЕМО-ВЕРСИЯ ПРОГРАММЫ #SEKTACARE
+				a.notice.center(href='https://account.sektaschool.ru/courses/care/demo.php', target='_BLANK', rel='noopener noreferrer') ДЕМО-ВЕРСИЯ ПРОГРАММЫ #SEKTACARE
 				p Мечтаете о хорошем результате, но боитесь, что противопоказания сделают прогресс слишком медленным?
 				p На курсе вы проработаете мышцы пресса, спины, ног и ягодиц и всего тела комплексно. Даже при наличии противопоказаний мы подберем упражнения, которые будут воздействовать эффективно.
 				p
@@ -30,26 +30,17 @@ div.course
 				p Чтобы тренировки укрепляли здоровье и способствовали похудению, они должны быть сложными, но выполнимыми и приносить вам радость. Наш курс состоит из таких тренировок, поэтому вы не бросите его после первого занятия.
 				p Курс доступен онлайн и в залах Москвы и Санкт-Петербурга.
 				p
-					b Длительность курса: 
+					b Длительность курса:&nbsp;
 					| 9 недель.
 				p
-					b Стоимость одной недели обучения: 
+					b Стоимость одной недели обучения:&nbsp;
 					| 1 350 рублей.
-				h5
-					b Особенности программы:
-				ul
-					li индивидуальные рекомендации спортивного врача на основе медицинской анкеты;
-					li адаптация тренировочного процесса и рекомендаций по питанию в соответствии с вашими особенностями и противопоказаниями;
-					li возможность выбора «мягкого» или «жесткого» подхода в работе куратора;
-					li выполнение тренировок в любое удобное для вас время;
-					li обучение на личной странице ученика на сайте;
-					li возможность отслеживать свой прогресс;
-					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
 	caption-section(v-if='courseInfo'
-		:dateStart='courseInfo.last_start_date',
+		dateStart='в понедельник',
+		:TEMPdateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType="online", :formData='courseInfo.prices', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType="online", :formData='{prices: courseInfo.prices}', :courseName='courseInfo.name')
 </template>
 
 <script>
@@ -81,11 +72,30 @@ export default {
 		return {}
 	},
 	methods: {
-		...mapActions(['setFormModalState'])
+		...mapActions(['setFormModalState']),
+		scrollTo(id) {
+			window.scrollTo({
+				top: getPosition(document.getElementById(id)).y -65,
+				behavior: "smooth"
+			});
+			function getPosition(el) {
+
+				var x = 0,
+					y = 0;
+
+				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
+					x += el.offsetLeft || 0;
+					y += el.offsetTop || 0;
+					el = el.offsetParent;
+				}
+
+				return { x: parseInt(x, 10), y: parseInt(y, 10) };
+			}
+		}
 	},
 }
 </script>
 
 <style lang="postcss">
-	
+
 </style>

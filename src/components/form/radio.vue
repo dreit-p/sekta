@@ -19,14 +19,17 @@ export default {
 		event: 'change'
 	},
 	props: {
-		name: String,
+		name: {
+			type: String,
+			default: ''
+		},
 		selected: {
 			type: String,
 			default: '',
 		},
 		options: {
 			type: Array,
-			default: [],
+			default: ()=>[],
 		},
 		error: {
 			type: String,

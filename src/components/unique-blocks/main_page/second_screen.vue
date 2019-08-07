@@ -44,6 +44,7 @@ section
 			hr.line_text_program
 			.text_program__item
 				p.tit Онлайн программы
+				p.green #sektaevo, #sektacare, #sektamama и #sektavip
 				p
 					| Можно пройти из любой точки мира — нужны только кроссовки и доступ к интернету.
 					br
@@ -51,7 +52,7 @@ section
 				p
 					| В каждой программе: полное видео тренировок, рекомендации по питанию, задания, которые приведут вас к цели, консультации опытного наставника
 				.bot_part
-					p.start Старт: каждый понедельник
+					p.start.green Старт: каждый понедельник
 					p.for_button
 						router-link(title='Выбрать курс', to='/online')
 							green-btn Выбрать курс
@@ -66,7 +67,7 @@ section
 					br
 					| в зале по фиксированному расписанию.
 				.bot_part
-					p.start Старт 04 марта
+					p.start.green Старт 04 марта
 					p.for_button
 						router-link(title='Посмотреть расписание', to='/gym/')
 							green-btn Посмотреть расписание
@@ -314,9 +315,11 @@ export default {
 			}
 			p.start {
 				font-size: 18px;
-				color: #0ab6a1;
 				font-weight: 700;
 				margin: 0.5em 0 1.5em 0;
+			}
+			.green {
+				color: #0ab6a1;
 			}
 			.for_button {
 				text-align: center;

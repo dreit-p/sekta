@@ -4,8 +4,8 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		.accordion2full__panel.accordion2full__panel_active(style='float: right; margin-top: 3vw;')
 			.first-screen__header
 				h1.first-screen__title
-					p Постройте ваше идеальное тело со Школой #SEKTA
-					p 
+					p Постройте ваше идеальное тело со&nbsp;Школой #SEKTA
+					p
 			.first-screen__content
 				ul
 					li занимайтесь в удобное время и в удобном месте;
@@ -14,8 +14,8 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 					li под чутким контролем кураторов;
 					li с поддержкой единомышленников.
 				p
-					green-btn(href='https://vk.com/away.php?utf=1&to=https%3A%2F%2Faccount.sektaschool.ru%2F%2Fregistration.php%3Futm_source%3Dsite%26utm_medium%3Dmain%26utm_campaign%3Dregistration%26utm_term%3D27.06.2018%26utm_content%3Dfirstbutton', style='color: #fff;', target='_blank',
-					@click.prevent='setFormModalState({modalState: true, type: "register"})') Получить демо доступ
+					router-link(to='/online/evo')
+						green-btn(style='color: #fff', target='_blank', rel='noopener noreferrer') Новый курс!
 </template>
 
 <script>
@@ -38,7 +38,7 @@ export default {
 
 <style lang="postcss" scoped>
 	.first-screen {
-		color: #000;
+		color: white;
 		padding: 0;
 		min-height: 0;
 		background-size: auto 300px;
@@ -47,7 +47,6 @@ export default {
 		&__title {
 			font-size: 30px;
 			text-transform: uppercase;
-			padding-right: 20px;
 			font-family: var(--font-second);
 			font-weight: 900;
 			line-height: 1.33;
@@ -180,14 +179,14 @@ export default {
 					.first-screen__title {
 							line-height: 1;
 							margin-bottom: 40px;
-							font-size: 26px;
+							font-size: 24px;
 						}
 					}
 				.first-screen__content ul {
 						color: #fff;
 						line-height: 1.23 !important;
 						font-size: 13px ;
-						width: 70%;
+						width: 90%;
 					}
 				}
 			}
