@@ -8,14 +8,13 @@ div.course
 		p Пришло время обновить тело, которое с достоинством прошло испытание на прочность. Мы создали программу «Идеальное тело для мамы», чтобы вы могли успевать по максимуму: заниматься ребенком, собой, отдыхать и находить силы и время для тренировок.
 		p С вас — желание любоваться собой в зеркале и стать примером для своего малыша. С нас — детально проработанная программа, сбалансированный рацион, консультации и поддержка команды профессиональных кураторов и экспертов, которые не понаслышке знают, какой путь вы сейчас проходите. Ведь они тоже мамы.
 		template(v-slot:buttons)
-			green-btn(@click.prevent='setFormModalState({modalState: true})') Записаться на обучение
+			green-btn(@click='scrollTo("entry-form")') Записаться на обучение
 
 	article.main-content
 		.article-limit
 			.text-typography
 				h3.center #SEKTAMAMA
-				h4.center ДЕМО-ВЕРСИЯ ПРОГРАММЫ #SEKTAMAMA
-				p Мечтаете о хорошем результате, но боитесь, что противопоказания сделают прогресс слишком медленным?
+				a.notice.center(href='https://account.sektaschool.ru/courses/smama/demo.php', target='_BLANK', rel='noopener noreferrer') ДЕМО-ВЕРСИЯ ПРОГРАММЫ #SEKTAMAMA
 				p На курсе вы проработаете мышцы пресса, спины, ног и ягодиц и всего тела комплексно. Даже при наличии противопоказаний мы подберем упражнения, которые будут воздействовать эффективно.
 				p
 					b Программа подходит:
@@ -32,10 +31,10 @@ div.course
 				p После беременности бывает диастаз, и это нормально. Если он не проходит, мы поможем справиться с ним постепенно — убрать полностью или сократить его проявление.
 
 				p
-					b Длительность курса:
+					b Длительность курса:&nbsp;
 					| 9 недель.
 				p
-					b Стоимость одной недели обучения:
+					b Стоимость одной недели обучения:&nbsp;
 					| 1 350 рублей.
 				h5
 					b Особенности программы:
@@ -48,8 +47,10 @@ div.course
 					li Забота о здоровье — возможность обсудить вопросы со специалистами (акушер-гинеколог, консультант по грудному вскармливанию)
 					li Готовое меню, книги рецептов, полезные советы — всё, чтобы облегчить путь к новому телу.
 
+
 	caption-section(v-if='courseInfo'
-		:dateStart='courseInfo.last_start_date',
+		dateStart='в понедельник',
+		:TEMPdateStart='courseInfo.last_start_date',
 	)
 	entry-form(v-if='courseInfo', formType='online', :formData='{prices: courseInfo.prices}', :courseName='courseInfo.name')
 </template>
@@ -84,7 +85,26 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions(['setFormModalState'])
+		...mapActions(['setFormModalState']),
+		scrollTo(id) {
+			window.scrollTo({
+				top: getPosition(document.getElementById(id)).y -65,
+				behavior: "smooth"
+			});
+			function getPosition(el) {
+
+				var x = 0,
+					y = 0;
+
+				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
+					x += el.offsetLeft || 0;
+					y += el.offsetTop || 0;
+					el = el.offsetParent;
+				}
+
+				return { x: parseInt(x, 10), y: parseInt(y, 10) };
+			}
+		}
 	},
 }
 </script>

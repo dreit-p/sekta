@@ -97,15 +97,15 @@ export default {
 	},
 	data () {
 		return {
-			cert_costs_options: ['1500', 3500, '7000', 10500],
-			city_options: ['Москва', 'Санкт-Петербург', 'Другой город'],
-			emailRepeat: '',
-			passwordRepeat: '',
+			cert_costs_options: ['1500', 3900, '7000', 12000],
+			city_options: [
+				{id: '1', name: 'Москва'},
+				{id: '2', name: 'Санкт-Петербург'},
+				{id: '3', name: 'Другой город'},
+			],
 			city: '',
 			cert_costs: '',
-			isAdult: false,
 			termsAgree: false,
-			spamAgree: false,
 		}
 	},
 }

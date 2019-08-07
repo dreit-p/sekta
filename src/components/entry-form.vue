@@ -237,6 +237,9 @@ export default {
             }
           }
         }
+        li {
+        	margin: .5rem *;
+        }
         hr {
           margin: 22px 0 18px;
           border: none;
