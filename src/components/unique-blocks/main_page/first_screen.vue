@@ -4,7 +4,7 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 		.accordion2full__panel.accordion2full__panel_active(style='float: right; margin-top: 3vw;')
 			.first-screen__header
 				h1.first-screen__title
-					p Постройте ваше идеальное тело со Школой #SEKTA
+					p Постройте ваше идеальное тело со&nbsp;Школой #SEKTA
 					p
 			.first-screen__content
 				ul
@@ -186,7 +186,7 @@ export default {
 						color: #fff;
 						line-height: 1.23 !important;
 						font-size: 13px ;
-						width: 70%;
+						width: 90%;
 					}
 				}
 			}
