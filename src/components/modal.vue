@@ -91,9 +91,11 @@ export default {
 		onSubmit (type) {
 			switch (type) {
 			case 'login':
+				this.setFormModalState({modalState: false});
 				this.$router.push({name: 'personal'});
 				break;
 			case 'register':
+				this.setFormModalState({modalState: false});
 				this.$router.push({name: 'personal'});
 				break;
 			}
