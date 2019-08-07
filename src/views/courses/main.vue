@@ -16,7 +16,7 @@
 						li 4 типа питания на выбор
 						li Тренировочный план, который легко встроится в вашу жизнь
 					.buttons
-						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', to='/online/evo')
+						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', :to='{ name: "sektaevo" }')
 							green-btn Подробности
 		section.course
 			.background
@@ -32,7 +32,7 @@
 						li людей старшего возраста
 						li людей с размером одежды 50+
 					.buttons
-						router-link(title='КУРС #SEKTACARE', to='/online/sektacare')
+						router-link(title='КУРС #SEKTACARE', :to='{ name: "sektacare" }')
 							green-btn Подробности
 		section.course
 			.background
@@ -48,7 +48,7 @@
 						li научиться питаться здорово и разнообразно во время ГВ,
 						li сделать рацион своей семьи более сбалансированным и питательным.
 					.buttons
-						router-link(title='#sektamama', to='/online/sektamama')
+						router-link(title='#sektamama', :to='{ name: "sektamama" }')
 							green-btn Подробности
 		section.course
 			.background
@@ -64,7 +64,7 @@
 						li укрепить организм,
 						li обеспечить здоровое протекание беременности.
 					.buttons
-						router-link(title='#sektamama', to='/online/pregnant')
+						router-link(title='#sektamama', :to='{ name: "pregnant" }')
 							green-btn Подробности
 		section.course
 			.background
@@ -75,7 +75,7 @@
 					.title VIP программа с личным тренером
 					p Для всех, кому нужен индивидуальный коучинг и программа, составленная специально для вас.
 					.buttons
-						router-link(title='vip программа sektavip', to='/online/sektavip')
+						router-link(title='vip программа sektavip', :to='{ name: "sektavip" }')
 							green-btn Подробности
 </template>
 

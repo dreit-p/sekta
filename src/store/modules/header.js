@@ -27,11 +27,11 @@ let state = {
 					name: 'Курс #sektaevo'
 				},
 				{
-					link: '/online/sektamama',
+					link: '/online/smama',
 					name: 'Курс для мам'
 				},
 				{
-					link: '/online/SektaCare',
+					link: '/online/sektacare',
 					name: 'Курс #SektaCare'
 				},
 				{
@@ -39,7 +39,7 @@ let state = {
 					name: 'VIP программа'
 				},
 				{
-					link: '/online/pregnant',
+					link: '/online/pregnancy',
 					name: 'Курсы для беременных'
 				},
 				// {

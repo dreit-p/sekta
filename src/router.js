@@ -98,13 +98,14 @@ const Router = new VueRouter({
 				},
 				{
 					path: 'evo',
+					name: 'sektaevo',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/evolution.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
 					path: 's60days',
-					// name: 's60-women',
+					name: 's60-women',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/s60-women.vue'),
 					meta: { scrollToTop: true }
@@ -117,20 +118,20 @@ const Router = new VueRouter({
 				},
 				{
 					path: 's60days-men',
-					// name: 's60-men',
+					name: 's60-men',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/s60-men.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
 					path: 'sektacare',
-					name: 'SektaCare',
+					name: 'sektacare',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/sektacare.vue'),
 					meta: { scrollToTop: true }
 				},
 				{
-					path: 'pregnant',
+					path: 'pregnancy',
 					name: 'pregnant',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/pregnant.vue'),
@@ -144,8 +145,8 @@ const Router = new VueRouter({
 					meta: { scrollToTop: true }
 				},
 				{
-					path: 'sektamama',
-					name: 'SektaMama',
+					path: 'smama',
+					name: 'sektamama',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/sektamama.vue'),
 					meta: { scrollToTop: true }
@@ -249,7 +250,10 @@ const Router = new VueRouter({
 			name: 'login',
 			component: Home
 		},
-		{ path: '/evo', redirect: '/online-courses/evo' }
+		{ path: '/evo', redirect: { name: 'sektaevo' } },
+		{ path: '/care', redirect: { name: 'sektacare' } },
+		{ path: '/mama', redirect: { name: 'sektamama' } },
+		{ path: '/pregnant', redirect: { name: 'pregnant' } },
 	]
 })
 
