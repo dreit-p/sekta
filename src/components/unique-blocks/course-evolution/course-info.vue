@@ -97,6 +97,7 @@ section.course_info {
 				&.groups {
 					display: flex;
 					.group {
+						text-transform: none;
 						border-left: 1px solid #5f1ab3;
 						padding: * 7px;
 						font-weight: 500;
