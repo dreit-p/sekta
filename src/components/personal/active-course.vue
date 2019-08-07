@@ -7,24 +7,24 @@
 				.text-side
 					.title {{ this.courseName }}
 					.info(v-if="group")
-						.line
+						.line(v-if="group.curator")
 							svg-icon(name='icon-user')
 							| Куратор:&nbsp;
-							span.green Администратор
+							span.green {{ this.group.curator.name }}
 						.line
 							svg-icon(name='icon-chat')
 							| Номер чата: 223
 						.line
 							svg-icon(name='icon-graph')
 							| Прогресс:&nbsp;
-							span.green {{ this.progress }}
-						.line
+							span.green 20
+						.line(v-if="group.start_date")
 							svg-icon(name='icon-calendar')
-							| Старт: {{ this.dateStart }}
+							| Старт: {{ this.group.start_date }}
 			.progress-bar(v-if="group")
 				.border
-				.fill(v-bind:style="{ width: this.progress }")
-			.progress-caption(v-else) {{this.payStatus}}
+				.fill(v-bind:style="{ width: '20%' }")
+			.progress-caption {{this.payStatus}}
 
 			.btns
 				green-btn(inverted v-if="group").btn Открыть курс
@@ -76,7 +76,7 @@ export default {
 	},
 	methods: {
 		payHandler() {
-			this.$emit('pay');
+			this.$emit('pay', this.url);
 		},
 		goToCourseHandler() {
 			this.$emit('goToCourse');
