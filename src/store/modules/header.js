@@ -5,7 +5,7 @@ let state = {
 			name: 'О проекте'
 		},
 		{
-			link: '/articles',
+			link: 'https://sektascience.com/',
 			name: 'Наши статьи'
 		},
 		{
@@ -24,7 +24,7 @@ let state = {
 			subLinks: [
 				{
 					link: '/online/evo',
-					name: 'Курс Evolution'
+					name: 'Курс #sektaevo'
 				},
 				{
 					link: '/online/sektamama',
@@ -42,10 +42,10 @@ let state = {
 					link: '/online/pregnant',
 					name: 'Курсы для беременных'
 				},
-				{
-					link: '/online/s60days-men',
-					name: 'Курс #s60days для мужчин'
-				},
+				// {
+				// 	link: '/online/s60days-men',
+				// 	name: 'Курс #s60days для мужчин'
+				// },
 			]
 		},
 		{
@@ -62,10 +62,10 @@ let state = {
 				}
 			]
 		},
-		{
-			link: '/camp',
-			name: 'Летний лагерь'
-		},
+		// {
+		// 	link: '/camp',
+		// 	name: 'Летний лагерь'
+		// },
 		{
 			link: '/gift-cert',
 			name: 'Подарочный сертификат'
