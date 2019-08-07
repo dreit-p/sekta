@@ -72,9 +72,7 @@ section.interractive_desc
 								span расскажем что есть, когда и сколько
 							li
 								span
-									| куратор поможет разобраться
-									br
-									|  и не сдаться
+									| диетах с высоким содержанием углеводов
 					.block
 						.block-title уход за кожей
 						ul.block-list

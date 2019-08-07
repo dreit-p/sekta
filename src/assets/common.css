@@ -7,8 +7,8 @@
 	font-style: normal;
 	font-display: swap;
 	font-weight: 400;
-	src: local('Uni Sans Regular'), 
-				local('UniSans-Regular'), 
+	src: local('Uni Sans Regular'),
+				local('UniSans-Regular'),
 				url(~@/assets/fonts/unisansregular-webfont.woff2) format('woff2'),
 				url(~@/assets/fonts/unisansregular-webfont.woff) format('woff');
 }
@@ -18,8 +18,8 @@
 	font-style: normal;
 	font-display: swap;
 	font-weight: 700;
-	src: local('Uni Sans Bold'), 
-				local('UniSans-Bold'), 
+	src: local('Uni Sans Bold'),
+				local('UniSans-Bold'),
 				url(~@/assets/fonts/unisansbold-webfont.woff2) format('woff2'),
 				url(~@/assets/fonts/unisansbold-webfont.woff) format('woff');
 }
@@ -29,8 +29,8 @@
 	font-style: normal;
 	font-display: swap;
 	font-weight: 900;
-	src: local('Uni Sans Heavy CAPS'), 
-				local('UniSans-Heavy-CAPS'), 
+	src: local('Uni Sans Heavy CAPS'),
+				local('UniSans-Heavy-CAPS'),
 				url(~@/assets/fonts/unisansheavycaps-webfont.woff2) format('woff2'),
 				url(~@/assets/fonts/unisansheavycaps-webfont.woff) format('woff');
 }

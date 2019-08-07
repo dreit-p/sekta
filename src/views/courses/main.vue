@@ -6,20 +6,18 @@
 		)
 		section.course
 			.background
-				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-s60days.jpg')} ')`}")
-				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-s60days.jpg')} ')`}")
+				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/evo_desk.jpg')} ')`}")
+				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/evo_mobile.jpg')} ')`}")
 			.content-wrapper
 				.content
-					.title Основной онлайн-курс #s60days:
+					.title ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO:
 					ul
-						li Тренировки, которые хочется выполнять.
-						li Здоровое питание без голода и срывов.
-						li 60 дней до результата.
+						li Подходит и мужчинам и женщинам
+						li 4 типа питания на выбор
+						li Тренировочный план, который легко встроится в вашу жизнь
 					.buttons
-						router-link(title='онлайн-курс #s60days для женщин', to='/online-courses/s60days')
-							green-btn Для женщин
-						router-link(title='онлайн-курс #s60days для мужчин', to='/online-courses/s60days-men')
-							green-btn Для мужчин
+						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', to='/online/evo')
+							green-btn Подробности
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-s60lite.jpg')} ')`}")
@@ -29,12 +27,12 @@
 					.title КУРС #SEKTACARE:
 					p Тренировки и питание для:
 					ul
-						li новичков в тренинге 
-						li людей с противопоказаниями к интенсивным нагрузкам 
+						li новичков в тренинге
+						li людей с противопоказаниями к интенсивным нагрузкам
 						li людей старшего возраста
-						li людей с размером одежды 50+ 
+						li людей с размером одежды 50+
 					.buttons
-						router-link(title='КУРС #SEKTACARE', to='/online-courses/sektacare')
+						router-link(title='КУРС #SEKTACARE', to='/online/sektacare')
 							green-btn Подробности
 		section.course
 			.background
@@ -50,7 +48,7 @@
 						li научиться питаться здорово и разнообразно во время ГВ,
 						li сделать рацион своей семьи более сбалансированным и питательным.
 					.buttons
-						router-link(title='#sektamama', to='/online-courses/sektamama')
+						router-link(title='#sektamama', to='/online/sektamama')
 							green-btn Подробности
 		section.course
 			.background
@@ -66,7 +64,7 @@
 						li укрепить организм,
 						li обеспечить здоровое протекание беременности.
 					.buttons
-						router-link(title='#sektamama', to='/online-courses/pregnant')
+						router-link(title='#sektamama', to='/online/pregnant')
 							green-btn Подробности
 		section.course
 			.background
@@ -77,7 +75,7 @@
 					.title VIP программа с личным тренером
 					p Для всех, кому нужен индивидуальный коучинг и программа, составленная специально для вас.
 					.buttons
-						router-link(title='vip программа sektavip', to='/online-courses/sektavip')
+						router-link(title='vip программа sektavip', to='/online/sektavip')
 							green-btn Подробности
 </template>
 
