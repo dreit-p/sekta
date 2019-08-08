@@ -7,9 +7,9 @@
 				.confirm-mail(v-else-if="isMailSent") Письмо отправлено на вашу почту
 			section.column
 				template(v-if="onlineCourses.length > 0")
-					h2.section-title.first Активные онлайн курсы
+					h2.section-title.first Заявки
 					active-course(
-						v-for="course in onlineCourses"
+						v-for="course in unPaidCourses"
 						:courseName="course.course_name"
 						:payStatus="course.pay_status"
 						:progress="course.edu_progress"
@@ -20,10 +20,24 @@
 						@openCourse="openCourse"
 						@pay="yaKassaRedirect"
 					)
-				template(v-if="gymCourses.length > 0")
+				template(v-if="onlineCoursesActive.length > 0")
+					h2.section-title.first Активные онлайн курсы
+					active-course(
+						v-for="course in onlineCoursesActive"
+						:courseName="course.course_name"
+						:payStatus="course.pay_status"
+						:progress="course.edu_progress"
+						:group="course.group"
+						:url="course.course_url"
+						:payUrl="course.approve_payment_url"
+						:additionalInfo='course.course_description'
+						@openCourse="openCourse"
+						@pay="yaKassaRedirect"
+					)
+				template(v-if="gymCoursesActive.length > 0")
 					h2.section-title Активные очные курсы
 					active-course(
-						v-for="course in gymCourses"
+						v-for="course in gymCoursesActive"
 						:courseName="course.course_name"
 						:payStatus="course.pay_status"
 						:progress="course.edu_progress"
@@ -92,7 +106,9 @@ export default {
     return {
       isMailSent: false,
       onlineCourses: [],
+      onlineCoursesActive: [],
       gymCourses: [],
+      gymCoursesActive: [],
       products: []
     };
   },
@@ -102,6 +118,11 @@ export default {
     },
     allCourses() {
       return [...this.onlineCourses, ...this.gymCourses];
+    },
+    unPaidCourses() {
+      return this.allCourses.filter(
+        course => course.pay_status === "Не оплачен"
+      );
     }
   },
   created() {
@@ -114,6 +135,9 @@ export default {
       api.getOnlineOrders(this.$store.state.user.token).then(
         res => {
           this.onlineCourses = res.data.data;
+          this.onlineCoursesActive = res.data.data.filter(
+            course => course.pay_status !== "Не оплачен"
+          );
         },
         rej => {}
       );
@@ -122,6 +146,9 @@ export default {
       api.getGymOrders(this.$store.state.user.token).then(
         res => {
           this.gymCourses = res.data.data;
+          this.gymCoursesActive = res.data.data.filter(
+            course => course.pay_status !== "Не оплачен"
+          );
         },
         rej => {}
       );
