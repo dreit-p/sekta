@@ -4,10 +4,10 @@ label.app-checkbox(:class='this.$options.name')
 		input(
 			:name='name'
 			:ref='name'
+			v-model='reactiveValue'
 			:required='required'
-			:checked='value'
 			type='checkbox'
-			@change='handleChange'
+			@change='changeHandler'
 		)
 		.icon
 			svg-icon(name='icon-check')
@@ -38,6 +38,14 @@ export default {
 			default: null
 		}
 	},
+	watch: {
+		value() {
+			this.reactiveValue = this.value && this.value != 'null' ? this.value : false
+		},
+		reactiveValue() {
+			this.changeHandler(this.reactiveValue);
+		},
+	},
 	computed: {
 		computedCaption() {
 			if (this.error) {
@@ -54,7 +62,7 @@ export default {
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
 	},
 	methods: {
-		handleChange() {
+		changeHandler() {
 			if (!this.disabled) {
 				this.$emit('input', this.value ? false : true);
 				this.$emit('change', this.value ? false : true);
@@ -64,8 +72,7 @@ export default {
 	$_veeValidate: {
 		// value getter
 		value() {
-
-			return this.$el.value;
+			return this.reactiveValue;
 		},
 		// name getter
 		name() {
@@ -74,7 +81,12 @@ export default {
 	},
 	mounted: function () {
 		// synbc the input to the initial value
-		this.$refs[this.name].value = this.value;
+		// this.$refs[this.name].value = this.value;
+	},
+	data() {
+		return {
+			reactiveValue: this.value != 'null' ? this.value : false
+		}
 	}
 }
 </script>
