@@ -61,16 +61,15 @@
 							.sub-text Количество: 1
 
 				h2.section-title Рекомендуем
-				.tile.simple
+				.tile.simple(v-for="course in recommended")
 					.main-content
 						.img-side
-							svg-icon(name='logo-sekta')
+							svg-icon(:name='course.svg')
 						.text-side
-							.title #s60lite
-							.description
-								| Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
+							.title {{course.name}}
+							.description {{course.description}}
 							.btns
-								a.btn Демо
+								a(:href="course.url" target="_blank").btn Демо
 			section.column.sidebar
 				h2.section-title.first Статистика
 				.tile
@@ -86,7 +85,7 @@
 						template(v-if="allCourses.length > 0")
 							h2.title.green Прогресс
 							hr
-							template(v-for="course in allCourses")
+							template(v-for="course in allCoursesActive")
 								.text.heavy {{course.course_name}}&nbsp;
 									span.green {{course.edu_progress || '0%'}}
 								hr
@@ -109,7 +108,23 @@ export default {
       onlineCoursesActive: [],
       gymCourses: [],
       gymCoursesActive: [],
-      products: []
+      products: [],
+      recommended: [
+        {
+          name: "#SEKTACARE",
+          description:
+            "В #SektaCare мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания",
+          url: "https://account.sektaschool.ru//courses/care/demo.php",
+          svg: "sekta-care"
+        },
+        {
+          name: "#SEKTAEVO",
+          description:
+            "SektaEvolution — это комплексный, продуманный и сбалансированный курс. При его разработке мы учли всё: опыт команды и 120 тысяч выпускников #SEKTA, базовые и новые исследования о здоровье, питании, спорте и образе жизни. В основе курса — наши исследования о мотивации. Постарались сделать всё, чтобы вам всегда хотелось идти вперед.",
+          url: "https://account.sektaschool.ru//courses/evolution_demo/",
+          svg: "sekta-evo"
+        }
+      ]
     };
   },
   computed: {
@@ -118,6 +133,9 @@ export default {
     },
     allCourses() {
       return [...this.onlineCourses, ...this.gymCourses];
+    },
+    allCoursesActive() {
+      return [...this.onlineCoursesActive, ...this.gymCoursesActive];
     },
     unPaidCourses() {
       return this.allCourses.filter(
