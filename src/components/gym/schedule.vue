@@ -44,47 +44,57 @@
 
 <script>
 export default {
-	name: 'Schedule',
+	name: "Schedule",
 	model: {
-		event: 'change'
+		event: "change"
 	},
 	props: {
 		value: {
 			type: Number,
-			default: ()=> null
+			default: () => null
 		},
 		practices: {
 			type: Array,
 			default: () => []
-		},
+		}
 	},
-	mounted () {
+	mounted() {
 		this.selectFirstTile();
 	},
-	data () {
+	data() {
 		return {
 			selectedPracticeID: null,
 			hoveredPracticeID: null,
 			mobileWidth: 650,
 			windowWidth: 0,
-			daysNames: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
-		}
+			daysNames: ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"]
+		};
 	},
 	computed: {
 		schedules() {
 			let schedules = [];
 
-			let findOrPushRow = (time) => {
+			let findOrPushRow = time => {
 				let row = schedules.find(s => s.time === time);
-				if (! row) {
+				if (!row) {
 					row = {
 						time: time,
-						tiles: this.daysNames.map((weekDay, index) => ({practiceIDs: [], weekDay: index, title: time, rowspan: 1})),
+						tiles: this.daysNames.map((weekDay, index) => ({
+							practiceIDs: [],
+							weekDay: index,
+							title: time,
+							rowspan: 1
+						}))
 					};
 
-					let timeToInt = (t) => { let d = t.split(':'); return +d[0] * 60 + +d[1]; };
+					let timeToInt = t => {
+						let d = t.split(":");
+						return +d[0] * 60 + +d[1];
+					};
 
-					let index = schedules.findIndex(s => timeToInt(s.time) > timeToInt(time));
+					let index = schedules.findIndex(
+						s => timeToInt(s.time) > timeToInt(time)
+					);
 					if (index === -1) {
 						schedules.push(row);
 					} else {
@@ -93,16 +103,18 @@ export default {
 				}
 
 				return row;
-			}
+			};
 
 			this.practices.forEach(practice => {
 				practice.schedules.forEach(practiceSchedule => {
-					let times = practiceSchedule.time.split(' ');
+					let times = practiceSchedule.time.split(" ");
 
 					// Add first time
 					let row = findOrPushRow(times[0]);
 
-					let tile = row.tiles.find(t => t.weekDay === +practiceSchedule.week_day - 1);
+					let tile = row.tiles.find(
+						t => t.weekDay === +practiceSchedule.week_day - 1
+					);
 					tile.practiceIDs.push(+practice.id);
 					tile.rowspan = times.length; // fixme
 					tile.title = practiceSchedule.time;
@@ -111,11 +123,12 @@ export default {
 					times.slice(1).forEach(time => {
 						let row2 = findOrPushRow(time);
 
-						let tile2 = row2.tiles.find(t => t.weekDay === +practiceSchedule.week_day - 1);
+						let tile2 = row2.tiles.find(
+							t => t.weekDay === +practiceSchedule.week_day - 1
+						);
 						tile2.rowspan = 0;
 						tile2.title = null;
 					});
-
 				});
 			});
 
@@ -126,22 +139,28 @@ export default {
 
 			let timeObj = {};
 			this.practices.forEach(practice => {
-
 				practice.schedules.forEach(practiceSchedule => {
-
 					if (timeObj.hasOwnProperty(practiceSchedule.time)) {
 						let uniqTime = timeObj[practiceSchedule.time];
-						if (!uniqTime.practiceIDs.find(id => id === +practice.id)) {
+						if (
+							!uniqTime.practiceIDs.find(
+								id => id === +practice.id
+							)
+						) {
 							uniqTime.practiceIDs.push(+practice.id);
 						}
-						if (!uniqTime.days.find(dayId => dayId === practiceSchedule.week_day)) {
+						if (
+							!uniqTime.days.find(
+								dayId => dayId === practiceSchedule.week_day
+							)
+						) {
 							uniqTime.days.push(practiceSchedule.week_day);
 						}
 					} else {
 						timeObj[practiceSchedule.time] = {
 							practiceIDs: [+practice.id],
 							days: [practiceSchedule.week_day]
-						}
+						};
 					}
 				});
 			});
@@ -149,52 +168,71 @@ export default {
 			let rows = {};
 			for (let time in timeObj) {
 				if (timeObj.hasOwnProperty(time)) {
-					timeObj[time].practiceIDs.forEach((id)=>{
+					timeObj[time].practiceIDs.forEach(id => {
 						if (!rows.hasOwnProperty(id)) {
 							rows[id] = {
 								days: [],
 								key: [],
-								tiles: [],
-							}
+								tiles: []
+							};
 						}
 
-						let sameDayIdx = rows[id].tiles.findIndex(tile=>compareArrs(tile.days,timeObj[time].days));
+						let sameDayIdx = rows[id].tiles.findIndex(tile =>
+							compareArrs(tile.days, timeObj[time].days)
+						);
 						if (sameDayIdx === -1) {
 							let index = rows[id].tiles.findIndex(tile => {
-								return tile.days[0] > timeObj[time].days[0]
+								return tile.days[0] > timeObj[time].days[0];
 							});
 
 							let tileData = {
 								time: time,
 								days: timeObj[time].days,
-								practiceIDs: timeObj[time].practiceIDs,
-							}
+								practiceIDs: timeObj[time].practiceIDs
+							};
 
 							if (index === -1) {
 								rows[id].days.push(timeObj[time].days);
 								rows[id].tiles.push(tileData);
 							} else {
-								rows[id].days.splice(index, 0, timeObj[time].days);
+								rows[id].days.splice(
+									index,
+									0,
+									timeObj[time].days
+								);
 								rows[id].tiles.splice(index, 0, tileData);
 							}
 
-							rows[id].key = [...rows[id].key,...timeObj[time].days];
+							rows[id].key = [
+								...rows[id].key,
+								...timeObj[time].days
+							];
 						} else {
-							let timeToInt = (t) => { let d = t.split(':'); return +d[0] * 60 + +d[1]; };
+							let timeToInt = t => {
+								let d = t.split(":");
+								return +d[0] * 60 + +d[1];
+							};
 
-							if (timeToInt(rows[id].tiles[sameDayIdx].time) < timeToInt(time)) {
-								rows[id].tiles[sameDayIdx].time += ', ' + time;
+							if (
+								timeToInt(rows[id].tiles[sameDayIdx].time) <
+								timeToInt(time)
+							) {
+								rows[id].tiles[sameDayIdx].time += ", " + time;
 							} else {
-								rows[id].tiles[sameDayIdx].time = time + ', ' + rows[id].tiles[sameDayIdx].time;
+								rows[id].tiles[sameDayIdx].time =
+									time +
+									", " +
+									rows[id].tiles[sameDayIdx].time;
 							}
 						}
 					});
 				}
 			}
 
-
 			function addSorted(targetArr, element, comparingFn) {
-				let index = targetArr.findIndex(dayTime => comparingFn(dayTime));
+				let index = targetArr.findIndex(dayTime =>
+					comparingFn(dayTime)
+				);
 				if (index === -1) {
 					targetArr.push(element);
 				} else {
@@ -203,113 +241,156 @@ export default {
 			}
 
 			function compareArrs(arr1, arr2) {
-				return arr1.length === arr2.length && arr1.sort().every((value, index)=>{ return value === arr2.sort()[index]});
+				return (
+					arr1.length === arr2.length &&
+					arr1.sort().every((value, index) => {
+						return value === arr2.sort()[index];
+					})
+				);
 			}
 
-			let getHumanisedDays = (daysArr)=>{
+			let getHumanisedDays = daysArr => {
 				let keyName = "";
 				let currentPairIndex = 0;
 
-				for (var timeIdx = daysArr.length - 1; timeIdx > currentPairIndex; timeIdx--) {
+				for (
+					var timeIdx = daysArr.length - 1;
+					timeIdx > currentPairIndex;
+					timeIdx--
+				) {
 					let consecutiveDays = [];
 					let conDaysIdx = 0;
-					daysArr.reduce((prev, current)=>{
-						if (prev+1 === current) {
+					daysArr.reduce((prev, current) => {
+						if (prev + 1 === current) {
 							consecutiveDays[conDaysIdx]
 								? consecutiveDays[conDaysIdx].push(current)
-								: consecutiveDays[conDaysIdx] = currentPairIndex === 0 ? [prev, current] : [current]
+								: (consecutiveDays[conDaysIdx] =
+										currentPairIndex === 0
+											? [prev, current]
+											: [current]);
 						} else {
-							consecutiveDays[conDaysIdx] = currentPairIndex === 0 ? [prev, current] : [current]
+							consecutiveDays[conDaysIdx] =
+								currentPairIndex === 0
+									? [prev, current]
+									: [current];
 							conDaysIdx++;
 						}
 						currentPairIndex++;
 						return current;
 					});
 					for (var i = 0; i < consecutiveDays.length; i++) {
-						if (i>0) {keyName += ', '}
+						if (i > 0) {
+							keyName += ", ";
+						}
 						if (consecutiveDays[i].length > 2) {
-							keyName = keyName + this.daysNames[-1+ consecutiveDays[i][0]] +"-"+ this.daysNames[-1+ consecutiveDays[i][consecutiveDays[i].length-1]] + (i+1 < consecutiveDays.length ? ", " : "");
+							keyName =
+								keyName +
+								this.daysNames[-1 + consecutiveDays[i][0]] +
+								"-" +
+								this.daysNames[
+									-1 +
+										consecutiveDays[i][
+											consecutiveDays[i].length - 1
+										]
+								] +
+								(i + 1 < consecutiveDays.length ? ", " : "");
 						} else {
-							for (var j = 0; j < consecutiveDays[i].length; j++) {
-								keyName = keyName + this.daysNames[-1+ consecutiveDays[i][j]] + (j+1 < consecutiveDays[i].length ? ", " : "");
+							for (
+								var j = 0;
+								j < consecutiveDays[i].length;
+								j++
+							) {
+								keyName =
+									keyName +
+									this.daysNames[-1 + consecutiveDays[i][j]] +
+									(j + 1 < consecutiveDays[i].length
+										? ", "
+										: "");
 							}
 						}
 					}
 				}
 
-				if (daysArr.length <=1) {
-					keyName = this.daysNames[daysArr[0]-1]
+				if (daysArr.length <= 1) {
+					keyName = this.daysNames[daysArr[0] - 1];
 				}
 				return keyName;
-			}
+			};
 
 			for (let practiceId in rows) {
 				if (rows.hasOwnProperty(+practiceId)) {
 					let row = rows[+practiceId];
-					if (!groups.find(group => compareArrs(group.key, row.key))) {
-
+					if (
+						!groups.find(group => compareArrs(group.key, row.key))
+					) {
 						groups.push({
-							days: row.days.map(daysRow => getHumanisedDays(daysRow)),
+							days: row.days.map(daysRow =>
+								getHumanisedDays(daysRow)
+							),
 							key: row.key,
 							practices: [+practiceId],
-							rows: [{tiles: row.tiles}],
+							rows: [{ tiles: row.tiles }]
 						});
 					} else {
-						let groupIdx = groups.findIndex(group => compareArrs(group.key, row.key));
+						let groupIdx = groups.findIndex(group =>
+							compareArrs(group.key, row.key)
+						);
 
-						let tiles = row.tiles.filter((tile)=>{
-							return +tile.practiceIDs[0] === +practiceId
+						let tiles = row.tiles.filter(tile => {
+							return +tile.practiceIDs[0] === +practiceId;
 						});
 
 						groups[groupIdx].practices.push(+practiceId);
-						groups[groupIdx].rows.push({tiles: tiles});
+						groups[groupIdx].rows.push({ tiles: tiles });
 					}
 				}
 			}
 			return groups;
-		},
+		}
 	},
 	watch: {
-		selectedPracticeID () {
-			this.$emit('change', this.selectedPracticeID);
+		selectedPracticeID() {
+			this.$emit("change", this.selectedPracticeID);
 		},
-		practices () {
+		practices() {
 			this.selectFirstTile();
-		},
+		}
 	},
-	created () {
-		this.windowWidth = window.innerWidth
+	created() {
+		this.windowWidth = window.innerWidth;
 		this.$nextTick(() => {
-			window.addEventListener('resize', () => {
-				this.windowWidth = window.innerWidth
+			window.addEventListener("resize", () => {
+				this.windowWidth = window.innerWidth;
 			});
 		});
 	},
 	methods: {
 		selectFirstTile() {
-			let tile = this.schedules[0].tiles.find(tile => tile.practiceIDs.length > 0);
+			let tile = this.schedules[0].tiles.find(
+				tile => tile.practiceIDs.length > 0
+			);
 			this.selectTile(tile.practiceIDs);
 		},
 		selectTile(practiceIDs) {
 			this.selectedPracticeID = this.getNextTile(practiceIDs);
 		},
 		hoverTile(practiceIDs) {
-			this.hoveredPracticeID =  this.getNextTile(practiceIDs);
+			this.hoveredPracticeID = this.getNextTile(practiceIDs);
 		},
 		leaveTile() {
 			this.hoveredPracticeID = null;
 		},
 		getNextTile(practiceIDs) {
 			let seletedIndex = practiceIDs.indexOf(this.selectedPracticeID);
-			let nextIndex = (seletedIndex + 1) % (practiceIDs.length);
+			let nextIndex = (seletedIndex + 1) % practiceIDs.length;
 
 			return +practiceIDs[nextIndex];
 		},
 		clickHandler() {
-			this.$emit('click');
-		},
-	},
-}
+			this.$emit("click");
+		}
+	}
+};
 </script>
 
 <style lang="postcss">
@@ -359,10 +440,10 @@ export default {
 			background-color: transparent;
 		}
 		.tile {
-			transition: box-shadow .3s, background-color .3s, color .3s;
+			transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
 			cursor: pointer;
 			user-select: none;
-			opacity: .3;
+			opacity: 0.3;
 			pointer-events: none;
 			border: none;
 			&.available {
@@ -373,12 +454,15 @@ export default {
 				grid-row-end: end;
 			}
 			&.hovered {
-				transition-duration: .1s;
+				transition-duration: 0.1s;
 				box-shadow: inset 0 0 0 3px var(--accent_color);
 			}
 			&.selected.hovered {
-				box-shadow: inset 0 0 0 3px color(var(--accent_color) shade(10%));
-				background-color: color(var(--accent_color) blend(#e6e6e6 30%)) !important;
+				box-shadow: inset 0 0 0 3px
+					color(var(--accent_color) shade(10%));
+				background-color: color(
+					var(--accent_color) blend(#e6e6e6 30%)
+				) !important;
 			}
 			&.selected {
 				background-color: var(--accent_color) !important;

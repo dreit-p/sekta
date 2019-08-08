@@ -48,10 +48,11 @@
 						@openCourse="openCourse"
 						@pay="yaKassaRedirect"
 					)
-				h2.section-title Сертфикаты
-				.tile.goods
-					.goods__image
-					.text СЕРТИФИКАТ НА СУММУ 10 900руб.
+				template(v-if="certificates.length > 0")
+					h2.section-title Сертфикаты
+					.tile.goods(v-for="certificate in certificates")
+						.goods__image
+						.text {{certificate.certificate.name}}
 				template(v-if="products.length > 0")
 					h2.section-title Товары
 					.tile.goods(v-for="course in products")
@@ -109,6 +110,7 @@ export default {
       gymCourses: [],
       gymCoursesActive: [],
       products: [],
+      certificates: [],
       recommended: [
         {
           name: "#SEKTACARE",
@@ -146,6 +148,7 @@ export default {
   created() {
     this.getOnlineOrders();
     this.getGymOrders();
+    this.getCertificates();
     this.getProducts();
   },
   methods: {
@@ -167,6 +170,14 @@ export default {
           this.gymCoursesActive = res.data.data.filter(
             course => course.pay_status !== "Не оплачен"
           );
+        },
+        rej => {}
+      );
+    },
+    getCertificates() {
+      api.getCertificates(this.$store.state.user.token).then(
+        res => {
+          this.certificates = res.data.data;
         },
         rej => {}
       );

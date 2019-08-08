@@ -66,7 +66,7 @@ let actions = {
 			return;
 		}
 
-		return getReq(`/api/gyms/${gymID}/gym-courses/${courseID}/practices`)
+		return getReq(`/api/gyms/${gymID}/gym-courses/${courseID}/visits-with-practices`)
 			.then((resp) => {
 				commit('setPractices', resp.data.data);
 				return resp;

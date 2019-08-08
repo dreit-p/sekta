@@ -44,4 +44,9 @@ export default {
 		setToken(token)
 		return axios.get(URL + `/api/personal/gym-orders`)
 	},
+	//Certificate
+	getCertificates(token) {
+		setToken(token)
+		return axios.get(URL + `/api/personal/certificate-orders`)
+	},
 }
