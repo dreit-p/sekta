@@ -51,6 +51,7 @@
 			name='termsAgree'
 			data-vv-as='обработка персональных данных'
 			:required='true'
+			v-model.trim='termsAgree'
 			v-validate='"required:true"'
 			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
 			:error='errors.first("termsAgree")'

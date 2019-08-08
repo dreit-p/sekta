@@ -7,7 +7,6 @@ label.app-checkbox(:class='this.$options.name')
 			v-model='reactiveValue'
 			:required='required'
 			type='checkbox'
-			@change='changeHandler'
 		)
 		.icon
 			svg-icon(name='icon-check')
