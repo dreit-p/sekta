@@ -20,7 +20,7 @@ const getReq = (path, data) => {
 		params: data,
 		method: 'get'
 	})
-		.then(resp=>resp)
+		.then(resp => resp)
 		.catch(err => {
 			console.warn(path, ': ', err);
 			throw err;
@@ -34,37 +34,44 @@ let state = {
 };
 
 let actions = {
-	reqCourses({ commit }) {
-		return getReq('/api/gym-courses')
-			.then((resp)=>{
+	reqCourses({ commit }, cityId) {
+		if (!cityId) {
+			return;
+		}
+		return getReq(`/api/cities/${cityId}/gym-courses`)
+			.then((resp) => {
 				commit('setCourses', resp.data.data);
 				return resp;
 			})
-			.catch(requestError=>{
+			.catch(requestError => {
 				throw requestError.response;
 			});
 	},
-	reqGyms({ commit }) {
-		return getReq('/api/gyms')
-			.then((resp)=>{
+	reqGyms({ commit }, { cityId, courseID }) {
+		if (!cityId || !courseID) {
+			return;
+		}
+
+		return getReq(`/api/cities/${cityId}/gym-courses/${courseID}/gyms`)
+			.then((resp) => {
 				commit('setGyms', resp.data.data);
 				return resp;
 			})
-			.catch(requestError=>{
+			.catch(requestError => {
 				throw requestError.response;
 			});
 	},
-	reqPractices({ commit }, {gymID, courseID}) {
-		if (! gymID || !courseID) {
+	reqPractices({ commit }, { gymID, courseID }) {
+		if (!gymID || !courseID) {
 			return;
 		}
 
 		return getReq(`/api/gyms/${gymID}/gym-courses/${courseID}/practices`)
-			.then((resp)=>{
+			.then((resp) => {
 				commit('setPractices', resp.data.data);
 				return resp;
 			})
-			.catch(requestError=>{
+			.catch(requestError => {
 				throw requestError.response;
 			});
 	},
@@ -72,13 +79,13 @@ let actions = {
 
 
 let mutations = {
-	setCourses (state, payload) {
+	setCourses(state, payload) {
 		state.courses = payload;
 	},
-	setPractices (state, payload) {
+	setPractices(state, payload) {
 		state.practices = payload;
 	},
-	setGyms (state, payload) {
+	setGyms(state, payload) {
 		state.gyms = payload;
 	},
 };

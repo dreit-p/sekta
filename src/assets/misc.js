@@ -1,0 +1,7 @@
+var moment = require('moment');
+moment.locale('ru');
+
+export function formatDateDayMonth(date) {
+	let newDate = moment(date).format("DD MMMM")
+	return newDate
+}
