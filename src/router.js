@@ -111,7 +111,7 @@ const Router = new VueRouter({
 					meta: { scrollToTop: true }
 				},
 				{
-					path: 'accu',
+					path: 'accuchek',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/accu.vue'),
 					meta: { scrollToTop: true }
