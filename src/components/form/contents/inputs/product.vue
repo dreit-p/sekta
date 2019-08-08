@@ -42,8 +42,10 @@
 					@input="cityInputHandler"
 					@change="cityChangeHandler"
 					)
-				.fox-cities__list
-					.fox-cities__item(v-for="city in foxCities" @click="() => selectCity(city)") {{city.city_name}}
+				template(v-if="foxCities.length > 0")
+					.fox-cities__close(@click="hideCities")
+					.fox-cities__list
+						.fox-cities__item(v-for="city in foxCities" @click="() => selectCity(city)") {{city.city_name}}
 
 			app-input(
 				placeholder='Индекс'
@@ -271,6 +273,7 @@ export default {
       if (this.timerId) {
         clearTimeout(this.timerId);
       }
+      if (!input) return;
       this.inputHandler("city");
       this.timerId = setTimeout(() => this.getCities(input), 1000);
       if (this.isCity) {
@@ -440,6 +443,14 @@ export default {
       color: white;
       background-color: #0078d7;
     }
+  }
+  &__close {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 2;
   }
 }
 .delivery-block {
