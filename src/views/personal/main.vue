@@ -232,6 +232,7 @@ article.main-body {
       min-width: 361px;
       @media (max-width: 850px) {
         grid-column: 1;
+        grid-row: 3;
       }
     }
   }
