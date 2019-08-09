@@ -94,257 +94,257 @@ import { formatDateDayMonth } from "../../assets/misc.js";
 Vue.component("vue-headful", vueHeadful);
 
 export default {
-  name: "GymSt",
-  components: {
-    EntryForm: () => import("@/components/entry-form.vue"),
-    SvgIcon: () => import("@/components/SvgIcon.vue"),
-    PhotoGallery: () =>
+	name: "GymSt",
+	components: {
+		EntryForm: () => import("@/components/entry-form.vue"),
+		SvgIcon: () => import("@/components/SvgIcon.vue"),
+		PhotoGallery: () =>
       import(
-        /* webpackChunkName: "gym-elems" */ "@/components/gym/photo-gallery.vue"
+      	/* webpackChunkName: "gym-elems" */ "@/components/gym/photo-gallery.vue"
       ),
-    Courses: () =>
+		Courses: () =>
       import(
-        /* webpackChunkName: "gym-elems" */ "@/components/gym/courses.vue"
+      	/* webpackChunkName: "gym-elems" */ "@/components/gym/courses.vue"
       ),
-    Practices: () =>
+		Practices: () =>
       import(
-        /* webpackChunkName: "gym-elems" */ "@/components/gym/practices.vue"
+      	/* webpackChunkName: "gym-elems" */ "@/components/gym/practices.vue"
       ),
-    Schedule: () =>
+		Schedule: () =>
       import(
-        /* webpackChunkName: "gym-elems" */ "@/components/gym/schedule.vue"
+      	/* webpackChunkName: "gym-elems" */ "@/components/gym/schedule.vue"
       ),
-    GymMap: () =>
+		GymMap: () =>
       import(/* webpackChunkName: "gym-elems" */ "@/components/gym/map.vue"),
-    GymHero: () => import("@/components/heroes/fullsize-hero.vue")
-  },
-  beforeRouteLeave(to, from, next) {
-    if (window.map) {
-      window.map.destroy();
-    }
-    next();
-  },
-  data() {
-    return {
-      cityId: 2,
-      selected: {
-        courseID: null,
-        gymID: null,
-        practices: null,
-        practiceID: null
-      },
-      nextBtn: {
-        scrollEvent: null,
-        isVisible: false,
-        destination: "plan",
-        text: ""
-      },
-      section: 0,
-      cityData: {
-        photos: [
-          {
-            file: "gym-photo-example.jpg",
-            width: "1200",
-            height: "822"
-          },
-          {
-            file: "gym-photo-example_2.jpg",
-            width: "176",
-            height: "220"
-          },
-          {
-            file: "gym-photo-example_3.jpg",
-            width: "550",
-            height: "734"
-          },
-          {
-            file: "gym-photo-example_4.jpg",
-            width: "2000",
-            height: "1124"
-          },
-          {
-            file: "gym-photo-example_5.jpg",
-            width: "1920",
-            height: "720"
-          },
-          {
-            file: "gym-photo-example_6.jpg",
-            width: "1600",
-            height: "1065"
-          }
-        ]
-      }
-    };
-  },
-  asyncComputed: {
-    gyms() {
-      let data = {
-        cityId: this.cityId,
-        courseID: this.selected.courseID
-      };
-      return this.$store.dispatch("gyms/reqGyms", data).then(res => {
-        if (res.data.data.length > 0) {
-          this.selected.gymID = res.data.data[0].id;
-          return res.data.data;
-        }
-        return null;
-      });
-    },
-    courses() {
-      return this.$store.dispatch("gyms/reqCourses", this.cityId).then(() => {
-        return this.$store.state.gyms.courses;
-      });
-    },
-    practices() {
-      return this.$store
-        .dispatch("gyms/reqPractices", {
-          gymID: this.selected.gymID,
-          courseID: this.selected.courseID
-        })
-        .then(() => {
-          return this.$store.state.gyms.practices;
-        });
-    }
-  },
-  computed: {
-    courseInfo() {
-      if (!this.courses) return;
-      let course = this.courses.find(
-        course => course.id === this.selected.courseID
-      );
-      return course;
-    },
-    courseDate() {
-      if (!this.courseInfo) return;
-      return formatDateDayMonth(this.courseInfo.common_start_date);
-    },
-    locationInfo() {
-      if (!this.gyms) return;
-      let gym = this.gyms.find(gym => gym.id === this.selected.gymID);
-      return gym;
-    },
-    practiceInfo() {
-      if (!this.practices) return;
-      let practice = this.practices.find(
-        practice => practice.id === this.selected.practiceID
-      );
-      return practice;
-    },
-    formData() {
-      if (!this.courseInfo || !this.locationInfo || !this.practiceInfo) {
-        return false;
-      }
-      return {
-        course: this.courseInfo,
-        location: this.locationInfo,
-        practice: this.practiceInfo
-      };
-    }
-  },
-  methods: {
-    setSection(num) {
-      this.section = num;
-      this.scrollTo("training-params");
-    },
-    activateNextBtn({ elemId, destId, text }) {
-      let screenHeight =
+		GymHero: () => import("@/components/heroes/fullsize-hero.vue")
+	},
+	beforeRouteLeave(to, from, next) {
+		if (window.map) {
+			window.map.destroy();
+		}
+		next();
+	},
+	data() {
+		return {
+			cityId: 2,
+			selected: {
+				courseID: null,
+				gymID: null,
+				practices: null,
+				practiceID: null
+			},
+			nextBtn: {
+				scrollEvent: null,
+				isVisible: false,
+				destination: "plan",
+				text: ""
+			},
+			section: 0,
+			cityData: {
+				photos: [
+					{
+						file: "gym-photo-example.jpg",
+						width: "1200",
+						height: "822"
+					},
+					{
+						file: "gym-photo-example_2.jpg",
+						width: "176",
+						height: "220"
+					},
+					{
+						file: "gym-photo-example_3.jpg",
+						width: "550",
+						height: "734"
+					},
+					{
+						file: "gym-photo-example_4.jpg",
+						width: "2000",
+						height: "1124"
+					},
+					{
+						file: "gym-photo-example_5.jpg",
+						width: "1920",
+						height: "720"
+					},
+					{
+						file: "gym-photo-example_6.jpg",
+						width: "1600",
+						height: "1065"
+					}
+				]
+			}
+		};
+	},
+	asyncComputed: {
+		gyms() {
+			let data = {
+				cityId: this.cityId,
+				courseID: this.selected.courseID
+			};
+			return this.$store.dispatch("gyms/reqGyms", data).then(res => {
+				if (res.data.data.length > 0) {
+					this.selected.gymID = res.data.data[0].id;
+					return res.data.data;
+				}
+				return null;
+			});
+		},
+		courses() {
+			return this.$store.dispatch("gyms/reqCourses", this.cityId).then(() => {
+				return this.$store.state.gyms.courses;
+			});
+		},
+		practices() {
+			return this.$store
+				.dispatch("gyms/reqPractices", {
+					gymID: this.selected.gymID,
+					courseID: this.selected.courseID
+				})
+				.then(() => {
+					return this.$store.state.gyms.practices;
+				});
+		}
+	},
+	computed: {
+		courseInfo() {
+			if (!this.courses) return;
+			let course = this.courses.find(
+				course => course.id === this.selected.courseID
+			);
+			return course;
+		},
+		courseDate() {
+			if (!this.courseInfo) return;
+			return formatDateDayMonth(this.courseInfo.common_start_date);
+		},
+		locationInfo() {
+			if (!this.gyms) return;
+			let gym = this.gyms.find(gym => gym.id === this.selected.gymID);
+			return gym;
+		},
+		practiceInfo() {
+			if (!this.practices) return;
+			let practice = this.practices.find(
+				practice => practice.id === this.selected.practiceID
+			);
+			return practice;
+		},
+		formData() {
+			if (!this.courseInfo || !this.locationInfo || !this.practiceInfo) {
+				return false;
+			}
+			return {
+				course: this.courseInfo,
+				location: this.locationInfo,
+				practice: this.practiceInfo
+			};
+		}
+	},
+	methods: {
+		setSection(num) {
+			this.section = num;
+			this.scrollTo("training-params");
+		},
+		activateNextBtn({ elemId, destId, text }) {
+			let screenHeight =
         window.innerHeight ||
         document.documentElement.clientHeight ||
         document.body.clientHeight;
-      if (
-        document.getElementById(elemId).offsetHeight <
+			if (
+				document.getElementById(elemId).offsetHeight <
           screenHeight - 100 - 65 &&
         this.isScrolledIntoView(document.getElementById(destId))
-      ) {
-        return false;
-      }
+			) {
+				return false;
+			}
 
-      var forLastExec,
-        delay = 100, // delay between calls
-        throttled = false;
+			var forLastExec,
+				delay = 100, // delay between calls
+				throttled = false;
 
-      function throttling(cb) {
-        // only run if we're not throttled
-        if (!throttled) {
-          // actual callback action
-          cb();
-          // we're throttled!
-          throttled = true;
-          // set a timeout to un-throttle
-          setTimeout(() => {
-            throttled = false;
-          }, delay);
-        }
-        // last exec on resize end
-        clearTimeout(forLastExec);
-        forLastExec = setTimeout(cb, delay);
-      }
+			function throttling(cb) {
+				// only run if we're not throttled
+				if (!throttled) {
+					// actual callback action
+					cb();
+					// we're throttled!
+					throttled = true;
+					// set a timeout to un-throttle
+					setTimeout(() => {
+						throttled = false;
+					}, delay);
+				}
+				// last exec on resize end
+				clearTimeout(forLastExec);
+				forLastExec = setTimeout(cb, delay);
+			}
 
-      this.nextBtn = {
-        isVisible: true,
-        destination: destId,
-        text: text,
-        scrollEvent: () => {
-          throttling(() => {
-            if (this.isScrolledIntoView(document.getElementById(destId))) {
-              this.clearScrollEvent();
-              this.nextBtn.isVisible = false;
-            }
-          });
-        }
-      };
-      window.addEventListener("scroll", this.nextBtn.scrollEvent, false);
-    },
-    getCertificateData(dataType) {
-      for (var i = 0; i < this.cityData.practices.length; i++) {
-        if (+this.cityData.practices[i].id == +this.selected.practiceID) {
-          return this.cityData.practices[i][dataType];
-        }
-      }
-    },
-    isScrolledIntoView(elem) {
-      let rect = elem.getBoundingClientRect();
-      let elemTop = rect.top;
-      let elemBottom = rect.bottom;
-      let offset = 100;
+			this.nextBtn = {
+				isVisible: true,
+				destination: destId,
+				text: text,
+				scrollEvent: () => {
+					throttling(() => {
+						if (this.isScrolledIntoView(document.getElementById(destId))) {
+							this.clearScrollEvent();
+							this.nextBtn.isVisible = false;
+						}
+					});
+				}
+			};
+			window.addEventListener("scroll", this.nextBtn.scrollEvent, false);
+		},
+		getCertificateData(dataType) {
+			for (var i = 0; i < this.cityData.practices.length; i++) {
+				if (+this.cityData.practices[i].id == +this.selected.practiceID) {
+					return this.cityData.practices[i][dataType];
+				}
+			}
+		},
+		isScrolledIntoView(elem) {
+			let rect = elem.getBoundingClientRect();
+			let elemTop = rect.top;
+			let elemBottom = rect.bottom;
+			let offset = 100;
 
-      let screenHeight =
+			let screenHeight =
         window.innerHeight ||
         document.documentElement.clientHeight ||
         document.body.clientHeight;
 
-      // Only completely visible elements return true:
-      // let isVisible = (elemTop >= 0) && (elemBottom <= screenHeight);
-      // Partially visible elements return true:
-      let isVisible = elemTop < screenHeight - offset && elemBottom >= offset;
-      return isVisible;
-    },
-    clearScrollEvent() {
-      window.removeEventListener("scroll", this.nextBtn.scrollEvent);
-      this.nextBtn.scrollEvent = null;
-    },
-    scrollTo(id) {
-      if (this.nextBtn.scrollEvent) {
-        this.clearScrollEvent();
-      }
-      window.scrollTo({
-        top: getPosition(document.getElementById(id)).y - 65,
-        behavior: "smooth"
-      });
-      function getPosition(el) {
-        var x = 0,
-          y = 0;
+			// Only completely visible elements return true:
+			// let isVisible = (elemTop >= 0) && (elemBottom <= screenHeight);
+			// Partially visible elements return true:
+			let isVisible = elemTop < screenHeight - offset && elemBottom >= offset;
+			return isVisible;
+		},
+		clearScrollEvent() {
+			window.removeEventListener("scroll", this.nextBtn.scrollEvent);
+			this.nextBtn.scrollEvent = null;
+		},
+		scrollTo(id) {
+			if (this.nextBtn.scrollEvent) {
+				this.clearScrollEvent();
+			}
+			window.scrollTo({
+				top: getPosition(document.getElementById(id)).y - 65,
+				behavior: "smooth"
+			});
+			function getPosition(el) {
+				var x = 0,
+					y = 0;
 
-        while (el != null && (el.tagName || "").toLowerCase() != "html") {
-          x += el.offsetLeft || 0;
-          y += el.offsetTop || 0;
-          el = el.offsetParent;
-        }
+				while (el != null && (el.tagName || "").toLowerCase() != "html") {
+					x += el.offsetLeft || 0;
+					y += el.offsetTop || 0;
+					el = el.offsetParent;
+				}
 
-        return { x: parseInt(x, 10), y: parseInt(y, 10) };
-      }
-    }
-  }
+				return { x: parseInt(x, 10), y: parseInt(y, 10) };
+			}
+		}
+	}
 };
 </script>
 

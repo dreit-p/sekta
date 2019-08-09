@@ -44,61 +44,61 @@
 import { formatDate } from "../../assets/misc";
 
 export default {
-  name: "ActiveCourse",
-  components: {
-    SvgIcon: () => import("@/components/SvgIcon.vue"),
-    GreenBtn: () => import("@/components/form/green-btn.vue")
-  },
-  props: {
-    courseName: {
-      type: String,
-      default: "NoName Course"
-    },
-    group: {
-      type: Object,
-      default: null
-    },
-    additionalInfo: {
-      type: String,
-      default: null
-    },
-    progress: {
-      type: String,
-      default: null
-    },
-    payStatus: {
-      type: String,
-      default: null
-    },
-    url: {
-      type: String,
-      default: null
-    },
-    payUrl: {
-      type: String,
-      default: null
-    }
-  },
-  data() {
-    return {
-      isDropDownActive: false,
-      date: ""
-    };
-  },
-  created() {
-    this.date = this.group ? formatDate(this.group.start_date) : "";
-  },
-  methods: {
-    openCourseHandler() {
-      this.$emit("openCourse", this.url);
-    },
-    payHandler() {
-      this.$emit("pay", this.payUrl);
-    },
-    goToCourseHandler() {
-      this.$emit("goToCourse");
-    }
-  }
+	name: "ActiveCourse",
+	components: {
+		SvgIcon: () => import("@/components/SvgIcon.vue"),
+		GreenBtn: () => import("@/components/form/green-btn.vue")
+	},
+	props: {
+		courseName: {
+			type: String,
+			default: "NoName Course"
+		},
+		group: {
+			type: Object,
+			default: null
+		},
+		additionalInfo: {
+			type: String,
+			default: null
+		},
+		progress: {
+			type: String,
+			default: null
+		},
+		payStatus: {
+			type: String,
+			default: null
+		},
+		url: {
+			type: String,
+			default: null
+		},
+		payUrl: {
+			type: String,
+			default: null
+		}
+	},
+	data() {
+		return {
+			isDropDownActive: false,
+			date: ""
+		};
+	},
+	created() {
+		this.date = this.group ? formatDate(this.group.start_date) : "";
+	},
+	methods: {
+		openCourseHandler() {
+			this.$emit("openCourse", this.url);
+		},
+		payHandler() {
+			this.$emit("pay", this.payUrl);
+		},
+		goToCourseHandler() {
+			this.$emit("goToCourse");
+		}
+	}
 };
 </script>
 

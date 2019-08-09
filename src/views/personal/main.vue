@@ -97,109 +97,109 @@
 import api from "@/assets/api/index.js";
 
 export default {
-  name: "MainPersonal",
-  components: {
-    SvgIcon: () => import("@/components/SvgIcon.vue"),
-    ActiveCourse: () => import("@/components/personal/active-course.vue")
-  },
-  data() {
-    return {
-      isMailSent: false,
-      onlineCourses: [],
-      onlineCoursesActive: [],
-      gymCourses: [],
-      gymCoursesActive: [],
-      products: [],
-      certificates: [],
-      recommended: [
-        {
-          name: "#SEKTACARE",
-          description:
+	name: "MainPersonal",
+	components: {
+		SvgIcon: () => import("@/components/SvgIcon.vue"),
+		ActiveCourse: () => import("@/components/personal/active-course.vue")
+	},
+	data() {
+		return {
+			isMailSent: false,
+			onlineCourses: [],
+			onlineCoursesActive: [],
+			gymCourses: [],
+			gymCoursesActive: [],
+			products: [],
+			certificates: [],
+			recommended: [
+				{
+					name: "#SEKTACARE",
+					description:
             "В #SektaCare мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания",
-          url: "https://account.sektaschool.ru//courses/care/demo.php",
-          svg: "sekta-care"
-        },
-        {
-          name: "#SEKTAEVO",
-          description:
+					url: "https://account.sektaschool.ru//courses/care/demo.php",
+					svg: "sekta-care"
+				},
+				{
+					name: "#SEKTAEVO",
+					description:
             "SektaEvolution — это комплексный, продуманный и сбалансированный курс. При его разработке мы учли всё: опыт команды и 120 тысяч выпускников #SEKTA, базовые и новые исследования о здоровье, питании, спорте и образе жизни. В основе курса — наши исследования о мотивации. Постарались сделать всё, чтобы вам всегда хотелось идти вперед.",
-          url: "https://account.sektaschool.ru//courses/evolution_demo/",
-          svg: "sekta-evo"
-        }
-      ]
-    };
-  },
-  computed: {
-    user() {
-      return this.$store.state.user;
-    },
-    allCourses() {
-      return [...this.onlineCourses, ...this.gymCourses];
-    },
-    allCoursesActive() {
-      return [...this.onlineCoursesActive, ...this.gymCoursesActive];
-    },
-    unPaidCourses() {
-      return this.allCourses.filter(
-        course => course.pay_status === "Не оплачен"
-      );
-    }
-  },
-  created() {
-    this.getOnlineOrders();
-    this.getGymOrders();
-    this.getCertificates();
-    this.getProducts();
-  },
-  methods: {
-    getOnlineOrders() {
-      api.getOnlineOrders(this.$store.state.user.token).then(
-        res => {
-          this.onlineCourses = res.data.data;
-          this.onlineCoursesActive = res.data.data.filter(
-            course => course.pay_status !== "Не оплачен"
-          );
-        },
-        rej => {}
-      );
-    },
-    getGymOrders() {
-      api.getGymOrders(this.$store.state.user.token).then(
-        res => {
-          this.gymCourses = res.data.data;
-          this.gymCoursesActive = res.data.data.filter(
-            course => course.pay_status !== "Не оплачен"
-          );
-        },
-        rej => {}
-      );
-    },
-    getCertificates() {
-      api.getCertificates(this.$store.state.user.token).then(
-        res => {
-          this.certificates = res.data.data;
-        },
-        rej => {}
-      );
-    },
-    getProducts() {
-      api.getProducts(this.$store.state.user.token).then(
-        res => {
-          this.products = res.data.data;
-        },
-        rej => {}
-      );
-    },
-    sendMailConfirm() {
-      this.isMailSent = true;
-    },
-    yaKassaRedirect(url) {
-      window.location = url;
-    },
-    openCourse(url) {
-      console.log(url);
-    }
-  }
+					url: "https://account.sektaschool.ru//courses/evolution_demo/",
+					svg: "sekta-evo"
+				}
+			]
+		};
+	},
+	computed: {
+		user() {
+			return this.$store.state.user;
+		},
+		allCourses() {
+			return [...this.onlineCourses, ...this.gymCourses];
+		},
+		allCoursesActive() {
+			return [...this.onlineCoursesActive, ...this.gymCoursesActive];
+		},
+		unPaidCourses() {
+			return this.allCourses.filter(
+				course => course.pay_status === "Не оплачен"
+			);
+		}
+	},
+	created() {
+		this.getOnlineOrders();
+		this.getGymOrders();
+		this.getCertificates();
+		this.getProducts();
+	},
+	methods: {
+		getOnlineOrders() {
+			api.getOnlineOrders(this.$store.state.user.token).then(
+				res => {
+					this.onlineCourses = res.data.data;
+					this.onlineCoursesActive = res.data.data.filter(
+						course => course.pay_status !== "Не оплачен"
+					);
+				},
+				rej => {}
+			);
+		},
+		getGymOrders() {
+			api.getGymOrders(this.$store.state.user.token).then(
+				res => {
+					this.gymCourses = res.data.data;
+					this.gymCoursesActive = res.data.data.filter(
+						course => course.pay_status !== "Не оплачен"
+					);
+				},
+				rej => {}
+			);
+		},
+		getCertificates() {
+			api.getCertificates(this.$store.state.user.token).then(
+				res => {
+					this.certificates = res.data.data;
+				},
+				rej => {}
+			);
+		},
+		getProducts() {
+			api.getProducts(this.$store.state.user.token).then(
+				res => {
+					this.products = res.data.data;
+				},
+				rej => {}
+			);
+		},
+		sendMailConfirm() {
+			this.isMailSent = true;
+		},
+		yaKassaRedirect(url) {
+			window.location = url;
+		},
+		openCourse(url) {
+			console.log(url);
+		}
+	}
 };
 </script>
 

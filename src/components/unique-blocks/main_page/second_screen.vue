@@ -78,21 +78,21 @@ section
 import { formatDateDayMonth } from "../../../assets/misc.js";
 
 export default {
-  name: "SecondScreen",
-  components: {
-    GreenBtn: () => import("@/components/form/green-btn.vue"),
-    WebpImg: () => import("@/components/webp-img.vue")
-  },
-  data() {
-    return {
-      courseDate: ""
-    };
-  },
-  created() {
-    this.$store.dispatch("gyms/reqCourses", 1).then(res => {
-      this.courseDate = formatDateDayMonth(res.data.data[0].common_start_date);
-    });
-  }
+	name: "SecondScreen",
+	components: {
+		GreenBtn: () => import("@/components/form/green-btn.vue"),
+		WebpImg: () => import("@/components/webp-img.vue")
+	},
+	data() {
+		return {
+			courseDate: ""
+		};
+	},
+	created() {
+		this.$store.dispatch("gyms/reqCourses", 1).then(res => {
+			this.courseDate = formatDateDayMonth(res.data.data[0].common_start_date);
+		});
+	}
 };
 </script>
 

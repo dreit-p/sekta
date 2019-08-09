@@ -142,261 +142,261 @@
 =====================================*/
 
 let globalInputs = {
-  names: ["email", "password", "firstname", "lastname"],
-  list: {}
+	names: ["email", "password", "firstname", "lastname"],
+	list: {}
 };
 
 for (var i = 0; i < globalInputs.names.length; i++) {
-  let name = globalInputs.names[i];
-  globalInputs.list[name] = {
-    get() {
-      return this.$store.state.inputs[name];
-    },
-    set(value) {
-      this.$store.commit("setInputData", { name: name, data: value });
-    }
-  };
+	let name = globalInputs.names[i];
+	globalInputs.list[name] = {
+		get() {
+			return this.$store.state.inputs[name];
+		},
+		set(value) {
+			this.$store.commit("setInputData", { name: name, data: value });
+		}
+	};
 }
 
 /*=====  End of define inputs  ======*/
 import api from "../../../../assets/api/index.js";
 
 export default {
-  name: "FormOnline",
-  components: {
-    AppInput: () => import("@/components/form/input.vue"),
-    AppCheckbox: () => import("@/components/form/checkbox.vue"),
-    AppDropdown: () => import("@/components/form/dropdown.vue"),
-    GreenBtn: () => import("@/components/form/green-btn.vue")
-  },
-  computed: {
-    ...globalInputs.list,
-    userCity() {
-      return this.$store.getters.getUserCity;
-    },
-    quantityOptions() {
-      if (!this.priceId) return [];
-      let num = this.prices.find(p => p.id === this.priceId).available_quantity;
-      if (num > 10) num = 10;
-      let options = [];
-      for (let i = 1; i <= num; i++) {
-        options.push({ id: i, name: i });
-      }
-      return options;
-    }
-  },
-  data() {
-    return {
-      isMerch: false,
-      priceId: null,
-      prices: [],
-      quantity: null,
-      deliveryId: null,
-      deliveryOptions: [
-        { id: "pickup", name: "Самовывоз из Санкт-Петербурга" },
-        { id: "courier", name: "Доставка курьером по России" }
-      ],
-      foxCities: [],
-      isCity: false,
-      city: {
-        city_name: "",
-        guid: ""
-      },
-      index: "",
-      address: "",
-      name: "",
-      phone: "",
-      promocode: "",
-      promo: {
-        amount: null
-      },
-      termsAgree: false,
-      hasError: false,
-      myErrors: {
-        priceId: null,
-        quantity: null,
-        deliveryId: null,
-        city: null,
-        index: null,
-        address: null,
-        name: null,
-        phone: null,
-        promocode: null,
-        termsAgree: null
-      },
-      //Delivery
-      timerId: null,
-      isDeliveryCalc: false,
-      isDeliveryDone: false,
-      deliveryPrice: null
-    };
-  },
-  created() {
-    this.isMerch = this.$route.name === "sektamerch";
-    let product = this.isMerch ? "TSHIRT" : "BULLET";
-    api.getProduct(product).then(res => {
-      this.prices = res.data.data.prices;
-    });
-  },
-  methods: {
-    inputHandler(name) {
-      this.myErrors[name] = null;
-      if (name === "city" || name === "address" || name === "index") {
-        this.isDeliveryDone = false;
-      }
-    },
-    pricesChangeHandler() {
-      if (this.promocode) {
-        this.checkPromocode(this.promocode);
-      }
-      this.quantity = null;
-      this.myErrors.priceId = null;
-    },
-    //Delivery
-    getCities(input) {
-      api.getFoxCities(input).then(res => {
-        this.foxCities = res.data.data;
-      });
-    },
-    selectCity(city) {
-      this.city = city;
-      this.isCity = true;
-    },
-    cityChangeHandler() {
-      setTimeout(this.hideCities, 150);
-    },
-    hideCities() {
-      this.foxCities = [];
-      clearTimeout(this.timerId);
-    },
-    cityInputHandler(input) {
-      if (this.timerId) {
-        clearTimeout(this.timerId);
-      }
-      if (!input) return;
-      this.inputHandler("city");
-      this.timerId = setTimeout(() => this.getCities(input), 1000);
-      if (this.isCity) {
-        this.isCity = false;
-        this.foxCities = [];
-        clearTimeout(this.timerId);
-      } else {
-        this.city.guid = "";
-      }
-    },
-    //Promocode
-    promoInputHandler() {
-      this.promo = { amount: null };
-      this.inputHandler("promocode");
-    },
-    promoChangeHandler(input) {
-      if (this.priceId) {
-        this.checkPromocode(input);
-      }
-    },
-    checkPromocode(code) {
-      api.reqDiscountedPrice(this.priceId, code).then(
-        res => {
-          this.promo = res.data;
-        },
-        rej => {
-          this.myErrors.promocode = [rej.response.data.message];
-        }
-      );
-    },
-    //Order
-    calcDeliveryPrice() {
-      this.checkDeliveryValid();
-      if (!this.hasError) {
-        this.isDeliveryDone = false;
-        this.isDeliveryCalc = true;
-        api.getFoxPrice(this.city.guid).then(res => {
-          this.isDeliveryCalc = false;
-          this.isDeliveryDone = true;
-          this.deliveryPrice = res.data.data.price;
-        });
-      }
-    },
-    checkDeliveryValid() {
-      this.hasError = false;
-      if (!this.city.guid) {
-        this.myErrors.city = ["Выберите город из списка"];
-        this.hasError = true;
-      } else {
-        this.checkInput("city");
-      }
-      this.checkInput("index");
-      this.checkInput("address");
-    },
-    checkOrderValid() {
-      this.hasError = false;
-      if (this.deliveryId === "courier") this.checkDeliveryValid();
+	name: "FormOnline",
+	components: {
+		AppInput: () => import("@/components/form/input.vue"),
+		AppCheckbox: () => import("@/components/form/checkbox.vue"),
+		AppDropdown: () => import("@/components/form/dropdown.vue"),
+		GreenBtn: () => import("@/components/form/green-btn.vue")
+	},
+	computed: {
+		...globalInputs.list,
+		userCity() {
+			return this.$store.getters.getUserCity;
+		},
+		quantityOptions() {
+			if (!this.priceId) return [];
+			let num = this.prices.find(p => p.id === this.priceId).available_quantity;
+			if (num > 10) num = 10;
+			let options = [];
+			for (let i = 1; i <= num; i++) {
+				options.push({ id: i, name: i });
+			}
+			return options;
+		}
+	},
+	data() {
+		return {
+			isMerch: false,
+			priceId: null,
+			prices: [],
+			quantity: null,
+			deliveryId: null,
+			deliveryOptions: [
+				{ id: "pickup", name: "Самовывоз из Санкт-Петербурга" },
+				{ id: "courier", name: "Доставка курьером по России" }
+			],
+			foxCities: [],
+			isCity: false,
+			city: {
+				city_name: "",
+				guid: ""
+			},
+			index: "",
+			address: "",
+			name: "",
+			phone: "",
+			promocode: "",
+			promo: {
+				amount: null
+			},
+			termsAgree: false,
+			hasError: false,
+			myErrors: {
+				priceId: null,
+				quantity: null,
+				deliveryId: null,
+				city: null,
+				index: null,
+				address: null,
+				name: null,
+				phone: null,
+				promocode: null,
+				termsAgree: null
+			},
+			//Delivery
+			timerId: null,
+			isDeliveryCalc: false,
+			isDeliveryDone: false,
+			deliveryPrice: null
+		};
+	},
+	created() {
+		this.isMerch = this.$route.name === "sektamerch";
+		let product = this.isMerch ? "TSHIRT" : "BULLET";
+		api.getProduct(product).then(res => {
+			this.prices = res.data.data.prices;
+		});
+	},
+	methods: {
+		inputHandler(name) {
+			this.myErrors[name] = null;
+			if (name === "city" || name === "address" || name === "index") {
+				this.isDeliveryDone = false;
+			}
+		},
+		pricesChangeHandler() {
+			if (this.promocode) {
+				this.checkPromocode(this.promocode);
+			}
+			this.quantity = null;
+			this.myErrors.priceId = null;
+		},
+		//Delivery
+		getCities(input) {
+			api.getFoxCities(input).then(res => {
+				this.foxCities = res.data.data;
+			});
+		},
+		selectCity(city) {
+			this.city = city;
+			this.isCity = true;
+		},
+		cityChangeHandler() {
+			setTimeout(this.hideCities, 150);
+		},
+		hideCities() {
+			this.foxCities = [];
+			clearTimeout(this.timerId);
+		},
+		cityInputHandler(input) {
+			if (this.timerId) {
+				clearTimeout(this.timerId);
+			}
+			if (!input) return;
+			this.inputHandler("city");
+			this.timerId = setTimeout(() => this.getCities(input), 1000);
+			if (this.isCity) {
+				this.isCity = false;
+				this.foxCities = [];
+				clearTimeout(this.timerId);
+			} else {
+				this.city.guid = "";
+			}
+		},
+		//Promocode
+		promoInputHandler() {
+			this.promo = { amount: null };
+			this.inputHandler("promocode");
+		},
+		promoChangeHandler(input) {
+			if (this.priceId) {
+				this.checkPromocode(input);
+			}
+		},
+		checkPromocode(code) {
+			api.reqDiscountedPrice(this.priceId, code).then(
+				res => {
+					this.promo = res.data;
+				},
+				rej => {
+					this.myErrors.promocode = [rej.response.data.message];
+				}
+			);
+		},
+		//Order
+		calcDeliveryPrice() {
+			this.checkDeliveryValid();
+			if (!this.hasError) {
+				this.isDeliveryDone = false;
+				this.isDeliveryCalc = true;
+				api.getFoxPrice(this.city.guid).then(res => {
+					this.isDeliveryCalc = false;
+					this.isDeliveryDone = true;
+					this.deliveryPrice = res.data.data.price;
+				});
+			}
+		},
+		checkDeliveryValid() {
+			this.hasError = false;
+			if (!this.city.guid) {
+				this.myErrors.city = ["Выберите город из списка"];
+				this.hasError = true;
+			} else {
+				this.checkInput("city");
+			}
+			this.checkInput("index");
+			this.checkInput("address");
+		},
+		checkOrderValid() {
+			this.hasError = false;
+			if (this.deliveryId === "courier") this.checkDeliveryValid();
 
-      this.checkInput("priceId");
-      if (this.isMerch) {
-        this.checkInput("quantity");
-        if (
-          this.quantity >
+			this.checkInput("priceId");
+			if (this.isMerch) {
+				this.checkInput("quantity");
+				if (
+					this.quantity >
           (this.priceId
-            ? this.prices.find(p => p.id === this.priceId).available_quantity
-            : 0)
-        ) {
-          this.hasError = true;
-        }
-      }
-      this.checkInput("deliveryId");
-      this.checkInput("name");
-      this.checkInput("phone");
-      this.checkInput("termsAgree");
-    },
-    checkInput(name) {
-      if (!this[name]) {
-        this.myErrors[name] = [""];
-        this.hasError = true;
-      }
-    },
-    makeOrder() {
-      this.checkOrderValid();
-      if (this.hasError) return;
-      let order = {
-        price_id: this.priceId,
-        delivery_type: this.deliveryId,
-        recipient_name: this.name,
-        recipient_phone: this.phone
-      };
-      if (this.deliveryId === "courier") {
-        order.delivery_city = this.city.city_name;
-        order.delivery_index = this.index;
-        order.delivery_address = this.address;
-      }
-      if (this.isDeliveryDone) order.delivery_price = this.deliveryPrice;
-      api.makeProguctOrder(order, this.$store.state.user.token).then(
-        res => {
-          this.makePayment(res.data.order_id);
-        },
-        rej => {
-          this.errorHandler(rej.response.data.errors);
-        }
-      );
-    },
-    makePayment(order_id) {
-      let data = {
-        order_id,
-        price_id: this.priceId
-      };
-      if (this.promo.amount) data.promocode = this.promo.promocode_code;
-      data.quantity = this.quantity ? this.quantity : 1;
-      api
-        .makeProguctPayment(data, this.$store.state.user.token)
-        .then(res => {}, rej => {});
-    },
-    errorHandler(errors) {
-      for (let key in errors) {
-        let newKey = key.replace("delivery_", "").replace("recipient_", "");
-        this.myErrors[newKey] = errors[key];
-      }
-    }
-  }
+          	? this.prices.find(p => p.id === this.priceId).available_quantity
+          	: 0)
+				) {
+					this.hasError = true;
+				}
+			}
+			this.checkInput("deliveryId");
+			this.checkInput("name");
+			this.checkInput("phone");
+			this.checkInput("termsAgree");
+		},
+		checkInput(name) {
+			if (!this[name]) {
+				this.myErrors[name] = [""];
+				this.hasError = true;
+			}
+		},
+		makeOrder() {
+			this.checkOrderValid();
+			if (this.hasError) return;
+			let order = {
+				price_id: this.priceId,
+				delivery_type: this.deliveryId,
+				recipient_name: this.name,
+				recipient_phone: this.phone
+			};
+			if (this.deliveryId === "courier") {
+				order.delivery_city = this.city.city_name;
+				order.delivery_index = this.index;
+				order.delivery_address = this.address;
+			}
+			if (this.isDeliveryDone) order.delivery_price = this.deliveryPrice;
+			api.makeProguctOrder(order, this.$store.state.user.token).then(
+				res => {
+					this.makePayment(res.data.order_id);
+				},
+				rej => {
+					this.errorHandler(rej.response.data.errors);
+				}
+			);
+		},
+		makePayment(order_id) {
+			let data = {
+				order_id,
+				price_id: this.priceId
+			};
+			if (this.promo.amount) data.promocode = this.promo.promocode_code;
+			data.quantity = this.quantity ? this.quantity : 1;
+			api
+				.makeProguctPayment(data, this.$store.state.user.token)
+				.then(res => {}, rej => {});
+		},
+		errorHandler(errors) {
+			for (let key in errors) {
+				let newKey = key.replace("delivery_", "").replace("recipient_", "");
+				this.myErrors[newKey] = errors[key];
+			}
+		}
+	}
 };
 </script>
 
