@@ -813,11 +813,6 @@ export default {
 						animation: fade-in .5s ease-out forwards;
 					}
 				}
-				@keyframes fade-in {
-					from {display: none}
-					1% {display: block; opacity: 0;}
-					to {opacity: 1;}
-				}
 			}
 		}
 
@@ -851,11 +846,6 @@ export default {
 		@media (max-width: 650px) {
 			display: block;
 		}
-		@keyframes pulse {
-			to {
-				opacity: 1;
-			}
-		}
 		.arrows {
 			margin: 0 auto;
 			position: relative;
@@ -887,11 +877,24 @@ export default {
 				bottom: 0;
 				animation-delay: .2s;
 			}
-			@keyframes arrow-fading {
-				from {opacity: 0;}
-				to {opacity: 1;}
-			}
 		}
 	}
+}
+
+@keyframes pulse {
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-in {
+	from {display: none}
+	1% {display: block; opacity: 0;}
+	to {opacity: 1;}
+}
+
+@keyframes arrow-fading {
+	from {opacity: 0;}
+	to {opacity: 1;}
 }
 </style>
