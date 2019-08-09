@@ -129,7 +129,10 @@ export default {
 				this.map.destroy();
 				this.mapCreated = false;
 			}
-		}
+		},
+		gyms() {
+			this.selectGym(this.gyms[0]);
+		},
 	},
 	created() {
 		this.defaultPosition = this.position;
