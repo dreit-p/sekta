@@ -14,7 +14,7 @@ div
 	appeal
 	faq
 
-	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="online", :formData='{prices: courseInfo.prices}', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms}', :courseName='courseInfo.name')
 
 </template>
 
@@ -45,7 +45,9 @@ export default {
 		}
 	},
 	data () {
-		return {}
+		return {
+			availablePlatforms: ['vk', 'tg'] // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
+		}
 	},
 	methods: {
 		...mapActions(['setFormModalState'])

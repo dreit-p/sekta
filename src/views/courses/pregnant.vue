@@ -42,7 +42,7 @@ div.course
 		dateStart='в понедельник',
 		:TEMPdateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType="online", :formData='{prices: courseInfo.prices}', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms}', :courseName='courseInfo.name')
 </template>
 
 <script>
@@ -71,7 +71,9 @@ export default {
 		}
 	},
 	data () {
-		return {}
+		return {
+			availablePlatforms: ['vk'] // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
+		}
 	},
 	methods: {
 		...mapActions(['setFormModalState']),

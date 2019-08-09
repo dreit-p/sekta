@@ -19,7 +19,7 @@
 			data-vv-as='Платформа обучения'
 			:value='inputsData.channel_type'
 			@change='inputsData.channel_type = $event'
-			:options='platform_options'
+			:options='comparedPlatforms'
 			v-validate='"required"'
 			:class="{ 'error': errors.has('channel_type'), 'success': fields.channel_type && fields.channel_type.valid}"
 			:error='errors.first("channel_type")'
@@ -201,6 +201,13 @@ export default {
 			}
 			return this.formData.prices.find(price => price.id === this.inputsData.price_id);
 		},
+		comparedPlatforms() {
+			let result = [];
+			this.platform_options.map((option)=>{
+				if (this.formData.platforms.includes(option.id)) result.push(option);
+			})
+			return result;
+		},
 	},
 	data () {
 		return {
@@ -216,7 +223,12 @@ export default {
 			promoprice: Infinity,
 			platform_options: [
 				{id: 'tg', name: 'Telegram'},
-				{id: 'vk', name: 'Вконтакте'}
+				{id: 'vk', name: 'Вконтакте'},
+				{id: 'fb', name: 'Facebook'},
+				{id: 'sk', name: 'Skype'},
+				{id: 'vb', name: 'Viber'},
+				{id: 'wa', name: 'WhatsApp'},
+				{id: 'email', name: 'E-mail'},
 			],
 			city_options: [
 				{id: '1', name: 'Москва'},
