@@ -14,7 +14,7 @@
 					ul
 						li Подходит и мужчинам и женщинам
 						li 4 типа питания на выбор
-						li Тренировочный план, который легко встроится в вашу жизнь
+						li Тренировочный план, который легко встроится в&nbsp;вашу жизнь
 					.buttons
 						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', :to='{ name: "sektaevo" }')
 							green-btn Подробности
@@ -24,13 +24,12 @@
 				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-s60lite.jpg')} ')`}")
 			.content-wrapper
 				.content
-					.title КУРС #SEKTACARE:
-					p Тренировки и питание для:
+					.title КУРС #SEKTACARE
+					p Программа для тех, кому нужен плавный старт
 					ul
-						li новичков в тренинге
-						li людей с противопоказаниями к интенсивным нагрузкам
-						li людей старшего возраста
-						li людей с размером одежды 50+
+						li нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости
+						li поэтапная работа с&nbsp;привычками
+						li опытный наставник, который адаптирует программу под ваши индивидуальные особенности
 					.buttons
 						router-link(title='КУРС #SEKTACARE', :to='{ name: "sektacare" }')
 							green-btn Подробности
@@ -40,13 +39,13 @@
 				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-sectamama.jpg')} ')`}")
 			.content-wrapper
 				.content
-					.title Школа идеального тела для мам
-					p Поможет:
+					.title ШКОЛА ИДЕАЛЬНОГО ТЕЛА ДЛЯ МАМ
+					p Курс поможет:
 					ul
-						li похудеть после родов,
-						li постепенно ввести безопасную физическую нагрузку,
-						li научиться питаться здорово и разнообразно во время ГВ,
-						li сделать рацион своей семьи более сбалансированным и питательным.
+						li похудеть после родов
+						li постепенно ввести безопасную физическую нагрузку
+						li научиться питаться здорово и&nbsp;разнообразно во время ГВ
+						li сделать рацион своей семьи более сбалансированным и питательным
 					.buttons
 						router-link(title='#sektamama', :to='{ name: "sektamama" }')
 							green-btn Подробности
@@ -56,13 +55,13 @@
 				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-pregnant.jpg')} ')`}")
 			.content-wrapper
 				.content.fix-to-top
-					.title Школа идеального тела для беременных
+					.title ШКОЛА ИДЕАЛЬНОГО ТЕЛА ДЛЯ БЕРЕМЕННЫХ
 					p СО ВТОРОГО ТРИМЕСТРА
-					p Поможет:
+					p Курс поможет:
 					ul
-						li сохранить форму,
-						li укрепить организм,
-						li обеспечить здоровое протекание беременности.
+						li сохранить форму
+						li укрепить организм
+						li обеспечить здоровое протекание беременности
 					.buttons
 						router-link(title='#sektamama', :to='{ name: "pregnant" }')
 							green-btn Подробности
@@ -72,8 +71,8 @@
 				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-vip.jpg')} ')`}")
 			.content-wrapper
 				.content
-					.title VIP программа с личным тренером
-					p Для всех, кому нужен индивидуальный коучинг и программа, составленная специально для вас.
+					.title VIP-ПРОГРАММА С ЛИЧНЫМ ТРЕНЕРОМ
+					p Для всех, кому нужен идеальный коучинг и&nbsp;программа, составленная специально для вас.
 					.buttons
 						router-link(title='vip программа sektavip', :to='{ name: "sektavip" }')
 							green-btn Подробности
