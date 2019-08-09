@@ -317,6 +317,7 @@ export default {
 				return keyName;
 			};
 
+			console.log('rows: ', rows);
 			for (let practiceId in rows) {
 				if (rows.hasOwnProperty(+practiceId)) {
 					let row = rows[+practiceId];
@@ -325,9 +326,9 @@ export default {
 					) {
 						groups.push({
 							days: row.days.map(daysRow =>
-								getHumanisedDays(daysRow)
+								getHumanisedDays(daysRow.sort())
 							),
-							key: row.key,
+							key: row.key.sort(),
 							practices: [+practiceId],
 							rows: [{ tiles: row.tiles }]
 						});
