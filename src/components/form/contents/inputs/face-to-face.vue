@@ -29,7 +29,6 @@
 			@change='promocode = $event'
 			type='text')
 
-		p.heavy-text.heavy-text_face.tiny-text_long(v-if='!price') Итого к оплате: Неизвестно
 		p.heavy-text.heavy-text_face.tiny-text_long(v-if='price') Итого к оплате: {{ !!promoprice.amount ? promoprice.amount : price.value }} руб. за месяц
 
 		app-checkbox(
