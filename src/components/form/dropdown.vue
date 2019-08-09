@@ -8,11 +8,12 @@ label.app-dropdown(:class='this.$options.name')
 			:ref='name'
 			v-model='reactiveValue'
 			v-bind="$attrs"
+			:disabled='preparedOptions.length === 1'
 			@click='isOpenedSelect = !isOpenedSelect'
 			@blur='isOpenedSelect = false'
 		)
 			option(value="" v-if='placeholder != undefined' disabled :selected='!value') {{this.placeholder}}
-			option(v-for='(point, index) in preparedOptions', :value="point.value", :selected='reactiveValue == point.value') {{point.text}}
+			option(v-for='(point, index) in preparedOptions', :value="point.value", :selected='reactiveValue == point.value && preparedOptions.length === 1') {{point.text}}
 		.dropdown-icon
 			svg(viewBox='0 0 18 9')
 				polygon.triangle(fill='currentColor' points='0,9 9,0 18,9')
@@ -111,6 +112,7 @@ export default {
 	mounted: function () {
 		// synbc the input to the initial value
 		// this.$refs[this.name].value = this.value;
+		if (this.options.length === 1) this.reactiveValue = this.preparedOptions[0].value
 	}
 }
 </script>
@@ -135,6 +137,9 @@ export default {
 			appearance: none;
 			&::-ms-expand {
 				display: none;
+			}
+			&[disabled] + .dropdown-icon {
+				opacity: .3;
 			}
 		}
 		&.success {
