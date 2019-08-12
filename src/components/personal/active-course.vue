@@ -13,7 +13,8 @@
 							span.green {{ this.group.curator.name }}
 						.line(v-if="group.chat_number")
 							svg-icon(name='icon-chat')
-							| Номер чата: {{this.group.chat_number}}
+							| Номер чата: 
+							a(:href="this.group.chat_number") {{this.group.chat_number}}
 						.line
 							svg-icon(name='icon-graph')
 							| Прогресс:&nbsp;
@@ -27,8 +28,19 @@
 			.progress-caption {{this.payStatus}}
 
 			.btns
-				green-btn(inverted v-if="url" @click="openCourseHandler").btn Открыть курс
 				green-btn.btn.btn-green(v-if="payUrl" @click="payHandler") Оплатить курс
+				.select-payment(v-else-if="prices")
+					app-dropdown.select-payment__dropdown(
+						placeholder='Сколько недель вы хотите оплатить?'
+						data-vv-as='Количество недель'
+						v-model="price"
+						:options='prices'
+						:disabled="false"
+						:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
+						:error='errors.first("weeks")'
+						name='weeks')
+					green-btn.btn.btn-green(:disabled="!price" @click="payHandler") Перейти к оплате
+				green-btn(inverted v-if="url" @click="openCourseHandler").btn Открыть курс
 		.additional-content(
 			v-bind:class="{ dropdown_active: isDropDownActive }"
 		)
@@ -42,14 +54,20 @@
 
 <script>
 import { formatDate } from "../../assets/misc";
+import api from '@/assets/api/index.js'
 
 export default {
 	name: "ActiveCourse",
 	components: {
 		SvgIcon: () => import("@/components/SvgIcon.vue"),
-		GreenBtn: () => import("@/components/form/green-btn.vue")
+		GreenBtn: () => import("@/components/form/green-btn.vue"),
+		AppDropdown: () => import("@/components/form/dropdown.vue"),
 	},
 	props: {
+		orderId: {
+			type: Number,
+			default: null
+		},
 		courseName: {
 			type: String,
 			default: "NoName Course"
@@ -58,12 +76,16 @@ export default {
 			type: Object,
 			default: null
 		},
+		prices: {
+			type: Array,
+			default: null
+		},
 		additionalInfo: {
 			type: String,
 			default: null
 		},
 		progress: {
-			type: String,
+			type: Number,
 			default: null
 		},
 		payStatus: {
@@ -82,7 +104,8 @@ export default {
 	data() {
 		return {
 			isDropDownActive: false,
-			date: ""
+			date: "",
+			price: null,
 		};
 	},
 	created() {
@@ -93,7 +116,15 @@ export default {
 			this.$emit("openCourse", this.url);
 		},
 		payHandler() {
-			this.$emit("pay", this.payUrl);
+			if (this.payUrl) {
+				this.$emit("pay", this.payUrl);
+			} else {
+				this.$store.dispatch('reqOnlinePayment', {orderId: this.orderId, price_id: this.price}).then(
+					res => {
+						this.$emit("pay", res.data.payment.approve_url);
+					},
+				)
+			}
 		},
 		goToCourseHandler() {
 			this.$emit("goToCourse");
@@ -102,7 +133,7 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped>
+<style lang="postcss">
 article.main-body {
   .green {
     color: var(--accent_color);
@@ -259,6 +290,21 @@ article.main-body {
       font-size: 11px;
       min-width: 110px;
     }
+  }
+  .select-payment {
+	display: flex;
+	align-items: center;
+
+	@media (max-width: 1200px) {
+      align-items: flex-start;
+	  flex-direction: column;
+    }
+
+	.select-wrapper {
+		margin-left: 10px;
+		max-width: 305px;
+	}
+
   }
 
   .additional-content {
