@@ -66,10 +66,6 @@ export default {
 			type: Array,
 			default: () => []
 		},
-		position: {
-			type: Array,
-			default: () => []
-		}
 	},
 	data() {
 		return {
@@ -89,7 +85,7 @@ export default {
 				}
 			},
 			windowWidth: window.innerWidth,
-			defaultPosition: []
+			defaultPosition: [55.746726, 37.5911983]
 		};
 	},
 	computed: {
@@ -132,10 +128,14 @@ export default {
 		},
 		gyms() {
 			this.selectGym(this.gyms[0]);
+			if (this.map) {
+				map.geoObjects.events.once('add', ()=>{
+					this.setCenterPosition(this.map);
+				})
+			}
 		},
 	},
 	created() {
-		this.defaultPosition = this.position;
 		this.selectGym(this.gyms[0]);
 	},
 	mounted() {
@@ -172,10 +172,10 @@ export default {
 			map.margin.setDefaultMargin([0, 0, 0, offsetLeft]);
 			if (this.gyms.length > 1) {
 				map.setBounds(map.geoObjects.getBounds(), {
-					zoomMargin: [10, 10, 10, offsetLeft]
+					zoomMargin: [10, 10, 10, offsetLeft],
 				});
 			} else {
-				map.setBounds(map.geoObjects.getBounds());
+				map.setBounds(map.geoObjects.getBounds(), {zoomMargin: 10});
 				map.setCenter(map.getCenter(), 15, {useMapMargin: true})
 			}
 			this.defaultPosition = map.getCenter();
