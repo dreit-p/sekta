@@ -8,7 +8,7 @@ label.app-dropdown(:class='this.$options.name')
 			:ref='name'
 			v-model='reactiveValue'
 			v-bind="$attrs"
-			:disabled='preparedOptions.length === 1'
+			:disabled='preparedOptions.length === 1 && disabled'
 			@click='isOpenedSelect = !isOpenedSelect'
 			@blur='isOpenedSelect = false'
 		)
@@ -48,6 +48,10 @@ export default {
 			default: ()=>[],
 		},
 		value: {},
+		disabled: {
+            type: Boolean,
+			default: true
+        },
 		error: {
 			type: String,
 			default: null

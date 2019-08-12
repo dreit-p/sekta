@@ -16,6 +16,7 @@
 			data-vv-as='Количество'
 			v-model="quantity"
 			:options='quantityOptions'
+            :disabled="false"
 			v-validate='`required|numeric|max_value:${priceId ? prices.find(p => p.id === priceId).available_quantity : 0}`'
 			:class="{ 'error': myErrors.quantity || errors.has('quantity'), 'success': quantity && !errors.has('quantity') }"
 			@change="() => inputHandler('quantity')"
@@ -228,7 +229,9 @@ export default {
 			timerId: null,
 			isDeliveryCalc: false,
 			isDeliveryDone: false,
-			deliveryPrice: null
+			deliveryPrice: null,
+
+            isOrderLoading: false,
 		};
 	},
 	created() {
@@ -357,7 +360,8 @@ export default {
 		},
 		makeOrder() {
 			this.checkOrderValid();
-			if (this.hasError) return;
+			if (this.hasError || this.isOrderLoading) return;
+            this.isOrderLoading = true;
 			let order = {
 				price_id: this.priceId,
 				delivery_type: this.deliveryId,
@@ -375,6 +379,7 @@ export default {
 					this.makePayment(res.data.order_id);
 				},
 				rej => {
+                    this.isOrderLoading = false;
 					this.errorHandler(rej.response.data.errors);
 				}
 			);
@@ -388,7 +393,11 @@ export default {
 			data.quantity = this.quantity ? this.quantity : 1;
 			api
 				.makeProguctPayment(data, this.$store.state.user.token)
-				.then(res => {}, rej => {});
+				.then(res => {
+                    window.location = res.data.payment.approve_url;
+                }, rej => {
+                    this.isOrderLoading = false;
+                });
 		},
 		errorHandler(errors) {
 			for (let key in errors) {
