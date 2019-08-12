@@ -173,10 +173,11 @@ export default {
 				cityId: this.city.id,
 				courseID: this.selected.courseID
 			};
-			return this.$store.dispatch("gyms/reqGyms", data).then(res => {
-				if (res.data.data.length > 0) {
-					this.selected.gymID = res.data.data[0].id;
-					return res.data.data;
+			return this.$store.dispatch("gyms/reqGyms", data).then(()=>{
+				let gyms = this.$store.state.gyms.gyms;
+				if (gyms.length > 0) {
+					this.selected.gymID = gyms[0].id;
+					return gyms;
 				}
 			});
 		},
