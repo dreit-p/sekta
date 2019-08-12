@@ -4,10 +4,10 @@ div.gym
             title="Москва курс #sekta"
             description="Покупая абонемент в #sekta на месяц, вы получаете не просто групповые тренировки в залах, а полноценную комплексную программу, направленную на ваш лучший результат. Здоврое питание, новые тренировочные задания каждый месяц, уход за кожей и поддержка и помощь куратороской команды каждый день."
     )
-	gym-hero(class='huge-content', :image='`gym_${getCity.code}.jpg`')
+	gym-hero(class='huge-content', :image='`gym_${city.code}.jpg`')
 		template(v-slot:another v-if="courseDate")
 			.huge-hero-text
-				h1.main {{getCity.name}}
+				h1.main {{city.name}}
 				.additional старт занятий – {{courseDate}}
 
 	.section-btns
@@ -118,7 +118,6 @@ export default {
 	},
 	data() {
 		return {
-			cityId: 1,
 			selected: {
 				courseID: null,
 				gymID: null,
@@ -171,7 +170,7 @@ export default {
 	asyncComputed: {
 		gyms() {
 			let data = {
-				cityId: this.getCity.id,
+				cityId: this.city.id,
 				courseID: this.selected.courseID
 			};
 			return this.$store.dispatch("gyms/reqGyms", data).then(res => {
@@ -183,7 +182,7 @@ export default {
 		},
 		courses() {
 			return this.$store
-				.dispatch("gyms/reqCourses", this.getCity.id)
+				.dispatch("gyms/reqCourses", this.city.id)
 				.then(() => {
 					return this.$store.state.gyms.courses;
 				});
@@ -210,7 +209,7 @@ export default {
 		city_options() {
 			return this.$store.state.cities;
 		},
-		getCity() {
+		city() {
 			let name = this.$route.params.city;
 			return this.city_options.find(city=>city.englishName === name);
 		},
