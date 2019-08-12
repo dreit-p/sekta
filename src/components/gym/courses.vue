@@ -37,8 +37,14 @@ export default {
 	data () {
 		return {
 			selectedCourse: null,
-			publicPath: 'http://api.sektaschool.ru.dev.immelman.ru'
+			publicPath: ''
+			// publicPath: 'http://api.sektaschool.ru.dev.immelman.ru'
 		}
+	},
+	watch: {
+		courses() {
+			this.selectCourse(this.groups[0].elements[0]);
+		},
 	},
 	computed: {
 		groups () {

@@ -37,6 +37,11 @@ export default new Vuex.Store({
 			cityId: null,
 		},
 		onlineCourses: null,
+		cities: [
+			{id: '1', name: 'Москва', code: 'msk', englishName: 'moscow'},
+			{id: '2', name: 'Санкт-Петербург', code: 'spb', englishName: 'saint-pitersburg'},
+			{id: '3', name: 'Другой город', code: 'reg', englishName: 'regions'},
+		],
 	},
 	actions,
 	getters,

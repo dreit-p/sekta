@@ -91,6 +91,9 @@ export default {
 			}
 			return false;
 		},
+		city_options() {
+			return this.$store.state.cities;
+		},
 	},
 	methods: {
 		unlockForm() {
@@ -193,11 +196,6 @@ export default {
 				{id: '+12', name: 'GMT+12 (Камчатка, Чукотка)'},
 				{id: '+13', name: 'GMT+13'},
 				{id: '+14', name: 'GMT+14'}
-			],
-			city_options: [
-				{id: '1', name: 'Москва'},
-				{id: '2', name: 'Санкт-Петербург'},
-				{id: '3', name: 'Другой город'},
 			],
 			genders: [
 				{id: 'default', text: 'Не выбрано'},

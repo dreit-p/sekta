@@ -39,10 +39,12 @@ export default {
 		...mapActions(['setFormModalState'])
 	},
 	computed: {
+		backgroundImage() {
+			return require('@/assets/images/' + this.image);
+		}
 	},
 	data () {
 		return {
-			backgroundImage: require('@/assets/images/' + this.image)
 		}
 	}
 }

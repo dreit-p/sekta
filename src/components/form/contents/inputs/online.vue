@@ -191,10 +191,13 @@ export default {
 		this.inputsData.city_id = this.userCity;
 	},
 	computed: {
+		...globalInputs.list,
 		userCity() {
 			return this.$store.getters.getUserCity;
 		},
-		...globalInputs.list,
+		city_options() {
+			return this.$store.state.cities;
+		},
 		price() {
 			if (this.formData.prices.length < 1) {
 				return false;
@@ -229,11 +232,6 @@ export default {
 				{id: 'vb', name: 'Viber'},
 				{id: 'wa', name: 'WhatsApp'},
 				{id: 'email', name: 'E-mail'},
-			],
-			city_options: [
-				{id: '1', name: 'Москва'},
-				{id: '2', name: 'Санкт-Петербург'},
-				{id: '3', name: 'Другой город'},
 			],
 			weeks_options: this.formData.prices ? this.formData.prices : ['Продажа невозможна'],
 			termsAgree: false,

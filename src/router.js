@@ -167,17 +167,17 @@ const Router = new VueRouter({
 						import('./views/gym/main.vue'),
 				},
 				{
-					path: 'moscow',
-					name: 'gym-moscow',
+					path: ':city',
+					name: 'gym',
 					component: () =>
-						import( /* webpackChunkName: "gym" */ './views/gym/moscow.vue'),
+						import( /* webpackChunkName: "gym" */ './views/gym/gym.vue'),
 				},
-				{
-					path: 'saint-pitersburg',
-					name: 'gym-saint-pitersburg',
-					component: () =>
-						import( /* webpackChunkName: "gym" */ './views/gym/saint-pitersburg.vue'),
-				},
+				// {
+				// 	path: 'saint-pitersburg',
+				// 	name: 'gym-saint-pitersburg',
+				// 	component: () =>
+				// 		import( /* webpackChunkName: "gym" */ './views/gym/saint-pitersburg.vue'),
+				// },
 			]
 		},
 		{

@@ -4,10 +4,10 @@ div.gym
             title="Москва курс #sekta"
             description="Покупая абонемент в #sekta на месяц, вы получаете не просто групповые тренировки в залах, а полноценную комплексную программу, направленную на ваш лучший результат. Здоврое питание, новые тренировочные задания каждый месяц, уход за кожей и поддержка и помощь куратороской команды каждый день."
     )
-	gym-hero(class='huge-content', image='gym_msk.jpg')
+	gym-hero(class='huge-content', :image='`gym_${getCity.code}.jpg`')
 		template(v-slot:another v-if="courseDate")
 			.huge-hero-text
-				h1.main Москва
+				h1.main {{getCity.name}}
 				.additional старт занятий – {{courseDate}}
 
 	.section-btns
@@ -28,7 +28,7 @@ div.gym
 			section#gym
 				template(v-if='gyms')
 					.section-caption Выберите расположение зала
-					gym-map(v-model='selected.gymID', @click='activateNextBtn({ elemId: "gym", destId: "quantityType", text: "Выбрать количество тренировок" })', :gyms='gyms' :position="[55.746726, 37.5911983]")
+					gym-map(v-model='selected.gymID', @click='activateNextBtn({ elemId: "gym", destId: "quantityType", text: "Выбрать количество тренировок" })', :gyms='gyms')
 
 			section#quantityType
 				template(v-if='selected.gymID && selected.courseID && visits.length > 0')
@@ -171,7 +171,7 @@ export default {
 	asyncComputed: {
 		gyms() {
 			let data = {
-				cityId: this.cityId,
+				cityId: this.getCity.id,
 				courseID: this.selected.courseID
 			};
 			return this.$store.dispatch("gyms/reqGyms", data).then(res => {
@@ -183,7 +183,7 @@ export default {
 		},
 		courses() {
 			return this.$store
-				.dispatch("gyms/reqCourses", this.cityId)
+				.dispatch("gyms/reqCourses", this.getCity.id)
 				.then(() => {
 					return this.$store.state.gyms.courses;
 				});
@@ -206,6 +206,13 @@ export default {
 				course => course.id === this.selected.courseID
 			);
 			return course;
+		},
+		city_options() {
+			return this.$store.state.cities;
+		},
+		getCity() {
+			let name = this.$route.params.city;
+			return this.city_options.find(city=>city.englishName === name);
 		},
 		courseDate() {
 			if (!this.courseInfo) return;
@@ -262,7 +269,9 @@ export default {
 	methods: {
 		setSection(num) {
 			this.section = num;
-			this.scrollTo("training-params");
+			if (window.innerWidth <= 650) {
+				this.scrollTo("training-params");
+			}
 		},
 		activateNextBtn({ elemId, destId, text }) {
 			let screenHeight =

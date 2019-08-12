@@ -79,6 +79,9 @@ export default {
 		userCity() {
 			return this.$store.getters.getUserCity;
 		},
+		city_options() {
+			return this.$store.state.cities;
+		},
 		price() {
 			if (!this.inputsData.price_id) return false;
 			let cert = this.price_id_options.find(cert=>cert.id === this.inputsData.price_id);
@@ -139,17 +142,13 @@ export default {
 				receiver_email: null,
 				price_id : null,
 				city_id: null,
+				with_curator: false,
 			},
 			price_id_options: [
 				{id: '1', name: '1500'},
 				{id: '2', name: '3900'},
 				{id: '3', name: '7000'},
 				{id: '4', name: '12000'},
-			],
-			city_options: [
-				{id: '1', name: 'Москва'},
-				{id: '2', name: 'Санкт-Петербург'},
-				{id: '3', name: 'Другой город'},
 			],
 			termsAgree: false,
 		}
