@@ -30,6 +30,7 @@
 						:progress="course.edu_progress"
 						:group="course.group"
 						:url="course.course_url"
+						:cityId="course.city_id"
 						:prices="course.available_prices"
 						:payUrl="course.approve_payment_url"
 						:additionalInfo='course.course_description'

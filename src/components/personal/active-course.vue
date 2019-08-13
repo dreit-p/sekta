@@ -41,7 +41,7 @@
 						name='weeks'
 						@change="pricesChangeHandler")
 					app-input(
-						placeholder='Промокод'
+						placeholder='Промокод(если есть)'
 						data-vv-as='Промокод'
 						v-model="promocode"
 						:class="{ 'error': promocodeErrors, 'success': promo.amount }"
@@ -54,7 +54,22 @@
 						:caption="promo.promocode_name"
 					)
 					.order__total-price(v-if="price") Итого к оплате: {{promo.amount || prices.find(p => p.id === price).value}} руб.
-					green-btn.btn.btn-green(:disabled="!price" @click="payHandler") Перейти к оплате
+					app-checkbox(
+						name='termsAgree'
+						data-vv-as='обработка персональных данных'
+						v-model.trim='termsAgree'
+						v-validate='"required:true"'
+						:required='true'
+						:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+						:error='errors.first("termsAgree")'
+					)
+						| Ознакомлен и согласен с условиями 
+						a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[cityId]', target='_BLANK', rel='noopener noreferrer') публичной оферты
+					p.tiny-text Оплата производится на сайте&nbsp;
+						a(href='https://kassa.yandex.ru/') Яндекс.Кассы
+					p.tiny-text Оказание услуг осуществляется&nbsp;
+						a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[cityId]', target='_BLANK', rel='noopener noreferrer') ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[cityId]  }}»
+					green-btn.btn.btn-green(:disabled="!price || !termsAgree" @click="payHandler") Перейти к оплате
 				green-btn(inverted v-if="url" @click="openCourseHandler").btn Открыть курс
 		.additional-content(
 			v-bind:class="{ dropdown_active: isDropDownActive }"
@@ -78,6 +93,7 @@ export default {
 		GreenBtn: () => import("@/components/form/green-btn.vue"),
 		AppDropdown: () => import("@/components/form/dropdown.vue"),
 		AppInput: () => import("@/components/form/input.vue"),
+		AppCheckbox: () => import("@/components/form/checkbox.vue"),
 	},
 	props: {
 		orderId: {
@@ -115,13 +131,18 @@ export default {
 		payUrl: {
 			type: String,
 			default: null
-		}
+		},
+		cityId: {
+			type: Number,
+			default: 3
+		},
 	},
 	data() {
 		return {
 			isDropDownActive: false,
 			date: "",
 			price: null,
+			termsAgree: false,
 			//Promocode
 			promocode: '',
 			promocodeErrors: null,
@@ -342,23 +363,37 @@ article.main-body {
 	display: flex;
 	align-items: flex-start;
 	flex-direction: column;
+	padding-left: 10px;
+
+	.btn {
+		margin-left: 0;
+	}
 
 	.select-wrapper {
-		margin-left: 10px;
 		max-width: 305px;
-	}
-	.app-input {
-		padding-left: 10px;
 	}
 	.input-wrapper {
 		margin-top: 15px;
 	}
 	.order__total-price {
-		margin-left: 10px;
 		margin-top: 10px;
 		font-size: 20px;
 		font-family: 'Montserrat', 'Uni Sans', 'Tahoma', 'Segoe UI', arial, sans-serif;
 		font-weight: 700;
+	}
+	.app-checkbox {
+		max-width: 100%;
+		margin: 14px 0;
+	}
+	.tiny-text {
+		font-size: 12px;
+		font-family: 'Open Sans', 'PT Sans', 'Segoe UI', arial, sans-serif;
+		line-height: 1.33;
+		margin-bottom: 14px;
+		margin-top: 0;
+		a {
+			color: #0ab6a1;
+		}
 	}
 
   }
