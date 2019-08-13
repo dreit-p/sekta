@@ -2,8 +2,8 @@
 	article.main-body
 		.limit
 			section.first-row
-				.confirm-mail(v-if="!isMailSent && !user.is_email_verified") Адрес электронной почты не подтвержден.&nbsp;
-					a(href="#" @click.prevent="sendMailConfirm").green Подтвердить сейчас
+				.confirm-mail(v-if="showMail && !isMailSent && !user.info.is_email_verified") Адрес электронной почты не подтвержден.&nbsp;
+					a(href="#" @click.prevent="requestVerifyEmail").green Подтвердить сейчас
 				.confirm-mail(v-else-if="isMailSent") Письмо отправлено на вашу почту
 			section.column
 				template(v-if="unPaidCourses.length > 0")
@@ -114,6 +114,7 @@ export default {
 			gymCoursesActive: [],
 			products: [],
 			certificates: [],
+			showMail: false,
 			recommended: [
 				{
 					name: "#SEKTACARE",
@@ -152,6 +153,11 @@ export default {
 		}
 	},
 	created() {
+		if (this.$route.query.verify_email) {
+			this.verifyEmail(this.$route.query.verify_email);
+		} else {
+			this.showMail = true
+		}
 		this.getOnlineOrders();
 		this.getGymOrders();
 		this.getCertificates();
@@ -196,8 +202,16 @@ export default {
 				rej => {}
 			);
 		},
-		sendMailConfirm() {
+		requestVerifyEmail() {
 			this.isMailSent = true;
+			api.requestVerifyEmail()
+		},
+		verifyEmail(token) {
+			api.verifyEmail(token).then(res => {
+				if (!res.data.status) {
+					this.showMail = true
+				}
+			},)
 		},
 		yaKassaRedirect(url) {
 			window.location = url;
@@ -254,7 +268,7 @@ article.main-body {
     }
   }
   .section-title {
-    margin: 60px 0.125rem 24px;
+    margin: 30px 0.125rem 24px;
     font-size: 22px;
     font-weight: 800;
     text-transform: uppercase;

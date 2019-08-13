@@ -49,4 +49,11 @@ export default {
 		setToken(token)
 		return axios.get(URL + `/api/personal/certificate-orders`)
 	},
+	//Email
+	requestVerifyEmail() {
+		return axios.post(URL + '/api/personal/request-verify-email')
+	},
+	verifyEmail(token) {
+		return axios.post(URL + `/api/personal/verify-email/${token}`)
+	},
 }
