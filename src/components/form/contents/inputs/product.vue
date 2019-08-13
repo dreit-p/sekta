@@ -239,7 +239,9 @@ export default {
 		this.isMerch = this.$route.name === "sektamerch";
 		let product = this.isMerch ? "TSHIRT" : "BULLET";
 		api.getProduct(product).then(res => {
-			this.prices = res.data.data.prices;
+			let newPrices = [] 
+			res.data.data.forEach(product => product.prices.forEach(price => newPrices.push(price)))
+			this.prices = newPrices;
 		});
 	},
 	methods: {

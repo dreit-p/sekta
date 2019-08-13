@@ -16,7 +16,7 @@ export default {
 		return axios.get(URL + `/api/personal/product-orders`)
 	},
 	getProduct(tag) {
-		return axios.get(URL + `/api/products/${tag}`)
+		return axios.get(URL + `/api/products?filter_by_tag=${tag}`)
 	},
 	getFoxCities(text) {
 		return axios.get(URL + `/api/delivery/fox-express/cities?text=${text}`)
