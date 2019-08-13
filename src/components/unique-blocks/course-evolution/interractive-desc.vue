@@ -199,6 +199,9 @@ export default {
 			font-weight: bold;
 			text-transform: uppercase;
 			color: var(--bt-dark_elems);
+			@media (max-width: 425px) {
+				font-size: 18px;
+			}
 		}
 		p {
 			font-size: 16px;
@@ -214,7 +217,7 @@ export default {
 		text-align: center;
 		text-transform: uppercase;
 		margin: 133px * 95px;
-		@media (min-width: 426px) and (max-width: 900px) {
+		@media (min-width: 424px) and (max-width: 900px) {
 			font-size: 26px;
 			margin: 80px * 50px;
 		}
