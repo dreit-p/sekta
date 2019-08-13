@@ -15,14 +15,14 @@
 							svg-icon(name='icon-chat')
 							| Номер чата: 
 							a(:href="this.group.chat_number") {{this.group.chat_number}}
-						.line
+						.line(v-if="progress || progress === 0")
 							svg-icon(name='icon-graph')
 							| Прогресс:&nbsp;
-							span.green {{this.progress || '0'}}%
+							span.green {{this.progress}}%
 						.line(v-if="date")
 							svg-icon(name='icon-calendar')
 							| Старт: {{ this.date }}
-			.progress-bar(v-if="group")
+			.progress-bar(v-if="group && (progress || progress === 0)")
 				.border
 				.fill(v-bind:style="{ width: `${this.progress}%` }")
 			.progress-caption {{this.payStatus}}
@@ -38,7 +38,22 @@
 						:disabled="false"
 						:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
 						:error='errors.first("weeks")'
-						name='weeks')
+						name='weeks'
+						@change="pricesChangeHandler")
+					app-input(
+						placeholder='Промокод'
+						data-vv-as='Промокод'
+						v-model="promocode"
+						:class="{ 'error': promocodeErrors, 'success': promo.amount }"
+						:error="promocodeErrors ? promocodeErrors[0] : ''"
+						name='promocode'
+						:prevent="true"
+						@keydown.enter.prevent="makeOrder"
+						@input="promoInputHandler"
+						@blur="promoChangeHandler"
+						:caption="promo.promocode_name"
+					)
+					.order__total-price(v-if="price") Итого к оплате: {{promo.amount || prices.find(p => p.id === price).value}} руб.
 					green-btn.btn.btn-green(:disabled="!price" @click="payHandler") Перейти к оплате
 				green-btn(inverted v-if="url" @click="openCourseHandler").btn Открыть курс
 		.additional-content(
@@ -62,6 +77,7 @@ export default {
 		SvgIcon: () => import("@/components/SvgIcon.vue"),
 		GreenBtn: () => import("@/components/form/green-btn.vue"),
 		AppDropdown: () => import("@/components/form/dropdown.vue"),
+		AppInput: () => import("@/components/form/input.vue"),
 	},
 	props: {
 		orderId: {
@@ -106,6 +122,10 @@ export default {
 			isDropDownActive: false,
 			date: "",
 			price: null,
+			//Promocode
+			promocode: '',
+			promocodeErrors: null,
+			promo: '',
 		};
 	},
 	created() {
@@ -119,7 +139,9 @@ export default {
 			if (this.payUrl) {
 				this.$emit("pay", this.payUrl);
 			} else {
-				this.$store.dispatch('reqOnlinePayment', {orderId: this.orderId, price_id: this.price}).then(
+				let code = ''
+				if (this.promo.amount) code = this.promo.promocode_code;
+				this.$store.dispatch('reqOnlinePayment', {orderId: this.orderId, price_id: this.price, promocode: code}).then(
 					res => {
 						this.$emit("pay", res.data.payment.approve_url);
 					},
@@ -128,7 +150,32 @@ export default {
 		},
 		goToCourseHandler() {
 			this.$emit("goToCourse");
-		}
+		},
+		pricesChangeHandler() {
+			if (this.promocode) {
+				this.checkPromocode(this.promocode);
+			}
+		},
+		//Promocode
+		promoInputHandler() {
+			this.promo = { amount: null };
+			this.promocodeErrors = null
+		},
+		promoChangeHandler(input) {
+			if (this.price) {
+				this.checkPromocode(input);
+			}
+		},
+		checkPromocode(code) {
+			api.reqDiscountedPrice(this.price, code).then(
+				res => {
+					this.promo = res.data;
+				},
+				rej => {
+					this.promocodeErrors = [rej.response.data.message];
+				}
+			);
+		},
 	}
 };
 </script>
@@ -293,16 +340,25 @@ article.main-body {
   }
   .select-payment {
 	display: flex;
-	align-items: center;
-
-	@media (max-width: 1200px) {
-      align-items: flex-start;
-	  flex-direction: column;
-    }
+	align-items: flex-start;
+	flex-direction: column;
 
 	.select-wrapper {
 		margin-left: 10px;
 		max-width: 305px;
+	}
+	.app-input {
+		padding-left: 10px;
+	}
+	.input-wrapper {
+		margin-top: 15px;
+	}
+	.order__total-price {
+		margin-left: 10px;
+		margin-top: 10px;
+		font-size: 20px;
+		font-family: 'Montserrat', 'Uni Sans', 'Tahoma', 'Segoe UI', arial, sans-serif;
+		font-weight: 700;
 	}
 
   }

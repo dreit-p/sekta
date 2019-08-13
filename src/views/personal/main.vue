@@ -83,14 +83,14 @@
 							span.green {{allCourses.filter(course => course.edu_progress === 100).length}}
 						hr
 						.text Активных курсов:&nbsp;
-							span.green {{allCourses.filter(course => course.edu_progress && course.edu_progress < 100).length}}
+							span.green {{allCoursesActive.filter(course => course.edu_progress !== 100).length}}
 						hr
-						template(v-if="allCourses.length > 0")
+						template(v-if="allCoursesForProgress.length > 0")
 							h2.title.green Прогресс
 							hr
-							template(v-for="course in allCoursesActive")
+							template(v-for="course in allCoursesForProgress")
 								.text.heavy {{course.course_name}}&nbsp;
-									span.green {{course.edu_progress || '0%'}}
+									span.green {{course.edu_progress}} %
 								hr
 
 </template>
@@ -139,11 +139,14 @@ export default {
 			return [...this.onlineCourses, ...this.gymCourses];
 		},
 		allCoursesActive() {
-			return [...this.onlineCoursesActive, ...this.gymCoursesActive];
+			return [...this.onlineCoursesActive, ...this.gymCoursesActive]
+		},
+		allCoursesForProgress() {
+			return [...this.onlineCoursesActive, ...this.gymCoursesActive].filter(course => course.edu_progress || course.edu_progress === 0);
 		},
 		unPaidCourses() {
 			return this.allCourses.filter(
-				course => course.pay_status === "Не оплачен"
+				course => course.pay_status === "Не оплачено"
 			);
 		}
 	},
@@ -159,7 +162,7 @@ export default {
 				res => {
 					this.onlineCourses = res.data.data;
 					this.onlineCoursesActive = res.data.data.filter(
-						course => course.pay_status !== "Не оплачен"
+						course => course.pay_status !== "Не оплачено"
 					);
 				},
 				rej => {}
@@ -170,7 +173,7 @@ export default {
 				res => {
 					this.gymCourses = res.data.data;
 					this.gymCoursesActive = res.data.data.filter(
-						course => course.pay_status !== "Не оплачен"
+						course => course.pay_status !== "Не оплачено"
 					);
 				},
 				rej => {}
