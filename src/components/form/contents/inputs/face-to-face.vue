@@ -115,14 +115,18 @@ export default {
 			this.ifValid(()=>{
 				this.isFormLocked = true;
 
-				this.$store.dispatch('sendGymOrder', this.price.id)
+				let city = this.$route.params.city
+				let cityId = 1
+				if (city === 'saint-pitersburg') cityId = 2
+
+				this.$store.dispatch('sendGymOrder', {price_id:this.price.id, city_id:cityId})
 					.then((resp)=>{
 						this.unlockForm();
 						this.$emit('submit', 'face-to-face');
 						this.$store.dispatch('setFormModalState', {modalState: false});
 						let gymOrderID = resp.data.order_id;
 						this.$store.dispatch('reqGymPayment', {gymOrderId: gymOrderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
-							console.log(resp);
+							window.location = resp.data.payment.approve_url;
 						});
 					})
 					.catch((err)=>{

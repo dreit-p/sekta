@@ -9,7 +9,7 @@ const postReq = (path, data) => {
 		data: data,
 		method: 'POST'
 	})
-		.then(resp=>resp)
+		.then(resp => resp)
 		.catch(err => {
 			console.warn(path, ': ', err);
 			throw err;
@@ -21,7 +21,7 @@ const getReq = (path, data) => {
 		params: data,
 		method: 'get'
 	})
-		.then(resp=>resp)
+		.then(resp => resp)
 		.catch(err => {
 			console.warn(path, ': ', err);
 			throw err;
@@ -29,7 +29,7 @@ const getReq = (path, data) => {
 }
 
 export default {
-	setFormModalState ({dispatch, commit}, {modalState, type}) {
+	setFormModalState({ dispatch, commit }, { modalState, type }) {
 		if (modalState !== undefined) {
 			dispatch('lockScroll', modalState);
 			commit('setFormModalState', modalState);
@@ -38,7 +38,7 @@ export default {
 			commit('setModalType', type);
 		}
 	},
-	lockScroll ({commit}, payload) {
+	lockScroll({ commit }, payload) {
 		let body = document.getElementsByTagName('body')[0];
 		if (payload) {
 			let scrollWidth = window.innerWidth - document.documentElement.clientWidth;
@@ -54,14 +54,14 @@ export default {
 		}
 		commit('setScrollLock', payload);
 	},
-	updateUserLocation ({state, dispatch}) {
+	updateUserLocation({ state, dispatch }) {
 		if (!state.user.location) {
 			dispatch('requestIPInfo');
 		}
 		return state.user.location;
 	},
 	requestOnlineCourses({ commit }) {
-		return new Promise((resolve)=>{
+		return new Promise((resolve) => {
 			return axios
 				.get(`${TEST_URL}/api/online-courses`)
 				.then(response => {
@@ -79,94 +79,94 @@ export default {
 			})
 			.catch(error => console.error(error));
 	},
-	authRequest({ commit }, {email, password}) {
-		return postReq('/api/auth/login', {email, password})
-			.then(resp=>{
+	authRequest({ commit }, { email, password }) {
+		return postReq('/api/auth/login', { email, password })
+			.then(resp => {
 				commit('setUserInfo', { type: 'token', data: resp.data.token })
-				axios.defaults.headers.common = {'Authorization': `Bearer ${resp.data.token}`}
+				axios.defaults.headers.common = { 'Authorization': `Bearer ${resp.data.token}` }
 				return resp
 			})
-			.catch(err=>{
+			.catch(err => {
 				throw err.response;
 			});
 	},
-	sendGymOrder({state}, price_id) {
-		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
-		return postReq('/api/personal/gym-orders', {price_id})
-			.then(resp=>{
+	sendGymOrder({ state }, { price_id, city_id }) {
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
+		return postReq('/api/personal/gym-orders', { price_id, city_id })
+			.then(resp => {
 				return resp
 			})
-			.catch(err=>{
+			.catch(err => {
 				throw err.response;
 			});
 	},
-	sendOnlineOrder({state}, data) {
-		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+	sendOnlineOrder({ state }, data) {
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
 		return postReq('/api/personal/online-orders', data)
-			.then(resp=>{
+			.then(resp => {
 				return resp
 			})
-			.catch(err=>{
+			.catch(err => {
 				throw err.response;
 			});
 	},
-	sendCertOrder({state}, data) {
-		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+	sendCertOrder({ state }, data) {
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
 		return postReq('/api/personal/certificate-orders', data)
-			.then(resp=>{
+			.then(resp => {
 				return resp
 			})
-			.catch(err=>{
+			.catch(err => {
 				throw err.response;
 			});
 	},
-	reqGymPayment({state}, {gymOrderId, price_id, promocode}) {
-		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
-		return postReq(`/api/personal/gym-orders/${gymOrderId}/payments`, {price_id, promocode})
-			.then(resp=>{
+	reqGymPayment({ state }, { gymOrderId, price_id, promocode }) {
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
+		return postReq(`/api/personal/gym-orders/${gymOrderId}/payments`, { price_id, promocode })
+			.then(resp => {
 				return resp
 			})
-			.catch(err=>{
+			.catch(err => {
 				throw err.response;
 			});
 	},
-	reqOnlinePayment({state}, {orderId, price_id, promocode}) {
-		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
-		return postReq(`/api/personal/online-orders/${orderId}/payments`, {price_id, promocode})
-			.then(resp=>{
+	reqOnlinePayment({ state }, { orderId, price_id, promocode }) {
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
+		return postReq(`/api/personal/online-orders/${orderId}/payments`, { price_id, promocode })
+			.then(resp => {
 				return resp
 			})
-			.catch(err=>{
+			.catch(err => {
 				throw err.response;
 			});
 	},
-	reqCertPayment({state}, {price_id, promocode}) {
-		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
-		return postReq(`/api/personal/certificate-orders/1/payments`, {price_id, promocode})
-			.then(resp=>{
+	reqCertPayment({ state }, { price_id, promocode }) {
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
+		return postReq(`/api/personal/certificate-orders/1/payments`, { price_id, promocode })
+			.then(resp => {
 				return resp
 			})
-			.catch(err=>{
+			.catch(err => {
 				throw err.response;
 			});
 	},
 	regRequest({ dispatch }, data) {
 		return postReq('/api/register', data)
-			.then(()=>{
-				return dispatch('authRequest', data).then(authResp=>authResp);
+			.then(() => {
+				return dispatch('authRequest', data).then(authResp => authResp);
 			})
-			.catch(regErr=>{
+			.catch(regErr => {
 				throw regErr.response;
 			});
 	},
 	userDetailsRequest({ state, dispatch, commit }) {
-		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
 		return getReq('/api/personal/details')
-			.then((resp)=>{
+			.then((resp) => {
 				commit('setUserInfo', { type: 'info', data: resp.data.data })
 				return resp;
 			})
-			.catch(requestError=>{
+			.catch(requestError => {
 				if (requestError.response.status == 403) {
 					dispatch('logOut');
 				}
@@ -174,43 +174,43 @@ export default {
 			});
 	},
 	userDetailsPosting({ state, dispatch }, data) {
-		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
 		return postReq('/api/personal/details', data)
-			.then(()=>{
-				return dispatch('userDetailsRequest').then(authResp=>authResp);
+			.then(() => {
+				return dispatch('userDetailsRequest').then(authResp => authResp);
 			})
-			.catch(postingErr=>{
+			.catch(postingErr => {
 				throw postingErr.response;
 			});
 	},
-	logOut({state, commit}) {
+	logOut({ state, commit }) {
 		if (state.user.token) {
-			return postReq('/api/auth/logout', {api_token: state.user.token})
-				.then(()=>{
+			return postReq('/api/auth/logout', { api_token: state.user.token })
+				.then(() => {
 					commit('setUserInfo', { type: 'info', data: null })
 					commit('setUserInfo', { type: 'token', data: '' })
 					axios.defaults.headers.common = {}
-					router.push({name: 'home'});
+					router.push({ name: 'home' });
 				})
 		}
 	},
-	reqDiscountedPrice(context, {price_id, code}) {
-		if (! price_id || !code) {
+	reqDiscountedPrice(context, { price_id, code }) {
+		if (!price_id || !code) {
 			return;
 		}
 
 		return getReq(`/api/prices/${price_id}/calc-with-promocode/${code}`)
-			.then((resp)=>{
+			.then((resp) => {
 				return resp.data;
 			})
-			.catch(requestError=>{
+			.catch(requestError => {
 				throw requestError.response;
 			});
 	},
 	updateOnlineCourses({ state, dispatch }) {
-		return new Promise((resolve)=>{
+		return new Promise((resolve) => {
 			if (state.onlineCourses === null) {
-				dispatch('requestOnlineCourses').then(()=>{
+				dispatch('requestOnlineCourses').then(() => {
 					resolve();
 				});
 			} else {
