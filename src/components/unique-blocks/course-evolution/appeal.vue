@@ -1,11 +1,11 @@
 <template lang="pug">
 section.appeal
 	.limit
-		.text-side
+		.text-side(v-if='startDates')
 			.big-text запишитесь сейчас
 			.medium-text ближайший старт
-			.highlighted-text 22 июля – VK
-			.highlighted-text 22 июля – Telegram
+			.highlighted-text {{startDates.vk}} – VK
+			.highlighted-text {{startDates.tg}} – Telegram
 			a.purple-btn(@click='scrollTo("entry-form")')
 				.border
 				.btn Записаться на курс
@@ -21,6 +21,12 @@ section.appeal
 <script>
 export default {
 	name: 'EvoAppeal',
+	props: {
+		startDates: {
+			type: Object,
+			default: ()=>{}
+		},
+	},
 	methods: {
 		scrollTo(id) {
 			window.scrollTo({

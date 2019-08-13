@@ -7,12 +7,12 @@ section.course_info
 				.text.big 10 недель
 				.text.small длительность курса
 			.block
-				.text.groups
+				.text.groups(v-if='startDates')
 					.group
-						.data 22 июля
+						.data {{startDates.vk}}
 						.caption VK
 					.group
-						.data 22 июля
+						.data {{startDates.tg}}
 						.caption Telegram
 				.text.small ближайший старт
 			.block
@@ -29,6 +29,12 @@ section.course_info
 <script>
 export default {
 	name: 'EvoCourseInfo',
+	props: {
+		startDates: {
+			type: Object,
+			default: ()=>{}
+		},
+	},
 	methods: {
 		scrollTo(id) {
 			window.scrollTo({

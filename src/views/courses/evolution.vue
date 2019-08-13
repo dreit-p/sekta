@@ -8,10 +8,10 @@ div
 			.img.right
 				.lines
 		interractive-desc
-		course-info
+		course-info(:startDates='startDates')
 	video-block
 	decorated-list
-	appeal
+	appeal(:startDates='startDates')
 	faq
 
 	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms}', :courseName='courseInfo.name')
@@ -20,6 +20,7 @@ div
 
 <script>
 import { mapActions } from 'vuex'
+import { formatDateDayMonth } from "../../assets/misc.js";
 
 const COURSE_TAG = 'EVO';
 
@@ -35,6 +36,18 @@ export default {
 		faq: () => import( /* webpackChunkName: "evolution" */ '@/components/unique-blocks/course-evolution/faq.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
 		EntryForm: () => import('@/components/entry-form.vue'),
+	},
+	computed: {
+		startDates() {
+			if (!this.courseInfo) return;
+			let dates = {};
+			for (let platform in this.courseInfo.start_dates) {
+				if (this.courseInfo.start_dates.hasOwnProperty(platform)) {
+					dates[platform] = formatDateDayMonth(this.courseInfo.start_dates[platform])
+				}
+			}
+			return dates;
+		},
 	},
 	asyncComputed: {
 		courseInfo() {
