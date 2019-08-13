@@ -10,8 +10,8 @@
 			data-vv-as='Без куратора'
 			:value='inputsData.no_curator'
 			@change='inputsData.no_curator = $event'
-			:class="{ 'error': errors.has('no_curator'), 'success': fields.no_curator && fields.no_curator.valid}"
-			:error='errors.first("no_curator")'
+			:class="{ 'error': getInputError('no_curator'), 'success': fields.no_curator && fields.no_curator.valid}"
+			:error='getInputError("no_curator")'
 			) Без куратора
 
 		app-dropdown(
@@ -21,8 +21,8 @@
 			@change='inputsData.edu_platform = $event'
 			:options='comparedPlatforms'
 			v-validate='"required"'
-			:class="{ 'error': errors.has('edu_platform'), 'success': fields.edu_platform && fields.edu_platform.valid}"
-			:error='errors.first("edu_platform")'
+			:class="{ 'error': getInputError('edu_platform'), 'success': fields.edu_platform && fields.edu_platform.valid}"
+			:error='getInputError("edu_platform")'
 			name='edu_platform')
 
 		app-input(
@@ -31,8 +31,8 @@
 			:value='inputsData.social_page_url'
 			@input='inputsData.social_page_url = $event'
 			v-validate='"required"'
-			:class="{ 'error': errors.has('social_page_url'), 'success': fields.social_page_url && fields.social_page_url.valid}"
-			:error='errors.first("social_page_url")'
+			:class="{ 'error': getInputError('social_page_url'), 'success': fields.social_page_url && fields.social_page_url.valid}"
+			:error='getInputError("social_page_url")'
 			name='social_page_url')
 
 		app-dropdown(
@@ -41,8 +41,8 @@
 			:options='weeks_options'
 			@change='inputsData.price_id = $event'
 			v-validate='"required"'
-			:class="{ 'error': errors.has('weeks'), 'success': fields.weeks && fields.weeks.valid}"
-			:error='errors.first("weeks")'
+			:class="{ 'error': getInputError('weeks'), 'success': fields.weeks && fields.weeks.valid}"
+			:error='getInputError("weeks")'
 			name='weeks')
 
 		app-dropdown(
@@ -52,8 +52,8 @@
 			@change='inputsData.city_id = $event'
 			:value='userCity ? userCity+"" : ""'
 			:options='city_options'
-			:class="{ 'error': errors.has('city'), 'success': fields.city && fields.city.valid}"
-			:error='errors.first("city")'
+			:class="{ 'error': getInputError('city'), 'success': fields.city && fields.city.valid}"
+			:error='getInputError("city")'
 			name='city')
 
 		p.tiny-text.tiny-text.tiny-text_face Промокод (если есть)
@@ -73,11 +73,13 @@
 			:required='true'
 			v-model.trim='termsAgree'
 			v-validate='"required:true"'
-			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
-			:error='errors.first("termsAgree")'
+			:class="{ 'error': getInputError('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+			:error='getInputError("termsAgree")'
 		)
 			| Ознакомлен и согласен с условиями&nbsp;
 			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]', target='_BLANK', rel='noopener noreferrer') публичной оферты
+
+		p.red(v-if='receivedErrors.message') {{receivedErrors.message}}
 
 		green-btn(:disabled='!price || isFormLocked')
 			| Перейти к оплате
@@ -140,6 +142,36 @@ export default {
 				this.isFormLocked = false;
 			}, 1000);
 		},
+		getInputError(name) {
+			if (this.errors.first(name)) {
+				return this.errors.first(name)
+			}
+			if (this.receivedErrors[name]) {
+				let errorString = '';
+				if (Array.isArray(this.receivedErrors[name])) {
+					this.receivedErrors[name].forEach((text)=>{
+						errorString = errorString + " " + text;
+					});
+				}
+				return errorString.trim();
+			}
+		},
+		setErrorWatcher(name) {
+			if (!this.receivedErrors.watchers.hasOwnProperty(name)) {
+				var watch = this.$watch('inputsData.'+name, ()=>{
+					delete this.receivedErrors[name];
+					watch();
+					delete this.receivedErrors.watchers[name]
+				});
+				this.receivedErrors.watchers[name] = watch;
+			}
+		},
+		createErrorsList(errorsArr) {
+			for (let key in errorsArr) {
+				this.setErrorWatcher(key);
+				this.$set(this.receivedErrors, key, errorsArr[key])
+			}
+		},
 		ifValid(cb) {
 			this.$validator.validateAll().then((result) => {
 				if (result) {
@@ -166,7 +198,15 @@ export default {
 						});
 					})
 					.catch((err)=>{
-						alert(err.data.message);
+						this.receivedErrors.watchers = {};
+						if (err.data.errors) {
+							this.createErrorsList(err.data.errors);
+						}
+						if (err.data.message) {
+							this.receivedErrors.message = err.data.message;
+						} else {
+							delete this.receivedErrors.message;
+						}
 						this.unlockForm();
 					});
 			});
@@ -221,6 +261,7 @@ export default {
 				price_id: null,
 				city_id: null,
 			},
+			receivedErrors: {},
 			isFormLocked: false,
 			promocode: null,
 			promoprice: Infinity,

@@ -49,9 +49,9 @@ export default {
 		},
 		value: {},
 		disabled: {
-            type: Boolean,
+			type: Boolean,
 			default: true
-        },
+		},
 		error: {
 			type: String,
 			default: null
@@ -152,10 +152,10 @@ export default {
 				color: var(--accent_color);
 				border-color: var(--accent_color);
 			}
-			.caption {
+			/* .caption {
 				color: var(--accent_color);
 				display: none;
-			}
+			} */
 			.icon.checked {
 				display: block;
 			}
