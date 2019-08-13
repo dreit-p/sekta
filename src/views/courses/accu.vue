@@ -10,7 +10,7 @@ div.course
 		p Тренировки программы учитывают особенности изменения гликемии во время, до и после занятия. Они подойдут и людям из группы риска по развитию метаболических нарушений, с лишним весом и желающим следить за здоровьем.
 		p Во время прохождения курса вы будете получать бесплатные онлайн-консультации врача-эндокринолога.
 		template(v-slot:buttons)
-			green-btn(@click.prevent='setFormModalState({modalState: true})') Записаться на обучение
+			green-btn(@click='scrollTo("entry-form")') Записаться на обучение
 
 	article.main-content
 		.article-limit
@@ -35,13 +35,13 @@ div.course
 				p Контроль заболевания требует регулярного посещения врачей и спортзала, больших вложений в заботу о питании. На программе #SektaAccuСhek вы будете получать онлайн-консультации врача–эндокринолога и сможете тренироваться дома 30—45 минут в день без дополнительного оборудования. Мы расскажем, как не тратить много времени на приготовление еды.
 
 				p
-					b Длительность курса: 
+					b Длительность курса:
 					| 8 недель.
 				p
-					b Стоимость одной недели обучения: 
+					b Стоимость одной недели обучения:
 					| 1600 рублей.
 				p
-					b При оплате 4-х недель: 
+					b При оплате 4-х недель:
 					| 5500 рублей.
 				h5
 					b Особенности программы:
@@ -54,11 +54,11 @@ div.course
 					li общение и поддержка единомышленников в чате под руководством команды тренеров и консультантов.
 
 
-	section
-		.section-caption
-			| Запишитесь сейчас
-			.highlight cтарт в понедельник
-		entry-form
+	caption-section(v-if='courseInfo'
+		dateStart='в понедельник',
+		:TEMPdateStart='courseInfo.last_start_date',
+	)
+	entry-form(v-if='courseInfo', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms}', :courseName='courseInfo.name')
 
 </template>
 
@@ -67,24 +67,56 @@ import { mapActions } from 'vuex'
 import Vue from 'vue';
 import vueHeadful from 'vue-headful';
 
+const COURSE_TAG = 'SEKTAACCUCHEK';
+
 Vue.component('vue-headful', vueHeadful);
-	
+
 export default {
 	name: 'Accu',
 	components: {
 		hero: () => import('@/components/heroes/aside-hero.vue'),
 		EntryForm: () => import('@/components/entry-form.vue'),
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
+		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+	},
+	asyncComputed: {
+		courseInfo() {
+			return this.$store.dispatch('updateOnlineCourses').then(()=>{
+				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
+				return currentCourseData;
+			});
+		}
 	},
 	data () {
-		return {}
+		return {
+			availablePlatforms: ['vk'] // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
+		}
 	},
 	methods: {
-		...mapActions(['setFormModalState'])
+		...mapActions(['setFormModalState']),
+		scrollTo(id) {
+			window.scrollTo({
+				top: getPosition(document.getElementById(id)).y -65,
+				behavior: "smooth"
+			});
+			function getPosition(el) {
+
+				var x = 0,
+					y = 0;
+
+				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
+					x += el.offsetLeft || 0;
+					y += el.offsetTop || 0;
+					el = el.offsetParent;
+				}
+
+				return { x: parseInt(x, 10), y: parseInt(y, 10) };
+			}
+		}
 	},
 }
 </script>
 
 <style lang="postcss">
-	
+
 </style>
