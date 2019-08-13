@@ -7,6 +7,7 @@
 			data-vv-as='Товар'
 			v-model="priceId"
 			:options="prices"
+			:disabled="false"
 			:class="{ 'error': myErrors.priceId, 'success': priceId}"
 			name='prices'
 			@change="pricesChangeHandler")
@@ -366,7 +367,8 @@ export default {
 				price_id: this.priceId,
 				delivery_type: this.deliveryId,
 				recipient_name: this.name,
-				recipient_phone: this.phone
+				recipient_phone: this.phone,
+				city_id: 1,
 			};
 			if (this.deliveryId === "courier") {
 				order.delivery_city = this.city.city_name;
