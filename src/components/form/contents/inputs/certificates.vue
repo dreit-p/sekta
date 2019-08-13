@@ -75,9 +75,24 @@ export default {
 		AppDropdown: () => import('@/components/form/dropdown.vue'),
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
 	},
+	asyncComputed: {
+		certificates() {
+			return this.$store
+				.dispatch("reqCertPrices")
+				.then((resp) => {
+					return resp.data.data;
+				});
+		},
+	},
 	computed: {
 		userCity() {
 			return this.$store.getters.getUserCity;
+		},
+		price_id_options() {
+			if (this.certificates) {
+				return this.certificates[0].prices
+			}
+			return []
 		},
 		city_options() {
 			return this.$store.state.cities;
@@ -85,7 +100,7 @@ export default {
 		price() {
 			if (!this.inputsData.price_id) return false;
 			let cert = this.price_id_options.find(cert=>cert.id === this.inputsData.price_id);
-			return cert.name;
+			return cert.value;
 		},
 	},
 	watch: {
@@ -120,8 +135,9 @@ export default {
 						this.$emit('submit', 'online');
 						this.$store.dispatch('setFormModalState', {modalState: false});
 						let orderID = resp.data.order_id;
-						this.$store.dispatch('reqCertPayment', {orderId: orderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
-							console.log(resp);
+						console.log('orderID: ', orderID);
+						this.$store.dispatch('reqCertPayment', {orderId: orderID, price_id: this.inputsData.price_id, promocode: this.promocode}).then((resp)=>{
+							window.location = resp.data.payment.approve_url;
 						});
 					})
 					.catch((err)=>{
@@ -144,12 +160,12 @@ export default {
 				city_id: null,
 				with_curator: false,
 			},
-			price_id_options: [
-				{id: '1', name: '1500'},
-				{id: '2', name: '3900'},
-				{id: '3', name: '7000'},
-				{id: '4', name: '12000'},
-			],
+			// price_id_options: [
+			// 	{id: '1', name: '1500'},
+			// 	{id: '2', name: '3900'},
+			// 	{id: '3', name: '7000'},
+			// 	{id: '4', name: '12000'},
+			// ],
 			termsAgree: false,
 		}
 	},

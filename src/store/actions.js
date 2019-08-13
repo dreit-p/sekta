@@ -110,16 +110,6 @@ export default {
 				throw err.response;
 			});
 	},
-	sendCertOrder({ state }, data) {
-		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
-		return postReq('/api/personal/certificate-orders', data)
-			.then(resp => {
-				return resp
-			})
-			.catch(err => {
-				throw err.response;
-			});
-	},
 	reqGymPayment({ state }, { gymOrderId, price_id, promocode }) {
 		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
 		return postReq(`/api/personal/gym-orders/${gymOrderId}/payments`, { price_id, promocode })
@@ -140,9 +130,29 @@ export default {
 				throw err.response;
 			});
 	},
-	reqCertPayment({ state }, { price_id, promocode }) {
+	reqCertPrices({state}) {
+		axios.defaults.headers.common = {'Authorization': `Bearer ${state.user.token}`}
+		return getReq(`/api/certificates`)
+			.then(resp=>{
+				return resp
+			})
+			.catch(err=>{
+				throw err.response;
+			});
+	},
+	sendCertOrder({ state }, data) {
 		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
-		return postReq(`/api/personal/certificate-orders/1/payments`, { price_id, promocode })
+		return postReq('/api/personal/certificate-orders', data)
+			.then(resp => {
+				return resp
+			})
+			.catch(err => {
+				throw err.response;
+			});
+	},
+	reqCertPayment({ state }, { orderId,price_id, promocode }) {
+		axios.defaults.headers.common = { 'Authorization': `Bearer ${state.user.token}` }
+		return postReq(`/api/personal/certificate-orders/${orderId}/payments`, { price_id, promocode })
 			.then(resp => {
 				return resp
 			})
