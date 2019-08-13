@@ -17,23 +17,23 @@
 		app-dropdown(
 			placeholder='Платформа обучения'
 			data-vv-as='Платформа обучения'
-			:value='inputsData.channel_type'
-			@change='inputsData.channel_type = $event'
+			:value='inputsData.edu_platform'
+			@change='inputsData.edu_platform = $event'
 			:options='comparedPlatforms'
 			v-validate='"required"'
-			:class="{ 'error': errors.has('channel_type'), 'success': fields.channel_type && fields.channel_type.valid}"
-			:error='errors.first("channel_type")'
-			name='channel_type')
+			:class="{ 'error': errors.has('edu_platform'), 'success': fields.edu_platform && fields.edu_platform.valid}"
+			:error='errors.first("edu_platform")'
+			name='edu_platform')
 
 		app-input(
 			placeholder='Введите ссылку на ваш аккаунт'
 			data-vv-as='Аккаунт'
-			:value='inputsData.channel_link'
-			@input='inputsData.channel_link = $event'
+			:value='inputsData.social_page_url'
+			@input='inputsData.social_page_url = $event'
 			v-validate='"required"'
-			:class="{ 'error': errors.has('channel_link'), 'success': fields.channel_link && fields.channel_link.valid}"
-			:error='errors.first("channel_link")'
-			name='channel_link')
+			:class="{ 'error': errors.has('social_page_url'), 'success': fields.social_page_url && fields.social_page_url.valid}"
+			:error='errors.first("social_page_url")'
+			name='social_page_url')
 
 		app-dropdown(
 			placeholder='Сколько недель вы хотите оплатить?'
@@ -216,8 +216,8 @@ export default {
 		return {
 			inputsData: {
 				// no_curator: false,
-				channel_link: null,
-				channel_type: null,
+				social_page_url: null,
+				edu_platform: null,
 				price_id: null,
 				city_id: null,
 			},
