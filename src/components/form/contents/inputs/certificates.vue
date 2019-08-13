@@ -11,9 +11,9 @@
 			:value='inputsData.receiver_name'
 			@input='inputsData.receiver_name = $event'
 			v-validate='"required"'
-			:class="{ 'error': errors.has('name'), 'success': fields.name && fields.name.valid}"
-			:error='errors.first("name")'
-			name='name')
+			:class="{ 'error': getInputError('receiver_name'), 'success': fields.receiver_name && fields.receiver_name.valid}"
+			:error='getInputError("receiver_name")'
+			name='receiver_name')
 
 		app-input(
 			placeholder='E-mail получателя'
@@ -21,8 +21,8 @@
 			:value='inputsData.receiver_email'
 			@input='inputsData.receiver_email = $event'
 			v-validate='"required|email"'
-			:class="{ 'error': errors.has('email'), 'success': fields.email && fields.email.valid}"
-			:error='errors.first("email")'
+			:class="{ 'error': getInputError('email'), 'success': fields.email && fields.email.valid}"
+			:error='getInputError("email")'
 			name='email')
 
 		app-dropdown(
@@ -32,8 +32,8 @@
 			@change='inputsData.price_id = $event'
 			:options='price_id_options'
 			v-validate='"required"'
-			:class="{ 'error': errors.has('price_id'), 'success': fields.price_id && fields.price_id.valid}"
-			:error='errors.first("price_id")'
+			:class="{ 'error': getInputError('price_id'), 'success': fields.price_id && fields.price_id.valid}"
+			:error='getInputError("price_id")'
 			name='price_id')
 
 		app-dropdown(
@@ -43,8 +43,8 @@
 			@change='inputsData.city_id = $event'
 			:value='userCity ? userCity+"" : ""'
 			:options='city_options'
-			:class="{ 'error': errors.has('city'), 'success': fields.city && fields.city.valid}"
-			:error='errors.first("city")'
+			:class="{ 'error': getInputError('city'), 'success': fields.city && fields.city.valid}"
+			:error='getInputError("city")'
 			name='city')
 
 		app-checkbox(
@@ -53,14 +53,16 @@
 			:required='true'
 			v-model.trim='termsAgree'
 			v-validate='"required:true"'
-			:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
-			:error='errors.first("termsAgree")'
+			:class="{ 'error': getInputError('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
+			:error='getInputError("termsAgree")'
 		)
 			| Ознакомлен и согласен с условиями&nbsp;
 			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]', target='_BLANK', rel='noopener noreferrer') публичной оферты
 
 		p.heavy-text.heavy-text_face.tiny-text_long(v-if='!price') Сертификат не выбран
 		p.heavy-text.heavy-text_face.tiny-text_long(v-if='price') Итого к оплате: {{ price }} руб.
+
+		p.red(v-if='receivedErrors.message') {{receivedErrors.message}}
 
 		green-btn(:disabled='!price || isFormLocked')
 			| Перейти к оплате
@@ -122,6 +124,36 @@ export default {
 				}
 			});
 		},
+		getInputError(name) {
+			if (this.errors.first(name)) {
+				return this.errors.first(name)
+			}
+			if (this.receivedErrors[name]) {
+				let errorString = '';
+				if (Array.isArray(this.receivedErrors[name])) {
+					this.receivedErrors[name].forEach((text)=>{
+						errorString = errorString + " " + text;
+					});
+				}
+				return errorString.trim();
+			}
+		},
+		setErrorWatcher(name) {
+			if (!this.receivedErrors.watchers.hasOwnProperty(name)) {
+				var watch = this.$watch('inputsData.'+name, ()=>{
+					delete this.receivedErrors[name];
+					watch();
+					delete this.receivedErrors.watchers[name]
+				});
+				this.receivedErrors.watchers[name] = watch;
+			}
+		},
+		createErrorsList(errorsArr) {
+			for (let key in errorsArr) {
+				this.setErrorWatcher(key);
+				this.$set(this.receivedErrors, key, errorsArr[key])
+			}
+		},
 		onSubmit() {
 			if (this.isFormLocked) {
 				return false;
@@ -141,7 +173,15 @@ export default {
 						});
 					})
 					.catch((err)=>{
-						alert(err.data.message);
+						this.receivedErrors.watchers = {};
+						if (err.data.errors) {
+							this.createErrorsList(err.data.errors);
+						}
+						if (err.data.message) {
+							this.receivedErrors.message = err.data.message;
+						} else {
+							delete this.receivedErrors.message;
+						}
 						this.unlockForm();
 					});
 			});
@@ -160,6 +200,7 @@ export default {
 				city_id: null,
 				with_curator: false,
 			},
+			receivedErrors: {},
 			// price_id_options: [
 			// 	{id: '1', name: '1500'},
 			// 	{id: '2', name: '3900'},
