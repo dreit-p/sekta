@@ -162,7 +162,7 @@ export default {
 						this.$store.dispatch('setFormModalState', {modalState: false});
 						let orderID = resp.data.order_id;
 						this.$store.dispatch('reqOnlinePayment', {orderId: orderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
-							console.log(resp);
+							window.location = resp.data.payment.approve_url;
 						});
 					})
 					.catch((err)=>{

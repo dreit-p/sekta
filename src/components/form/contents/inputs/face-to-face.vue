@@ -115,9 +115,8 @@ export default {
 			this.ifValid(()=>{
 				this.isFormLocked = true;
 
-				let city = this.$route.params.city
-				let cityId = 1
-				if (city === 'saint-pitersburg') cityId = 2
+				let currentCityName = this.$route.params.city
+				let cityId = this.$store.state.cities.find(city=>city.englishName === currentCityName).id
 
 				this.$store.dispatch('sendGymOrder', {price_id:this.price.id, city_id:cityId})
 					.then((resp)=>{
