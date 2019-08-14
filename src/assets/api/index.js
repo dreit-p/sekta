@@ -27,11 +27,11 @@ export default {
 	reqDiscountedPrice(priceId, code) {
 		return axios.get(URL + `/api/prices/${priceId}/calc-with-promocode/${code}`)
 	},
-	makeProguctOrder(data, token) {
+	makeProductOrder(data, token) {
 		setToken(token)
 		return axios.post(URL + `/api/personal/product-orders`, data)
 	},
-	makeProguctPayment(data, token) {
+	makeProductPayment(data, token) {
 		setToken(token)
 		return axios.post(URL + `/api/personal/product-orders/${data.order_id}/payments`, data)
 	},
@@ -61,7 +61,6 @@ export default {
 		return axios.post(URL + '/api/password-recovery/request', { email })
 	},
 	resetPassword(token, password, password_confirmation) {
-		console.log({ token, password, password_confirmation })
 		return axios.post(URL + `/api/password-recovery/reset`, { token, password, password_confirmation })
 	},
 }

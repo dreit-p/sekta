@@ -378,7 +378,7 @@ export default {
 				order.delivery_address = this.address;
 			}
 			if (this.isDeliveryDone) order.delivery_price = this.deliveryPrice;
-			api.makeProguctOrder(order, this.$store.state.user.token).then(
+			api.makeProductOrder(order, this.$store.state.user.token).then(
 				res => {
 					this.makePayment(res.data.order_id);
 				},
@@ -396,7 +396,7 @@ export default {
 			if (this.promo.amount) data.promocode = this.promo.promocode_code;
 			data.quantity = this.quantity ? this.quantity : 1;
 			api
-				.makeProguctPayment(data, this.$store.state.user.token)
+				.makeProductPayment(data, this.$store.state.user.token)
 				.then(res => {
                     window.location = res.data.payment.approve_url;
                 }, rej => {
