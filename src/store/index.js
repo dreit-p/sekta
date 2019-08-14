@@ -38,8 +38,8 @@ export default new Vuex.Store({
 		},
 		onlineCourses: null,
 		cities: [
-			{id: '1', name: 'Москва', code: 'msk', englishName: 'moscow'},
-			{id: '2', name: 'Санкт-Петербург', code: 'spb', englishName: 'saint-pitersburg'},
+			{id: '1', name: 'Москва', code: 'msk', englishName: 'moskva'},
+			{id: '2', name: 'Санкт-Петербург', code: 'spb', englishName: 'sankt-peterburg'},
 			{id: '3', name: 'Другой город', code: 'reg', englishName: 'regions'},
 		],
 	},

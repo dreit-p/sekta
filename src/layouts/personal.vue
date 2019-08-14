@@ -26,7 +26,8 @@ div.personal-layout
 
 <script>
 export default {
-	name: 'PersonalLayout',metaInfo: {
+	name: 'PersonalLayout',
+	metaInfo: {
 		// if no subcomponents specify a metaInfo.title, this title will be used
 		title: 'Personal Layout',
 		// all titles will be injected into this template

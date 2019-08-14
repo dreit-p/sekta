@@ -13,7 +13,7 @@ export default {
 		// if no subcomponents specify a metaInfo.title, this title will be used
 		title: 'Default Layout',
 		// all titles will be injected into this template
-		titleTemplate: '%s | #Sekta'
+		titleTemplate: '%s'
 	},
 	components: {
 		AppHeader: () => import('@/components/header.vue'),
