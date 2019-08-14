@@ -29,7 +29,7 @@
 
 			.btns
 				green-btn.btn.btn-green(v-if="payUrl" @click="payHandler") Оплатить курс
-				.select-payment(v-else-if="prices")
+				.select-payment(v-else-if="prices && prices.length > 0")
 					app-dropdown.select-payment__dropdown(
 						placeholder='Сколько недель вы хотите оплатить?'
 						data-vv-as='Количество недель'
