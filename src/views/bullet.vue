@@ -1,9 +1,5 @@
 <template lang="pug">
 div.course
-	vue-headful(
-			title="Bullet Journal от #sekta"
-			description="Блокнот в точку - Bullet Journal от #sekta. Расчерченный календарь на 12 месяцев; трекеры привычек, настроения, сна и физической усталости; десятки страниц дневника для фантазии и жизни."
-	)
 	hero(image='bullet_bg-sektabullet.jpg', title='SEKTABULLET', sideToRender='right')
 		p Буллет джорнал — это
 		ul.merch__list
@@ -18,12 +14,13 @@ div.course
 
 <script>
 import Vue from 'vue';
-import vueHeadful from 'vue-headful';
-
-Vue.component('vue-headful', vueHeadful);
 
 export default {
 	name: 'SektaBullet',
+	metaInfo: {
+		title: 'Bullet Journal от #sekta',
+		description: 'Блокнот в точку - Bullet Journal от #sekta. Расчерченный календарь на 12 месяцев; трекеры привычек, настроения, сна и физической усталости; десятки страниц дневника для фантазии и жизни.'
+	},
 	components: {
 		hero: () => import('@/components/heroes/fullsize-hero.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),

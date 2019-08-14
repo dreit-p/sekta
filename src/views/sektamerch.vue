@@ -1,9 +1,5 @@
 <template lang="pug">
 div.course
-	vue-headful(
-			title="Мерч #sekta"
-			description="Футблоки, майки и толстовки #sekta. Размеры от xs до xl. Доставка по всей России."
-	)
 	hero(image='merch_bg-sektamerch.jpg', title='SEKTAMERCH', sideToRender='right')
 		p Купи крутую футболку #sektabootcampunited прямо сейчас! (Иначе они опять закончатся, и придется ждать следующего буткэмпа!)
 		p Есть четыре размера: XS, S, M, L. <br>
@@ -23,12 +19,13 @@ div.course
 
 <script>
 import Vue from 'vue';
-import vueHeadful from 'vue-headful';
-
-Vue.component('vue-headful', vueHeadful);
 
 export default {
 	name: 'SektaMerch',
+	metaInfo: {
+		title: 'Мерч #sekta',
+		description: 'Футблоки, майки и толстовки #sekta. Размеры от xs до xl. Доставка по всей России.'
+	},
 	components: {
 		hero: () => import('@/components/heroes/fullsize-hero.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),

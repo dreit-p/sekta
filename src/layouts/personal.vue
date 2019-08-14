@@ -26,7 +26,12 @@ div.personal-layout
 
 <script>
 export default {
-	name: 'PersonalLayout',
+	name: 'PersonalLayout',metaInfo: {
+		// if no subcomponents specify a metaInfo.title, this title will be used
+		title: 'Personal Layout',
+		// all titles will be injected into this template
+		titleTemplate: '%s | Личный кабинет'
+	},
 	components: {
 		AppFooter: () => import('@/components/footer.vue'),
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
@@ -214,7 +219,7 @@ export default {
 				transform: rotateX(-180deg);
 			}
 		}
-	
+
 	}
 
 

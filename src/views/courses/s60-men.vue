@@ -1,9 +1,5 @@
 <template lang="pug">
 div.course
-	vue-headful(
-            title="#SektaMen онлайн-курс для мужчин"
-            description="Онлайн-курс из ежедневных тренировок на все группы мыщц, программы правильного питания и работы с куратором под ваши цели. Поможет прокачать рельеф тела, набрать массу или сбросить вес. 9 недель."
-    )
 	hero(image='course_bg-sectamen.jpg', title='КУРС ДЛЯ МУЖЧИН', inversed)
 		p #Sektamen — направление, созданное специально для мужчин. Опытные кураторы помогут вам достичь любой цели с помощью работы над питанием и тренировками. Мы даем рекомендации каждому ученику в зависимости от желаемого результата: нарастить мышечную массу, похудеть или просто стать сильнее, быстрее и выносливее. Вне зависимости от уровня вашей подготовки мы подберем для вас оптимальную нагрузку.
 		template(v-slot:buttons)
@@ -51,14 +47,15 @@ div.course
 <script>
 import { mapActions } from 'vuex'
 import Vue from 'vue';
-import vueHeadful from 'vue-headful';
-
-Vue.component('vue-headful', vueHeadful);
 
 const COURSE_TAG = 'CARE';
 
 export default {
 	name: 'S60Men',
+	metaInfo: {
+		title: '#SektaMen онлайн-курс для мужчин',
+		description: 'Онлайн-курс из ежедневных тренировок на все группы мыщц, программы правильного питания и работы с куратором под ваши цели. Поможет прокачать рельеф тела, набрать массу или сбросить вес. 9 недель.'
+	},
 	components: {
 		hero: () => import('@/components/heroes/aside-hero.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),

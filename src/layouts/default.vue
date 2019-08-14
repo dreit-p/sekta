@@ -9,6 +9,12 @@ div.main-layout
 <script>
 export default {
 	name: 'DefaultLayout',
+	metaInfo: {
+		// if no subcomponents specify a metaInfo.title, this title will be used
+		title: 'Default Layout',
+		// all titles will be injected into this template
+		titleTemplate: '%s | #Sekta'
+	},
 	components: {
 		AppHeader: () => import('@/components/header.vue'),
 		AppFooter: () => import('@/components/footer.vue'),

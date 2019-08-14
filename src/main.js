@@ -39,6 +39,9 @@ Validator.localize('ru', ru);
 
 /*=====  End of Validator  ======*/
 
+import VueMeta from 'vue-meta'
+Vue.use(VueMeta)
+
 
 if (process.env.NODE_ENV === 'production') {
 	Vue.config.devtools = false
