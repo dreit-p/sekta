@@ -1,5 +1,5 @@
 <template lang="pug">
-form.form.passwordInputs(@submit.prevent='onSubmit(passwordInputs)', novalidate="true")
+form.form.passwordInputs(@submit.prevent.stop='onSubmit(passwordInputs)', novalidate="true")
 	app-input(
 	placeholder='Новый пароль'
 	data-vv-as='пароль'
@@ -22,11 +22,12 @@ form.form.passwordInputs(@submit.prevent='onSubmit(passwordInputs)', novalidate=
 	:error='getInputError("password_confirmation")'
 	:class="{ 'error': getInputError('password_confirmation'), 'success': !getInputError('password_confirmation') && fields.password_confirmation && fields.password_confirmation.valid }"
 	name='password_confirmation')
-
+	p(v-if="showMessage") {{apiMessage}}
 	green-btn(:disabled='isFormLocked') Изменить пароль
 </template>
 
 <script>
+import api from '../../assets/api/index.js'
 
 export default {
 	name: 'PasswordForm',
@@ -41,6 +42,9 @@ export default {
 			}
 			return false;
 		},
+	},
+	created() {
+		if (this.$route.name === 'password-recovery') this.recovery = true
 	},
 	methods: {
 		unlockForm() {
@@ -87,30 +91,44 @@ export default {
 			});
 		},
 		onSubmit(data) {
-			if (this.isFormLocked) {
-				return false;
+			if (this.recovery) {
+				this.showMessage = false
+				this.apiMessage = ''
+				let token = this.$route.query.token ? this.$route.query.token: ''
+				let password = data.password ? data.password: ''
+				let password_confirmation = data.password_confirmation ? data.password_confirmation :''
+				api.resetPassword(token, password, password_confirmation).then(res => {
+					this.showMessage = true
+					this.apiMessage = res.data.message
+					this.$router.push({ name: 'personal'})
+				}, rej => {
+					this.showMessage = true
+					this.apiMessage = rej.response.data.message
+				})
+			} else { 
+				if (this.isFormLocked) {
+					return false;
+				}
+				this.ifValid(()=>{
+					this.isFormLocked = true;
+					this.$store.dispatch('userDetailsPosting', data)
+						.then(()=>{
+							this.unlockForm();
+						})
+						.catch((err)=>{
+							this.receivedErrors.watchers = {};
+							if (err.data.errors) {
+								this.createErrorsList(err.data.errors);
+							}
+							if (err.data.message) {
+								this.receivedErrors.message = err.data.message;
+							} else {
+								delete this.receivedErrors.message;
+							}
+							this.unlockForm();
+						});
+				})
 			}
-
-			this.ifValid(()=>{
-				this.isFormLocked = true;
-				this.$store.dispatch('userDetailsPosting', data)
-					.then(()=>{
-						this.unlockForm();
-					})
-					.catch((err)=>{
-						this.receivedErrors.watchers = {};
-						if (err.data.errors) {
-							this.createErrorsList(err.data.errors);
-						}
-						if (err.data.message) {
-							this.receivedErrors.message = err.data.message;
-						} else {
-							delete this.receivedErrors.message;
-						}
-						this.unlockForm();
-					});
-			})
-
 		}
 	},
 	data () {
@@ -118,6 +136,9 @@ export default {
 			isFormLocked: false,
 			passwordInputs: {},
 			receivedErrors: {},
+			recovery: false,
+			showMessage: false,
+			apiMessage: ''
 		}
 	},
 }

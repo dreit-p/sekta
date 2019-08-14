@@ -240,6 +240,12 @@ const Router = new VueRouter({
 			]
 		},
 		{
+			path: '/password-recovery',
+			name: 'password-recovery',
+			component: () =>
+				import('./views/personal/password-recovery.vue'),
+		},
+		{
 			// 404
 			path: '*',
 			component: () =>

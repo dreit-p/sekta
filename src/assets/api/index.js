@@ -56,4 +56,12 @@ export default {
 	verifyEmail(token) {
 		return axios.post(URL + `/api/personal/verify-email/${token}`)
 	},
+	//Password
+	requestPasswordRecovery(email) {
+		return axios.post(URL + '/api/password-recovery/request', { email })
+	},
+	resetPassword(token, password, password_confirmation) {
+		console.log({ token, password, password_confirmation })
+		return axios.post(URL + `/api/password-recovery/reset`, { token, password, password_confirmation })
+	},
 }
