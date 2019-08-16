@@ -1,9 +1,5 @@
 <template lang="pug">
 div.course
-	vue-headful(
-            title="#SektaVip индивидуальный онлайн-курс"
-            description="Индивидуальная онлайн-программа один на один с куратором. Составим уникальную программу питания и тренировок с учетом вашего опыта, распорядка дня и целей."
-    )
 	hero(image='course_bg-sectavip.jpg', title='VIP ПРОГРАММА', horizontal, inversed)
 		p Индивидуальная коучинговая программа с самыми актуальными разработками нашей Школы. Мы поможем вам выстроить эффективную систему питания и тренировок с учетом ваших особенностей, жизненного графика, свободного времени, предпочитаемой платформы (VK, Facebook, Viber, WhatsApp, Telegram, Skype, Email) и подберем куратора, исходя из ваших запросов.
 		template(v-slot:buttons)
@@ -47,14 +43,15 @@ div.course
 <script>
 import { mapActions } from 'vuex'
 import Vue from 'vue';
-import vueHeadful from 'vue-headful';
-
-Vue.component('vue-headful', vueHeadful);
 
 const COURSE_TAG = 'VIP';
 
 export default {
 	name: 'Vip',
+	metaInfo: {
+		title: '#SektaVip индивидуальный онлайн-курс',
+		description: 'Индивидуальная онлайн-программа один на один с куратором. Составим уникальную программу питания и тренировок с учетом вашего опыта, распорядка дня и целей.'
+	},
 	components: {
 		hero: () => import('@/components/heroes/aside-hero.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),

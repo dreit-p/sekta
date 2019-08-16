@@ -1,7 +1,7 @@
 let state = {
 	mainLinks: [
 		{
-			link: '/about-us',
+			link: '/aboutus',
 			name: 'О проекте'
 		},
 		{
@@ -53,11 +53,11 @@ let state = {
 			name: 'Тренировки в зале',
 			subLinks: [
 				{
-					link: '/gym/moscow',
+					link: '/gym/moskva',
 					name: 'Москва'
 				},
 				{
-					link: '/gym/saint-pitersburg',
+					link: '/gym/sankt-peterburg',
 					name: 'Санкт-Петербург'
 				}
 			]

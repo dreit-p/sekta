@@ -26,6 +26,10 @@ const COURSE_TAG = 'EVO';
 
 export default {
 	name: 'Evolution',
+	metaInfo: {
+		title: '#SektaEvo онлайн-курс',
+		description: 'Основной онлайн-курс #Sekta для мужчин и женщин. 4 типа питания на выбор. Эффективная тренировочная программа. Работа над вашими целями вместе с куратором в течение 10 недель.'
+	},
 	components: {
 		Hero: () => import( /* webpackChunkName: "evolution" */ '@/components/unique-blocks/course-evolution/hero.vue'),
 		InterractiveDesc: () => import( /* webpackChunkName: "evolution" */ '@/components/unique-blocks/course-evolution/interractive-desc.vue'),

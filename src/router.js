@@ -41,19 +41,19 @@ const Router = new VueRouter({
 			component: Home
 		},
 		{
-			path: '/about',
+			path: '/aboutus',
 			name: 'about',
 			// route level code-splitting
 			// this generates a separate chunk (about.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
 			component: () =>
-				import( /* webpackChunkName: "about" */ './views/template.vue')
+				import('./views/about-us.vue')
 		},
 		{
-			path: '/gift-cert',
+			path: '/certificates',
 			name: 'gift-cert',
 			component: () =>
-				import( /* webpackChunkName: "about" */ './views/certificates.vue')
+				import('./views/certificates.vue')
 		},
 		{
 			path: '/results',
@@ -61,13 +61,13 @@ const Router = new VueRouter({
 			component: () => import('./views/results.vue')
 		},
 		{
-			path: '/contacts',
+			path: '/kontakty',
 			name: 'contacts',
 			component: () =>
 				import('./views/contacts.vue')
 		},
 		{
-			path: '/jobs',
+			path: '/vacancies',
 			name: 'jobs',
 			component: () =>
 				import('./views/jobs.vue')
@@ -111,13 +111,7 @@ const Router = new VueRouter({
 					meta: { scrollToTop: true }
 				},
 				{
-					path: 'accuchek',
-					component: () =>
-						import( /* webpackChunkName: "courses" */ './views/courses/accu.vue'),
-					meta: { scrollToTop: true }
-				},
-				{
-					path: 's60days-men',
+					path: 'sektamen',
 					name: 's60-men',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/s60-men.vue'),
@@ -171,13 +165,7 @@ const Router = new VueRouter({
 					name: 'gym',
 					component: () =>
 						import( /* webpackChunkName: "gym" */ './views/gym/gym.vue'),
-				},
-				// {
-				// 	path: 'saint-pitersburg',
-				// 	name: 'gym-saint-pitersburg',
-				// 	component: () =>
-				// 		import( /* webpackChunkName: "gym" */ './views/gym/saint-pitersburg.vue'),
-				// },
+				}
 			]
 		},
 		{
@@ -197,6 +185,11 @@ const Router = new VueRouter({
 			name: 'sektamerch',
 			component: () =>
 				import('./views/sektamerch.vue'),
+		},
+		{
+			path: '/accuchek',
+			component: () =>
+				import( /* webpackChunkName: "courses" */ './views/courses/accu.vue')
 		},
 		{
 			path: '/personal',

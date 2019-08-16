@@ -1,9 +1,5 @@
 <template lang="pug">
 div.course
-	vue-headful(
-            title="#SektaPregnant онлайн курс для беременных"
-            description="Онлайн-курс здорового питания и программы видео тренировок для женщин с 12 недели беременности. Поможет сохранить форму, укрепить организм и обеспечит здоровое протекание беременности. Составлен совместно с акушером-гинекологом и учитывает все особенности этого периода."
-    )
 	hero(image='course_bg-pregnant.jpg', title='ДЛЯ БЕРЕМЕННЫХ', horizontal)
 		p Чтобы быстрее восстановиться после родов, нужно заранее позаботиться о своем теле и здоровье в целом. Курс «Я беременна» составлен совместно с акушером-гинекологом и учитывает все особенности этого периода. Программа курса поможет вам сохранить форму, укрепить организм и обеспечит здоровое протекание беременности.
 		template(v-slot:buttons)
@@ -48,14 +44,15 @@ div.course
 <script>
 import { mapActions } from 'vuex'
 import Vue from 'vue';
-import vueHeadful from 'vue-headful';
-
-Vue.component('vue-headful', vueHeadful);
 
 const COURSE_TAG = 'PREGNANT';
 
 export default {
 	name: 'Pregnants',
+	metaInfo: {
+		title: '#SektaPregnant онлайн курс для беременных',
+		description: 'Онлайн-курс здорового питания и программы видео тренировок для женщин с 12 недели беременности. Поможет сохранить форму, укрепить организм и обеспечит здоровое протекание беременности. Составлен совместно с акушером-гинекологом и учитывает все особенности этого периода.'
+	},
 	components: {
 		hero: () => import('@/components/heroes/aside-hero.vue'),
 		GreenBtn: () => import('@/components/form/green-btn.vue'),

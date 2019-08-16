@@ -1,9 +1,5 @@
 <template lang="pug">
 div.course
-	vue-headful(
-            title="#SektaCare онлайн-курс"
-            description="Онлайн-курс правильного питания и программы видео тренировок для людей с противопоказаниями. Если болят суставы, большая масса тела, или вы новичок в спорте - #SektaCare поможет плавно войти в тренировочный режим и программу правильного питания."
-    )
 	hero(image='course_bg-sectacare.jpg', title='Курс #SektaCare')
 		p В #SEKTACARE мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вы давно не тренировались или только начинаете?
 		p Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
@@ -46,14 +42,15 @@ div.course
 <script>
 import { mapActions } from 'vuex'
 import Vue from 'vue';
-import vueHeadful from 'vue-headful';
-
-Vue.component('vue-headful', vueHeadful);
 
 const COURSE_TAG = 'CARE';
 
 export default {
 	name: 'SektaCare',
+	metaInfo: {
+		title: '#SektaCare онлайн-курс',
+		description: 'Онлайн-курс правильного питания и программы видео тренировок для людей с противопоказаниями. Если болят суставы, большая масса тела, или вы новичок в спорте - #SektaCare поможет плавно войти в тренировочный режим и программу правильного питания.'
+	},
 	components: {
 		hero: () => import('@/components/heroes/aside-hero.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),

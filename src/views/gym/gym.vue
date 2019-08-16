@@ -1,9 +1,5 @@
 <template lang="pug">
 div.gym
-	vue-headful(
-            title="Москва курс #sekta"
-            description="Покупая абонемент в #sekta на месяц, вы получаете не просто групповые тренировки в залах, а полноценную комплексную программу, направленную на ваш лучший результат. Здоврое питание, новые тренировочные задания каждый месяц, уход за кожей и поддержка и помощь куратороской команды каждый день."
-    )
 	gym-hero(class='huge-content', :image='`gym_${city.code}.jpg`')
 		template(v-slot:another v-if="courseDate")
 			.huge-hero-text
@@ -87,14 +83,23 @@ div.gym
 
 <script>
 import Vue from "vue";
-import vueHeadful from "vue-headful";
-
 import { formatDateDayMonth } from "../../assets/misc.js";
-
-Vue.component("vue-headful", vueHeadful);
 
 export default {
 	name: "GymMoscow",
+	metaInfo() {
+		let cityId = this.city.id
+		return {
+			title: {
+				1: 'Москва курс #sekta',
+				2: 'Санкт-петербург курс #sekta'
+			}[cityId],
+			description: {
+				1: 'Покупая абонемент в #sekta на месяц, вы получаете не просто групповые тренировки в залах, а полноценную комплексную программу, направленную на ваш лучший результат. Здоврое питание, новые тренировочные задания каждый месяц, уход за кожей и поддержка и помощь куратороской команды каждый день.',
+				2: 'Покупая абонемент в #sekta на месяц, вы получаете не просто групповые тренировки в залах, а полноценную комплексную программу, направленную на ваш лучший результат. Здоврое питание, новые тренировочные задания каждый месяц, уход за кожей и поддержка и помощь куратороской команды каждый день.'
+			}[cityId],
+		}
+	},
 	components: {
 		EntryForm: () => import("@/components/entry-form.vue"),
 		SvgIcon: () => import("@/components/SvgIcon.vue"),

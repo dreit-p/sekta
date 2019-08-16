@@ -1,9 +1,5 @@
 <template lang="pug">
 div.course
-	vue-headful(
-			title="Летний лагер #sekta"
-			description="Ежегодный летний спортивный лагерь #sektacamp. Неделя тренировок, лекций, мастер-классов от научного и тренировочного отделов #sekta."
-	)
 	hero(image='course_bg-sektacamp.jpg', title='SEKTACAMP2019')
 		p Спортивный лагерь #sektacamp2019 пройдет с 27 июля по 4 августа на курорте «Роза Хутор» в окружении Кавказских гор.
 		template(v-slot:buttons)
@@ -105,12 +101,13 @@ div.course
 <script>
 import { mapActions } from 'vuex'
 import Vue from 'vue';
-import vueHeadful from 'vue-headful';
-
-Vue.component('vue-headful', vueHeadful);
 
 export default {
 	name: 'SektaCamp',
+	metaInfo: {
+		title: 'Летний лагер #sekta',
+		description: 'Ежегодный летний спортивный лагерь #sektacamp. Неделя тренировок, лекций, мастер-классов от научного и тренировочного отделов #sekta.'
+	},
 	components: {
 		hero: () => import('@/components/heroes/fullsize-hero.vue'),
 		EntryForm: () => import('@/components/entry-form.vue'),
