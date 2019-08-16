@@ -21,5 +21,8 @@ export default {
 	},
 	setOnlineCourses(state, data) {
 		state.onlineCourses = data;
+	},
+	setCookieNotificationState(state, data) {
+		state.isCookieMsgShowed = data;
 	}
 }

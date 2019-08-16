@@ -4,6 +4,7 @@ div.main-layout
 	app-modal
 	slot
 	app-footer
+	cookie-notification
 </template>
 
 <script>
@@ -19,6 +20,7 @@ export default {
 		AppHeader: () => import('@/components/header.vue'),
 		AppFooter: () => import('@/components/footer.vue'),
 		AppModal: () => import('@/components/modal.vue'),
+		CookieNotification: () => import('@/components/cookie.vue'),
 	},
 }
 </script>

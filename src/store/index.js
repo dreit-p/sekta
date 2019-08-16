@@ -15,7 +15,8 @@ export default new Vuex.Store({
 	plugins: [createPersistedState({
 		paths: [
 			'inputs',
-			'user'
+			'user',
+			'isCookieMsgShowed'
 		],
 	})],
 	modules: {
@@ -37,6 +38,7 @@ export default new Vuex.Store({
 			cityId: null,
 		},
 		onlineCourses: null,
+		isCookieMsgShowed: false,
 		cities: [
 			{id: '1', name: 'Москва', code: 'msk', englishName: 'moskva'},
 			{id: '2', name: 'Санкт-Петербург', code: 'spb', englishName: 'sankt-peterburg'},
