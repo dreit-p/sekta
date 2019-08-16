@@ -2,11 +2,12 @@
 section.evo-hero
 	.limit
 		.text-side
-			img.evo-logo(src='@/assets/images/evolution/logo-evolution.svg' alt='')
-			.colored-caption
-				| онлайн фитнес-курс
-				br
-				| у вас дома
+			.logo-and-caption
+				img.evo-logo(src='@/assets/images/evolution/logo-evolution.svg' alt='')
+				.colored-caption
+					| онлайн фитнес-курс
+					br
+					| у вас дома
 			.text
 				p
 					b #SektaEvolution
@@ -91,15 +92,21 @@ section.evo-hero {
 			.notice {
 				display: none;
 			}
-			.evo-logo,
-			.colored-caption {
+			.logo-and-caption {
 				display: inline-block;
 				align-self: flex-start;
 			}
 		}
-		@media (max-width: 600px) {
-			.evo-logo,
+		@media (max-width: 425px) {
+			.evo-logo {
+				width: 280px;
+			}
 			.colored-caption {
+				font-size: 16px;
+			}
+		}
+		@media (max-width: 600px) {
+			.logo-and-caption {
 				align-self: center;
 			}
 			.colored-caption {
