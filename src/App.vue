@@ -39,10 +39,21 @@ export default {
 	components: {
 		DefaultLayout: () => import('@/layouts/default.vue'),
 		PersonalLayout: () => import('@/layouts/personal.vue'),
+		MskLayout: () => import('@/layouts/msk.vue'),
+		SpbLayout: () => import('@/layouts/spb.vue'),
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
 	},
 	computed: {
 		layout() {
+			if (process.env.NODE_ENV === 'development') {
+				return (this.$route.meta.layout || default_layout) + '-layout';
+			}
+			let subdomain = /([\w.-]*)\.\w+\.\w+\/*$/gi.exec(window.location.host);
+			if (subdomain != null) {
+				if (subdomain[1] && subdomain[1] === 'msk' || subdomain[1] === 'spb') {
+					return subdomain[1] +'-layout';
+				}
+			}
 			return (this.$route.meta.layout || default_layout) + '-layout';
 		}
 	},
