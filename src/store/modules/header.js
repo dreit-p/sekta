@@ -13,7 +13,7 @@ let state = {
 			name: 'Результаты'
 		},
 		{
-			link: '/contacts',
+			link: '/kontakty',
 			name: 'Контакты'
 		},
 	],
@@ -43,7 +43,7 @@ let state = {
 					name: 'VIP программа'
 				},
 				// {
-				// 	link: '/online/s60days-men',
+				// 	link: '/online/sektamen',
 				// 	name: 'Курс #s60days для мужчин'
 				// },
 			]
@@ -67,7 +67,7 @@ let state = {
 		// 	name: 'Летний лагерь'
 		// },
 		{
-			link: '/gift-cert',
+			link: '/certificates',
 			name: 'Подарочный сертификат'
 		}
 	],

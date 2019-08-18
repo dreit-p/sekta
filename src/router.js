@@ -51,7 +51,7 @@ const Router = new VueRouter({
 		},
 		{
 			path: '/certificates',
-			name: 'gift-cert',
+			name: 'certificates',
 			component: () =>
 				import('./views/certificates.vue')
 		},

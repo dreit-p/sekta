@@ -12,7 +12,7 @@ div
 				p © 2019, ИП Доронина О. А.
 				p ОГРНИП 314667933100032
 			section.links
-				router-link(class='link larger animated-underline', to='/jobs') Вакансии
+				router-link(class='link larger animated-underline', to='/vacancies') Вакансии
 				.icons
 					a(v-for='network in networks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
 						svg-icon(:name='"network-" + network.name')

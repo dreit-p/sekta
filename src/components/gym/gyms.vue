@@ -16,7 +16,7 @@ div.location
 		.text
 			| Нам кажется, вы находитесь в Москве
 		.btns
-			router-link(title='Тренировки в Москве', to='/gym/moscow')
+			router-link(title='Тренировки в Москве', to='/gym/moskva')
 				green-btn Посмотреть расписание
 
 
@@ -24,14 +24,14 @@ div.location
 		.text
 			| Нам кажется, вы находитесь в Санкт-Петербурге
 		.btns
-			router-link(title='Тренировки в Питере', to='/gym/saint-pitersburg')
+			router-link(title='Тренировки в Питере', to='/gym/sankt-peterburg')
 				green-btn Посмотреть расписание
 
 	template(v-else)
 		.text
 			| К сожалению, тренировки в зале сейчас доступны только в Москве и Санкт-Петербурге. Вы можете записаться на онлайн-курс — его прошли 101 000 человек.
 		.btns
-			router-link(title='Страница онлайн курсов', to='/online-courses')
+			router-link(title='Страница онлайн курсов', to='/online')
 				green-btn На страницу онлайн-курсов
 
 </template>
