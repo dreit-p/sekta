@@ -40,6 +40,10 @@ div.main-layout
 <script>
 export default {
 	name: 'RegSubDomain',
+	metaInfo: {
+		title: 'Реквизиты регионы',
+		description: 'ООО "Школа идеального тела регионы"',
+	},
 	components: {
 		HeaderComponent: () => import('./header.vue'),
 	},

@@ -16,12 +16,6 @@
 <script>
 export default {
 	name: 'HeaderSubDomain',
-	metaInfo: {
-		// if no subcomponents specify a metaInfo.title, this title will be used
-		title: 'Документы',
-		// all titles will be injected into this template
-		titleTemplate: '%s'
-	},
 	components: {
 		CookieNotification: () => import('@/components/cookie.vue'),
 		SvgIcon:() => import('@/components/SvgIcon.vue'),

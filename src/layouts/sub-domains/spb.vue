@@ -40,6 +40,10 @@ div.main-layout
 <script>
 export default {
 	name: 'SpbSubDomain',
+	metaInfo: {
+		title: 'Реквизиты Санкт-Петербург',
+		description: 'ООО "Школа идеального тела спб"',
+	},
 	components: {
 		HeaderComponent: () => import('./header.vue'),
 	},
