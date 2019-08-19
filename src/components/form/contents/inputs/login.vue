@@ -26,8 +26,6 @@
 
 		a(href='#', @click.prevent='setFormModalState({type:"recovery"})') Восстановить пароль
 
-		p.red(v-if='receivedErrors.message') {{receivedErrors.message}}
-
 		green-btn(:disabled='isFormLocked')
 			| Войти
 </template>
