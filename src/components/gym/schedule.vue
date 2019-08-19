@@ -395,6 +395,9 @@ export default {
 
 <style lang="postcss">
 .time-selector {
+	.limit {
+		max-width: calc(var(--col-total) * 4.3);
+	}
 	.description {
 		margin: 5px *;
 		font-size: 15px;
@@ -424,7 +427,7 @@ export default {
 		}
 		.day,
 		.tile {
-			padding: 28px 10px 30px;
+			padding: 18px 10px 20px;
 			background-color: #e6e6e6;
 			text-align: center;
 			font-size: 30px;

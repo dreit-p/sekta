@@ -59,7 +59,6 @@
 			| Ознакомлен и согласен с условиями&nbsp;
 			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]', target='_BLANK', rel='noopener noreferrer') публичной оферты
 
-		p.heavy-text.heavy-text_face.tiny-text_long(v-if='!price') Сертификат не выбран
 		p.heavy-text.heavy-text_face.tiny-text_long(v-if='price') Итого к оплате: {{ price }} руб.
 
 		p.red(v-if='receivedErrors.message') {{receivedErrors.message}}
