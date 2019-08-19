@@ -93,8 +93,6 @@
 			v-model.trim='spamAgree'
 		) Хочу получать информационные письма
 
-		p.red(v-if='receivedErrors.message') {{receivedErrors.message}}
-
 		green-btn(:disabled='isFormLocked')
 			| Далее
 </template>
