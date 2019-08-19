@@ -43,6 +43,53 @@
 </template>
 
 <script>
+
+// Author: https://gomakethings.com/check-if-two-arrays-or-objects-are-equal-with-javascript/
+function compareNestedArrs(value, other) {
+	var type = Object.prototype.toString.call(value);
+	if (type !== Object.prototype.toString.call(other)) return false;
+	if (['[object Array]', '[object Object]'].indexOf(type) < 0) return false;
+
+	var valueLen = type === '[object Array]' ? value.length : Object.keys(value).length;
+	var otherLen = type === '[object Array]' ? other.length : Object.keys(other).length;
+	if (valueLen !== otherLen) return false;
+
+	var compare = function (item1, item2) {
+
+		var itemType = Object.prototype.toString.call(item1);
+
+		if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) {
+			if (!compareNestedArrs(item1, item2)) return false;
+		}
+
+		else {
+
+			if (itemType !== Object.prototype.toString.call(item2)) return false;
+
+			if (itemType === '[object Function]') {
+				if (item1.toString() !== item2.toString()) return false;
+			} else {
+				if (item1 !== item2) return false;
+			}
+
+		}
+	};
+
+	if (type === '[object Array]') {
+		for (var i = 0; i < valueLen; i++) {
+			if (compare(value[i], other[i]) === false) return false;
+		}
+	} else {
+		for (var key in value) {
+			if (value.hasOwnProperty(key)) {
+				if (compare(value[key], other[key]) === false) return false;
+			}
+		}
+	}
+
+	return true;
+};
+
 export default {
 	name: "Schedule",
 	model: {
@@ -154,7 +201,14 @@ export default {
 								dayId => dayId === practiceSchedule.week_day
 							)
 						) {
-							uniqTime.days.push(practiceSchedule.week_day);
+							let index = uniqTime.days.findIndex(
+								week_day => week_day > practiceSchedule.week_day
+							);
+							if (index === -1) {
+								uniqTime.days.push(practiceSchedule.week_day);
+							} else {
+								uniqTime.days.splice(index, 0, practiceSchedule.week_day);
+							}
 						}
 					} else {
 						timeObj[practiceSchedule.time] = {
@@ -203,10 +257,10 @@ export default {
 								rows[id].tiles.splice(index, 0, tileData);
 							}
 
-							rows[id].key = [
-								...rows[id].key,
-								...timeObj[time].days
-							];
+							// rows[id].key = [
+							// 	...rows[id].key,
+							// 	...timeObj[time].days
+							// ];
 						} else {
 							let timeToInt = t => {
 								let d = t.split(":");
@@ -317,23 +371,24 @@ export default {
 				return keyName;
 			};
 
+
 			for (let practiceId in rows) {
 				if (rows.hasOwnProperty(+practiceId)) {
 					let row = rows[+practiceId];
 					if (
-						!groups.find(group => compareArrs(group.key, row.key))
+						!groups.find(group => compareNestedArrs(group.daysIDs, row.days))
 					) {
 						groups.push({
 							days: row.days.map(daysRow =>
-								getHumanisedDays(daysRow.sort())
+								getHumanisedDays(daysRow)
 							),
-							key: row.key.sort(),
+							daysIDs: row.days,
 							practices: [+practiceId],
 							rows: [{ tiles: row.tiles }]
 						});
 					} else {
 						let groupIdx = groups.findIndex(group =>
-							compareArrs(group.key, row.key)
+							compareNestedArrs(group.daysIDs, row.days)
 						);
 
 						let tiles = row.tiles.filter(tile => {
@@ -345,6 +400,7 @@ export default {
 					}
 				}
 			}
+
 			return groups;
 		}
 	},
