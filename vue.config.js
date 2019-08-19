@@ -15,7 +15,8 @@ module.exports = {
 			overlay: true,
 			compress: true,
 			public: "home.dreit.ru", //for autorefresh
-			allowedHosts: [".dreit.ru"]
+			allowedHosts: [".dreit.ru"],
+			disableHostCheck: true,
 		}
 	},
 

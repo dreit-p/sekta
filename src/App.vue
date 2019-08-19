@@ -35,36 +35,26 @@ if (isMobile()) {
 
 const default_layout = 'default';
 
+function subDomain() {
+	return window.location.hostname.split('.')[0];
+}
+
 export default {
 	components: {
 		DefaultLayout: () => import('@/layouts/default.vue'),
 		PersonalLayout: () => import('@/layouts/personal.vue'),
-		MskLayout: () => import('@/layouts/msk.vue'),
-		SpbLayout: () => import('@/layouts/spb.vue'),
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
+		SubDomainLayout: () => import(`@/layouts/sub-domains/${subDomain()}.vue`),
 	},
 	computed: {
 		layout() {
-			if (process.env.NODE_ENV === 'development') {
-				return (this.$route.meta.layout || default_layout) + '-layout';
-			}
-			let subdomain = /([\w.-]*)\.\w+\.\w+\/*$/gi.exec(window.location.host);
-			if (subdomain != null) {
-				if (subdomain[1] && subdomain[1] === 'msk' || subdomain[1] === 'spb') {
-					return subdomain[1] +'-layout';
-				}
-			}
-			return (this.$route.meta.layout || default_layout) + '-layout';
+			let layout = ['msk', 'spb', 'reg'].includes(subDomain())
+				? 'sub-domain'
+				: (this.$route.meta.layout || default_layout);
+
+			return layout + '-layout';
 		}
 	},
-	created() {
-		// nothing defined here (when this.$route.path is other than "/")
-		// console.log(this.$route, this.$route.meta.layout);
-	},
-	updated() {
-		// something defined here whatever the this.$route.path
-		// console.log(this.$route, this.$route.meta.layout);
-	}
 }
 </script>
 

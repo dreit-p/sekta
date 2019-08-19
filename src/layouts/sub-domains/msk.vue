@@ -1,0 +1,47 @@
+<template lang="pug">
+div.main-layout
+	header-component
+	.requisites
+		.article-limit
+			.text-typography
+				h2 Общество с ограниченной ответственностью «ШКОЛА ИДЕАЛЬНОГО ТЕЛА МСК»
+				table(border='1')
+					tr
+						td Полное фирменное наименование
+						td Общество с ограниченной ответственностью «ШКОЛА ИДЕАЛЬНОГО ТЕЛА МСК»
+					tr
+						td Сокращенное фирменное наименование
+						td ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА МСК»
+					tr
+						td Адрес места нахождения
+						td 105064, г. Москва, Нижний Сусальный переулок, дом 5, строение 4, помещение II
+					tr
+						td Дата регистрации
+						td 30.04.2015 года
+					tr
+						td Основной государственный орган (ОГРН)
+						td 1157746408720
+					tr
+						td ИНН
+						td 7701346970
+					tr
+						td КПП
+						td 770901001
+					tr
+						td Наименование налогового органа
+						td Инспекция Федеральной налоговой службы №9 по г. Москве
+					tr
+						td Генеральный директор
+						td Балезин Павел Владимирович
+				img(src='http://msk.sektaschool.ru/ШИТ-МСК-ИНН.jpg' width='100%')
+				img(src='http://msk.sektaschool.ru/ШИТ-МСК-ОГРН.jpg' width='100%')
+</template>
+
+<script>
+export default {
+	name: 'MskSubDomain',
+	components: {
+		HeaderComponent: () => import('./header.vue'),
+	},
+}
+</script>
