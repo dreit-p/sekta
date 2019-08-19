@@ -20,13 +20,18 @@
 		p.tiny-text Оплата производится на сайте&ensp;
 			a(href='https://kassa.yandex.ru/') Яндекс.Кассы
 		p.tiny-text Оказание услуг осуществляется&ensp;
-			a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[userCity]', target='_BLANK', rel='noopener noreferrer') ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[userCity]  }}»
+			a(:href='requisitesLink', target='_BLANK', rel='noopener noreferrer')
+				| ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[userCity]  }}»
 </template>
 
 <script>
 export default {
 	name: 'TextsCertificates',
 	computed: {
+		requisitesLink() {
+			let cityCode = this.$store.state.cities.find(city => city.id === this.userCity).code;
+			return window.location.protocol +"//"+ cityCode + "." + window.location.host
+		},
 		userCity() {
 			return this.$store.getters.getUserCity;
 		},

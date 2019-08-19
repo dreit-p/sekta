@@ -14,7 +14,9 @@
 	p.small-text(style="margin-top: 10px") При выборе варианта “Предоплата...” вторую часть оплаты необходимо внести до 1 июля. Ссылка на вторую оплату придет вам в письме
 	div(style='margin-top: 37px')
 		p.tiny-text Оплата производится на сайте Яндекс.Кассы
-		p.tiny-text Оказание услуг осуществляется ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА *ГОРОД*»
+		p.tiny-text Оказание услуг осуществляется&nbsp;
+			a(:href='requisitesLink', target='_BLANK', rel='noopener noreferrer')
+				| ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[userCity]  }}»
 </template>
 
 <script>
@@ -24,6 +26,15 @@ export default {
 		setFormModalState(data) {
 			return this.$parent.setFormModalState(data);
 		}
+	},
+	computed: {
+		requisitesLink() {
+			let cityCode = this.$store.state.cities.find(city => city.id === this.userCity).code;
+			return window.location.protocol +"//"+ cityCode + "." + window.location.host
+		},
+		userCity() {
+			return this.$store.getters.getUserCity;
+		},
 	},
 }
 </script>
