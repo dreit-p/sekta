@@ -21,6 +21,7 @@
 				v-if='isShowingMap || mapCreated'
 				:coords='defaultPosition'
 				zoom='13'
+				ymap-class='ymap'
 				:clusterOptions='clusterOptions'
 				:controls='["rulerControl"]'
 				:placemarks='placemarks'
@@ -240,6 +241,16 @@ export default {
 			user-select: none;
 			pointer-events: none;
 		}
+		@media (max-width: 700px) {
+			position: relative;
+			&.hidden {
+				position: absolute;
+			}
+		}
+	}
+	.ymap {
+		width: 100%;
+		min-height: 390px;
 	}
 	.tiles {
 		position: relative;
@@ -253,9 +264,11 @@ export default {
 		@media (max-width: 700px) {
 			display: inline-flex;
 			margin: auto;
+			min-height: 0;
 			opacity: 1;
 			transition: opacity 0.3s;
 			&.hidden {
+				position: absolute;
 				opacity: 0;
 				visibility: hidden;
 			}
