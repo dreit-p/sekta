@@ -432,6 +432,7 @@ export default {
 	}
 	.section-btns {
 		position: fixed;
+		-webkit-transform: translateZ(0);
 		-webkit-overflow-scrolling: touch;
 		z-index: 2;
 		left: 0;
