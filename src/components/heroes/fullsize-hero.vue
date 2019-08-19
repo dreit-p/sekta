@@ -178,7 +178,7 @@ export default {
 				flex-direction: column;
 				justify-content: flex-end;
 				.main {
-					font-size: 127px;
+					font-size: 80px;
 					margin: .05em 0;
 					font-family: var(--font-second);
 					font-weight: 900;

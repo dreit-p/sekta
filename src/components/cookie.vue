@@ -38,6 +38,7 @@ export default {
 
 <style lang="postcss">
 section.cookie-notification {
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	position: fixed;
 	z-index: 5;
 	bottom: 0;
