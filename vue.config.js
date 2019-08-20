@@ -1,14 +1,14 @@
-// const path = require('path');
-// const PrerenderSPAPlugin = require('prerender-spa-plugin');
+const path = require('path');
+const PrerenderSPAPlugin = require('prerender-spa-plugin');
 
 module.exports = {
 	configureWebpack: {
-		// plugins: [
-		//     new PrerenderSPAPlugin({
-		//         staticDir: path.join(__dirname, 'dist'),
-		//         routes: ['/', '/contacts', '/about-us', '/online-courses', '/online-courses/s60days'],
-		//     })
-		// ],
+		plugins: [
+			new PrerenderSPAPlugin({
+				staticDir: path.join(__dirname, 'dist'),
+				routes: ['/', '/kontakty', '/results', '/about', '/online', '/online/evo', '/online/sektacare', '/online/smama', '/online/pregnancy', '/online/sektavip', '/gym', '/gym/moskva', '/gym/sankt-peterburg', '/certificates'],
+			})
+		],
 		devServer: {
 			port: 4444,
 			host: '0.0.0.0',
