@@ -81,7 +81,7 @@ section.evo-hero {
 		flex-grow: 1;
 		flex-basis: 407px;
 		padding: 24px *;
-		margin-top: 180px;
+		margin-top: 0px;
 		@media (max-width: 900px) {
 			display: flex;
 			padding: 24px *;
