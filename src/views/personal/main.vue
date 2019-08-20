@@ -6,20 +6,6 @@
 					a(href="#" @click.prevent="requestVerifyEmail").green Подтвердить сейчас
 				.confirm-mail(v-else-if="isMailSent") Письмо отправлено на вашу почту
 			section.column
-				template(v-if="unPaidCourses.length > 0")
-					h2.section-title.first Заявки
-					active-course(
-						v-for="course in unPaidCourses"
-						:courseName="course.course_name"
-						:payStatus="course.pay_status"
-						:progress="course.edu_progress"
-						:group="course.group"
-						:url="course.course_url"
-						:payUrl="course.approve_payment_url"
-						:additionalInfo='course.course_description'
-						@openCourse="openCourse"
-						@pay="yaKassaRedirect"
-					)
 				template(v-if="onlineCoursesActive.length > 0")
 					h2.section-title.first Активные онлайн курсы
 					active-course(
@@ -30,9 +16,10 @@
 						:progress="course.edu_progress"
 						:group="course.group"
 						:url="course.course_url"
+						:demoUrl="course.course_demo_url"
 						:cityId="course.city_id"
 						:prices="course.available_prices"
-						:payUrl="course.approve_payment_url"
+						:payment="course.pending_payment"
 						:additionalInfo='course.course_description'
 						@openCourse="openCourse"
 						@pay="yaKassaRedirect"
@@ -46,7 +33,8 @@
 						:progress="course.edu_progress"
 						:group="course.group"
 						:url="course.course_url"
-						:payUrl="course.approve_payment_url"
+						:demoUrl="course.course_demo_url"
+						:payment="course.pending_payment"
 						:additionalInfo='course.course_description'
 						@openCourse="openCourse"
 						@pay="yaKassaRedirect"
@@ -63,7 +51,24 @@
 						.text-block
 							.text.title {{course.product_name}}
 							.sub-text Количество: 1
-
+				template(v-if="unPaidCourses.length > 0")
+					h2.section-title.first Заявки
+					active-course(
+						v-for="course in unPaidCourses"
+						:courseName="course.course_name"
+						:orderId="course.id"
+						:payStatus="course.pay_status"
+						:progress="course.edu_progress"
+						:group="course.group"
+						:url="course.course_url"
+						:demoUrl="course.course_demo_url"
+						:cityId="course.city_id"
+						:prices="course.available_prices"
+						:payment="course.pending_payment"
+						:additionalInfo='course.course_description'
+						@openCourse="openCourse"
+						@pay="yaKassaRedirect"
+					)
 				h2.section-title Рекомендуем
 				.tile.simple(v-for="course in recommended")
 					.main-content
@@ -86,13 +91,13 @@
 						.text Активных курсов:&nbsp;
 							span.green {{allCoursesActive.filter(course => course.edu_progress !== 100).length}}
 						hr
-						template(v-if="allCoursesForProgress.length > 0")
-							h2.title.green Прогресс
-							hr
-							template(v-for="course in allCoursesForProgress")
-								.text.heavy {{course.course_name}}&nbsp;
-									span.green {{course.edu_progress}} %
-								hr
+						// template(v-if="allCoursesForProgress.length > 0")
+						// 	h2.title.green Прогресс
+						// 	hr
+						// 	template(v-for="course in allCoursesForProgress")
+						// 		.text.heavy {{course.course_name}}&nbsp;
+						// 			span.green {{course.edu_progress}} %
+						// 		hr
 
 </template>
 
@@ -217,7 +222,7 @@ export default {
 			window.location = url;
 		},
 		openCourse(url) {
-			console.log(url);
+			window.open(url);
 		}
 	}
 };

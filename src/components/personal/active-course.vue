@@ -26,9 +26,9 @@
 				.border
 				.fill(v-bind:style="{ width: `${this.progress}%` }")
 			.progress-caption {{this.payStatus}}
-
+			.progress-caption(v-if="payment") {{this.payment.price_name}}
 			.btns
-				green-btn.btn.btn-green(v-if="payUrl" @click="payHandler") Оплатить курс
+				green-btn.btn.btn-green(v-if="payment" @click="payHandler") Оплатить курс
 				.select-payment(v-else-if="prices && prices.length > 0")
 					app-dropdown.select-payment__dropdown(
 						placeholder='Сколько недель вы хотите оплатить?'
@@ -71,6 +71,7 @@
 						a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[cityId]', target='_BLANK', rel='noopener noreferrer') ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[cityId]  }}»
 					green-btn.btn.btn-green(:disabled="!price || !termsAgree" @click="payHandler") Перейти к оплате
 				green-btn(inverted v-if="url" @click="openCourseHandler").btn Открыть курс
+				green-btn(inverted v-if="demoUrl" @click="openCourseHandler").btn Демо
 		.additional-content(
 			v-bind:class="{ dropdown_active: isDropDownActive }"
 		)
@@ -128,8 +129,12 @@ export default {
 			type: String,
 			default: null
 		},
-		payUrl: {
+		demoUrl: {
 			type: String,
+			default: null
+		},
+		payment: {
+			type: Object,
 			default: null
 		},
 		cityId: {
@@ -154,11 +159,15 @@ export default {
 	},
 	methods: {
 		openCourseHandler() {
-			this.$emit("openCourse", this.url);
+			if (this.url) {
+				this.$emit("openCourse", this.url);
+			} else if (this.demoUrl) {
+				this.$emit("openCourse", this.demoUrl);
+			}
 		},
 		payHandler() {
-			if (this.payUrl) {
-				this.$emit("pay", this.payUrl);
+			if (this.payment.approve_url) {
+				this.$emit("pay", this.payment.approve_url);
 			} else {
 				let code = ''
 				if (this.promo.amount) code = this.promo.promocode_code;
