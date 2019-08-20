@@ -2,7 +2,7 @@
 #app
 	component(:is="layout")
 		transition(name='fade-flip', mode='out-in', @after-leave="$root.$emit('triggerScroll')")
-			router-view
+			router-view( :key="$route.path")
 </template>
 
 <script>
