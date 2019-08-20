@@ -15,16 +15,16 @@
 							svg-icon(name='icon-chat')
 							| Номер чата: 
 							a(:href="this.group.chat_number") {{this.group.chat_number}}
-						.line(v-if="progress || progress === 0")
-							svg-icon(name='icon-graph')
-							| Прогресс:&nbsp;
-							span.green {{this.progress}}%
+						// .line(v-if="progress || progress === 0")
+						// 	svg-icon(name='icon-graph')
+						// 	| Прогресс:&nbsp;
+						// 	span.green {{this.progress}}%
 						.line(v-if="date")
 							svg-icon(name='icon-calendar')
 							| Старт: {{ this.date }}
-			.progress-bar(v-if="group && (progress || progress === 0)")
-				.border
-				.fill(v-bind:style="{ width: `${this.progress}%` }")
+			// .progress-bar(v-if="group && (progress || progress === 0)")
+			// 	.border
+			// 	.fill(v-bind:style="{ width: `${this.progress}%` }")
 			.progress-caption {{this.payStatus}}
 			.progress-caption(v-if="payment") {{this.payment.price_name}}
 			.btns
