@@ -157,9 +157,10 @@ export default {
 	},
 	computed: {
 		requisitesLink() {
-			let cityCode = this.$store.state.cities.find(city => city.id == this.cityId).code || 1;
-			console.log(cityCode)
-			return window.location.protocol +"//"+ cityCode + "." + window.location.host
+			let city = this.$store.state.cities.find(city => city.id === this.userCity);
+			if (!city || city === -1) return;
+
+			return window.location.protocol +"//"+ city.code + "." + window.location.host
 		},
 	},
 	created() {

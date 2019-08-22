@@ -229,8 +229,6 @@ export default {
 		})
 	},
 	updateCity({ state, dispatch }) {
-		if (!state.user.cityId) {
-			dispatch('requestIPInfo');
-		}
+		dispatch('requestIPInfo');
 	}
 }
