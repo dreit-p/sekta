@@ -105,8 +105,10 @@ header.main-header
 								a.animated-underline {{ subLink.name }}
 				ul.main-links
 					template(v-for='(link, index) in mainLinks')
-							router-link(tag='li', class='link', :key='`mainLink-${index}`', :to='link.link', :data-index='index', @click.native='setMenuState(false)')
-								a.animated-underline {{ link.name }}
+						li.link(v-if='isURL(link.link)')
+							a.animated-underline(:href='link.link', target='_BLANK', rel='noopener noreferrer') {{ link.name }}
+						router-link(v-else, tag='li', class='link', :key='`mainLinkMobile-${index}`', :to='link.link', :data-index='index', @click.native='setMenuState(false)')
+							a.animated-underline {{ link.name }}
 </template>
 
 <script>
