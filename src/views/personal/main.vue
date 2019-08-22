@@ -29,11 +29,14 @@
 					active-course(
 						v-for="course in gymCoursesActive"
 						:courseName="course.course_name"
+						:orderId="course.id"
 						:payStatus="course.pay_status"
 						:progress="course.edu_progress"
 						:group="course.group"
 						:url="course.course_url"
 						:demoUrl="course.course_demo_url"
+						:cityId="course.city_id"
+						:prices="course.available_prices"
 						:payment="course.pending_payment"
 						:additionalInfo='course.course_description'
 						@openCourse="openCourse"
