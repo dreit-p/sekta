@@ -11,7 +11,7 @@ div.course
 				h3.center ПРОГРАММА ДЛЯ БЕРЕМЕННЫХ
 				a.notice.center(href='https://www.youtube.com/watch?v=MUNQRUgy444&feature=youtu.be', target='_BLANK', rel='noopener noreferrer') ПРОБНАЯ ТРЕНИРОВКА ДЛЯ БЕРЕМЕННЫХ
 				p
-					b Программа подходит женщинам с 12-ой недели беременности.
+					b Программа подходит женщинам с 12-ой недели беременности.&nbsp;
 					| До начала программы получите от наблюдающего врача&ensp;
 					a(href='https://sektaschool.ru/site/img/2019-07-26_11.31.36.jpg') справку
 					| /письменное подтверждение с&ensp;
@@ -22,7 +22,7 @@ div.course
 					| 5 недель.
 				p
 					b Стоимость одной недели обучения:&ensp;
-					| 1 500 рублей.
+					| 1&ensp;500 рублей.
 				h5
 					b Особенности программы:
 				ul

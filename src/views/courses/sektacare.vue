@@ -30,7 +30,7 @@ div.course
 					| 9 недель.
 				p
 					b Стоимость одной недели обучения:&nbsp;
-					| 1 350 рублей.
+					| 1&ensp;500 рублей.
 
 	caption-section(v-if='courseInfo'
 		dateStart='в понедельник',
