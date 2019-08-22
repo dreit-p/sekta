@@ -46,9 +46,7 @@ export default {
 	computed: {
 		cityId: {
 			get() {
-				if (!this.$store.state.user.city) {
-					this.$store.dispatch('updateCity');
-				}
+				this.$store.dispatch('updateCity');
 				return this.$store.state.user.cityId ? this.$store.state.user.cityId : 3
 			}
 		}
