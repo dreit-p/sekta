@@ -33,8 +33,8 @@ div.main-layout
 					tr
 						td Генеральный директор
 						td Балезин Павел Владимирович
-				img(src='http://msk.sektaschool.ru/ШИТ-МСК-ИНН.jpg' width='100%')
-				img(src='http://msk.sektaschool.ru/ШИТ-МСК-ОГРН.jpg' width='100%')
+				img(src='@/assets/images/docs/ШИТ-МСК-ИНН.jpg' width='100%')
+				img(src='@/assets/images/docs/ШИТ-МСК-ОГРН.jpg' width='100%')
 </template>
 
 <script>

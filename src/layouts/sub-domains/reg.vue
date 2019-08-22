@@ -33,8 +33,7 @@ div.main-layout
 					tr
 						td Генеральный директор
 						td Уфимцев Андрей Николаевич
-<!--				img(src='http://spb.sektaschool.ru/ШИТ-СПБ-ИНН.jpg' width='100%')-->
-<!--				img(src='http://spb.sektaschool.ru/ШИТ-СПБ-ОГРН.jpg' width='100%')-->
+				img(src='@/assets/images/docs/ШИТ-РЕГ-ИНН.jpg' width='100%')
 </template>
 
 <script>

@@ -31,8 +31,8 @@ div
 				tr
 					td Генеральный директор
 					td Балезин Павел Владимирович
-			img(src='@/assets/images/ШИТ-МСК-ИНН.jpg' width='100%')
-			img(src='@/assets/images/ШИТ-МСК-ОГРН.jpg' width='100%')
+			//img(src='@/assets/images/ШИТ-МСК-ИНН.jpg' width='100%')
+			//img(src='@/assets/images/ШИТ-МСК-ОГРН.jpg' width='100%')
 </template>
 
 <script>
