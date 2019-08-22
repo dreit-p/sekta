@@ -37,7 +37,7 @@
 
 					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-online(v-if='entryFormType == "online"', :key='entryFormType', @submit='onSubmit($event)', v-bind:formData='this.formData', v-bind:courseName='this.courseName')
+					inputs-online(v-if='entryFormType == "online"', :key='entryFormType', @submit='onSubmit($event)', :formData='formData', :courseName='courseName')
 
 					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType', @submit='onSubmit($event)')
 
@@ -45,7 +45,7 @@
 
 					inputs-product(v-if='entryFormType == "bullet"', :key='entryFormType', @submit='onSubmit($event)')
 
-					inputs-face-to-face(v-if='entryFormType == "face-to-face"', :key='entryFormType', @submit='onSubmit($event)', v-bind:formData='this.formData')
+					inputs-face-to-face(v-if='entryFormType == "face-to-face"', :key='entryFormType', @submit='onSubmit($event)', :formData='formData')
 
 </template>
 
