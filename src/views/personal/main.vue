@@ -89,10 +89,10 @@
 						h2.title.green Курсы
 						hr
 						.text Завершенных курсов:&nbsp;
-							span.green {{allCourses.filter(course => course.edu_progress === 100).length}}
+							span.green {{allCourses.filter(course => course.edu_status.is_finished).length}}
 						hr
 						.text Активных курсов:&nbsp;
-							span.green {{allCoursesActive.filter(course => course.edu_progress !== 100).length}}
+							span.green {{allCoursesActive.length}}
 						hr
 						// template(v-if="allCoursesForProgress.length > 0")
 						// 	h2.title.green Прогресс
@@ -152,11 +152,11 @@ export default {
 			return [...this.onlineCoursesActive, ...this.gymCoursesActive]
 		},
 		allCoursesForProgress() {
-			return [...this.onlineCoursesActive, ...this.gymCoursesActive].filter(course => course.edu_progress || course.edu_progress === 0);
+			return [...this.onlineCoursesActive, ...this.gymCoursesActive].filter(course => course.edu_progress === null);
 		},
 		unPaidCourses() {
 			return this.allCourses.filter(
-				course => course.pay_status === "Не оплачено"
+				course => course.edu_status.is_pending
 			);
 		}
 	},
@@ -177,7 +177,7 @@ export default {
 				res => {
 					this.onlineCourses = res.data.data;
 					this.onlineCoursesActive = res.data.data.filter(
-						course => course.pay_status !== "Не оплачено"
+						course => course.edu_status.is_active
 					);
 				},
 				rej => {}
@@ -188,7 +188,7 @@ export default {
 				res => {
 					this.gymCourses = res.data.data;
 					this.gymCoursesActive = res.data.data.filter(
-						course => course.pay_status !== "Не оплачено"
+						course => course.edu_status.is_active
 					);
 				},
 				rej => {}
