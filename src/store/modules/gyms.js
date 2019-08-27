@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
-
 // const postReq = (path, data) => {
 // 	return axios({
 // 		url: `${TEST_URL}${path}`,
@@ -16,7 +14,7 @@ const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
 // }
 const getReq = (path, data) => {
 	return axios({
-		url: `${TEST_URL}${path}`,
+		url: `${process.env.VUE_APP_BACKEND_URL}${path}`,
 		params: data,
 		method: 'get'
 	})

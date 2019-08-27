@@ -1,11 +1,9 @@
 import axios from 'axios'
 import router from '@/router'
 
-const TEST_URL = `http://api.sektaschool.ru.dev.immelman.ru`;
-
 const postReq = (path, data) => {
 	return axios({
-		url: `${TEST_URL}${path}`,
+		url: `${process.env.VUE_APP_BACKEND_URL}${path}`,
 		data: data,
 		method: 'POST'
 	})
@@ -17,7 +15,7 @@ const postReq = (path, data) => {
 }
 const getReq = (path, data) => {
 	return axios({
-		url: `${TEST_URL}${path}`,
+		url: `${process.env.VUE_APP_BACKEND_URL}${path}`,
 		params: data,
 		method: 'get'
 	})
@@ -63,7 +61,7 @@ export default {
 	requestOnlineCourses({ commit }) {
 		return new Promise((resolve) => {
 			return axios
-				.get(`${TEST_URL}/api/online-courses`)
+				.get(`${process.env.VUE_APP_BACKEND_URL}/api/online-courses`)
 				.then(response => {
 					commit('setOnlineCourses', response.data.data);
 					resolve();
@@ -73,7 +71,7 @@ export default {
 	},
 	requestIPInfo({ commit }) {
 		return axios
-			.get(`${TEST_URL}/api/define-city`)
+			.get(`${process.env.VUE_APP_BACKEND_URL}/api/define-city`)
 			.then(response => {
 				commit('setCity', response.data.data.id);
 			})

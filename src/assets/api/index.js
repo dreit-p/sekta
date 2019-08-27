@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = `http://api.sektaschool.ru.dev.immelman.ru`;
+const URL = process.env.VUE_APP_BACKEND_URL;
 
 function setToken(token) {
 	axios.defaults.headers.common = { 'Authorization': `Bearer ${token}` }
