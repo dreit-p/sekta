@@ -1,6 +1,9 @@
 import Vue from 'vue'
 
 export default {
+	setAuthToken(state, token) {
+		state.user.token = token
+	},
 	setFormModalState(state, modalState) {
 		state.appStates.formModal.isOpened = modalState;
 	},
@@ -13,8 +16,8 @@ export default {
 	setInputData(state, { name, data }) {
 		Vue.set(state.inputs, name, data)
 	},
-	setUserInfo(state, { type, data }) {
-		Vue.set(state.user, type, data)
+	setUserInfo(state, userInfo) {
+		Vue.set(state.user, 'info', userInfo)
 	},
 	setCity(state, cityId) {
 		state.user.cityId = cityId;

@@ -173,7 +173,7 @@ export default {
 	},
 	methods: {
 		getOnlineOrders() {
-			api.getOnlineOrders(this.$store.state.user.token).then(
+			api.online.getOrders().then(
 				res => {
 					this.onlineCourses = res.data.data;
 					this.onlineCoursesActive = res.data.data.filter(
@@ -184,7 +184,7 @@ export default {
 			);
 		},
 		getGymOrders() {
-			api.getGymOrders(this.$store.state.user.token).then(
+			api.gym.getOrders().then(
 				res => {
 					this.gymCourses = res.data.data;
 					this.gymCoursesActive = res.data.data.filter(
@@ -195,7 +195,7 @@ export default {
 			);
 		},
 		getCertificates() {
-			api.getCertificates(this.$store.state.user.token).then(
+			api.certs.getOrders().then(
 				res => {
 					this.certificates = res.data.data;
 				},
@@ -203,7 +203,7 @@ export default {
 			);
 		},
 		getProducts() {
-			api.getProducts(this.$store.state.user.token).then(
+			api.product.getOrders().then(
 				res => {
 					this.products = res.data.data;
 				},
@@ -212,10 +212,10 @@ export default {
 		},
 		requestVerifyEmail() {
 			this.isMailSent = true;
-			api.requestVerifyEmail()
+			api.personal.requestVerifyEmail()
 		},
 		verifyEmail(token) {
-			api.verifyEmail(token).then(res => {
+			api.personal.verifyEmail(token).then(res => {
 				if (!res.data.status) {
 					this.showMail = true
 				}

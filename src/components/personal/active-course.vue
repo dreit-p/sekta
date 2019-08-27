@@ -206,7 +206,7 @@ export default {
 			}
 		},
 		checkPromocode(code) {
-			api.reqDiscountedPrice(this.price, code).then(
+			api.getPriceWithPromocode(this.price, code).then(
 				res => {
 					this.promo = res.data;
 				},

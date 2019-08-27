@@ -68,7 +68,7 @@ export default {
 		},
 		sendPasswordRecovery() {
 			this.isLoading = true
-			api.requestPasswordRecovery(this.email).then(res => {
+			api.personal.requestPasswordRecovery(this.email).then(res => {
 				this.apiMessage = res.data.message
 			},
 			rej => {

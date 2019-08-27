@@ -1,6 +1,9 @@
 // import store from '@/store/'
 
 export default {
+	authToken(state) {
+		return state.user.token
+	},
 	isUserAuth(state) {
 		return !!state.user.token
 	},

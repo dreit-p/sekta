@@ -97,7 +97,7 @@ export default {
 				let token = this.$route.query.token ? this.$route.query.token: ''
 				let password = data.password ? data.password: ''
 				let password_confirmation = data.password_confirmation ? data.password_confirmation :''
-				api.resetPassword(token, password, password_confirmation).then(res => {
+				api.personal.resetPassword(token, password, password_confirmation).then(res => {
 					this.showMessage = true
 					this.apiMessage = res.data.message
 					this.$router.push({ name: 'personal'})

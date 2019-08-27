@@ -238,8 +238,8 @@ export default {
 	created() {
 		this.isMerch = this.$route.name === "sektamerch";
 		let product = this.isMerch ? "TSHIRT" : "BULLET";
-		api.getProduct(product).then(res => {
-			let newPrices = [] 
+		api.product.getProduct(product).then(res => {
+			let newPrices = []
 			res.data.data.forEach(product => product.prices.forEach(price => newPrices.push(price)))
 			this.prices = newPrices;
 		});
@@ -301,7 +301,7 @@ export default {
 			}
 		},
 		checkPromocode(code) {
-			api.reqDiscountedPrice(this.priceId, code).then(
+			api.getPriceWithPromocode(this.priceId, code).then(
 				res => {
 					this.promo = res.data;
 				},
@@ -378,7 +378,7 @@ export default {
 				order.delivery_address = this.address;
 			}
 			if (this.isDeliveryDone) order.delivery_price = this.deliveryPrice;
-			api.makeProductOrder(order, this.$store.state.user.token).then(
+			api.product.createOrder(order).then(
 				res => {
 					this.makePayment(res.data.order_id);
 				},
@@ -390,13 +390,11 @@ export default {
 		},
 		makePayment(order_id) {
 			let data = {
-				order_id,
 				price_id: this.priceId
 			};
 			if (this.promo.amount) data.promocode = this.promo.promocode_code;
 			data.quantity = this.quantity ? this.quantity : 1;
-			api
-				.makeProductPayment(data, this.$store.state.user.token)
+			api.product.createPayment(order_id, data)
 				.then(res => {
                     window.location = res.data.payment.approve_url;
                 }, rej => {

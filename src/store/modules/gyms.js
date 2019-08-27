@@ -1,29 +1,4 @@
-import axios from 'axios'
-
-// const postReq = (path, data) => {
-// 	return axios({
-// 		url: `${TEST_URL}${path}`,
-// 		data: data,
-// 		method: 'POST'
-// 	})
-// 		.then(resp=>resp)
-// 		.catch(err => {
-// 			console.warn(path, ': ', err);
-// 			throw err;
-// 		})
-// }
-const getReq = (path, data) => {
-	return axios({
-		url: `${process.env.VUE_APP_BACKEND_URL}${path}`,
-		params: data,
-		method: 'get'
-	})
-		.then(resp => resp)
-		.catch(err => {
-			console.warn(path, ': ', err);
-			throw err;
-		})
-}
+import api from '../../assets/api'
 
 let state = {
 	courses: [],
@@ -36,7 +11,7 @@ let actions = {
 		if (!cityId) {
 			return;
 		}
-		return getReq(`/api/cities/${cityId}/gym-courses`)
+		return api.gym.getCoursesByCity(cityId)
 			.then((resp) => {
 				commit('setCourses', resp.data.data);
 				return resp;
@@ -49,8 +24,7 @@ let actions = {
 		if (!cityId || !courseID) {
 			return;
 		}
-
-		return getReq(`/api/cities/${cityId}/gym-courses/${courseID}/gyms`)
+		return api.gym.getGymsByCityAndCourse(cityId, courseID)
 			.then((resp) => {
 				commit('setGyms', resp.data.data);
 				return resp;
@@ -63,8 +37,7 @@ let actions = {
 		if (!gymID || !courseID) {
 			return;
 		}
-
-		return getReq(`/api/gyms/${gymID}/gym-courses/${courseID}/visits-with-practices`)
+		return api.gym.getVisitsWithPracticesByGymAndCourse(gymID, courseID)
 			.then((resp) => {
 				commit('setPractices', resp.data.data);
 				return resp;
