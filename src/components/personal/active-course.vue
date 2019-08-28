@@ -175,7 +175,7 @@ export default {
 			}
 		},
 		payHandler() {
-			if (this.payment.approve_url) {
+			if (this.payment && this.payment.approve_url) {
 				this.$emit("pay", this.payment.approve_url);
 			} else {
 				let code = ''
