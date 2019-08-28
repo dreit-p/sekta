@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 
 const scrollBehavior = (to, from, savedPosition) => new Promise((resolve) => {
 	if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-	const position = savedPosition || {x:0, y:0};
+	const position = savedPosition || { x: 0, y: 0 };
 	if (!savedPosition) {
 		if (to.hash) {
 			position.selector = to.hash;
@@ -219,6 +219,13 @@ const Router = new VueRouter({
 			]
 		},
 		{
+			path: '/account-login',
+			name: 'account',
+			meta: { requiresAuth: true },
+			component: () =>
+				import('./views/personal/account-login.vue'),
+		},
+		{
 			path: '/password-recovery',
 			name: 'password-recovery',
 			component: () =>
@@ -250,7 +257,7 @@ Router.beforeEach((to, from, next) => {
 		if (!store.state.user.token) {
 			next({
 				path: '/login',
-				query: { redirect: to.fullPath }
+				query: { redirect: to.name }
 			})
 		} else {
 			next()

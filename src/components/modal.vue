@@ -92,7 +92,7 @@ export default {
 			switch (type) {
 			case 'login':
 				this.setFormModalState({modalState: false});
-				this.$router.push({name: 'personal'});
+				this.$router.push({name: this.$route.query.redirect || 'personal'});
 				break;
 			case 'register':
 				this.setFormModalState({modalState: false});
