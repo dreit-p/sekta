@@ -63,6 +63,9 @@ export default {
 		getOrders() {
 			return axiosWithAuth().get(URL + `/api/personal/online-orders`)
 		},
+		getLastOrder(courseId) {
+			return axiosWithAuth().get(URL + `/api/personal/online-orders/last-for-course/${courseId}`)
+		},
 	},
 
 	gym: {

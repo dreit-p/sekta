@@ -48,7 +48,7 @@ div.course
 		dateStart='в понедельник',
 		:TEMPdateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType='online', :formData='{prices: courseInfo.prices, platforms: availablePlatforms}', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType='online', :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id}', :courseName='courseInfo.name')
 </template>
 
 <script>

@@ -23,6 +23,7 @@
 			v-validate='"required"'
 			:class="{ 'error': getInputError('edu_platform'), 'success': fields.edu_platform && fields.edu_platform.valid}"
 			:error='getInputError("edu_platform")'
+			:disabled="!!userOrderId"
 			name='edu_platform')
 
 		app-input(
@@ -33,6 +34,7 @@
 			v-validate='"required"'
 			:class="{ 'error': getInputError('social_page_url'), 'success': fields.social_page_url && fields.social_page_url.valid}"
 			:error='getInputError("social_page_url")'
+			:disabled="!!userOrderId"
 			name='social_page_url')
 
 		app-dropdown(
@@ -54,6 +56,7 @@
 			:options='city_options'
 			:class="{ 'error': getInputError('city'), 'success': fields.city && fields.city.valid}"
 			:error='getInputError("city")'
+			:disabled="!!userOrderId"
 			name='city')
 
 		p.tiny-text.tiny-text.tiny-text_face Промокод (если есть)
@@ -85,7 +88,7 @@
 			| Перейти к оплате
 </template>
 <script>
-
+import api from '../../../../assets/api/index.js'
 /*=====================================
 =            define inputs            =
 =====================================*/
@@ -187,28 +190,34 @@ export default {
 			this.ifValid(()=>{
 				this.isFormLocked = true;
 
-				this.$store.dispatch('sendOnlineOrder', this.inputsData)
-					.then((resp)=>{
-						this.unlockForm();
-						this.$emit('submit', 'online');
-						this.$store.dispatch('setFormModalState', {modalState: false});
-						let orderID = resp.data.order_id;
-						this.$store.dispatch('reqOnlinePayment', {orderId: orderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
-							window.location = resp.data.payment.approve_url;
-						});
-					})
-					.catch((err)=>{
-						this.receivedErrors.watchers = {};
-						if (err.data.errors) {
-							this.createErrorsList(err.data.errors);
-						}
-						if (err.data.message) {
-							this.receivedErrors.message = err.data.message;
-						} else {
-							delete this.receivedErrors.message;
-						}
-						this.unlockForm();
+				if (this.userOrderId) {
+					this.$store.dispatch('reqOnlinePayment', {orderId: this.userOrderId, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
+						window.location = resp.data.payment.approve_url;
 					});
+				} else {
+					this.$store.dispatch('sendOnlineOrder', this.inputsData)
+						.then((resp)=>{
+							this.unlockForm();
+							this.$emit('submit', 'online');
+							this.$store.dispatch('setFormModalState', {modalState: false});
+							let orderID = resp.data.order_id;
+							this.$store.dispatch('reqOnlinePayment', {orderId: orderID, price_id: this.price.id, promocode: this.promocode}).then((resp)=>{
+								window.location = resp.data.payment.approve_url;
+							});
+						})
+						.catch((err)=>{
+							this.receivedErrors.watchers = {};
+							if (err.data.errors) {
+								this.createErrorsList(err.data.errors);
+							}
+							if (err.data.message) {
+								this.receivedErrors.message = err.data.message;
+							} else {
+								delete this.receivedErrors.message;
+							}
+							this.unlockForm();
+						});
+				}
 			});
 		},
 	},
@@ -229,6 +238,20 @@ export default {
 	},
 	mounted() {
 		this.inputsData.city_id = this.userCity;
+		this.weeks_options = this.formData.prices ? this.formData.prices : ['Продажа невозможна']
+		api.online.getLastOrder(this.formData.id).then(
+			res => {
+				let response = res.data.data
+				this.userOrderId = response.id
+				this.inputsData = {
+					social_page_url: response.social_page_url,
+					edu_platform: response.edu_platform,
+					price_id: null,
+					city_id: response.city_id
+				}
+				this.weeks_options = response.available_prices
+			},
+		)
 	},
 	computed: {
 		...globalInputs.list,
@@ -261,6 +284,8 @@ export default {
 				price_id: null,
 				city_id: null,
 			},
+			userOrderId: null,
+			currentFormData: {},
 			receivedErrors: {},
 			isFormLocked: false,
 			promocode: null,
@@ -274,7 +299,7 @@ export default {
 				{id: 'wa', name: 'WhatsApp'},
 				{id: 'email', name: 'E-mail'},
 			],
-			weeks_options: this.formData.prices ? this.formData.prices : ['Продажа невозможна'],
+			weeks_options: [],
 			termsAgree: false,
 		}
 	},

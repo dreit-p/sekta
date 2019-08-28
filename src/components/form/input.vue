@@ -9,6 +9,7 @@ label.app-input(:class='this.$options.name')
 			:type='type'
 			autocomplete="off"
 			v-bind="$attrs"
+			:disabled='disabled'
 			@change="onChange($event.target.value)"
 			@keydown.enter="onEnterKey"
 			@blur="onBlurHandler($event.target.value)"
@@ -50,7 +51,10 @@ export default {
 		},
 		prevent: {
 			default: false
-		}
+		},
+		disabled: {
+			default: false
+		},
 	},
 	computed: {
 		computedCaption() {
