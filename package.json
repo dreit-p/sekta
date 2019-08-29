@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "postinstall": "test -e .env.local || cp .env.example .env.local"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "axios": "^0.18.1",
