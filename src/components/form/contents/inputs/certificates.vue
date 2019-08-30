@@ -91,7 +91,7 @@ export default {
 		},
 		price_id_options() {
 			if (this.certificates) {
-				return this.certificates[0].prices
+				return this.certificates.map(cert => ({...cert.price, name: cert.name}))
 			}
 			return []
 		},
