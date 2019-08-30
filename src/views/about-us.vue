@@ -48,6 +48,7 @@ div.about-us
 				.image.portrait
 					.shine
 					webp-img(src='about-us/photo-4.png')
+	articles
 
 </template>
 
@@ -60,6 +61,7 @@ export default {
 	},
 	components: {
 		WebpImg: () => import("@/components/webp-img.vue"),
+		Articles: () => import("@/components/unique-blocks/about-us/articles.vue"),
 	},
 	mounted() {
 		this.descriptionImages = document.querySelectorAll('.about-us .description .image');
