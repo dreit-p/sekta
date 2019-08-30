@@ -9,6 +9,12 @@ module.exports = {
 		// 		routes: ['/', '/kontakty', '/results', '/about', '/online', '/online/evo', '/online/sektacare', '/online/smama', '/online/pregnancy', '/online/sektavip', '/gym', '/gym/moskva', '/gym/sankt-peterburg', '/certificates'],
 		// 	})
 		// ],
+		optimization: {
+			splitChunks: {
+				minSize: 10000,
+				maxSize: 250000,
+			}
+		},
 		devServer: {
 			port: 4444,
 			host: '0.0.0.0',
