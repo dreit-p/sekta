@@ -2,6 +2,8 @@
 .content
 	p.heavy-text Запишитесь на курс
 	p Чтобы записаться на курс, заполните форму заявки и нажмите «Перейти к оплате».
+	p Если у вас подарочный сертификат на первую неделю обучения курса для мам — для активации сертификата напишите на почту&ensp;
+		a(href='mailto:info@sektaschool.ru') info@sektaschool.ru.
 
 	p.heavy-text Важно!
 	p После оплаты вы получите письмо о зачислении на курс с инструкциями к обучению и полезными материалами. Если письма нет, проверьте папку «Спам». Если нет и там, напишите нам:&ensp;
@@ -19,7 +21,7 @@
 
 <script>
 export default {
-	name: 'TextsOnline',
+	name: 'TextsMama',
 	methods: {
 		setFormModalState(data) {
 			return this.$parent.setFormModalState(data);

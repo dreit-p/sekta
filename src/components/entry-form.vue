@@ -17,6 +17,10 @@
 
 					texts-online(v-if='entryFormType == "online"')
 
+					texts-vip(v-if='entryFormType == "vip"')
+
+					texts-mama(v-if='entryFormType == "mama"')
+
 					texts-camp(v-if='entryFormType == "camp"')
 
 					texts-product(v-if='entryFormType == "merch"')
@@ -38,6 +42,10 @@
 					inputs-certificates(v-if='entryFormType == "certificates"', :key='entryFormType', @submit='onSubmit($event)')
 
 					inputs-online(v-if='entryFormType == "online"', :key='entryFormType', @submit='onSubmit($event)', :formData='formData', :courseName='courseName')
+
+					inputs-vip(v-if='entryFormType == "vip"', :key='entryFormType', @submit='onSubmit($event)', :formData='formData', :courseName='courseName')
+
+					inputs-mama(v-if='entryFormType == "mama"', :key='entryFormType', @submit='onSubmit($event)', :formData='formData', :courseName='courseName')
 
 					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType', @submit='onSubmit($event)')
 
@@ -61,6 +69,8 @@ const formContent = {
 		"recovery",
 		"certificates",
 		"online",
+		"vip",
+		"mama",
 		"face-to-face",
 		"camp",
 		"merch",
@@ -215,25 +225,25 @@ export default {
           font-size: 16px;
           margin: 0;
           line-height: 1.5;
-          &.small-text {
-            font-size: 14px;
-            line-height: 1.43;
+        }
+        .small-text {
+          font-size: 14px;
+          line-height: 1.43;
+        }
+        .tiny-text {
+          margin: 7px *;
+          font-size: 12px;
+          line-height: 1.33;
+          &_face {
+            color: grey;
+            margin-bottom: 5px;
           }
-          &.tiny-text {
-            margin: 7px *;
-            font-size: 12px;
-            line-height: 1.33;
-            &_face {
-              color: grey;
-              margin-bottom: 5px;
-            }
-            &_long {
-              width: 385px;
-              margin-bottom: 10px;
-              margin-top: 5px;
-              @media (max-width: 992px) {
-                width: auto;
-              }
+          &_long {
+            width: 385px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            @media (max-width: 992px) {
+              width: auto;
             }
           }
         }

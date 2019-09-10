@@ -43,7 +43,7 @@
 						@pay="yaKassaRedirect"
 					)
 				template(v-if="certificates.length > 0")
-					h2.section-title Сертфикаты
+					h2.section-title Сертификаты
 					.tile.goods(v-for="certificate in certificates")
 						.goods__image
 						.text {{certificate.certificate.name}}
