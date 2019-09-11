@@ -2,7 +2,9 @@ import Vue from 'vue'
 
 export default {
 	setAuthToken(state, token) {
-		state.user.token = token
+		// Here token sets & resets if user logout
+		document.cookie = `api_token=${token}; domain=${window.location.hostname}; path=/; expires=2147483647`;
+		state.user.token = token;
 	},
 	setFormModalState(state, modalState) {
 		state.appStates.formModal.isOpened = modalState;

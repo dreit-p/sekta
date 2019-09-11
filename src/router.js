@@ -219,13 +219,6 @@ const Router = new VueRouter({
 			]
 		},
 		{
-			path: '/account-login',
-			name: 'account',
-			meta: { requiresAuth: true },
-			component: () =>
-				import('./views/personal/account-login.vue'),
-		},
-		{
 			path: '/password-recovery',
 			name: 'password-recovery',
 			component: () =>
