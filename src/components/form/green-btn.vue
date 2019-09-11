@@ -13,7 +13,8 @@ export default {
 					'green-btn': true,
 				},
 				attrs: {
-					href: self.href
+					href: self.href,
+					target: self.target,
 				},
 				on: {
 					click (e) {
@@ -47,6 +48,10 @@ export default {
 	},
 	props: {
 		href: {
+			type: String,
+			default: ''
+		},
+		target: {
 			type: String,
 			default: ''
 		},

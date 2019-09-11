@@ -71,8 +71,8 @@
 						a(:href='requisitesLink', target='_BLANK', rel='noopener noreferrer')
 							| ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[cityId]  }}»
 					green-btn.btn.btn-green(:disabled="!price || !termsAgree" @click="payHandler") Перейти к оплате
-				green-btn(inverted v-if="url" @click="openCourseHandler").btn Открыть курс
-				green-btn(inverted v-if="demoUrl" @click="openCourseHandler").btn Демо
+				green-btn(inverted v-if="url" :href="url" target="_blank").btn Открыть курс
+				green-btn(inverted v-if="demoUrl" :href="demoUrl" target="_blank").btn Демо
 		.additional-content(
 			v-bind:class="{ dropdown_active: isDropDownActive }"
 		)
@@ -167,13 +167,6 @@ export default {
 		this.date = this.group ? formatDate(this.group.start_date) : "";
 	},
 	methods: {
-		openCourseHandler() {
-			if (this.url) {
-				this.$emit("openCourse", this.url);
-			} else if (this.demoUrl) {
-				this.$emit("openCourse", this.demoUrl);
-			}
-		},
 		payHandler() {
 			if (this.payment && this.payment.approve_url) {
 				this.$emit("pay", this.payment.approve_url);

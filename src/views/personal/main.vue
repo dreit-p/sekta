@@ -21,7 +21,6 @@
 						:prices="course.available_prices"
 						:payment="course.pending_payment"
 						:additionalInfo='course.course_description'
-						@openCourse="openCourse"
 						@pay="yaKassaRedirect"
 					)
 				template(v-if="gymCoursesActive.length > 0")
@@ -39,7 +38,6 @@
 						:prices="course.available_prices"
 						:payment="course.pending_payment"
 						:additionalInfo='course.course_description'
-						@openCourse="openCourse"
 						@pay="yaKassaRedirect"
 					)
 				template(v-if="certificates.length > 0")
@@ -69,7 +67,6 @@
 						:prices="course.available_prices"
 						:payment="course.pending_payment"
 						:additionalInfo='course.course_description'
-						@openCourse="openCourse"
 						@pay="yaKassaRedirect"
 					)
 				h2.section-title Рекомендуем
@@ -224,9 +221,6 @@ export default {
 		yaKassaRedirect(url) {
 			window.location = url;
 		},
-		openCourse(url) {
-			window.open(url);
-		}
 	}
 };
 </script>
