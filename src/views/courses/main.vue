@@ -186,7 +186,7 @@ article.courses-list {
 	}
 	.content {
 		padding: 20px var(--col-space);
-		max-width: calc(var(--col-total)*6 /2);
+		max-width: calc((var(--col-width) + var(--col-space))*6 /2);
 		@media (min-width: 601px) {
 			&.fix-to-top {
 				align-self: flex-start;

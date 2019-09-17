@@ -453,7 +453,7 @@ export default {
 <style lang="postcss">
 .time-selector {
 	.limit {
-		max-width: calc(var(--col-total) * 4.3);
+		max-width: calc((var(--col-width) + var(--col-space)) * 4.3);
 	.description {
 		margin: 5px *;
 		font-size: 15px;

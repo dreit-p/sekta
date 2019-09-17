@@ -11,5 +11,5 @@
 
 	--col-width: 150.8px;
 	--col-space: 15px;
-	--col-total: calc(var(--col-width) + var(--col-space));
+	/* --col-total: calc(var(--col-width) + var(--col-space)); */
 }

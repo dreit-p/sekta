@@ -235,8 +235,10 @@ article.main-body {
   .limit {
     padding-top: 30px;
     display: grid;
+    display: -ms-grid;
     grid-auto-columns: auto 361px;
     grid-gap: 0 30px;
+    -ms-grid-columns: 1fr 30px 361px;
     @media (max-width: 850px) {
       grid-gap: 0;
     }
@@ -249,6 +251,7 @@ article.main-body {
   }
   section.first-row {
     grid-row: 1;
+    -ms-grid-row: 1;
     .confirm-mail:not(:first-child) {
       margin-top: 25px;
     }
@@ -265,12 +268,16 @@ article.main-body {
   }
   section.column {
     grid-row: 2;
+    -ms-grid-row: 2;
     &.sidebar {
       grid-column: 2;
+      -ms-grid-column: 3;
       min-width: 361px;
       @media (max-width: 850px) {
         grid-column: 1;
+        -ms-grid-column: 1;
         grid-row: 3;
+        -ms-grid-row: 3;
       }
     }
   }

@@ -180,7 +180,7 @@ export default {
         margin: auto;
         float: left;
         position: relative;
-        max-width: calc(var(--col-total) * 3);
+        max-width: calc((var(--col-width) + var(--col-space)) * 3);
       }
       &:nth-child(odd) {
         > * {
