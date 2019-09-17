@@ -3,8 +3,8 @@
 		result-modal(v-if="showResultModal" :result="resultInModal" @close="toggleResultModal")
 		.limit.limit_small
 			h1.title Результаты
-			.result-tabs
-				.result-tab(v-for="(tab, index) in tabs" :class="{active: activeTabIndex === index}" @click="changeActiveTab(index,tab)") {{tab.name}}
+			// .result-tabs
+			// 	.result-tab(v-for="(tab, index) in tabs" :class="{active: activeTabIndex === index}" @click="changeActiveTab(index,tab)") {{tab.name}}
 			.result-tabs__select-block
 				select.result-tabs__select(v-model="selectedTab")
 					option(v-for="(tab, index) in tabs" @click="changeActiveTab(index, tab)") {{tab.name}}
