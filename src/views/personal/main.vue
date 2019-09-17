@@ -2,6 +2,8 @@
 	article.main-body
 		.limit
 			section.first-row
+				.confirm-mail(v-if="!$store.state.user.info.gmt") Важно! Укажите верный часовой пояс перед записью на любой курс.&nbsp;
+					router-link(to='/personal/details').green Укажите часовой пояс
 				.confirm-mail(v-if="showMail && !isMailSent && !user.info.is_email_verified") Адрес электронной почты не подтвержден.&nbsp;
 					a(href="#" @click.prevent="requestVerifyEmail").green Подтвердить сейчас
 				.confirm-mail(v-else-if="isMailSent") Письмо отправлено на вашу почту
@@ -247,6 +249,9 @@ article.main-body {
   }
   section.first-row {
     grid-row: 1;
+    .confirm-mail:not(:first-child) {
+      margin-top: 25px;
+    }
   }
   .confirm-mail {
     background-color: white;
