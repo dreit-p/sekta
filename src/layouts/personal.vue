@@ -56,7 +56,6 @@ export default {
 <style lang="postcss">
 	.personal-layout {
 		min-height: 100vh;
-		height: 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;

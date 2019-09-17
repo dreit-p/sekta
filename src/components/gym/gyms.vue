@@ -65,6 +65,7 @@ export default {
 		align-items: center;
 		.text {
 			width: auto;
+			max-width: 100%;
 			margin: 15px auto;
 			text-align: center;
 			>*,

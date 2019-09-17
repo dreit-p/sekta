@@ -7,7 +7,7 @@
 			p Если в ячейке несколько вариантов времени для одного дня - значит, в этот день вы можете выбирать, в какое время посещать тренировки.
 
 		.grid(v-if='windowWidth > mobileWidth')
-			.day(v-for='name in daysNames') {{name}}
+			.day(v-for='(name, index) in daysNames' :style='{gridColumn: index+1 }') {{name}}
 			template(v-for='(row, rowIndex) in schedules')
 				button.tile(
 					v-for='(tile, tileIndex) in row.tiles'
@@ -479,6 +479,7 @@ export default {
 	}
 	.grid {
 		display: grid;
+		display: -ms-grid;
 		grid-template-columns: repeat(6, 1fr [col-start]);
 		grid-gap: 10px;
 		margin: 10px *;
@@ -496,13 +497,16 @@ export default {
 			border-radius: 5px;
 			align-items: center;
 			display: grid;
+			display: -ms-grid;
 		}
 		.day {
 			padding: 15px 10px;
 			margin-top: 10px;
 			background-color: transparent;
+			-ms-grid-row: 1;
 		}
 		.tile {
+			-ms-grid-row: 2;
 			transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
 			cursor: pointer;
 			user-select: none;
