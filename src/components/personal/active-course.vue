@@ -242,6 +242,9 @@ article.main-body {
     }
     .top-content {
       display: flex;
+      @media (max-width: 500px) {
+        flex-direction: column;
+      }
     }
     .main-content {
       margin: 20px 30px;
@@ -276,7 +279,6 @@ article.main-body {
       float: left;
       @media (max-width: 500px) {
         float: right;
-        width: 50%;
       }
     }
     .title {
