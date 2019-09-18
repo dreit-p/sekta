@@ -86,6 +86,7 @@ const Router = new VueRouter({
 			children: [
 				{
 					path: '/',
+					name: 'online',
 					component: () =>
 						import('./views/courses/main.vue'),
 				},
@@ -135,7 +136,6 @@ const Router = new VueRouter({
 		},
 		{
 			path: '/gym',
-			// name: 'gym',
 			component: {
 				name: 'router-wrapper',
 				template: `<router-view></router-view>`
@@ -143,6 +143,7 @@ const Router = new VueRouter({
 			children: [
 				{
 					path: '/',
+					name: 'gym-main',
 					component: () =>
 						import('./views/gym/main.vue'),
 				},
@@ -235,10 +236,20 @@ const Router = new VueRouter({
 			name: 'login',
 			component: Home
 		},
+		//Old site redirects
 		{ path: '/evo', redirect: { name: 'sektaevo' } },
-		{ path: '/care', redirect: { name: 'sektacare' } },
-		{ path: '/mama', redirect: { name: 'sektamama' } },
-		{ path: '/pregnant', redirect: { name: 'pregnant' } },
+		{ path: '/courses/smama', redirect: { name: 'sektamama' } },
+		{ path: '/courses/sektacare', redirect: { name: 'sektacare' } },
+		{ path: '/courses/pregnancy', redirect: { name: 'pregnant' } },
+		{ path: '/courses/sektavip', redirect: { name: 'sektavip' } },
+		{ path: '/cities/moskva', redirect: { path: '/gym/moskva' } },
+		{ path: '/cities/sankt-peterburg', redirect: { path: '/gym/sankt-peterburg' } },
+		{ path: '/certificates/gift', redirect: { name: 'certificates' } },
+		{ path: '/informacziya/kontakty', redirect: { name: 'contacts' } },
+		{ path: '/informacziya/presskit', redirect: { name: 'about' } },
+		{ path: '/informacziya/vacancies', redirect: { name: 'jobs' } },
+		{ path: '/online-repayment', redirect: { name: 'online' } },
+		{ path: '/repayment', redirect: { name: 'gym-main' } },
 	]
 })
 
