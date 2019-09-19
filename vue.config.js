@@ -3,12 +3,12 @@ const PrerenderSPAPlugin = require('prerender-spa-plugin');
 
 module.exports = {
 	configureWebpack: {
-		// plugins: [
-		// 	new PrerenderSPAPlugin({
-		// 		staticDir: path.join(__dirname, 'dist'),
-		// 		routes: ['/', '/kontakty', '/results', '/about', '/online', '/online/evo', '/online/sektacare', '/online/smama', '/online/pregnancy', '/online/sektavip', '/gym', '/gym/moskva', '/gym/sankt-peterburg', '/certificates'],
-		// 	})
-		// ],
+		plugins: [
+			new PrerenderSPAPlugin({
+				staticDir: path.join(__dirname, 'dist'),
+				routes: ['/', '/kontakty', '/results', '/about', '/online', '/online/evo', '/online/sektacare', '/online/smama', '/online/pregnancy', '/online/sektavip', '/gym', '/gym/moskva', '/gym/sankt-peterburg', '/certificates'],
+			})
+		],
 		optimization: {
 			splitChunks: {
 				minSize: 10000,
