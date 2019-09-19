@@ -39,7 +39,7 @@ div.course
 				p Подождать до 20 числа текущего месяца — в этот день мы открываем набор в группы направления #sektalite.
 
 				h5 Когда старт курса?
-				p сюда надо подкручивать дату из аминки (проставляется вручную каждый месяц)
+				p {{this.courseDate}}
 
 				h5 Что брать с собой на тренировки в зал?
 				p Спортивную форму, кроссовки для тренинга или бега, банные принадлежности (если в выбранном вами зале есть душ), бутылку с водой. Коврики и нужный инвентарь для тренировок есть в зале.
@@ -49,6 +49,7 @@ div.course
 
 <script>
 import Vue from 'vue';
+import { formatDateDayMonth } from "../../assets/misc.js";
 
 export default {
 	name: 'Gym',
@@ -59,6 +60,28 @@ export default {
 	components: {
 		CoursesHero: () => import('@/components/heroes/fullsize-hero.vue'),
 		Gyms: () => import('@/components/gym/gyms.vue'),
+	},
+	asyncComputed: {
+		courses() {
+			return this.$store
+				.dispatch("gyms/reqCourses", 1)
+				.then(() => {
+					return this.$store.state.gyms.courses;
+				});
+		},
+	},
+	computed: {
+		courseInfo() {
+			if (!this.courses) return;
+			let course = this.courses.find(
+				course => course.id === this.selected.courseID
+			);
+			return course;
+		},
+		courseDate() {
+			if (!this.courseInfo) return;
+			return formatDateDayMonth(this.courseInfo.common_start_date);
+		},
 	},
 	data () {
 		return {}
