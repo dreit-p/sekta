@@ -440,10 +440,11 @@ article.main-body {
         right: 0;
         color: inherit;
         margin-left: 5px;
+				margin-top: 3px;
       }
-      @media (max-width: 500px) {
-        padding: 10px;
-      }
+      // @media (max-width: 500px) {
+      //   padding: 10px;
+      // }
     }
   }
 
