@@ -17,12 +17,18 @@
 			a(href='https://kassa.yandex.ru/') Яндекс.Кассы
 		p.tiny-text Оказание услуг осуществляется&nbsp;
 			a(:href='requisitesLink', target='_BLANK', rel='noopener noreferrer')
-				| ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[userCity]  }}»
+				| ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[city.id]  }}»
 </template>
 
 <script>
 export default {
 	name: 'TextsOnline',
+	props: {
+		city: {
+			type: Object,
+			default: ()=>{}
+		}
+	},
 	methods: {
 		setFormModalState(data) {
 			return this.$parent.setFormModalState(data);
@@ -30,13 +36,10 @@ export default {
 	},
 	computed: {
 		requisitesLink() {
-			let city = this.$store.state.cities.find(city => city.id === this.userCity);
+			let city = this.$store.state.cities.find(city => city.id === this.city.id);
 			if (!city || city === -1) return;
 
 			return window.location.protocol +"//"+ city.code + "." + window.location.host
-		},
-		userCity() {
-			return this.$store.getters.getUserCity;
 		},
 	},
 }

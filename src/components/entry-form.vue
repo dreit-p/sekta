@@ -27,7 +27,7 @@
 
 					texts-product(v-if='entryFormType == "bullet"')
 
-					texts-face-to-face(v-if='entryFormType == "face-to-face"')
+					texts-face-to-face(v-if='entryFormType == "face-to-face"' :city="formData.city")
 
 		.half
 			.inputs-wrapper

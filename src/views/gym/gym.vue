@@ -242,7 +242,8 @@ export default {
 			return {
 				course: this.courseInfo,
 				location: this.locationInfo,
-				practice: this.practiceInfo
+				practice: this.practiceInfo,
+				city: this.city
 			};
 		}
 	},
