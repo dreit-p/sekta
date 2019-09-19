@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from './views/home.vue'
 import store from './store/'
 
+import accuchek from './views/courses/accu.vue'
+
 Vue.use(VueRouter)
 
 const scrollBehavior = (to, from, savedPosition) => new Promise((resolve) => {
@@ -175,8 +177,8 @@ const Router = new VueRouter({
 		},
 		{
 			path: '/accuchek',
-			component: () =>
-				import( /* webpackChunkName: "courses" */ './views/courses/accu.vue')
+			name: 'accuchek',
+			component: accuchek,
 		},
 		{
 			path: '/personal',

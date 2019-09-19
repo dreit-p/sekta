@@ -41,7 +41,8 @@ Validator.localize('ru', ru);
 
 import VueMeta from 'vue-meta'
 Vue.use(VueMeta)
-
+import VueHead from 'vue-head'
+Vue.use(VueHead)
 
 if (process.env.NODE_ENV === 'production') {
 	Vue.config.devtools = false
