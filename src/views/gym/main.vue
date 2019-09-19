@@ -71,16 +71,9 @@ export default {
 		},
 	},
 	computed: {
-		courseInfo() {
-			if (!this.courses) return;
-			let course = this.courses.find(
-				course => course.id === this.selected.courseID
-			);
-			return course;
-		},
 		courseDate() {
-			if (!this.courseInfo) return;
-			return formatDateDayMonth(this.courseInfo.common_start_date);
+			if (!this.courses) return;
+			return formatDateDayMonth(this.courses[0].common_start_date);
 		},
 	},
 	data () {
