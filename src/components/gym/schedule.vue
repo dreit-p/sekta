@@ -187,9 +187,11 @@ export default {
 
 			let timeObj = {};
 			this.practices.forEach(practice => {
+				console.log('===');
 				practice.schedules.forEach(practiceSchedule => {
-					if (timeObj.hasOwnProperty(practiceSchedule.time) && timeObj[practiceSchedule.time].hasOwnProperty(practiceSchedule.id)) {
-						let uniqTime = timeObj[practiceSchedule.time][practiceSchedule.id];
+					console.log('---');
+					if (timeObj.hasOwnProperty(practiceSchedule.time) && timeObj[practiceSchedule.time].hasOwnProperty(practice.id)) {
+						let uniqTime = timeObj[practiceSchedule.time][practice.id];
 						if (
 							!uniqTime.practiceIDs.find(
 								id => id === +practice.id
@@ -210,12 +212,11 @@ export default {
 							} else {
 								uniqTime.days.splice(index, 0, practiceSchedule.week_day);
 							}
-							console.log("uniqTime.days", uniqTime.days);
 						}
 					} else {
-						// if (!timeObj[practiceSchedule.time]) {timeObj[practiceSchedule.time] = {}}
-						timeObj[practiceSchedule.time] = {}
-						timeObj[practiceSchedule.time][practiceSchedule.id] = {
+						if (!timeObj[practiceSchedule.time]) {timeObj[practiceSchedule.time] = {}}
+						// timeObj[practiceSchedule.time] = {}
+						timeObj[practiceSchedule.time][practice.id] = {
 							practiceIDs: [+practice.id],
 							days: [practiceSchedule.week_day]
 						};
