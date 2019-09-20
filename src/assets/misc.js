@@ -1,12 +1,19 @@
-var moment = require('moment');
-moment.locale('ru');
+import format from 'date-fns/format'
+import { ru } from 'date-fns/locale'
+
+const addLocale = (date, formatStr) => {
+	return format(date, formatStr, {
+		locale: ru
+	})
+}
 
 export function formatDateDayMonth(date) {
-	let newDate = moment(date).format("DD MMMM")
+	let newDate = addLocale(new Date(date), 'dd MMMM')
 	return newDate
 }
 
 export function formatDate(date) {
-	let newDate = moment(date).format("L")
+	let newDate = addLocale(new Date(date), "dd/MM/y")
 	return newDate
 }
+
