@@ -27,7 +27,7 @@ export default {
 	},
 	computed: {
 		requisitesLink() {
-			let city = this.$store.state.cities.find(city => city.id === this.userCity);
+			let city = this.$store.state.cities.find(city => city.id == this.userCity);
 			if (!city || city === -1) return;
 
 			return window.location.protocol +"//"+ city.code + "." + window.location.host

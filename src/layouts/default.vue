@@ -18,7 +18,6 @@ export default {
 	},
 	head: {
 		script: function () {
-			console.log(this.isAccu)
 			if (!this.isAccu) return [{t: "text/javascript", 
 				i: `!function () {
 					var t = document.createElement("script");
