@@ -20,8 +20,8 @@ module.exports = {
 			host: '0.0.0.0',
 			overlay: true,
 			compress: true,
-			public: "home.dreit.ru", //for autorefresh
-			allowedHosts: [".dreit.ru"],
+			// public: "home.dreit.ru", //for autorefresh
+			// allowedHosts: [".dreit.ru"],
 			disableHostCheck: true,
 		}
 	},

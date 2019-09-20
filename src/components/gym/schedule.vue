@@ -36,9 +36,9 @@
 				template(v-for='(row, rowIndex) in group.rows')
 					.tile.available(
 						v-for='(tile, tileIndex) in row.tiles'
-						:class='{selected: ((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices).includes(selectedPracticeID) }'
-						:style='{gridRow: tile.practiceIDs.length > 0 ? `${rowIndex+2} / ${rowIndex+2 + (tile.practiceIDs.length <= 1 ? 1 : group.practices.length) }` : "auto", gridColumn: tileIndex+1 }'
-						@click='selectTile((tile.practiceIDs.length <= 1) ? tile.practiceIDs : group.practices); clickHandler()'
+						:class='{selected: ((tile.practiceIDs.length <= 1) ? tile.practiceIDs : getCommonValue(tile.practiceIDs, group.practices)).includes(selectedPracticeID) }'
+						:style='{gridRow: tile.practiceIDs.length > 0 ? `${rowIndex+2} / ${rowIndex+2 + (tile.practiceIDs.length <= 1 ? 1 : getCommonValue(tile.practiceIDs, group.practices).length) }` : "auto", gridColumn: tileIndex+1 }'
+						@click='selectTile(((tile.practiceIDs.length <= 1) ? tile.practiceIDs : getCommonValue(tile.practiceIDs, group.practices))); clickHandler()'
 					) {{tile.time}}
 
 </template>
@@ -188,8 +188,8 @@ export default {
 			let timeObj = {};
 			this.practices.forEach(practice => {
 				practice.schedules.forEach(practiceSchedule => {
-					if (timeObj.hasOwnProperty(practiceSchedule.time)) {
-						let uniqTime = timeObj[practiceSchedule.time];
+					if (timeObj.hasOwnProperty(practiceSchedule.time) && timeObj[practiceSchedule.time].hasOwnProperty(practiceSchedule.id)) {
+						let uniqTime = timeObj[practiceSchedule.time][practiceSchedule.id];
 						if (
 							!uniqTime.practiceIDs.find(
 								id => id === +practice.id
@@ -210,77 +210,96 @@ export default {
 							} else {
 								uniqTime.days.splice(index, 0, practiceSchedule.week_day);
 							}
+							console.log("uniqTime.days", uniqTime.days);
 						}
 					} else {
-						timeObj[practiceSchedule.time] = {
+						// if (!timeObj[practiceSchedule.time]) {timeObj[practiceSchedule.time] = {}}
+						timeObj[practiceSchedule.time] = {}
+						timeObj[practiceSchedule.time][practiceSchedule.id] = {
 							practiceIDs: [+practice.id],
 							days: [practiceSchedule.week_day]
 						};
 					}
 				});
 			});
+			console.log("timeObj", timeObj);
 
 			let rows = {};
 			for (let time in timeObj) {
 				if (timeObj.hasOwnProperty(time)) {
-					timeObj[time].practiceIDs.forEach(id => {
-						if (!rows.hasOwnProperty(id)) {
-							rows[id] = {
-								days: [],
-								key: [],
-								tiles: []
-							};
-						}
 
-						let sameDayIdx = rows[id].tiles.findIndex(tile =>
-							compareArrs(tile.days, timeObj[time].days)
-						);
-						if (sameDayIdx === -1) {
-							let index = rows[id].tiles.findIndex(tile => {
-								return tile.days[0] > timeObj[time].days[0];
-							});
-
-							let tileData = {
-								time: time,
-								days: timeObj[time].days,
-								practiceIDs: timeObj[time].practiceIDs
-							};
-
-							if (index === -1) {
-								rows[id].days.push(timeObj[time].days);
-								rows[id].tiles.push(tileData);
-							} else {
-								rows[id].days.splice(
-									index,
-									0,
-									timeObj[time].days
-								);
-								rows[id].tiles.splice(index, 0, tileData);
+					let createRow = (uniqTime)=>{
+						uniqTime.practiceIDs.forEach(id => {
+							if (!rows.hasOwnProperty(id)) {
+								rows[id] = {
+									days: [],
+									key: [],
+									tiles: []
+								};
 							}
 
-							// rows[id].key = [
-							// 	...rows[id].key,
-							// 	...timeObj[time].days
-							// ];
-						} else {
-							let timeToInt = t => {
-								let d = t.split(":");
-								return +d[0] * 60 + +d[1];
-							};
+							let sameDayIdx = rows[id].tiles.findIndex(tile =>
+								compareArrs(tile.days, uniqTime.days)
+							);
+							if (sameDayIdx === -1) {
+								let index = rows[id].tiles.findIndex(tile => {
+									return tile.days[0] > uniqTime.days[0];
+								});
 
-							if (
-								timeToInt(rows[id].tiles[sameDayIdx].time) <
-								timeToInt(time)
-							) {
-								rows[id].tiles[sameDayIdx].time += ", " + time;
+								let tileData = {
+									time: time,
+									days: uniqTime.days,
+									practiceIDs: uniqTime.practiceIDs
+								};
+
+								if (index === -1) {
+									rows[id].days.push(uniqTime.days);
+									rows[id].tiles.push(tileData);
+								} else {
+									rows[id].days.splice(
+										index,
+										0,
+										uniqTime.days
+									);
+									rows[id].tiles.splice(index, 0, tileData);
+								}
+
+								// rows[id].key = [
+								// 	...rows[id].key,
+								// 	...uniqTime.days
+								// ];
 							} else {
-								rows[id].tiles[sameDayIdx].time =
-									time +
-									", " +
-									rows[id].tiles[sameDayIdx].time;
+								let timeToInt = t => {
+									let d = t.split(":");
+									return +d[0] * 60 + +d[1];
+								};
+
+								if (
+									timeToInt(rows[id].tiles[sameDayIdx].time) <
+									timeToInt(time)
+								) {
+									rows[id].tiles[sameDayIdx].time += ", " + time;
+								} else {
+									rows[id].tiles[sameDayIdx].time =
+										time +
+										", " +
+										rows[id].tiles[sameDayIdx].time;
+								}
+							}
+						});
+					}
+
+					if (typeof timeObj[time] == 'object') {
+						for (let id in timeObj[time]) {
+							if (timeObj[time].hasOwnProperty(id)) {
+								createRow(timeObj[time][id]);
 							}
 						}
-					});
+					} else {
+						createRow(timeObj[time]);
+					}
+
+
 				}
 			}
 
@@ -436,6 +455,9 @@ export default {
 		},
 		leaveTile() {
 			this.hoveredPracticeID = null;
+		},
+		getCommonValue(arr1, arr2) {
+			return arr1.filter(value => arr2.includes(value))
 		},
 		getNextTile(practiceIDs) {
 			let seletedIndex = practiceIDs.indexOf(this.selectedPracticeID);
