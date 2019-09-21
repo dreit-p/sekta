@@ -1,14 +1,20 @@
 const path = require('path');
 const PrerenderSPAPlugin = require('prerender-spa-plugin');
 
+var plugins = [];
+
+if (process.env.NODE_ENV === 'production') {
+	plugins = [
+		new PrerenderSPAPlugin({
+			staticDir: path.join(__dirname, 'dist'),
+			routes: ['/', '/kontakty', '/results', '/about', '/online', '/online/evo', '/online/sektacare', '/online/smama', '/online/pregnancy', '/online/sektavip', '/gym', '/gym/moskva', '/gym/sankt-peterburg', '/certificates'],
+		})
+	]
+}
+
 module.exports = {
 	configureWebpack: {
-		plugins: [
-			new PrerenderSPAPlugin({
-				staticDir: path.join(__dirname, 'dist'),
-				routes: ['/', '/kontakty', '/results', '/about', '/online', '/online/evo', '/online/sektacare', '/online/smama', '/online/pregnancy', '/online/sektavip', '/gym', '/gym/moskva', '/gym/sankt-peterburg', '/certificates'],
-			})
-		],
+		plugins: plugins,
 		optimization: {
 			splitChunks: {
 				minSize: 10000,
