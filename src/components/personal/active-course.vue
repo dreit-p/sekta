@@ -13,7 +13,7 @@
 							span.green {{ this.group.curator.name }}
 						.line(v-if="group.chat_number")
 							svg-icon(name='icon-chat')
-							| Номер чата:
+							| Номер чата:&ensp;
 							a(:href="this.group.chat_number") {{this.group.chat_number}}
 						// .line(v-if="progress || progress === 0")
 						// 	svg-icon(name='icon-graph')
@@ -63,7 +63,7 @@
 						:class="{ 'error': errors.has('termsAgree'), 'success': fields.termsAgree && fields.termsAgree.valid}"
 						:error='errors.first("termsAgree")'
 					)
-						| Ознакомлен и согласен с условиями
+						| Ознакомлен и согласен с условиями&ensp;
 						a(:href='"../docs/"+{1: "publicoffer_msk_new.pdf", 2: "publicoffer_spb_new.pdf", 3: "publicoffer_reg_new.pdf"}[cityId]', target='_BLANK', rel='noopener noreferrer') публичной оферты
 					p.tiny-text Оплата производится на сайте&nbsp;
 						a(href='https://kassa.yandex.ru/') Яндекс.Кассы

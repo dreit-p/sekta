@@ -16,6 +16,9 @@ div.profile-details
 
 export default {
 	name: 'DetailsPersonal',
+	metaInfo: {
+		title: 'Личный кабинет',
+	},
 	components: {
 		AppInput: () => import('@/components/form/input.vue'),
 		AppRadio: () => import('@/components/form/radio.vue'),

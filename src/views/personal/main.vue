@@ -108,6 +108,9 @@ import api from "@/assets/api/index.js";
 
 export default {
 	name: "MainPersonal",
+	metaInfo: {
+		title: 'Мои курсы',
+	},
 	components: {
 		SvgIcon: () => import("@/components/SvgIcon.vue"),
 		ActiveCourse: () => import("@/components/personal/active-course.vue")

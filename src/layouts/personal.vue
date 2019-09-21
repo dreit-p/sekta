@@ -28,10 +28,8 @@ div.personal-layout
 export default {
 	name: 'PersonalLayout',
 	metaInfo: {
-		// if no subcomponents specify a metaInfo.title, this title will be used
-		title: 'Personal Layout',
 		// all titles will be injected into this template
-		titleTemplate: '%s | Личный кабинет'
+		titleTemplate: '%s'
 	},
 	components: {
 		AppFooter: () => import('@/components/footer.vue'),

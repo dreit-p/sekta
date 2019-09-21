@@ -12,13 +12,13 @@ export default {
 	name: 'DefaultLayout',
 	metaInfo: {
 		// if no subcomponents specify a metaInfo.title, this title will be used
-		title: 'Default Layout',
+		title: 'Sekta',
 		// all titles will be injected into this template
 		titleTemplate: '%s',
 	},
 	head: {
 		script: function () {
-			if (!this.isAccu) return [{t: "text/javascript", 
+			if (!this.isAccu) return [{t: "text/javascript",
 				i: `!function () {
 					var t = document.createElement("script");
 					t.type = "text/javascript", t.async = !0, t.src = "https://vk.com/js/api/openapi.js?162", t.onload = function () {
