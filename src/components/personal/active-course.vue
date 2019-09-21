@@ -13,7 +13,7 @@
 							span.green {{ this.group.curator.name }}
 						.line(v-if="group.chat_number")
 							svg-icon(name='icon-chat')
-							| Номер чата:&ensp;
+							| Номер чата:&nbsp;
 							a(:href="this.group.chat_number") {{this.group.chat_number}}
 						// .line(v-if="progress || progress === 0")
 						// 	svg-icon(name='icon-graph')
