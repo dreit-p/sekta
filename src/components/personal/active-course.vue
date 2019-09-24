@@ -86,7 +86,7 @@
 
 <script>
 import { formatDate } from "../../assets/misc";
-import api from '@/assets/api/index.js'
+import api from "@/assets/api/index.js";
 
 export default {
 	name: "ActiveCourse",
@@ -95,7 +95,7 @@ export default {
 		GreenBtn: () => import("@/components/form/green-btn.vue"),
 		AppDropdown: () => import("@/components/form/dropdown.vue"),
 		AppInput: () => import("@/components/form/input.vue"),
-		AppCheckbox: () => import("@/components/form/checkbox.vue"),
+		AppCheckbox: () => import("@/components/form/checkbox.vue")
 	},
 	props: {
 		orderId: {
@@ -141,7 +141,7 @@ export default {
 		cityId: {
 			type: Number,
 			default: 3
-		},
+		}
 	},
 	data() {
 		return {
@@ -150,18 +150,20 @@ export default {
 			price: null,
 			termsAgree: false,
 			//Promocode
-			promocode: '',
+			promocode: "",
 			promocodeErrors: null,
-			promo: '',
+			promo: ""
 		};
 	},
 	computed: {
 		requisitesLink() {
-			let city = this.$store.state.cities.find(city => city.id === this.userCity);
+			let city = this.$store.state.cities.find(city => city.id === this.cityId);
 			if (!city || city === -1) return;
 
-			return window.location.protocol +"//"+ city.code + "." + window.location.host
-		},
+			return (
+				window.location.protocol + "//" + city.code + "." + window.location.host
+			);
+		}
 	},
 	created() {
 		this.date = this.group ? formatDate(this.group.start_date) : "";
@@ -171,13 +173,17 @@ export default {
 			if (this.payment && this.payment.approve_url) {
 				this.$emit("pay", this.payment.approve_url);
 			} else {
-				let code = ''
+				let code = "";
 				if (this.promo.amount) code = this.promo.promocode_code;
-				this.$store.dispatch('reqOnlinePayment', {orderId: this.orderId, price_id: this.price, promocode: code}).then(
-					res => {
+				this.$store
+					.dispatch("reqOnlinePayment", {
+						orderId: this.orderId,
+						price_id: this.price,
+						promocode: code
+					})
+					.then(res => {
 						this.$emit("pay", res.data.payment.approve_url);
-					},
-				)
+					});
 			}
 		},
 		goToCourseHandler() {
@@ -191,7 +197,7 @@ export default {
 		//Promocode
 		promoInputHandler() {
 			this.promo = { amount: null };
-			this.promocodeErrors = null
+			this.promocodeErrors = null;
 		},
 		promoChangeHandler(input) {
 			if (this.price) {
@@ -207,7 +213,7 @@ export default {
 					this.promocodeErrors = [rej.response.data.message];
 				}
 			);
-		},
+		}
 	}
 };
 </script>
@@ -373,42 +379,42 @@ article.main-body {
     }
   }
   .select-payment {
-	display: flex;
-	align-items: flex-start;
-	flex-direction: column;
-	padding-left: 10px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-left: 10px;
 
-	.btn {
-		margin-left: 0;
-	}
+    .btn {
+      margin-left: 0;
+    }
 
-	.select-wrapper {
-		max-width: 305px;
-	}
-	.input-wrapper {
-		margin-top: 15px;
-	}
-	.order__total-price {
-		margin-top: 10px;
-		font-size: 20px;
-		font-family: 'Montserrat', 'Uni Sans', 'Tahoma', 'Segoe UI', arial, sans-serif;
-		font-weight: 700;
-	}
-	.app-checkbox {
-		max-width: 100%;
-		margin: 14px 0;
-	}
-	.tiny-text {
-		font-size: 12px;
-		font-family: 'Open Sans', 'PT Sans', 'Segoe UI', arial, sans-serif;
-		line-height: 1.33;
-		margin-bottom: 14px;
-		margin-top: 0;
-		a {
-			color: #0ab6a1;
-		}
-	}
-
+    .select-wrapper {
+      max-width: 305px;
+    }
+    .input-wrapper {
+      margin-top: 15px;
+    }
+    .order__total-price {
+      margin-top: 10px;
+      font-size: 20px;
+      font-family: "Montserrat", "Uni Sans", "Tahoma", "Segoe UI", arial,
+        sans-serif;
+      font-weight: 700;
+    }
+    .app-checkbox {
+      max-width: 100%;
+      margin: 14px 0;
+    }
+    .tiny-text {
+      font-size: 12px;
+      font-family: "Open Sans", "PT Sans", "Segoe UI", arial, sans-serif;
+      line-height: 1.33;
+      margin-bottom: 14px;
+      margin-top: 0;
+      a {
+        color: #0ab6a1;
+      }
+    }
   }
 
   .additional-content {
@@ -440,7 +446,7 @@ article.main-body {
         right: 0;
         color: inherit;
         margin-left: 5px;
-				margin-top: 3px;
+        margin-top: 3px;
       }
       // @media (max-width: 500px) {
       //   padding: 10px;
