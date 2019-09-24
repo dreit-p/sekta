@@ -1,6 +1,5 @@
 <template lang="pug">
-div.main-layout
-	header-component
+header-component
 	.requisites
 		.article-limit
 			.text-typography
@@ -38,13 +37,13 @@ div.main-layout
 
 <script>
 export default {
-	name: 'RegSubDomain',
+	name: "RegSubDomain",
 	metaInfo: {
-		title: 'Реквизиты регионы',
-		description: 'ООО "Школа идеального тела регионы"',
+		title: "Реквизиты регионы",
+		description: 'ООО "Школа идеального тела регионы"'
 	},
 	components: {
-		HeaderComponent: () => import('./header.vue'),
-	},
-}
+		HeaderComponent: () => import("./header.vue")
+	}
+};
 </script>
