@@ -13,10 +13,8 @@ div.course
 				p
 					b Программа подходит женщинам с 12-ой недели беременности.&nbsp;
 					| До начала программы получите от наблюдающего врача&ensp;
-					a(href='https://sektaschool.ru/site/img/2019-07-26_11.31.36.jpg') справку
-					| /письменное подтверждение с&ensp;
-					a(href='https://sektaschool.ru/site/docs/parmed-xpreg2.pdf') рекомендациями
-					| &ensp;о разрешенных вам нагрузках.
+					a(href='../docs/parmed-xpreg.pdf' target='_BLANK' rel='noopener noreferrer') справку
+					| /письменное подтверждение о разрешенных вам нагрузках.
 				p
 					b Продолжительность курса:&ensp;
 					| 5 недель.
@@ -42,49 +40,51 @@ div.course
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import Vue from 'vue';
+import { mapActions } from "vuex";
 
-const COURSE_TAG = 'PREGNANT';
+const COURSE_TAG = "PREGNANT";
 
 export default {
-	name: 'Pregnants',
+	name: "Pregnants",
 	metaInfo: {
-		title: '#SektaPregnant онлайн курс для беременных',
-		description: 'Онлайн-курс здорового питания и программы видео тренировок для женщин с 12 недели беременности. Поможет сохранить форму, укрепить организм и обеспечит здоровое протекание беременности. Составлен совместно с акушером-гинекологом и учитывает все особенности этого периода.'
+		title: "#SektaPregnant онлайн курс для беременных",
+		description:
+			"Онлайн-курс здорового питания и программы видео тренировок для женщин с 12 недели беременности. Поможет сохранить форму, укрепить организм и обеспечит здоровое протекание беременности. Составлен совместно с акушером-гинекологом и учитывает все особенности этого периода."
 	},
 	components: {
-		hero: () => import('@/components/heroes/aside-hero.vue'),
-		GreenBtn: () => import('@/components/form/green-btn.vue'),
-		EntryForm: () => import('@/components/entry-form.vue'),
-		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
+		hero: () => import("@/components/heroes/aside-hero.vue"),
+		GreenBtn: () => import("@/components/form/green-btn.vue"),
+		EntryForm: () => import("@/components/entry-form.vue"),
+		CaptionSection: () =>
+			import("@/components/form/contents/caption-section.vue")
 	},
 	asyncComputed: {
 		courseInfo() {
-			return this.$store.dispatch('updateOnlineCourses').then(()=>{
-				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
+			return this.$store.dispatch("updateOnlineCourses").then(() => {
+				let currentCourseData = this.$store.state.onlineCourses.find(
+					course => course.tag === COURSE_TAG
+				);
 				return currentCourseData;
 			});
 		}
 	},
-	data () {
+	data() {
 		return {
-			availablePlatforms: ['vk'] // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
-		}
+			availablePlatforms: ["vk"] // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
+		};
 	},
 	methods: {
-		...mapActions(['setFormModalState']),
+		...mapActions(["setFormModalState"]),
 		scrollTo(id) {
 			window.scrollTo({
-				top: getPosition(document.getElementById(id)).y -65,
+				top: getPosition(document.getElementById(id)).y - 65,
 				behavior: "smooth"
 			});
 			function getPosition(el) {
-
 				var x = 0,
 					y = 0;
 
-				while (el != null && (el.tagName || '').toLowerCase() != 'html') {
+				while (el != null && (el.tagName || "").toLowerCase() != "html") {
 					x += el.offsetLeft || 0;
 					y += el.offsetTop || 0;
 					el = el.offsetParent;
@@ -93,10 +93,9 @@ export default {
 				return { x: parseInt(x, 10), y: parseInt(y, 10) };
 			}
 		}
-	},
-}
+	}
+};
 </script>
 
 <style lang="postcss">
-
 </style>
