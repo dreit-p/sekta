@@ -74,6 +74,7 @@
 				green-btn(inverted v-if="url" :href="url" target="_blank").btn Открыть курс
 				green-btn(inverted v-if="demoUrl" :href="demoUrl" target="_blank").btn Демо
 		.additional-content(
+			v-if="this.additionalInfo"
 			v-bind:class="{ dropdown_active: isDropDownActive }"
 		)
 			button.open-btn(
