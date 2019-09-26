@@ -40,7 +40,7 @@
 	transition(v-if='selectedGym', name='fade')
 		video-modal(v-if='selectedGym.video_url && showVideoModal', :iframe-link='selectedGym.video_url', @close='showVideoModal = false')
 			p.bold {{selectedGym.name}}
-			p selectedGym.secondLine
+			//- p selectedGym.secondLine
 
 
 </template>
@@ -99,8 +99,8 @@ export default {
 					coords: [gym.geo_point_lat, gym.geo_point_lon],
 					properties: {
 						name: gym.name,
-						secondLine: "gym.secondLine",
-						hintContent: "gym.secondLine"
+						// secondLine: "gym.secondLine",
+						hintContent: gym.address,
 					},
 					callbacks: {
 						click: () => {
