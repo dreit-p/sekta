@@ -30,9 +30,9 @@
 				@map-was-initialized='initHandler'
 			)
 	.limit(v-if='selectedGym')
-		.additional-info
+		.additional-info(v-if="selectedGym.description || selectedGym.video_url")
 			.links
-				span Не знаете как пройти в зал?
+				span Не знаете как пройти в зал?&ensp;
 				a(href='#', v-if='selectedGym.video_url', @click.prevent='showVideoModal = !showVideoModal') Посмотрите видео
 				span(v-if='selectedGym.video_url && selectedGym.description')  или
 				a(href='#', v-if='selectedGym.description', @click.prevent='showDescriptionText = !showDescriptionText') Прочитайте описание
