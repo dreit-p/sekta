@@ -3,7 +3,7 @@ import Vue from 'vue'
 export default {
 	setAuthToken(state, token) {
 		// Here token sets & resets if user logout
-		let newCookie = `api_token=${token}; domain=.${window.location.hostname}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+		let newCookie = `api_token=${token}; domain=account.${window.location.hostname}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
 		document.cookie = newCookie;
 		state.user.token = token;
 	},
@@ -27,8 +27,5 @@ export default {
 	},
 	setOnlineCourses(state, data) {
 		state.onlineCourses = data;
-	},
-	setCookieNotificationState(state, data) {
-		state.isCookieMsgShowed = data;
 	}
 }

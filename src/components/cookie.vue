@@ -10,27 +10,27 @@ transition(name='fade')
 </template>
 
 <script>
-
-
-
 export default {
 	name: 'CookieNotification',
 	data () {
 		return {
 			showAllText: false,
+			isNotificationShowed: true,
 		}
 	},
 	components: {
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
 	},
-	computed: {
-		isNotificationShowed () {
-			return this.$store.state.isCookieMsgShowed;
-		},
+	mounted() {
+		let allCookie = document.cookie;
+		let cookie = Object.fromEntries(allCookie.split("; ").map(c => c.split('=')));
+		this.isNotificationShowed = !!cookie.is_cookie_accepted;
 	},
 	methods: {
 		setNotificationState(state) {
-			this.$store.commit('setCookieNotificationState', state);
+			let newCookie = `is_cookie_accepted=true; domain=${process.env.VUE_APP_COOKIE_DOMAIN}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
+			document.cookie = newCookie;
+			this.isNotificationShowed = true
 		},
 	},
 }
