@@ -1,5 +1,5 @@
 <template lang="pug">
-header-component
+template-component(:tag="'msk'")
 	.requisites
 		.article-limit
 			.text-typography
@@ -44,7 +44,7 @@ export default {
 		description: 'ООО "Школа идеального тела мск"'
 	},
 	components: {
-		HeaderComponent: () => import("./header.vue")
+		TemplateComponent: () => import("./template.vue")
 	}
 };
 </script>
