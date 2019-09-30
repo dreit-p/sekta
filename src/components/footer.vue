@@ -1,11 +1,14 @@
 <template lang="pug">
 div
+	sendpulse
 	section.soc-networks
 		.limit
 			.caption Ещё больше полезного в наших аккаунтах:
 			.icons
 				a(v-for='network in networks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
 					svg-icon(:name='"network-" + network.name')
+			.subscribe
+				a.animated-underline(@click="openForm") Подпишитесь на нашу рассылку
 	footer.main-footer
 		.limit
 			section.organization
@@ -32,6 +35,7 @@ export default {
 	name: 'AppFooter',
 	components: {
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
+		Sendpulse: () => import('@/components/unique-blocks/sendpulse.vue'),
 	},
 	data () {
 		return {
@@ -54,6 +58,12 @@ export default {
 				},
 			]
 		}
+	},
+	methods: {
+		openForm() {
+			let sendpulse = document.querySelector(".sp-hide");
+			sendpulse.classList.remove('sp-hide')
+		}
 	}
 }
 </script>
@@ -75,6 +85,11 @@ export default {
 			line-height: 1.35;
 			letter-spacing: 0.2px;
 			color: white;
+		}
+		.subscribe {
+			color: white;
+			text-align: center;
+			cursor: pointer;
 		}
 	}
 	.soc-networks .icons,
