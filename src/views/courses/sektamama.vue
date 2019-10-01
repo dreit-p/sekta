@@ -45,7 +45,7 @@ div.course
 
 
 	caption-section(v-if='courseInfo'
-		dateStart='в понедельник',
+		:dateStart='formatDate()',
 		:TEMPdateStart='courseInfo.last_start_date',
 	)
 	entry-form(v-if='courseInfo', formType='mama', :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id}', :courseName='courseInfo.name')
@@ -54,6 +54,8 @@ div.course
 <script>
 import { mapActions } from 'vuex'
 import Vue from 'vue';
+
+import { formatDateDayMonth } from "../../assets/misc.js";
 
 const COURSE_TAG = 'MAMA';
 
@@ -84,6 +86,9 @@ export default {
 	},
 	methods: {
 		...mapActions(['setFormModalState']),
+		formatDate() {
+			return formatDateDayMonth(this.courseInfo.start_dates[this.availablePlatforms[0]])
+		},
 		scrollTo(id) {
 			window.scrollTo({
 				top: getPosition(document.getElementById(id)).y -65,
