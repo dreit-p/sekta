@@ -88,10 +88,10 @@
 						h2.title.green Курсы
 						hr
 						.text Завершенных курсов:&nbsp;
-							span.green {{allCourses.filter(course => course.edu_status.is_finished).length}}
+							span.green {{statistics.finished}}
 						hr
 						.text Активных курсов:&nbsp;
-							span.green {{allCoursesActive.length}}
+							span.green {{statistics.active}}
 						hr
 						// template(v-if="allCoursesForProgress.length > 0")
 						// 	h2.title.green Прогресс
@@ -140,7 +140,11 @@ export default {
 					url: "https://account.sektaschool.ru//courses/evolution_demo/",
 					svg: "sekta-evo"
 				}
-			]
+			],
+			statistics: {
+				active: 0,
+				finished: 0
+			}
 		};
 	},
 	computed: {
@@ -150,15 +154,12 @@ export default {
 		allCourses() {
 			return [...this.onlineCourses, ...this.gymCourses];
 		},
-		allCoursesActive() {
-			return [...this.onlineCoursesActive, ...this.gymCoursesActive]
-		},
-		allCoursesForProgress() {
-			return [...this.onlineCoursesActive, ...this.gymCoursesActive].filter(course => course.edu_progress === null);
-		},
+		// allCoursesForProgress() {
+		// 	return [...this.onlineCoursesActive, ...this.gymCoursesActive].filter(course => course.edu_progress === null);
+		// },
 		unPaidCourses() {
 			return this.allCourses.filter(
-				course => course.edu_status.is_pending
+				course => !course.is_active
 			);
 		}
 	},
@@ -172,14 +173,23 @@ export default {
 		this.getGymOrders();
 		this.getCertificates();
 		this.getProducts();
+		this.getStatistics();
 	},
 	methods: {
+		getStatistics() {
+			api.personal.getStatistics().then(
+				res => {
+					this.statistics = res.data
+				},
+				rej => {}
+			);
+		},
 		getOnlineOrders() {
 			api.online.getOrders().then(
 				res => {
 					this.onlineCourses = res.data.data;
 					this.onlineCoursesActive = res.data.data.filter(
-						course => course.edu_status.is_active
+						course => course.is_active
 					);
 				},
 				rej => {}
@@ -190,7 +200,7 @@ export default {
 				res => {
 					this.gymCourses = res.data.data;
 					this.gymCoursesActive = res.data.data.filter(
-						course => course.edu_status.is_active
+						course => course.is_active
 					);
 				},
 				rej => {}

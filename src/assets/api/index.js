@@ -32,6 +32,9 @@ export default {
 		updateDetails(data) {
 			return axiosWithAuth().post(URL + `/api/personal/details`, data)
 		},
+		getStatistics(data) {
+			return axios.get(URL + `/api/personal/education-statistics`, data)
+		},
 
 		//Email
 		requestVerifyEmail() {
