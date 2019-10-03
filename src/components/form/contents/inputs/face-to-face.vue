@@ -19,6 +19,15 @@
 			template(v-for='string in getTrainingTimes') {{string}}
 				br
 
+		app-input(
+			placeholder='Введите ссылку на ваш аккаунт Вконтакте'
+			data-vv-as='Аккаунт'
+			:value='social_page_url'
+			@input='social_page_url = $event'
+			:error='getInputError("social_page_url")'
+			v-validate='"required"'
+			:class="{'error': getInputError('social_page_url'),'success': social_page_url}"
+			name='social_page_url')
 
 		p.tiny-text.tiny-text.tiny-text_face Промокод (если есть)
 		app-input(
@@ -108,6 +117,20 @@ export default {
 				}
 			});
 		},
+		getInputError(name) {
+			if (this.errors.first(name)) {
+				return this.errors.first(name)
+			}
+			if (this.receivedErrors[name]) {
+				let errorString = '';
+				if (Array.isArray(this.receivedErrors[name])) {
+					this.receivedErrors[name].forEach((text)=>{
+						errorString = errorString + " " + text;
+					});
+				}
+				return errorString.trim();
+			}
+		},
 		onSubmit() {
 			if (this.isFormLocked) {
 				return false;
@@ -118,7 +141,7 @@ export default {
 				let currentCityName = this.$route.params.city
 				let cityId = this.$store.state.cities.find(city=>city.englishName === currentCityName).id
 
-				this.$store.dispatch('sendGymOrder', {price_id:this.price.id, city_id:cityId})
+				this.$store.dispatch('sendGymOrder', {price_id:this.price.id, city_id:cityId, social_page_url: this.social_page_url})
 					.then((resp)=>{
 						this.unlockForm();
 						this.$emit('submit', 'face-to-face');
@@ -242,6 +265,8 @@ export default {
 			termsAgree: false,
 			promocode: null,
 			promoprice: Infinity,
+			receivedErrors: {},
+			social_page_url: '',
 			daysNames: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
 		}
 	},
