@@ -20,7 +20,7 @@
 				br
 
 		app-input(
-			placeholder='Введите ссылку на ваш аккаунт Вконтакте'
+			placeholder='Введите ссылку на аккаунт Вконтакте'
 			data-vv-as='Аккаунт'
 			:value='social_page_url'
 			@input='social_page_url = $event'
