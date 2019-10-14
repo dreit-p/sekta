@@ -13,7 +13,7 @@ div.course
 				p
 					b Программа подходит женщинам с 12-ой недели беременности.&nbsp;
 					| До начала программы получите от наблюдающего врача&ensp;
-					a(href='https://psv4.userapi.com/c848036/u6500402/docs/d4/ba163b8ecc83/obrazets.jpg?extra=-h0uscmUFWztN0595J4BxqDJNbcztEq_9IQN7djF0HxKWnMRXHyq8sazhg2_7SJsWFHO_zAUZBuGgpJiL9HkEb6s9yivnozhnSy5G4VjGcimYyVM_22dZVRTaPJlRMkaxcuNutkfN542wHjTQdimkg&dl=1' target='_BLANK' rel='noopener noreferrer') справку
+					a(href='../pregnant-sert.jpg' target='_BLANK' rel='noopener noreferrer') справку
 					|  или письменное подтверждение о&ensp;
 					a(href='../docs/parmed-xpreg.pdf' target='_BLANK' rel='noopener noreferrer') разрешенных
 					|  вам нагрузках.
