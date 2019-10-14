@@ -292,7 +292,7 @@ export default {
 			promoprice: Infinity,
 			platform_options: [
 				{id: 'tg', name: 'Telegram'},
-				{id: 'vk', name: 'Вконтакте'},
+				{id: 'vk', name: 'Общение ВКонтакте'},
 				{id: 'fb', name: 'Facebook'},
 				{id: 'sk', name: 'Skype'},
 				{id: 'vb', name: 'Viber'},

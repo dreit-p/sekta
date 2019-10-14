@@ -15,8 +15,8 @@
 			) Без куратора
 
 		app-dropdown(
-			placeholder='Платформа обучения'
-			data-vv-as='Платформа обучения'
+			placeholder='Выберите платформу группового чата'
+			data-vv-as='Выберите платформу группового чата'
 			:value='inputsData.edu_platform'
 			@change='inputsData.edu_platform = $event'
 			:options='comparedPlatforms'
@@ -220,6 +220,12 @@ export default {
 				}
 			});
 		},
+		changePlaceholder() {
+			let name = this.$route.name
+			if (name === "sektacare" || "pregnant" || "accuchek") {
+				this.platform_options.find(p => p.id === 'vk').name = "Групповой чат ВКонтакте"
+			}
+		},
 	},
 	watch: {
 		promocode() {
@@ -239,6 +245,7 @@ export default {
 	mounted() {
 		this.inputsData.city_id = this.userCity;
 		this.weeks_options = this.formData.prices ? this.formData.prices : ['Продажа невозможна']
+		this.changePlaceholder()
 		api.online.getLastOrder(this.formData.id).then(
 			res => {
 				let response = res.data.data
