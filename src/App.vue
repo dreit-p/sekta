@@ -10,8 +10,7 @@
 </template>
 
 <script>
-const isProdScripts = process.env.VUE_APP_NO_PROD_SCRIPTS;
-if (!isProdScripts) {
+if (process.env.NODE_ENV === 'production') {
 	// Yandex.Metrika counter
 	(function (m, e, t, r, i, k, a) {
 		m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
