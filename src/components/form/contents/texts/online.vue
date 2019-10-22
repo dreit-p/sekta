@@ -2,6 +2,7 @@
 .content
 	p.heavy-text Запишитесь на курс
 	p Чтобы записаться на курс, заполните форму заявки и нажмите «Перейти к оплате».
+	p(v-if="course === 'sektaevo'") При оплате всего курса вы получаете последнюю неделю в подарок.
 
 	p.heavy-text Важно!
 	p После оплаты вы получите письмо о зачислении на курс с инструкциями к обучению и полезными материалами. Если письма нет, проверьте папку «Спам». Если нет и там, напишите нам:&ensp;
@@ -24,6 +25,14 @@ export default {
 		setFormModalState(data) {
 			return this.$parent.setFormModalState(data);
 		}
+	},
+	data() {
+		return {
+			course: ''
+		}
+	},
+	created() {
+		this.course = this.$route.name
 	},
 	computed: {
 		requisitesLink() {
