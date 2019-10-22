@@ -28,8 +28,7 @@ export default {
 	},
 	methods: {
 		setNotificationState(state) {
-			let newCookie = `is_cookie_accepted=true; domain=${process.env.VUE_APP_COOKIE_DOMAIN}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
-			document.cookie = newCookie;
+			document.cookie = `is_cookie_accepted=true; domain=${process.env.VUE_APP_COOKIE_DOMAIN}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
 			this.isNotificationShowed = true
 		},
 	},
