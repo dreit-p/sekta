@@ -29,6 +29,9 @@
 			:class="{'error': getInputError('social_page_url'),'success': social_page_url}"
 			name='social_page_url')
 
+		p.tiny-text.tiny-text.tiny-text_face Вы уже проходили обучение на очном курсе #sekta?
+		AppRadio.form-radio(:options='pastExp', :selected='isExp', @change='isExp = $event')
+
 		p.tiny-text.tiny-text.tiny-text_face Промокод (если есть)
 		app-input(
 			data-vv-as='Промокод'
@@ -84,6 +87,7 @@ export default {
 	name: 'FaceToFace',
 	components: {
 		AppInput: () => import('@/components/form/input.vue'),
+		AppRadio: () => import('@/components/form/radio.vue'),
 		AppCheckbox: () => import('@/components/form/checkbox.vue'),
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
 	},
@@ -93,8 +97,21 @@ export default {
 			default: ()=>{}
 		}
 	},
-	mounted() {
-
+	data () {
+		return {
+			isFormLocked: false,
+			termsAgree: false,
+			promocode: null,
+			promoprice: Infinity,
+			receivedErrors: {},
+			social_page_url: '',
+			daysNames: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+			pastExp: [
+				{id: '1', text: 'Да'},
+				{id: '0', text: 'Нет'},
+			],
+			isExp: '0'
+		}
 	},
 	methods: {
 		getDiscountedPrice (price_id, code, cb) {
@@ -141,7 +158,7 @@ export default {
 				let currentCityName = this.$route.params.city
 				let cityId = this.$store.state.cities.find(city=>city.englishName === currentCityName).id
 
-				this.$store.dispatch('sendGymOrder', {price_id:this.price.id, city_id:cityId, social_page_url: this.social_page_url})
+				this.$store.dispatch('sendGymOrder', {price_id:this.price.id, city_id:cityId, social_page_url: this.social_page_url, was_trained: this.isExp})
 					.then((resp)=>{
 						this.unlockForm();
 						this.$emit('submit', 'face-to-face');
@@ -259,16 +276,15 @@ export default {
 			return strings();
 		},
 	},
-	data () {
-		return {
-			isFormLocked: false,
-			termsAgree: false,
-			promocode: null,
-			promoprice: Infinity,
-			receivedErrors: {},
-			social_page_url: '',
-			daysNames: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
-		}
-	},
 }
 </script>
+
+<style lang="postcss">
+.form-radio {
+	margin-bottom: 15px;
+}
+.form-radio label {
+	font-weight: bold;
+}
+
+</style>
