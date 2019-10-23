@@ -64,7 +64,8 @@
 			data-vv-as='Промокод'
 			name='promocode'
 			:caption='promoprice.promocode_name ? promoprice.promocode_name : ""'
-			:class='{success: !!promoprice.promocode_name}'
+			:class="{'error': promoError, 'success': !!promoprice.promocode_name}"
+			:error='promoError'
 			@change='promocode = $event'
 			type='text')
 
@@ -132,11 +133,81 @@ export default {
 			default: ''
 		}
 	},
+	data () {
+		return {
+			inputsData: {
+				// no_curator: false,
+				social_page_url: null,
+				edu_platform: null,
+				price_id: null,
+				city_id: null,
+			},
+			userOrderId: null,
+			currentFormData: {},
+			receivedErrors: {},
+			isFormLocked: false,
+			promocode: null,
+			promoprice: Infinity,
+			platform_options: [
+				{id: 'tg', name: 'Telegram'},
+				{id: 'vk', name: 'Вконтакте'},
+				{id: 'fb', name: 'Facebook'},
+				{id: 'sk', name: 'Skype'},
+				{id: 'vb', name: 'Viber'},
+				{id: 'wa', name: 'WhatsApp'},
+				{id: 'email', name: 'E-mail'},
+			],
+			weeks_options: [],
+			termsAgree: false,
+			promoError: '',
+		}
+	},
+	computed: {
+		...globalInputs.list,
+		userCity() {
+			return this.$store.getters.getUserCity;
+		},
+		city_options() {
+			return this.$store.state.cities;
+		},
+		price() {
+			if (this.formData.prices.length < 1) {
+				return false;
+			}
+			return this.formData.prices.find(price => price.id === this.inputsData.price_id);
+		},
+		comparedPlatforms() {
+			let result = [];
+			this.platform_options.map((option)=>{
+				if (this.formData.platforms.includes(option.id)) result.push(option);
+			})
+			return result;
+		},
+	},
+	watch: {
+		promocode() {
+			if (this.price) {
+				this.promoError = ''
+				this.defineDiscountedPrice(this.price.id, this.promocode);
+			}
+		},
+		'inputsData.price_id'() {
+			if (this.promocode) {
+				this.defineDiscountedPrice(this.price.id, this.promocode);
+			}
+		},
+		'inputsData.city_id'(newData) {
+			this.$store.commit('setCity', newData)
+		},
+	},
 	methods: {
 		defineDiscountedPrice (price_id, code) {
+			this.isFormLocked = true
 			this.$store.dispatch('reqDiscountedPrice', {price_id, code}).then((resp)=>{
-				this.promoprice = resp;
-			}).catch(()=>{
+				this.isFormLocked = false
+				this.promoprice = resp ? resp : Infinity;
+			}).catch((e)=>{
+				this.promoError = e.data.message
 				this.promoprice = Infinity
 			});
 		},
@@ -227,21 +298,6 @@ export default {
 			}
 		},
 	},
-	watch: {
-		promocode() {
-			if (this.price) {
-				this.defineDiscountedPrice(this.price.id, this.promocode);
-			}
-		},
-		'inputsData.price_id'() {
-			if (this.promocode) {
-				this.defineDiscountedPrice(this.price.id, this.promocode);
-			}
-		},
-		'inputsData.city_id'(newData) {
-			this.$store.commit('setCity', newData)
-		},
-	},
 	mounted() {
 		this.inputsData.city_id = this.userCity;
 		this.weeks_options = this.formData.prices ? this.formData.prices : ['Продажа невозможна']
@@ -259,56 +315,6 @@ export default {
 				this.weeks_options = response.available_prices
 			},
 		)
-	},
-	computed: {
-		...globalInputs.list,
-		userCity() {
-			return this.$store.getters.getUserCity;
-		},
-		city_options() {
-			return this.$store.state.cities;
-		},
-		price() {
-			if (this.formData.prices.length < 1) {
-				return false;
-			}
-			return this.formData.prices.find(price => price.id === this.inputsData.price_id);
-		},
-		comparedPlatforms() {
-			let result = [];
-			this.platform_options.map((option)=>{
-				if (this.formData.platforms.includes(option.id)) result.push(option);
-			})
-			return result;
-		},
-	},
-	data () {
-		return {
-			inputsData: {
-				// no_curator: false,
-				social_page_url: null,
-				edu_platform: null,
-				price_id: null,
-				city_id: null,
-			},
-			userOrderId: null,
-			currentFormData: {},
-			receivedErrors: {},
-			isFormLocked: false,
-			promocode: null,
-			promoprice: Infinity,
-			platform_options: [
-				{id: 'tg', name: 'Telegram'},
-				{id: 'vk', name: 'Вконтакте'},
-				{id: 'fb', name: 'Facebook'},
-				{id: 'sk', name: 'Skype'},
-				{id: 'vb', name: 'Viber'},
-				{id: 'wa', name: 'WhatsApp'},
-				{id: 'email', name: 'E-mail'},
-			],
-			weeks_options: [],
-			termsAgree: false,
-		}
 	},
 }
 </script>

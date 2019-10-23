@@ -43,15 +43,12 @@
 					app-input(
 						placeholder='Промокод(если есть)'
 						data-vv-as='Промокод'
-						v-model="promocode"
-						:class="{ 'error': promocodeErrors, 'success': promo.amount }"
-						:error="promocodeErrors ? promocodeErrors[0] : ''"
+						:class="{ 'error': promoError, 'success': promo.amount }"
+						:error="promoError ? promoError : ''"
 						name='promocode'
-						:prevent="true"
-						@keydown.enter.prevent="makeOrder"
-						@input="promoInputHandler"
-						@blur="promoChangeHandler"
+						@change='promocode = $event'
 						:caption="promo.promocode_name"
+						type='text'
 					)
 					.order__total-price(v-if="price") Итого к оплате: {{promo.amount || prices.find(p => p.id === price).value}} руб.
 					app-checkbox(
@@ -69,8 +66,8 @@
 						a(href='https://kassa.yandex.ru/') Яндекс.Кассы
 					p.tiny-text Оказание услуг осуществляется&nbsp;
 						a(:href='requisitesLink', target='_BLANK', rel='noopener noreferrer')
-							| ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[cityId]  }}»
-					green-btn.btn.btn-green(:disabled="!price || !termsAgree" @click="payHandler") Перейти к оплате
+							| ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{ {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[cityId] }}»
+					green-btn.btn.btn-green(:disabled="!price || !termsAgree || isFormLocked" @click="payHandler") Перейти к оплате
 				green-btn(inverted v-if="url" :href="url" target="_blank").btn Открыть курс
 				green-btn(inverted v-if="demoUrl" :href="demoUrl" target="_blank").btn Демо
 		.additional-content(
@@ -152,8 +149,9 @@ export default {
 			termsAgree: false,
 			//Promocode
 			promocode: "",
-			promocodeErrors: null,
-			promo: ""
+			promoError: '',
+			promo: "",
+			isFormLocked: false
 		};
 	},
 	computed: {
@@ -165,6 +163,16 @@ export default {
 				window.location.protocol + "//" + city.code + "." + window.location.host
 			);
 		}
+	},
+	watch: {
+		promocode() {
+			this.promo = ""
+			if (this.price) {
+        this.promoError = ''
+        this.isFormLocked = false
+				this.checkPromocode(this.promocode);
+			}
+		},
 	},
 	created() {
 		this.date = this.group ? formatDate(this.group.start_date) : "";
@@ -196,22 +204,28 @@ export default {
 			}
 		},
 		//Promocode
-		promoInputHandler() {
-			this.promo = { amount: null };
-			this.promocodeErrors = null;
-		},
-		promoChangeHandler(input) {
-			if (this.price) {
-				this.checkPromocode(input);
-			}
-		},
 		checkPromocode(code) {
+      if (code.length === 0) return
+      this.isFormLocked = true
 			api.getPriceWithPromocode(this.price, code).then(
 				res => {
 					this.promo = res.data;
+					this.promoError = '';
+					this.isFormLocked = false
+					if (res) {
+						this.promoprice = res;
+					} else {
+						this.promoprice = Infinity;
+					}
 				},
 				rej => {
-					this.promocodeErrors = [rej.response.data.message];
+					if (rej.response) {
+						this.promoError = rej.response.data.message
+					} else {
+						this.promoError = '';
+						this.isFormLocked = false
+						this.promoprice = Infinity
+					}
 				}
 			);
 		}

@@ -37,7 +37,8 @@
 			data-vv-as='Промокод'
 			name='promocode'
 			:caption='promoprice.promocode_name ? promoprice.promocode_name : ""'
-			:class='{success: !!promoprice.promocode_name}'
+			:class="{'error': promoError, 'success': !!promoprice.promocode_name}"
+			:error='promoError'
 			@change='promocode = $event'
 			type='text')
 
@@ -110,14 +111,17 @@ export default {
 				{id: '1', text: 'Да'},
 				{id: '0', text: 'Нет'},
 			],
-			isExp: '0'
+			isExp: '0',
+			promoError: '',
 		}
 	},
 	methods: {
 		getDiscountedPrice (price_id, code, cb) {
+			this.isFormLocked = true
 			this.$store.dispatch('reqDiscountedPrice', {price_id, code}).then((resp)=>{
 				cb(resp);
-			}).catch(()=>{
+			}).catch((e)=>{
+				this.promoError = e.data.message
 				this.promoprice = Infinity
 			});
 		},
@@ -177,8 +181,10 @@ export default {
 	},
 	watch: {
 		promocode() {
+			this.promoError = ''
 			this.getDiscountedPrice(this.price.id, this.promocode, (resp)=>{
-				this.promoprice = resp;
+				this.isFormLocked = false
+				this.promoprice = resp ? resp : Infinity;
 			});
 		},
 	},
