@@ -29,7 +29,7 @@
 			.progress-caption(v-if="payment") {{this.payment.price_name}}
 			.btns
 				green-btn.btn.btn-green(v-if="payment" @click="payHandler") Оплатить курс
-				.select-payment(v-else-if="prices && prices.length > 0")
+				form.select-payment(v-else-if="prices && prices.length > 0" @submit="payHandler")
 					app-dropdown.select-payment__dropdown(
 						placeholder='Сколько недель вы хотите оплатить?'
 						data-vv-as='Количество недель'
@@ -164,16 +164,7 @@ export default {
 			);
 		}
 	},
-	watch: {
-		promocode() {
-			this.promo = ""
-			if (this.price) {
-        this.promoError = ''
-        this.isFormLocked = false
-				this.checkPromocode(this.promocode);
-			}
-		},
-	},
+
 	created() {
 		this.date = this.group ? formatDate(this.group.start_date) : "";
 	},
@@ -205,8 +196,7 @@ export default {
 		},
 		//Promocode
 		checkPromocode(code) {
-      if (code.length === 0) return
-      this.isFormLocked = true
+
 			api.getPriceWithPromocode(this.price, code).then(
 				res => {
 					this.promo = res.data;
