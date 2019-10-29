@@ -26,6 +26,8 @@
 			:disabled="!!userOrderId"
 			name='edu_platform')
 
+		p.input-caption(v-if='!!formData.startDates && !!inputsData.edu_platform') Дата старта: {{ formData.startDates[inputsData.edu_platform] }}
+
 		app-input(
 			placeholder='Введите ссылку на ваш аккаунт'
 			data-vv-as='Аккаунт'

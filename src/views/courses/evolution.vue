@@ -14,7 +14,7 @@ div
 	appeal(:startDates='startDates')
 	faq
 
-	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id}', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', bgColor='purple', bgImage='evolution/bg-form-evo.jpg', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id, startDates: startDates}', :courseName='courseInfo.name')
 
 </template>
 
