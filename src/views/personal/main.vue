@@ -46,9 +46,14 @@
 					)
 				template(v-if="certificates.length > 0")
 					h2.section-title Сертификаты
-					.tile.goods(v-for="certificate in certificates")
+					.tile.goods.certificate(v-for="certificate in certificates")
 						.goods__image
-						.text {{certificate.certificate.name}}
+						.goods__block
+							.text {{certificate.certificate.name}}
+							.progress-caption {{certificate.pay_status}}
+							.description(v-if="certificate.is_fully_paid") Мы отправили сертификат на почту, которую вы указывали при покупке
+							.btns(v-if="certificate.available_prices.length > 0 || certificate.pending_payment")
+								.btn(@click="goPay(certificate.pending_payment, certificate.id, certificate.available_prices[0].id)") Оплатить
 				template(v-if="products.length > 0")
 					h2.section-title Товары
 					.tile.goods(v-for="course in products")
@@ -179,6 +184,20 @@ export default {
 		this.getStatistics();
 	},
 	methods: {
+		goPay(url, id, price) {
+			if (url) {
+				window.location = url.approve_url;
+			} else {
+				this.$store
+					.dispatch("reqCertPayment", {
+						orderId: id,
+						price_id: price,
+					})
+					.then(res => {
+						window.location = res.data.payment.approve_url
+					});
+			}
+		},
 		getStatistics() {
 			api.personal.getStatistics().then(
 				res => {
@@ -388,6 +407,42 @@ article.main-body {
       color: #6a6a6a;
     }
   }
+
+	.tile.certificate {
+		align-items: flex-start;
+
+		.goods__image{
+			margin-right: 0;
+			flex: 1;
+		}
+		.goods__block {
+			padding: 20px 30px;
+			flex: 1;
+		}
+		.progress-caption {
+			width: 100%;
+			overflow: hidden;
+			font-size: 11px;
+			font-weight: 700;
+			color:#6a6a6a;
+    	margin: 15px 0;
+		}
+		.description {
+			margin-bottom: 15px;
+			margin-top: 23px;
+			line-height: 1.5;
+			font-size: 14px;
+		}
+		.btn  {
+			background-color: #0ab6a1;
+			color: white;
+			cursor: pointer;
+			&:hover {
+				border: 1px solid #078675;
+				background: #078675;
+			}
+		}
+	}
 
   .tile.simple {
     overflow: hidden;
