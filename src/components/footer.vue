@@ -12,7 +12,7 @@ div
 	footer.main-footer
 		.limit
 			section.organization
-				p © 2019, ИП Доронина О. А.
+				p © 2019, ИП Доронина&nbsp;О.&nbsp;А.
 				p ОГРНИП 314667933100032
 			section.links
 				router-link(class='link larger animated-underline', to='/vacancies') Вакансии
@@ -25,6 +25,8 @@ div
 			section.contacts
 				a.phone.animated-underline(href='callto: +78005006882') 8 (800) 500–68–82
 				a.mail.animated-underline(href='mailto: info@sektaschool.ru') info@sektaschool.ru
+			section.reward
+				img.reward__image(src="@/assets/images/reward-icon.png")
 			section.developer
 				svg-icon(name='logo-immelman')
 				p.smaller Поддержка сайта
@@ -143,7 +145,6 @@ export default {
 			font-size: 13px;
 		}
 		section {
-			width: 100%;
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
@@ -168,6 +169,15 @@ export default {
 		.contacts {
 			.phone {
 				font-size: 20px;
+			}
+		}
+		.reward {
+			max-width: 74px;
+			box-sizing: initial;
+			width: 100%;
+			&__image {
+				max-width: 74px;
+				position: relative;
 			}
 		}
 		.developer {
