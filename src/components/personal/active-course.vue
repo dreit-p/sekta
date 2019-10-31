@@ -3,7 +3,8 @@
 		.main-content
 			.top-content
 				.img-side
-					svg-icon(name='logo-sekta')
+					img(v-if="image" :src="image")
+					svg-icon(v-else name='logo-sekta')
 				.text-side
 					.title {{ this.courseName }}
 					.info(v-if="group")
@@ -113,6 +114,10 @@ export default {
 			default: null
 		},
 		additionalInfo: {
+			type: String,
+			default: null
+		},
+		image: {
 			type: String,
 			default: null
 		},
@@ -284,6 +289,7 @@ article.main-body {
       svg {
         margin: 0;
         height: auto;
+				max-width: 145px;
       }
     }
     .text-side {
