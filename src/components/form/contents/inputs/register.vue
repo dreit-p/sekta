@@ -1,7 +1,7 @@
 <template lang="pug">
 .content.register
 
-	p.heavy-text Давайте знакомиться
+	p.heavy-text Заполните форму
 
 	form(@submit.prevent="validateBeforeSubmit", novalidate="true")
 		app-input(
