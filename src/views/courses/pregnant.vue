@@ -74,7 +74,7 @@ export default {
 	},
 	data() {
 		return {
-			availablePlatforms: ["vk"] // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
+			availablePlatforms: ['tg'] // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
 		};
 	},
 	methods: {
