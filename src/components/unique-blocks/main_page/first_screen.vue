@@ -1,5 +1,5 @@
 <template lang="pug">
-section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/images/first_screen-bg.jpg')}')`, backgroundPosition: '80% 0' }")
+section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/images/first_screen-bg-girls.jpg')}')`, backgroundPosition: '80% 0' }")
 	.limit.first-screen__container.clearfix
 		.accordion2full__panel.accordion2full__panel_active(style='float: right; margin-top: 3vw;')
 			.first-screen__header
@@ -14,8 +14,8 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 					li под чутким контролем кураторов;
 					li с поддержкой единомышленников.
 				p
-					router-link(to='/online/evo')
-						green-btn(style='color: #fff', target='_blank', rel='noopener noreferrer') Новый курс!
+					router-link(to='/online')
+						green-btn(style='color: #fff', target='_blank', rel='noopener noreferrer') Подробнее об онлайн-курсах
 </template>
 
 <script>
@@ -38,7 +38,7 @@ export default {
 
 <style lang="postcss" scoped>
 	.first-screen {
-		color: white;
+		color: black;
 		padding: 0;
 		min-height: 0;
 		background-size: auto 300px;
