@@ -204,9 +204,31 @@ body {
 		font-size: 24px;
 	}
 	.highlight {
+		display: flex;
+		justify-content: center;
 		font-size: 22px;
 		color: var(--accent_color);
 		margin: 0;
+
+		.highlight__title {
+			padding: 0 10px;
+			margin-top: 2px;
+			font-size: 20px;
+
+			span {
+				font-size: 16px;
+			}
+		}
+		.highlight__title:not(:first-child) {
+			border-left: 1px solid #0ab6a1;
+		}
+		.highlight__title.two {
+			flex: 1;
+			text-align: right;
+		}
+		.highlight__title.two:nth-child(2) {
+			text-align: left;
+		}
 	}
 }
 

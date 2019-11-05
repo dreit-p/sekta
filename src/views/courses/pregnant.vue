@@ -44,8 +44,6 @@ div.course
 <script>
 import { mapActions } from "vuex";
 
-import { formatDateDayMonth } from "../../assets/misc.js";
-
 const COURSE_TAG = "PREGNANT";
 
 export default {
@@ -72,15 +70,22 @@ export default {
 			});
 		}
 	},
-	data() {
-		return {
-			availablePlatforms: ['tg'] // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
-		};
+	data () {
+		return {}
+	},
+	computed: {
+		availablePlatforms() {
+			return Object.keys(this.courseInfo.start_dates).filter(p => this.courseInfo.start_dates[p])
+		}
 	},
 	methods: {
 		...mapActions(["setFormModalState"]),
 		formatDate() {
-			return formatDateDayMonth(this.courseInfo.start_dates[this.availablePlatforms[0]])
+			let newObj = {}
+			this.availablePlatforms.forEach(platform => {
+				newObj[platform] = this.courseInfo.start_dates[platform]
+			});
+			return newObj
 		},
 		scrollTo(id) {
 			window.scrollTo({
