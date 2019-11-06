@@ -117,6 +117,13 @@ const Router = new VueRouter({
 						import( /* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
 				},
 				{
+					path: 'energyboost',
+					name: 'energyboost',
+					component: () =>
+						import( /* webpackChunkName: "courses" */ './views/courses/energy-boost.vue'),
+					meta: { scrollToTop: true }
+				},
+				{
 					path: 'pregnancy',
 					name: 'pregnant',
 					component: () =>

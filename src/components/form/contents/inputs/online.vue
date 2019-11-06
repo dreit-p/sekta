@@ -170,6 +170,12 @@ export default {
 			return this.$store.getters.getUserCity;
 		},
 		city_options() {
+			if (this.formData.availableCities) {
+				return this.$store.state.cities.filter(city => {
+					return this.formData.availableCities.includes(city.id);
+				});
+			}
+
 			return this.$store.state.cities;
 		},
 		price() {

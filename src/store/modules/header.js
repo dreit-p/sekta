@@ -30,6 +30,10 @@ let state = {
 					link: '/online/sektacare',
 					name: 'Курс #SektaCare'
 				},
+				/*{
+					link: '/online/energyboost',
+					name: 'Курс #SektaEnergyBoost'
+				},*/
 				{
 					link: '/online/smama',
 					name: 'Курс для мам'
