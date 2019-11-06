@@ -12,10 +12,10 @@
 							svg-icon(name='icon-user')
 							| Куратор:&nbsp;
 							span.green {{ this.group.curator.name }}
-						.line(v-if="group.chat_number")
+						.line(v-if="group.chat_url")
 							svg-icon(name='icon-chat')
 							| Ссылка на чат:&nbsp;
-							a(:href="this.group.chat_number") {{this.group.chat_number}}
+							a(:href="this.group.chat_url") {{this.group.chat_url}}
 						// .line(v-if="progress || progress === 0")
 						// 	svg-icon(name='icon-graph')
 						// 	| Прогресс:&nbsp;
