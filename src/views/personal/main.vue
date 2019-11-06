@@ -138,14 +138,14 @@ export default {
 					name: "#SEKTACARE",
 					description:
             "В #SektaCare мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания",
-					url: "https://account.sektaschool.ru//courses/care/demo.php",
+					url: "https://account.sektaschool.ru/courses/care/demo.php",
 					svg: "sekta-care"
 				},
 				{
 					name: "#SEKTAEVO",
 					description:
             "SektaEvolution — это комплексный, продуманный и сбалансированный курс. При его разработке мы учли всё: опыт команды и 120 тысяч выпускников #SEKTA, базовые и новые исследования о здоровье, питании, спорте и образе жизни. В основе курса — наши исследования о мотивации. Постарались сделать всё, чтобы вам всегда хотелось идти вперед.",
-					url: "https://account.sektaschool.ru//courses/evolution_demo/",
+					url: "https://account.sektaschool.ru/courses/evolution_demo/",
 					svg: "sekta-evo"
 				}
 			],
