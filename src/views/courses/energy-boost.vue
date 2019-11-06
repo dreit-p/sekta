@@ -68,14 +68,22 @@ export default {
 	},
 	data () {
 		return {
-			availablePlatforms: ['vk'], // 'tg', 'vk', 'fb', 'sk', 'vb', 'wa', 'email'
 			availableCities: ['2']
+		}
+	},
+	computed: {
+		availablePlatforms() {
+			return Object.keys(this.courseInfo.start_dates).filter(p => this.courseInfo.start_dates[p])
 		}
 	},
 	methods: {
 		...mapActions(['setFormModalState']),
 		formatDate() {
-			return formatDateDayMonth(this.courseInfo.start_dates[this.availablePlatforms[0]])
+			let newObj = {}
+			this.availablePlatforms.forEach(platform => {
+				newObj[platform] = this.courseInfo.start_dates[platform]
+			});
+			return newObj
 		},
 		scrollTo(id) {
 			window.scrollTo({
