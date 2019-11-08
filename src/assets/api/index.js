@@ -122,6 +122,12 @@ export default {
 		},
 	},
 
+	table: {
+		getFoods() {
+			return axios.get(URL + '/api/content/foods');
+		},
+	},
+
 	defineCity() {
 		return axios.get(URL + `/api/define-city`)
 	},

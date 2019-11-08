@@ -65,6 +65,7 @@ export default {
 	components: {
 		DefaultLayout: () => import('@/layouts/default.vue'),
 		PersonalLayout: () => import('@/layouts/personal.vue'),
+		EmptyLayout: () => import('@/layouts/empty.vue'),
 		SvgIcon: () => import('@/components/SvgIcon.vue'),
 		SubDomainLayout: () => import(`@/layouts/sub-domains/${subDomain()}.vue`),
 	},

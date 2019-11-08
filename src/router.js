@@ -229,6 +229,12 @@ const Router = new VueRouter({
 			]
 		},
 		{
+			path: '/table',
+			meta: { layout: 'empty' },
+			component: () =>
+					import('./views/table/main.vue')
+		},
+		{
 			path: '/password-recovery',
 			name: 'password-recovery',
 			component: () =>
