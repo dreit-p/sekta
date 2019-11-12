@@ -3,29 +3,9 @@
 	component(:is="layout")
 		transition(name='fade-flip', mode='out-in', @after-leave="$root.$emit('triggerScroll')")
 			router-view( :key="$route.path")
-	div
-		noscript
-			div
-				img(src="https://mc.yandex.ru/watch/23370769" style="position:absolute; left:-9999px;" alt="")
 </template>
 
 <script>
-if (process.env.NODE_ENV === 'production') {
-	// Yandex.Metrika counter
-	(function (m, e, t, r, i, k, a) {
-		m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
-		m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-		})
-		(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-		ym(23370769, "init", {
-		clickmap: true,
-		trackLinks: true,
-		accurateTrackBounce: true,
-		webvisor: true
-	});
-	// /Yandex.Metrika counter
-}
-
 (function(document, window) {
 	document.addEventListener("DOMContentLoaded", function() {
 		var baseUrl = window.location.href

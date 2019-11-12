@@ -4,6 +4,7 @@ import router from './router'
 import store from './store/'
 import 'normalize.css'
 import '@/assets/common.css'
+import VueYandexMetrika from 'vue-yandex-metrika'
 
 import AsyncComputed from 'vue-async-computed'
 Vue.use(AsyncComputed)
@@ -48,6 +49,12 @@ if (process.env.NODE_ENV === 'production') {
 	Vue.config.devtools = false
 	Vue.config.productionTip = false
 }
+
+Vue.use(VueYandexMetrika, {
+	id: process.env.VUE_APP_YANDEX_METRIKA_ID,
+	router: router,
+	env: process.env.NODE_ENV,
+})
 
 window.vm = new Vue({
 	router,
