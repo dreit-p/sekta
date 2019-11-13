@@ -9,7 +9,7 @@ div.course
 		.article-limit
 			.text-typography
 				h3.center ПРОГРАММА ДЛЯ БЕРЕМЕННЫХ
-				a.notice.center(href='https://www.youtube.com/watch?v=MUNQRUgy444&feature=youtu.be', target='_BLANK', rel='noopener noreferrer') ПРОБНАЯ ТРЕНИРОВКА ДЛЯ БЕРЕМЕННЫХ
+				a.notice.center(href='https://www.youtube.com/watch?v=MUNQRUgy444&feature=youtu.be', target='_BLANK', rel='noopener noreferrer') Пробная тренировка – суставная гимнастика
 				p
 					b Программа подходит женщинам с 12-ой недели беременности.&nbsp;
 					| До начала программы получите от наблюдающего врача&ensp;
