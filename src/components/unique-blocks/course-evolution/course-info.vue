@@ -10,10 +10,10 @@ section.course_info
 				.text.groups(v-if='startDates')
 					.group
 						.data {{startDates.vk}}
-						.caption VK
+						.caption Груповой чат ВКонтакте
 					.group
 						.data {{startDates.tg}}
-						.caption Telegram
+						.caption Групповой чат в Telegram
 				.text.small ближайший старт
 			.block
 				.text.big
