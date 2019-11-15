@@ -21,7 +21,7 @@ export default {
 	},
 	data() {
 		return {
-			SECONDS_TO_SHOW_POP: 60,
+			SECONDS_TO_SHOW_POP: 10,
 			isOpened: false,
 			instagram: [
 				{
