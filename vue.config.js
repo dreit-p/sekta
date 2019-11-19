@@ -1,13 +1,36 @@
 const path = require('path');
 const PrerenderSPAPlugin = require('prerender-spa-plugin');
+const SitemapPlugin = require('sitemap-webpack-plugin').default;
+
+const sitemap = [
+	'/',
+	'/kontakty',
+	'/results',
+	'/about',
+	'/online',
+	'/online/evo',
+	'/online/sektacare',
+	'/online/smama',
+	'/online/pregnancy',
+	'/online/sektavip',
+	'/gym',
+	'/gym/moskva',
+	'/gym/sankt-peterburg',
+	'/certificates'
+]
 
 var plugins = [];
 
 if (process.env.NODE_ENV === 'production') {
 	plugins = [
+		new SitemapPlugin('https://sektaschool.ru', sitemap, {
+			fileName: 'sitemap.xml',
+			lastMod: true,
+			changeFreq: 'monthly'
+		}),
 		new PrerenderSPAPlugin({
 			staticDir: path.join(__dirname, 'dist'),
-			routes: ['/', '/kontakty', '/results', '/about', '/online', '/online/evo', '/online/sektacare', '/online/smama', '/online/pregnancy', '/online/sektavip', '/gym', '/gym/moskva', '/gym/sankt-peterburg', '/certificates'],
+			routes: sitemap,
 		})
 	]
 }

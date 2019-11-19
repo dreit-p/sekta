@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Home from './views/home.vue'
 import store from './store/'
 
-import accuchek from './views/courses/accu.vue'
 
 Vue.use(VueRouter)
 
@@ -185,7 +184,7 @@ const Router = new VueRouter({
 		{
 			path: '/accuchek',
 			name: 'accuchek',
-			component: accuchek,
+			component: import('./views/courses/accu.vue'),
 		},
 		{
 			path: '/personal',
