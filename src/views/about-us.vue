@@ -118,19 +118,19 @@ export default {
 
 						const getFlareGradient = ()=>{
 							let dy = tileCenter.y - currentMousePosition[1],
-							dx = tileCenter.x - currentMousePosition[0],
-							theta = Math.atan2(dy, dx), //angle between cursor and center of poster in RAD
-							angle = theta * 180 / Math.PI - 90; //convert rad in degrees
+								dx = tileCenter.x - currentMousePosition[0],
+								theta = Math.atan2(dy, dx), //angle between cursor and center of poster in RAD
+								angle = theta * 180 / Math.PI - 90; //convert rad in degrees
 							//get angle between 0-360
 							if (angle < 0) {
 								angle = angle + 360;
 							}
 							let alpha = Math.max(0, Math.min(1,
-									(wrapperPos.y + window.pageYOffset + wrapperPos.height - currentMousePosition[1]) /wrapperPos.height
-								));
+								(wrapperPos.y + window.pageYOffset + wrapperPos.height - currentMousePosition[1]) /wrapperPos.height
+							));
 							let gray = Math.max(0, Math.min(255,
-									(wrapperPos.y + window.pageYOffset + wrapperPos.height - currentMousePosition[1]) /20 /10 * 25.5
-								));
+								(wrapperPos.y + window.pageYOffset + wrapperPos.height - currentMousePosition[1]) /20 /10 * 25.5
+							));
 							return `linear-gradient(${angle}deg, rgba(255,255,255,${alpha}) 0%,rgba(255,255,255,0) 80%)`
 						}
 						wrapper.getElementsByClassName('shine')[0].style.background = getFlareGradient();

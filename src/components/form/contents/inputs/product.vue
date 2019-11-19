@@ -232,7 +232,7 @@ export default {
 			isDeliveryDone: false,
 			deliveryPrice: null,
 
-            isOrderLoading: false,
+			isOrderLoading: false,
 		};
 	},
 	created() {
@@ -364,7 +364,7 @@ export default {
 		makeOrder() {
 			this.checkOrderValid();
 			if (this.hasError || this.isOrderLoading) return;
-            this.isOrderLoading = true;
+			this.isOrderLoading = true;
 			let order = {
 				price_id: this.priceId,
 				delivery_type: this.deliveryId,
@@ -383,7 +383,7 @@ export default {
 					this.makePayment(res.data.order_id);
 				},
 				rej => {
-                    this.isOrderLoading = false;
+					this.isOrderLoading = false;
 					this.errorHandler(rej.response.data.errors);
 				}
 			);
@@ -396,10 +396,10 @@ export default {
 			data.quantity = this.quantity ? this.quantity : 1;
 			api.product.createPayment(order_id, data)
 				.then(res => {
-                    window.location = res.data.payment.approve_url;
-                }, rej => {
-                    this.isOrderLoading = false;
-                });
+					window.location = res.data.payment.approve_url;
+				}, rej => {
+					this.isOrderLoading = false;
+				});
 		},
 		errorHandler(errors) {
 			for (let key in errors) {

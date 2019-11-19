@@ -2,7 +2,7 @@
 	<picture>
 		<source :type="'image/'+files[0].type" :srcset="files[0].link">
 		<source :type="'image/'+files[1].type" :srcset="files[1].link">
-		<img :src="files[1].link" :alt="alt" v-bind="$attrs" :style='imgStyle'>
+		<img :src="files[1].link" :alt="alt" v-bind="$attrs" :style="imgStyle">
 	</picture>
 </template>
 
@@ -34,14 +34,14 @@ export default {
 
 			let extless =  file.replace(/\.[^.]+$/, "");
 			return [
-			{
-				type: 'webp',
-				link: extless + '.webp',
-			},
-			{
-				type: fileExt,
-				link: `${extless}.${fileExt}`,
-			}
+				{
+					type: 'webp',
+					link: extless + '.webp',
+				},
+				{
+					type: fileExt,
+					link: `${extless}.${fileExt}`,
+				}
 			]
 		},
 

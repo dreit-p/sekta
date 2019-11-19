@@ -89,7 +89,7 @@ function compareNestedArrs(value, other) {
 	}
 
 	return true;
-};
+}
 
 export default {
 	name: "Schedule",

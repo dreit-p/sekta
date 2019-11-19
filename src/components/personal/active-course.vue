@@ -173,8 +173,8 @@ export default {
 		promocode() {
 			this.promo = ""
 			if (this.price) {
-        this.promoError = ''
-        this.isFormLocked = false
+				this.promoError = ''
+				this.isFormLocked = false
 				this.checkPromocode(this.promocode);
 			}
 		},
