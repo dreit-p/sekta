@@ -79,7 +79,6 @@ export default {
 		},
 		isVidget() {
 			let suitableLinks = ["sektacare", "sektaevo", "sektamama", "pregnant", "sektavip"]
-			console.log(suitableLinks.includes(this.$route.name))
 			return suitableLinks.includes(this.$route.name)
 		}
 	},
