@@ -70,11 +70,11 @@ let state = {
 		// 	link: '/camp',
 		// 	name: 'Летний лагерь'
 		// },
-		{
+		/*{
 			link: '/online/enbo',
 			name: 'Energy Boost',
 			classes: 'highlighted'
-		},
+		},*/
 		{
 			link: '/certificates',
 			name: 'Подарочный сертификат'
