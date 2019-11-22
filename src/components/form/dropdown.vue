@@ -146,7 +146,7 @@ export default {
 				display: none;
 			}
 			&[disabled] + .dropdown-icon {
-				opacity: .3;
+				opacity: 0;
 			}
 		}
 		&.success {

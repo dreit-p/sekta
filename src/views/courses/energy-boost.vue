@@ -1,49 +1,61 @@
 <template lang="pug">
 div.course
-	hero(image='course_bg-sectacare.jpg', title='Курс #SektaEnergyBoost')
-		p В #SektaEnergyBoost мы заботимся о тех, кому нужно плавно ввести тренировки в свою жизнь. Вы давно не тренировались или только начинаете?
-		p Мы создали специальную программу для тех, кто не хочет прыгать с места в карьер. Вас ждет разнообразная нагрузка, направленная на жиросжигание, развитие выносливости, силы, гибкости  — такие тренировки помогут улучшить метаболизм, а куратор подберет идеальный режим питания.
+	hero(image='course_bg-enbo.jpg', title='ENERGY BOOST', timerTime='Dec 9 2019 00:00:00 GMT+0300')
+		p Вы можете чувствовать себя сильным, бодрым и подтянутым всю зиму!
+
+		p Сезонный онлайн-курс #SEKTA
+		.highlight-block
+			p Доступен с #[b 9 декабря] по #[b 10 февраля]
+			p Длится #[b 2 недели]
+			p Старт — #[b в любой день]
+			p Стоимость: #[b 4000 ₽]
+
 		template(v-slot:buttons)
-			green-btn(@click='scrollTo("entry-form")') Записаться на обучение
+			green-btn(@click='scrollTo("entry-form")') Участвовать
 
 	article.main-content
 		.article-limit
 			.text-typography
-				h3.center #SektaEnergyBoost
-				a.notice.center(href='https://account.sektaschool.ru/courses/winter/demo.php', target='_BLANK', rel='noopener noreferrer') ДЕМО-ВЕРСИЯ ПРОГРАММЫ #SektaEnergyBoost
-				p Мечтаете о хорошем результате, но боитесь, что противопоказания сделают прогресс слишком медленным?
-				p На курсе вы проработаете мышцы пресса, спины, ног и ягодиц и всего тела комплексно. Даже при наличии противопоказаний мы подберем упражнения, которые будут воздействовать эффективно.
+				h3.center Чего ждать от курса
 				p
-					b Что вы получите?
+					b ENERGY BOOST поможет:
 				ul
-					li Снижение массы тела
-					li Укрепление мышечного корсета
-					li Укрепление спины
-					li Укрепление суставов
-					li Здоровое питание без диет
-					li Безопасные тренировки
-					li Узнаете, как адаптировать упражнения и тренироваться после спортивных или других травм
-				p Чтобы тренировки укрепляли здоровье и способствовали похудению, они должны быть сложными, но выполнимыми и приносить вам радость. Наш курс состоит из таких тренировок, поэтому вы не бросите его после первого занятия.
-				p Курс доступен онлайн и в залах Москвы и Санкт-Петербурга.
-				p
-					b Длительность курса:&nbsp;
-					| 9 недель.
-				p
-					b Стоимость одной недели обучения:&nbsp;
-					| 1&ensp;500 рублей.
+					li #[b прокачаться] и выйти на новую ступень своей формы,
+					li #[b зарядиться энергией] в разгар зимы,
+					li #[b восстановиться] после стресса и поддержать организм.
 
-	caption-section(v-if='courseInfo'
-		:dateStart='formatDate()',
-		:TEMPdateStart='courseInfo.last_start_date',
-	)
-	entry-form(v-if='courseInfo', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id, availableCities: availableCities}', :courseName='courseInfo.name')
+				iframeBlock(videoSrc='https://player.vimeo.com/video/181652481', imgSrc='EnBo-video-placeholder.jpg', title='ОЛЯ МАРКЕС РАССКАЗЫВАЕТ О #SEKTA ENERGY BOOST:')
+
+				p #[b Четыре уровня] — выберите подходящий, а потом повторите программу на более сложном.
+
+				p #[b Три вида тренировок:]
+				ul
+					li короткие утренние тренировки с Олей Маркес — для бодрости,
+					li антистресс-практики: инь-йога, хатха-йога, кундалини, пилатес, растяжка, флоу-йога — для восстановления,
+					li «классика» от #SEKTA — для тех, кто хочет прокачаться по максимуму.
+
+				p #[b Energizing menu:]
+				ul
+					li готовое меню для увеличения уровня энергии,
+					li список рецептов и продуктовая корзина,
+					li со всеми необходимыми витаминами и микроэлементами,
+					li no sugar, no junk.
+
+				p #[b А еще:]
+				ul
+					li групповой чат,
+					li работа с паттернами в питании,
+					li диджитал детокс,
+					li рецепты здоровых блюд для новогоднего стола,
+					li периодическое голодание,
+					li планирование года на базе концепции #[a(href='https://sektascience.com/2019/03/01/new-normal/') New Normal].
+
+	caption-section
+	entry-form(v-if='courseInfo', formType="enbo", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id, availableCities: availableCities}', :courseName='courseInfo.name')
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Vue from 'vue';
-
-import { formatDateDayMonth } from "../../assets/misc.js";
 
 const COURSE_TAG = 'WINTER_19';
 
@@ -54,7 +66,8 @@ export default {
 		description: 'Онлайн-курс правильного питания и программы видео тренировок для людей с противопоказаниями. Если болят суставы, большая масса тела, или вы новичок в спорте - #SektaEnergyBoost поможет плавно войти в тренировочный режим и программу правильного питания.'
 	},
 	components: {
-		hero: () => import('@/components/heroes/aside-hero.vue'),
+		hero: () => import('@/components/heroes/hero-with_timer.vue'),
+		iframeBlock: () => import('@/components/iframe-block.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
 		EntryForm: () => import('@/components/entry-form.vue'),
 		GreenBtn: () => import('@/components/form/green-btn.vue'),
@@ -68,7 +81,7 @@ export default {
 	},
 	data () {
 		return {
-			availableCities: ['2']
+			availableCities: ['2'],
 		}
 	},
 	computed: {
@@ -107,3 +120,11 @@ export default {
 	},
 }
 </script>
+<style lang="postcss">
+	.highlight-block {
+		p {
+			margin: 10px *;
+		}
+	}
+</style>
+

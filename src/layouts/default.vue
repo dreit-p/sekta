@@ -2,7 +2,7 @@
 div.main-layout
 	app-header
 	app-modal
-	vidget-modal(v-if="isVidget")
+	widget-modal(v-if="isWidget")
 	slot
 	app-footer
 	cookie-notification
@@ -70,15 +70,15 @@ export default {
 		AppHeader: () => import('@/components/header.vue'),
 		AppFooter: () => import('@/components/footer.vue'),
 		AppModal: () => import('@/components/modal.vue'),
-		VidgetModal: () => import('@/components/vidget-modal.vue'),
+		WidgetModal: () => import('@/components/widget-modal.vue'),
 		CookieNotification: () => import('@/components/cookie.vue'),
 	},
 	computed: {
 		isAccu() {
 			return this.$route.path ==='/accuchek'
 		},
-		isVidget() {
-			let suitableLinks = ["sektacare", "sektaevo", "sektamama", "pregnant", "sektavip"]
+		isWidget() {
+			let suitableLinks = ["sektacare", "sektaevo", "sektamama", "pregnant", "sektavip", "gym"]
 			return suitableLinks.includes(this.$route.name)
 		}
 	},

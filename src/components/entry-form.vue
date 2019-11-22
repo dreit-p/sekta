@@ -21,6 +21,8 @@
 
 					texts-mama(v-if='entryFormType == "mama"')
 
+					texts-enbo(v-if='entryFormType == "enbo"')
+
 					texts-camp(v-if='entryFormType == "camp"')
 
 					texts-product(v-if='entryFormType == "merch"')
@@ -47,6 +49,8 @@
 
 					inputs-mama(v-if='entryFormType == "mama"', :key='entryFormType', @submit='onSubmit($event)', :formData='formData', :courseName='courseName')
 
+					inputs-enbo(v-if='entryFormType == "enbo"', :key='entryFormType', @submit='onSubmit($event)', :formData='formData', :courseName='courseName')
+
 					inputs-camp(v-if='entryFormType == "camp"', :key='entryFormType', @submit='onSubmit($event)')
 
 					inputs-product(v-if='entryFormType == "merch"', :key='entryFormType', @submit='onSubmit($event)')
@@ -71,6 +75,7 @@ const formContent = {
 		"online",
 		"vip",
 		"mama",
+		"enbo",
 		"face-to-face",
 		"camp",
 		"merch",

@@ -1,6 +1,6 @@
 <template lang="pug">
 transition(name='fade')
-	.vidget-modal(v-if="isOpened")
+	.widget-modal(v-if="isOpened")
 		.veil(@click="close")
 		.modal-wrapper
 			.modal-content
@@ -10,7 +10,7 @@ transition(name='fade')
 						a(v-for='network in currentNetworks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
 							svg-icon(:name='"network-" + network.name')
 					.text-block__title Подписывайтесь!
-					.text-block__text(@click="stopVidget") Больше не показывать
+					.text-block__text(@click="stopWidget") Больше не показывать
 
 </template>
 
@@ -47,13 +47,46 @@ export default {
 	},
 	computed: {
 		currentNetworks() {
-			return this.$route.name === "sektamama" || this.$route.name === "pregnant" ?
-				[this.instagram[1], ...this.networks] :
-				[this.instagram[0], ...this.networks]
+			let route = this.$route
+			console.log(route)
+			if (route.name === "sektamama" || route.name === "pregnant" ) {
+				return[this.instagram[1], ...this.networks]
+			} else if (route.path === "/gym/moskva") {
+				return [
+					{
+					name: 'instagram',
+					link: 'https://www.instagram.com/sektamoscow/'
+					},
+					{
+						name: 'vkontakte',
+						link: 'https://vk.com/sektamskinfo'
+					},
+					{
+						name: 'facebook',
+						link: 'https://www.facebook.com/sektaschool/'
+					},
+				]
+			} else if (route.path === "/gym/sankt-peterburg") {
+				return [
+					{
+					name: 'instagram',
+					link: 'https://www.instagram.com/sektaspb/'
+					},
+					{
+						name: 'vkontakte',
+						link: 'https://vk.com/sektaspbinfo'
+					},
+					{
+						name: 'facebook',
+						link: 'https://www.facebook.com/sektaschool/'
+					},
+				]
+			}
+			return [this.instagram[0], ...this.networks]
 		}
 	},
 	mounted() {
-		if (!localStorage.getItem('stopVidget')) {
+		if (!localStorage.getItem('stopWidget')) {
 			setTimeout(this.setMouseLeave, this.SECONDS_TO_SHOW_POP * 1000)
 		}
 	},
@@ -71,9 +104,9 @@ export default {
 		mouseLeave() {
 			this.isOpened = true
 		},
-		stopVidget() {
+		stopWidget() {
 			this.close()
-			localStorage.setItem('stopVidget', true);
+			localStorage.setItem('stopWidget', true);
 		}
 	}
 }
@@ -81,7 +114,7 @@ export default {
 
 
 <style lang="postcss">
-.vidget-modal{
+.widget-modal{
 	position: fixed;
 	top: 0;
 	right: 0;

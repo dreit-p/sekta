@@ -34,7 +34,7 @@ header.main-header
 				ul.additional-links(v-if='additionalLinks.length > 0')
 					router-link(
 						tag='li',
-						class='link',
+						:class='["link", !!link.classes ? link.classes : ""]',
 						v-for='(link, index) in additionalLinks',
 						:key='link.id',
 						:to='link.link',
@@ -512,6 +512,12 @@ export default {
 	.bottom {
 		.additional-links {
 			margin: 10px *;
+			.link.highlighted {
+				border-radius: 3px;
+				margin: 0 *;
+				padding: 8px;
+				border: 2px solid var(--accent_color);
+			}
 		}
 	}
 

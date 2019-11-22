@@ -1,0 +1,49 @@
+<template lang="pug">
+.content
+	p.heavy-text Запишитесь на курс
+	p Чтобы записаться на курс, заполните форму заявки и нажмите «Перейти к оплате».
+
+	p.heavy-text Важно!
+	p После оплаты на указанную почту придёт письмо о зачислении на курс и информация о том, что нужно сделать до начала обучения. Первый старт — 9 декабря. Потом можно начать в любой день.
+	p Если письма нет, проверьте папку «Спам». Если нет и там, напишите нам:&ensp;
+		b
+			a(href="mailto:info@sektaschool.ru") info@sektaschool.ru
+		|  или позвоните – 8 (800) 500-68-82 (пн-пт с 10:00 до 19:00).
+
+	div(style='margin-top: 20px')
+		p.tiny-text Оплата — с помощью&nbsp;
+			a(href='https://kassa.yandex.ru/') Яндекс.Кассы
+		p.tiny-text Услуги оказывает&nbsp;
+			a(:href='requisitesLink', target='_BLANK', rel='noopener noreferrer')
+				| ООО «ШКОЛА ИДЕАЛЬНОГО ТЕЛА {{  {1: 'Москва', 2: 'Санкт-Петербург', 3: 'Регионы'}[userCity]  }}»
+</template>
+
+<script>
+export default {
+	name: 'TextsOnline',
+	methods: {
+		setFormModalState(data) {
+			return this.$parent.setFormModalState(data);
+		}
+	},
+	data() {
+		return {
+			course: ''
+		}
+	},
+	created() {
+		this.course = this.$route.name
+	},
+	computed: {
+		requisitesLink() {
+			let city = this.$store.state.cities.find(city => city.id == this.userCity);
+			if (!city || city === -1) return;
+
+			return window.location.protocol +"//"+ city.code + "." + window.location.host
+		},
+		userCity() {
+			return 2;
+		},
+	},
+}
+</script>

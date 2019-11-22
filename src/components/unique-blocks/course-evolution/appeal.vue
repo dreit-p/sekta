@@ -4,8 +4,8 @@ section.appeal
 		.text-side(v-if='startDates')
 			.big-text запишитесь сейчас
 			.medium-text ближайший старт
-			.highlighted-text {{startDates.vk}} – VK
-			.highlighted-text {{startDates.tg}} – Telegram
+			.highlighted-text {{startDates.vk}} –&nbsp;VK
+			.highlighted-text {{startDates.tg}} –&nbsp;Telegram
 			a.purple-btn(@click='scrollTo("entry-form")')
 				.border
 				.btn Записаться на курс
