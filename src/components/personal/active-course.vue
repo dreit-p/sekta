@@ -20,9 +20,9 @@
 						// 	svg-icon(name='icon-graph')
 						// 	| Прогресс:&nbsp;
 						// 	span.green {{this.progress}}%
-						.line(v-if="date")
+						.line(v-if="this.group.start_date")
 							svg-icon(name='icon-calendar')
-							| Старт: {{ this.date }}
+							| {{ this.group.start_date }}
 			// .progress-bar(v-if="group && (progress || progress === 0)")
 			// 	.border
 			// 	.fill(v-bind:style="{ width: `${this.progress}%` }")
@@ -180,10 +180,6 @@ export default {
 		},
 	},
 
-
-	created() {
-		this.date = this.group ? formatDate(this.group.start_date) : "";
-	},
 	methods: {
 		payHandler() {
 			if (this.payment && this.payment.approve_url) {
