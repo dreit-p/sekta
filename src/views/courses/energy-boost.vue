@@ -1,13 +1,13 @@
 <template lang="pug">
 div.course
 	hero(image='course_bg-enbo.jpg', title='ENERGY BOOST', timerTime='Dec 9 2019 00:00:00 GMT+0300')
-		p Вы можете чувствовать себя сильным, бодрым и подтянутым всю зиму!
 		.highlight-block
+			p Вы можете чувствовать себя сильным, бодрым и подтянутым всю зиму!
 			p Сезонный #[b онлайн]-курс #SEKTA
 			p Доступен с #[b 9 декабря] по #[b 10 февраля]
 			p Длится #[b 2 недели]
 			p Старт — #[b в любой день]
-			p Стоимость: #[b 4000 ₽]
+			p Стоимость: #[b 4000 руб.]
 
 		template(v-slot:buttons)
 			green-btn(@click='scrollTo("entry-form")') Участвовать
@@ -23,7 +23,7 @@ div.course
 					li #[b зарядиться энергией] в разгар зимы,
 					li #[b восстановиться] после стресса и поддержать организм.
 
-				iframeBlock(videoSrc='https://player.vimeo.com/video/181652481', imgSrc='EnBo-video-placeholder.jpg', title='ОЛЯ МАРКЕС РАССКАЗЫВАЕТ О #SEKTA ENERGY BOOST:')
+				iframeBlock(videoSrc='https://player.vimeo.com/video/374926206', imgSrc='EnBo-video-placeholder.jpg', title='ОЛЯ МАРКЕС РАССКАЗЫВАЕТ О #SEKTA ENERGY BOOST:')
 
 				p #[b Четыре уровня] — выберите подходящий, а потом повторите программу на более сложном.
 
@@ -47,7 +47,7 @@ div.course
 					li диджитал детокс,
 					li рецепты здоровых блюд для новогоднего стола,
 					li периодическое голодание,
-					li планирование года на базе концепции #[a(href='https://sektascience.com/2019/03/01/new-normal/') New Normal].
+					li планирование года на базе концепции #[a(href='https://sektascience.com/2019/03/01/new-normal/' target="_BLANK" rel="noopener noreferrer") New Normal].
 
 	caption-section
 	entry-form(v-if='courseInfo', formType="enbo", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id, availableCities: availableCities}', :courseName='courseInfo.name')

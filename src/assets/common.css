@@ -61,7 +61,7 @@ i {
 
 .limit,
 .article-limit {
-	overflow: hidden;
+	/* overflow: hidden; */
 	max-width: calc((var(--col-width) + var(--col-space)) * 6);
 	/* 980px */
 	margin: auto;
