@@ -275,23 +275,13 @@ export default {
 			justify-content: flex-end;
 			flex-direction: column;
 			color: white;
-			@media (min-width: 1026px) {
-				position: absolute;
-				width: 200px;
-				right: calc(25% + -100px);
-				bottom: 16%;
-			}
-			@media (max-width: 1025px) {
-				align-items: center;
-				align-self: center;
-			}
 			.timer-caption {
 				text-transform: uppercase;
 				font-weight: bold;
 				width: 100%;
 				font-size: 20px;
-				font-family: var(--font-second);
 				margin: 10px *;
+				font-family: var(--font-second);
 				color: currentColor;
 			}
 			.counters {
@@ -301,8 +291,8 @@ export default {
 				color: currentColor;
 				font-size: 56px;
 				line-height: 52px;
-				font-weight: 700;
 				margin: 0 10px 10px;
+				font-weight: 700;
 				font-family: var(--font-second);
 				text-align: center;
 			}
@@ -324,6 +314,33 @@ export default {
 				.number {
 					font-size: 56px;
 					line-height: 56px;
+				}
+			}
+			@media (min-width: 1026px) {
+				position: absolute;
+				width: 200px;
+				right: calc(25% + -100px);
+				bottom: 16%;
+			}
+			@media (max-width: 1025px) {
+				align-items: center;
+				align-self: center;
+				.timer-caption {
+					font-size: 16px;
+					margin: 8px *;
+				}
+				.delimiter {
+					font-size: 44px;
+					line-height: 41px;
+					margin: 0 8px 8px;
+				}
+				.counter .counter-title {
+					font-size: 16px;
+					line-height: 16px;
+				}
+				.counter .number {
+					font-size: 44px;
+					line-height: 44px;
 				}
 			}
 		}

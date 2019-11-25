@@ -2,9 +2,8 @@
 div.course
 	hero(image='course_bg-enbo.jpg', title='ENERGY BOOST', timerTime='Dec 9 2019 00:00:00 GMT+0300')
 		p Вы можете чувствовать себя сильным, бодрым и подтянутым всю зиму!
-
-		p Сезонный онлайн-курс #SEKTA
 		.highlight-block
+			p Сезонный #[b онлайн]-курс #SEKTA
 			p Доступен с #[b 9 декабря] по #[b 10 февраля]
 			p Длится #[b 2 недели]
 			p Старт — #[b в любой день]

@@ -68,6 +68,10 @@ export default {
 			margin: 0;
 			z-index: 1;
 			background-image: linear-gradient(#ececec 0%, transparent 100%);
+			@media (max-width: 500px) {
+				font-size: 13px;
+				padding: 10px 15px;
+			}
 		}
 		.play-btn {
 			background-image: url(~@/assets/images/play-btn.png);
@@ -81,6 +85,10 @@ export default {
 			right: 0;
 			bottom: 0;
 			margin: auto;
+			@media (max-width: 500px) {
+				height: 64px;
+				width: 64px;
+			}
 		}
 	}
 </style>
