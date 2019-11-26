@@ -26,7 +26,7 @@
 				:controls='["rulerControl"]'
 				:placemarks='placemarks'
 				style='width: 100%; height: 100%;'
-				map-link='https://api-maps.yandex.ru/2.1/?apikey=32d7c971-fea9-41f9-ba2c-5c2aaade6810&lang=ru_RU'
+				:settings='{apiKey: "32d7c971-fea9-41f9-ba2c-5c2aaade6810", lang: "ru_RU", version: "2.1" }'
 				@map-was-initialized='initHandler'
 			)
 	.limit(v-if='selectedGym')
