@@ -205,6 +205,19 @@ export default {
 						font-size: 18px;
 					}
 				}
+				p {
+					font-size: 30px;
+					margin: 7px 0;
+					font-weight: 900;
+					color: #dcdcdc;
+					font-family: var(--font-second);
+					@media (max-width: 980px) {
+						font-size: 3vw;
+					}
+					@media (max-width: 360px) {
+						font-size: 13px;
+					}
+				}
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 .time-selector
 	.limit
 		.description
+			p(v-if='city.code === "msk"') Если вы планируете купить абонемент на 8 занятий без привязки к залу и времени в Москве – он даст право на посещение занятия в любом зале и в любой группе. Полный список групп и залов будет доступен после оплаты, в информационной группе.
 			p Чтобы записаться на курс #sekta в зале, в таблице ниже вам нужно выбрать группу — конкретные дни недели и время, в которые вы будете заниматься. Например: понедельник, среда и пятница в 18:00.
 			p Чтобы выбрать конкретное расписание нажмите на удобные дни, вся группа загорится зеленым.
 			p Если в ячейке несколько вариантов времени для одного дня - значит, в этот день вы можете выбирать, в какое время посещать тренировки.
@@ -119,6 +120,10 @@ export default {
 		};
 	},
 	computed: {
+		city() {
+			let name = this.$route.params.city;
+			return this.$store.state.cities.find(city=>city.englishName === name);
+		},
 		schedules() {
 			let schedules = [];
 
@@ -187,9 +192,7 @@ export default {
 
 			let timeObj = {};
 			this.practices.forEach(practice => {
-				console.log('===');
 				practice.schedules.forEach(practiceSchedule => {
-					console.log('---');
 					if (timeObj.hasOwnProperty(practiceSchedule.time) && timeObj[practiceSchedule.time].hasOwnProperty(practice.id)) {
 						let uniqTime = timeObj[practiceSchedule.time][practice.id];
 						if (
@@ -223,7 +226,6 @@ export default {
 					}
 				});
 			});
-			console.log("timeObj", timeObj);
 
 			let rows = {};
 			for (let time in timeObj) {
@@ -304,16 +306,16 @@ export default {
 				}
 			}
 
-			function addSorted(targetArr, element, comparingFn) {
-				let index = targetArr.findIndex(dayTime =>
-					comparingFn(dayTime)
-				);
-				if (index === -1) {
-					targetArr.push(element);
-				} else {
-					targetArr.splice(index, 0, element);
-				}
-			}
+			// function addSorted(targetArr, element, comparingFn) {
+			// 	let index = targetArr.findIndex(dayTime =>
+			// 		comparingFn(dayTime)
+			// 	);
+			// 	if (index === -1) {
+			// 		targetArr.push(element);
+			// 	} else {
+			// 		targetArr.splice(index, 0, element);
+			// 	}
+			// }
 
 			function compareArrs(arr1, arr2) {
 				return (

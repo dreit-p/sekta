@@ -4,7 +4,7 @@ div
 		.limit
 			.wrapper
 				.main-text
-					| Номер вашей заявки: 
+					| Номер вашей заявки:
 					span.variable-text 123456789 от 12.01.2019
 				p.caption Вы выбрали курс:
 				span.variable-text Основное направление
@@ -13,13 +13,13 @@ div
 				p.caption Количество тренировок в неделю:
 				span.variable-text 6
 				p.caption Время тренировок:
-				span.variable-text пн-пт 8:00 
+				span.variable-text каждый день 8:00
 					br
 					| сб 10:30, 12:00, 13:30
 				.inline
-					.caption Сумма: 
+					.caption Сумма:
 						span.variable-text 6 500 руб
-					.caption Статус заявки: 
+					.caption Статус заявки:
 						span.variable-text оплачена 12.01.2019
 
 </template>
