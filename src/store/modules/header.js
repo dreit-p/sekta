@@ -19,6 +19,11 @@ let state = {
 	],
 	additionalLinks: [
 		{
+			link: '/online/energyboost',
+			name: 'Energy Boost',
+			classes: 'highlighted'
+		},
+		{
 			link: '/online',
 			name: 'Онлайн курсы',
 			subLinks: [
@@ -66,11 +71,6 @@ let state = {
 		// 	link: '/camp',
 		// 	name: 'Летний лагерь'
 		// },
-		{
-			link: '/online/energyboost',
-			name: 'Energy Boost',
-			classes: 'highlighted'
-		},
 		{
 			link: '/certificates',
 			name: 'Подарочный сертификат'
