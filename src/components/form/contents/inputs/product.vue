@@ -17,7 +17,7 @@
 			data-vv-as='Количество'
 			v-model="quantity"
 			:options='quantityOptions'
-            :disabled="false"
+			:disabled="false"
 			v-validate='`required|numeric|max_value:${priceId ? prices.find(p => p.id === priceId).available_quantity : 0}`'
 			:class="{ 'error': myErrors.quantity || errors.has('quantity'), 'success': quantity && !errors.has('quantity') }"
 			@change="() => inputHandler('quantity')"

@@ -42,7 +42,7 @@
 			@change='promocode = $event'
 			type='text')
 
-		p.heavy-text.heavy-text_face.tiny-text_long(v-if='price') Итого к оплате: {{ !!promoprice.amount ? promoprice.amount : price.value }} руб. за месяц
+		p.heavy-text.heavy-text_face.tiny-text_long(v-if='price') Итого к оплате: {{ !!promoprice.amount ? promoprice.amount : price.value }} руб.
 
 		app-checkbox(
 			name='termsAgree'

@@ -19,11 +19,10 @@ div
 				| 191186, Санкт-Петербург, Невский пр., 11, 4 этаж.
 			p
 				b График работы офиса:&nbsp;
-				| пн-пт, 10:00 – 19:00.
+				| Каждый день, 10:00 – 19:00.
 </template>
 
 <script>
-import Vue from 'vue';
 
 export default {
 	name: 'Contacts',

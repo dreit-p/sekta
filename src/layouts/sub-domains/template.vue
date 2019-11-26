@@ -11,7 +11,7 @@
 					.main-links
 					.contacts
 						a.phone.animated-underline.left(href='tel:+78005006882') 8 (800) 500–68–82
-						.caption пн-пт 10:00–19:00
+						.caption каждый день 10:00–19:00
 	<slot></slot>
 	section.soc-networks
 		.limit
