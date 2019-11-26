@@ -31,10 +31,6 @@ let state = {
 					name: 'Курс #SektaCare'
 				},
 				{
-					link: '/online/energyboost',
-					name: 'Курс #SektaEnergyBoost'
-				},
-				{
 					link: '/online/smama',
 					name: 'Курс для мам'
 				},
@@ -70,11 +66,11 @@ let state = {
 		// 	link: '/camp',
 		// 	name: 'Летний лагерь'
 		// },
-		/*{
-			link: '/online/enbo',
+		{
+			link: '/online/energyboost',
 			name: 'Energy Boost',
 			classes: 'highlighted'
-		},*/
+		},
 		{
 			link: '/certificates',
 			name: 'Подарочный сертификат'
