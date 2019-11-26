@@ -31,7 +31,7 @@ let state = {
 					name: 'Курс #SektaCare'
 				},
 				/*{
-					link: '/online/enbo',
+					link: '/online/energyboost',
 					name: 'Курс #SektaEnergyBoost'
 				},*/
 				{

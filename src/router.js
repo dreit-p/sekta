@@ -116,7 +116,7 @@ const Router = new VueRouter({
 						import( /* webpackChunkName: "courses" */ './views/courses/sektacare.vue')
 				},
 				{
-					path: 'enbo',
+					path: 'energyboost',
 					name: 'energyboost',
 					component: () =>
 						import( /* webpackChunkName: "courses" */ './views/courses/energy-boost.vue'),
