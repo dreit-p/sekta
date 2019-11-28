@@ -130,7 +130,7 @@ export default {
 		gyms() {
 			this.selectGym(this.gyms[0]);
 			if (this.map) {
-				map.geoObjects.events.once('add', ()=>{
+				window.map.geoObjects.events.once('add', ()=>{
 					this.setCenterPosition(this.map);
 				})
 			}
