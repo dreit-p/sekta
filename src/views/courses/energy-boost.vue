@@ -55,6 +55,8 @@ div.course
 
 	caption-section
 	entry-form(v-if='courseInfo', formType="enbo", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id, availableCities: availableCities}', :courseName='courseInfo.name')
+
+	sendpulse
 </template>
 
 <script>
@@ -70,6 +72,7 @@ export default {
 	},
 	components: {
 		hero: () => import('@/components/heroes/hero-with_timer.vue'),
+		sendpulse: () => import('@/components/unique-blocks/enbo-sendpulse.vue'),
 		iframeBlock: () => import('@/components/iframe-block.vue'),
 		CaptionSection: () => import('@/components/form/contents/caption-section.vue'),
 		EntryForm: () => import('@/components/entry-form.vue'),

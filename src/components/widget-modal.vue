@@ -48,14 +48,13 @@ export default {
 	computed: {
 		currentNetworks() {
 			let route = this.$route
-			console.log(route)
 			if (route.name === "sektamama" || route.name === "pregnant" ) {
 				return[this.instagram[1], ...this.networks]
 			} else if (route.path === "/gym/moskva") {
 				return [
 					{
-					name: 'instagram',
-					link: 'https://www.instagram.com/sektamoscow/'
+						name: 'instagram',
+						link: 'https://www.instagram.com/sektamoscow/'
 					},
 					{
 						name: 'vkontakte',
@@ -69,8 +68,8 @@ export default {
 			} else if (route.path === "/gym/sankt-peterburg") {
 				return [
 					{
-					name: 'instagram',
-					link: 'https://www.instagram.com/sektaspb/'
+						name: 'instagram',
+						link: 'https://www.instagram.com/sektaspb/'
 					},
 					{
 						name: 'vkontakte',
