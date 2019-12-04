@@ -56,7 +56,7 @@ div.course
 	caption-section
 	entry-form(v-if='courseInfo', formType="enbo", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id, availableCities: availableCities}', :courseName='courseInfo.name')
 
-	sendpulse
+	//- sendpulse
 </template>
 
 <script>
