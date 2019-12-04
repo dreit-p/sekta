@@ -37,12 +37,11 @@ div.course
 		dateStart='каждый день',
 		:TEMPdateStart='courseInfo.last_start_date',
 	)
-	entry-form(v-if='courseInfo', formType='vip', :formData='{prices: courseInfo.prices, platforms: availablePlatforms}', :courseName='courseInfo.name')
+	entry-form(v-if='courseInfo', formType='vip', :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id}', :courseName='courseInfo.name')
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import Vue from 'vue';
 
 const COURSE_TAG = 'VIP';
 
