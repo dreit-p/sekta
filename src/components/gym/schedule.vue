@@ -160,6 +160,11 @@ export default {
 
 			this.practices.forEach(practice => {
 				practice.schedules.forEach(practiceSchedule => {
+
+					if (practiceSchedule.week_day > 6) {
+						console.log('WARNING! Extra week day.');
+						return false;
+					}
 					let times = practiceSchedule.time.split(" ");
 
 					// Add first time
