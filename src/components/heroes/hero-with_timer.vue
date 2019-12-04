@@ -1,6 +1,6 @@
 <template lang="pug">
 section.aside-hero.orange
-	.main(:class='{"with-timer": !!timerTime}')
+	.main(:class='{"with-timer": currentDeadlineIndex > -1}')
 		.background
 			.triangle
 				svg(height='500' viewBox='0 0 150 500')
@@ -13,8 +13,8 @@ section.aside-hero.orange
 					h1.title(:class='{inversed: inversed}', v-if='this.title') {{title}}
 					.text
 						slot
-					.hero-timer(v-if='timerTime')
-						.timer-caption Старт через:
+					.hero-timer(v-if='currentDeadlineIndex > -1')
+						.timer-caption {{ currentCaption }}
 						.counters
 							.counter
 								//- circleBar(:radius='30', :max='20', :progress='countdownData.days', :width='3')
@@ -39,6 +39,8 @@ section.aside-hero.orange
 </template>
 
 <script>
+const countdown = require('countdown');
+
 export default {
 	name: 'CoursesHero',
 	components: {
@@ -65,46 +67,39 @@ export default {
 			type: String,
 			default: ''
 		},
-		timerTime: {
-			type: String,
-			default: ''
+		deadlines: {
+			type: Array,
+			default: ()=>[],
+		},
+		deadlineCaptions: {
+			type: Array,
+			default: ()=>[],
 		},
 	},
 	data () {
 		return {
 			backgroundImage: require('@/assets/images/aside-hero/' + this.image),
 			backgroundImage_mobile: require('@/assets/images/aside-hero/mobile-' + this.image),
-			countdownData: {
-				days: 0,
-				hours: 0,
-				minutes: 0,
-			}
+			currentDate: new Date,
 		}
 	},
+	computed: {
+		currentDeadlineIndex() {
+			return this.deadlines.findIndex(date => new Date(date) >= this.currentDate);
+		},
+		currentDeadline() {
+			return this.deadlines[this.currentDeadlineIndex];
+		},
+		currentCaption() {
+			return this.deadlineCaptions[this.currentDeadlineIndex];
+		},
+		countdownData() {
+			let deadline = new Date(this.currentDeadline);
+			return countdown(deadline, (new Date >= deadline ? deadline : new Date), countdown.DAYS|countdown.HOURS|countdown.MINUTES);
+		},
+	},
 	mounted() {
-		if (this.timerTime.length >0) {
-			let countdown = require('countdown');
-
-			const deadline = new Date(this.timerTime);
-			const countdownInstance = ()=>countdown(deadline, (new Date >= deadline ? deadline : new Date), countdown.DAYS|countdown.HOURS|countdown.MINUTES)
-
-			let countdownObj = countdownInstance();
-			this.countdownData = {
-				days: countdownObj.days,
-				hours: countdownObj.hours,
-				minutes: countdownObj.minutes,
-			}
-
-			setInterval(()=>{
-				let countdownObj = countdownInstance();
-				this.countdownData = {
-					days: countdownObj.days,
-					hours: countdownObj.hours,
-					minutes: countdownObj.minutes,
-				}
-			}, 1);
-
-		}
+		setInterval(() => this.currentDate = new Date, 1000); // trigger update current date
 	},
 }
 </script>
@@ -318,8 +313,8 @@ export default {
 			}
 			@media (min-width: 1026px) {
 				position: absolute;
-				width: 200px;
-				right: calc(25% + -100px);
+				width: 250px;
+				right: calc(25% + -150px);
 				bottom: 16%;
 			}
 			@media (max-width: 1025px) {
