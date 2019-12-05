@@ -13,7 +13,7 @@ section.course_info
 						.caption Груповой чат ВКонтакте
 					.group
 						.data {{startDates.tg}}
-						.caption Групповой чат в&nbsp;Telegram
+						.caption Груповой чат в&nbsp;Telegram
 				.text.small ближайший старт
 			.block
 				.text.big
