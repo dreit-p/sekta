@@ -9,7 +9,8 @@ section.photo-gallery
 				.padding(
 					:style='{paddingBottom: photo.height/photo.width*100 + "%"}'
 				)
-				webp-img(:src='photo.file' alt='')
+				picture
+					img(:src="photo.url")
 </template>
 
 <script>
@@ -20,15 +21,6 @@ export default {
 			type: Array,
 			default: ()=>[]
 		},
-	},
-	components: {
-		WebpImg: () => import('@/components/webp-img.vue'),
-	},
-	created () {
-	},
-	computed: {
-	},
-	methods: {
 	},
 	data () {
 		return {
@@ -52,6 +44,9 @@ export default {
 		}
 		picture {
 			width: 100%;
+			img {
+				width: 100%;
+			}
 		}
 	}
 	@media (min-width: 425px) {

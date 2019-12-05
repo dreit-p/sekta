@@ -38,9 +38,9 @@ div.gym
 					schedule(v-model='selected.practiceID', @click='activateNextBtn({ elemId: "time", destId: "form", text: "Начать оформление" })', :practices='selected.visit.practices')
 
 
-			//- section
-			//- 	.section-caption Фотографии зала
-			//- 	photo-gallery(:photos='cityData.photos')
+			section(v-if='!!currentGym && currentGym.gallery.length')
+				.section-caption Фотографии зала
+				photo-gallery(:photos='currentGym.gallery')
 
 			section#form
 				.section-caption(v-if="courseDate")
@@ -158,41 +158,7 @@ export default {
 				destination: "plan",
 				text: ""
 			},
-			section: 0,
-			cityData: {
-				photos: [
-					{
-						file: "gym-photo-example.jpg",
-						width: "1200",
-						height: "822"
-					},
-					{
-						file: "gym-photo-example_2.jpg",
-						width: "176",
-						height: "220"
-					},
-					{
-						file: "gym-photo-example_3.jpg",
-						width: "550",
-						height: "734"
-					},
-					{
-						file: "gym-photo-example_4.jpg",
-						width: "2000",
-						height: "1124"
-					},
-					{
-						file: "gym-photo-example_5.jpg",
-						width: "1920",
-						height: "720"
-					},
-					{
-						file: "gym-photo-example_6.jpg",
-						width: "1600",
-						height: "1065"
-					}
-				]
-			}
+			section: 0
 		};
 	},
 	asyncComputed: {
@@ -215,6 +181,10 @@ export default {
 				.then(() => {
 					return this.$store.state.gyms.courses;
 				});
+		},
+		currentGym() {
+			if (!this.gyms) {return false}
+			return this.gyms.find(gym => gym.id === this.selected.gymID);
 		},
 		visits() {
 			return this.$store
