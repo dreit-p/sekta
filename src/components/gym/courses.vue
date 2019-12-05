@@ -6,7 +6,7 @@
 			a.tile(
 				href='#'
 				v-for='(course, index) in group.elements'
-				:class='{checked: selectedCourse === course}'
+				:class='{checked: selectedCourse === course, disabled: course.is_disabled}'
 				@click.prevent='selectCourse(course); click()'
 			)
 				.image(:style="{ backgroundImage: `url(' ${publicPath}${course.image} ')`}")
@@ -139,6 +139,13 @@ export default {
 				min-height: 0;
 				padding: 0;
 				margin: 0 *;
+			}
+			&.disabled {
+				opacity: .4;
+				pointer-events: none;
+				.description {
+					background-color: gray;
+				}
 			}
 			@media (min-width: 499px) {
 				&.checked {
