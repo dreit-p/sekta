@@ -56,8 +56,7 @@ export default {
 	asyncComputed: {
 		courseInfo() {
 			return this.$store.dispatch('updateOnlineCourses').then(()=>{
-				let currentCourseData = this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
-				return currentCourseData;
+				return this.$store.state.onlineCourses.find((course) => course.tag === COURSE_TAG);
 			});
 		}
 	},

@@ -268,11 +268,7 @@ export default {
 			return this.formData.prices.find(price => price.id === this.inputsData.price_id);
 		},
 		comparedPlatforms() {
-			let result = [];
-			this.platform_options.map((option)=>{
-				if (this.formData.platforms.includes(option.id)) result.push(option);
-			})
-			return result;
+			return this.platform_options.filter(option => this.formData.platforms.includes(option.id));
 		},
 	},
 	data () {
