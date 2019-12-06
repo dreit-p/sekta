@@ -299,6 +299,7 @@ export default {
 			let name = this.$route.name
 			if (name === "sektacare" || "pregnant" || "accuchek") {
 				this.platform_options.find(p => p.id === 'vk').name = "Групповой чат ВКонтакте"
+				this.platform_options.find(p => p.id === 'tg').name = "Групповой чат в Telegram"
 			}
 		},
 	},
