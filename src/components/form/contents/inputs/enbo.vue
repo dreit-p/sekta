@@ -132,7 +132,7 @@ export default {
 			promocode: null,
 			promoprice: Infinity,
 			platform_options: [
-				{id: 'tg', name: 'Груповой чат в Telegram'},
+				{id: 'tg', name: 'Групповой чат в Telegram'},
 				{id: 'vk', name: 'Вконтакте'},
 				{id: 'fb', name: 'Facebook'},
 				{id: 'sk', name: 'Skype'},
