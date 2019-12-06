@@ -35,7 +35,6 @@ div.course
 
 	caption-section(v-if='courseInfo'
 		dateStart='каждый день',
-		:TEMPdateStart='courseInfo.last_start_date',
 	)
 	entry-form(v-if='courseInfo', formType='vip', :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id}', :courseName='courseInfo.name')
 </template>

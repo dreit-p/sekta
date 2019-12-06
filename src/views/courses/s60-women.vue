@@ -43,9 +43,7 @@ div.course
 					li возможность отслеживать свой прогресс;
 					li общение и поддержка единомышленников в чате под руководством кураторской команды тренеров и консультантов.
 
-	caption-section(v-if='courseInfo'
-		:dateStart='courseInfo.last_start_date'
-	)
+	caption-section(v-if='courseInfo')
 	entry-form(v-if='courseInfo', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id}', :courseName='courseInfo.name')
 </template>
 

@@ -38,9 +38,7 @@ div.course
 					li консультации по питанию;
 					li помощь куратора в адаптации общих рекомендаций под ваши особенности и цели.
 
-	caption-section(v-if='courseInfo'
-		:dateStart='courseInfo.last_start_date',
-	)
+	caption-section(v-if='courseInfo')
 	entry-form(v-if='courseInfo', formType="online", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id}', :courseName='courseInfo.name')
 </template>
 

@@ -97,13 +97,6 @@ export default {
 	},
 	methods: {
 		...mapActions(['setFormModalState']),
-		formatDate() {
-			let newObj = {}
-			this.availablePlatforms.forEach(platform => {
-				newObj[platform] = this.courseInfo.start_dates[platform]
-			});
-			return newObj
-		},
 		scrollTo(id) {
 			window.scrollTo({
 				top: getPosition(document.getElementById(id)).y -65,
