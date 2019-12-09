@@ -268,6 +268,8 @@ const Router = new VueRouter({
 })
 
 Router.beforeEach((to, from, next) => {
+	// перед каждым переходом обновляем токен в куках
+	document.cookie = `api_token=${store.state.user.token}; domain=${process.env.VUE_APP_COOKIE_DOMAIN}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT`;
 
 	if (to.matched.some(record => record.meta.requiresAuth)) {
 		// этот путь требует авторизации, проверяем залогинен ли

@@ -41,7 +41,7 @@ export default {
 		},
 	},
 	created() {
-		this.$store.dispatch('userDetailsRequest', this.user.token);
+		this.$store.dispatch('userDetailsRequest');
 	},
 	data () {
 		return {
