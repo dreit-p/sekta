@@ -7,7 +7,7 @@
 				href='#'
 				v-for='(course, index) in group.elements'
 				:class='{checked: selectedCourse === course, disabled: course.is_disabled}'
-				@click.prevent='selectCourse(course); click()'
+				@click.prevent='selectCourse(course); emitClick()'
 			)
 				.image(:style="{ backgroundImage: `url(' ${publicPath}${course.image} ')`}")
 					.caption {{course.name}}
@@ -84,7 +84,7 @@ export default {
 			this.$emit('change', course.id);
 			this.selectedCourse = course;
 		},
-		click() {
+		emitClick() {
 			this.$emit('click');
 		},
 	},
@@ -96,15 +96,15 @@ export default {
 		.group {
 			overflow: visible;
 			margin-bottom: 50px;
+			.group-title {
+				font-size: 18px;
+				font-style: italic;
+			}
 			@media (max-width: 500px) {
 				.group-title {
 					display: none;
 				}
 				margin-bottom: 0;
-			}
-			.group-title {
-				font-size: 18px;
-				font-style: italic;
 			}
 		}
 		.tiles {
@@ -143,14 +143,22 @@ export default {
 			&.disabled {
 				opacity: .4;
 				pointer-events: none;
+				box-shadow: none;
 				.description {
-					background-color: gray;
+					pointer-events: none;
+					background-color: color(gray a(.8));
+				}
+				.image:after {
+					background: linear-gradient(to top, color(gray a(.67)), transparent);
 				}
 			}
 			@media (min-width: 499px) {
 				&.checked {
-					transition-duration: .2s;
 					box-shadow: 0px 10px 20px 0 rgba(0, 0, 0, 0.35);
+				}
+				&.checked,
+				&.disabled {
+					transition-duration: .2s;
 					.image .caption {
 						display: none;
 					}
@@ -259,10 +267,12 @@ export default {
 					opacity: 1;
 					color: black;
 					text-align: left;
-					background-color: transparent;
+					min-height: 0;
+					background-color: transparent !important;
 				}
 			}
-			&.checked .description {
+			&.checked .description,
+			&.disabled .description {
 				transition-duration: .2s;
 				opacity: 1;
 			}
