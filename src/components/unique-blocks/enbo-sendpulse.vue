@@ -1,7 +1,10 @@
 <template>
-	<div v-if="show" @click.self="$emit('close')" class="sp-form-outer sp-popup-outer">
-		<div id="sp-form-139063" sp-id="139063" sp-hash="125909c98319d1820ec0aaef4b68cea1a71d4093dfbd254fbe336b20c2ed9087" sp-lang="ru" class="sp-form sp-form-regular sp-form-popup sp-form-horizontal" sp-show-options="%7B%22satellite%22%3Afalse%2C%22maDomain%22%3A%22login.sendpulse.com%22%2C%22formsDomain%22%3A%22forms.sendpulse.com%22%2C%22condition%22%3A%22onEnter%22%2C%22scrollTo%22%3A25%2C%22delay%22%3A60%2C%22repeat%22%3A1%2C%22background%22%3A%22rgba(238%2C%20238%2C%20238%2C%201)%22%2C%22position%22%3A%22bottom-right%22%2C%22animation%22%3A%22%22%2C%22hideOnMobile%22%3Afalse%2C%22urlFilter%22%3Atrue%2C%22urlFilterConditions%22%3A%5B%7B%22force%22%3A%22hide%22%2C%22clause%22%3A%22equal%22%2C%22token%22%3A%22https%3A%2F%2Fsektaschool.ru%2Fonline%2Fenergyboost%22%7D%5D%2C%22analytics%22%3A%7B%22ga%22%3A%7B%22eventLabel%22%3A%22%D0%A4%D0%BE%D1%80%D0%BC%D0%B0_%D0%BF%D0%BE%D0%B4%D0%BF%D0%B8%D1%81%D0%BA%D0%B8_sektaschool_ru_%D0%91%D0%B0%D0%B7%D0%B0_%D1%80%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B_%D1%81_%D1%81%D0%B0%D0%B9%D1%82%D0%B0%22%2C%22send%22%3Afalse%7D%2C%22ym%22%3A%7B%22counterId%22%3Anull%2C%22eventLabel%22%3Anull%2C%22targetId%22%3Anull%2C%22send%22%3Afalse%7D%7D%7D">
-			<div class="sp-form-fields-wrapper"><button class="sp-btn-close " @click.self="$emit('close')">&nbsp;</button>
+	<div class="sp-form-outer sp-popup-outer sp-force-hide">
+		<div id="sp-form-139063" sp-id="139063" sp-hash="125909c98319d1820ec0aaef4b68cea1a71d4093dfbd254fbe336b20c2ed9087" sp-lang="ru" class="sp-form sp-form-regular sp-form-popup sp-form-horizontal" sp-show-options="%7B%22satellite%22%3Afalse%2C%22maDomain%22%3A%22login.sendpulse.com%22%2C%22formsDomain%22%3A%22forms.sendpulse.com%22%2C%22condition%22%3A%22onButtonClick%22%2C%22scrollTo%22%3A25%2C%22delay%22%3A0%2C%22repeat%22%3A1%2C%22background%22%3A%22rgba(238%2C%20238%2C%20238%2C%201)%22%2C%22position%22%3A%22bottom-right%22%2C%22animation%22%3A%22%22%2C%22hideOnMobile%22%3Afalse%2C%22urlFilter%22%3Atrue%2C%22urlFilterConditions%22%3A%5B%7B%22force%22%3A%22hide%22%2C%22clause%22%3A%22equal%22%2C%22token%22%3A%22https%3A%2F%2Fsektaschool.ru%2Fonline%2Fenergyboost%22%7D%5D%2C%22analytics%22%3A%7B%22ga%22%3A%7B%22eventLabel%22%3A%22%D0%A4%D0%BE%D1%80%D0%BC%D0%B0_%D0%BF%D0%BE%D0%B4%D0%BF%D0%B8%D1%81%D0%BA%D0%B8_sektaschool_ru_%D0%91%D0%B0%D0%B7%D0%B0_%D1%80%D0%B5%D1%86%D0%B5%D0%BF%D1%82%D1%8B_%D1%81_%D1%81%D0%B0%D0%B9%D1%82%D0%B0%22%2C%22send%22%3Afalse%7D%2C%22ym%22%3A%7B%22counterId%22%3Anull%2C%22eventLabel%22%3Anull%2C%22targetId%22%3Anull%2C%22send%22%3Afalse%7D%7D%7D">
+			<div class="sp-form-fields-wrapper">
+				<button class="sp-btn-close ">
+					&nbsp;
+				</button>
 				<div class="sp-message">
 					<div></div>
 				</div>
@@ -22,17 +25,10 @@
 <script>
 export default {
 	name: 'SendpulseForm',
-	props: {
-		show: {
-			type: Boolean,
-			required: true,
-			default: false,
-		},
-	},
 	mounted() {
 		let sendpulseScript = document.createElement('script')
 		sendpulseScript.setAttribute('src', '//static-login.sendpulse.com/apps/fc3/build/loader.js')
-		sendpulseScript.setAttribute('sp-form-id', 'ae2e68bcf1cbd64f749e0cc672e2763f10afae52262301cb387db841450cd704')
+		sendpulseScript.setAttribute('sp-form-id', '125909c98319d1820ec0aaef4b68cea1a71d4093dfbd254fbe336b20c2ed9087')
 		document.head.appendChild(sendpulseScript)
 
 		console.log('EnBo senpulse is mounted');
@@ -45,6 +41,10 @@ export default {
 
 </script>
 <style scoped>
+.sp-force-hide {
+	display: none;
+}
+
 .sp-form[sp-id="139063"] {
 	display: block;
 	background: #ffffff;
@@ -116,7 +116,7 @@ export default {
 }
 
 .sp-popup-outer {
-	display: block;
+	background-color: rgba(0, 0, 0, 0.5);
 	z-index: 5;
 }
 
