@@ -1,13 +1,13 @@
 <template lang="pug">
 div
-	sendpulse
+	//- sendpulse
 	section.soc-networks
 		.limit
 			.caption Ещё больше полезного в наших аккаунтах:
 			.icons
 				a(v-for='network in networks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
 					svg-icon(:name='"network-" + network.name')
-			.subscribe
+			//- .subscribe
 				a.animated-underline(@click="openForm") Подпишитесь на нашу рассылку
 	footer.main-footer
 		.limit
@@ -63,8 +63,8 @@ export default {
 	},
 	methods: {
 		openForm() {
-			let sendpulse = document.querySelector(".sp-hide");
-			sendpulse.classList.remove('sp-hide')
+			let sendpulse = document.querySelector(".sp-force-hide");
+			sendpulse.classList.remove('sp-force-hide')
 		}
 	}
 }
