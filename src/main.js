@@ -54,6 +54,7 @@ Vue.use(VueYandexMetrika, {
 	id: process.env.VUE_APP_YANDEX_METRIKA_ID,
 	router: router,
 	env: process.env.NODE_ENV,
+	options: {webvisor: true}
 })
 
 window.vm = new Vue({
