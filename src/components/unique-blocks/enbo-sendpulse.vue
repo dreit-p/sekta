@@ -18,10 +18,6 @@ export default {
 		document.head.appendChild(sendpulseScript)
 
 		console.log('EnBo senpulse '+this.formId+' is mounted');
-
-		sendpulseScript = document.createElement('script')
-		sendpulseScript.setAttribute('src', '//static-login.sendpulse.com/apps/fc3/build/default-handler.js?1574954079563')
-		document.head.appendChild(sendpulseScript)
 	},
 	methods: {
 		openSendpulse() {
@@ -38,7 +34,13 @@ export default {
 }
 
 </script>
-<style>
+<style scope>
+
+a {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 .sp-force-hide {
 	display: none !important;
 }
