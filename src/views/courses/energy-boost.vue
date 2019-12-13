@@ -44,7 +44,8 @@ div.course
 					li со всеми необходимыми витаминами и микроэлементами,
 					li no sugar, no junk.
 
-				a(href='#' @click.prevent='' sp-show-form="139063") Меню для новогоднего стола! Получить.
+				sendpulse(formId='139063')
+					a() Меню для новогоднего стола! Получить.
 
 				p #[b А еще:]
 				ul
@@ -57,8 +58,6 @@ div.course
 
 	caption-section
 	entry-form(v-if='courseInfo', formType="enbo", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id, availableCities: availableCities}', :courseName='courseInfo.name')
-
-	sendpulse
 </template>
 
 <script>
