@@ -160,7 +160,7 @@ export default {
 
 	@media (max-width: 650px) {
 		.first-screen.main {
-			background-image: url(~@/assets/images/first_screen-bg_small.jpg) !important;
+			background-image: url(~@/assets/images/first_screen-bg-girls_small.jpg) !important;
 			height: 148vw !important;
 			max-height: 700px;
 			position: relative;
