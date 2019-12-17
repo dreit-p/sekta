@@ -1,35 +1,35 @@
 <template lang="pug">
-div
-	//- sendpulse
-	section.soc-networks
-		.limit
-			.caption Ещё больше полезного в наших аккаунтах:
-			.icons
-				a(v-for='network in networks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
-					svg-icon(:name='"network-" + network.name')
-			//- .subscribe
-				a.animated-underline(@click="openForm") Подпишитесь на нашу рассылку
-	footer.main-footer
-		.limit
-			section.organization
-				p © 2019, ИП Доронина&nbsp;О.&nbsp;А.
-				p ОГРНИП 314667933100032
-			section.links
-				router-link(class='link larger animated-underline', to='/vacancies') Вакансии
+	div
+		section.soc-networks
+			.limit
+				.caption Ещё больше полезного в наших аккаунтах:
 				.icons
 					a(v-for='network in networks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
 						svg-icon(:name='"network-" + network.name')
-				a(class='link smaller animated-underline', href='../docs/privacy_policy.pdf', target='_BLANK', rel='noopener noreferrer') Политика конфиденциальности
-			section.contacts
-				a.phone.animated-underline(href='callto: +78005006882') 8 (800) 500–68–82
-				a.mail.animated-underline(href='mailto: info@sektaschool.ru') info@sektaschool.ru
-			section.reward
-				img.reward__image(src="@/assets/images/reward-icon.png")
-			section.developer
-				svg-icon(name='logo-immelman')
-				p.smaller Поддержка сайта
-				a.larger(href='https://immelman.ru/', target='_BLANK', rel='noopener noreferrer') «Бюро Иммельман»
+				.subscribe
+					a.animated-underline(sp-show-form="139886") Подпишитесь на нашу рассылку
+		footer.main-footer
+			.limit
+				section.organization
+					p © 2019, ИП Доронина&nbsp;О.&nbsp;А.
+					p ОГРНИП 314667933100032
+				section.links
+					router-link(class='link larger animated-underline', to='/vacancies') Вакансии
+					.icons
+						a(v-for='network in networks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
+							svg-icon(:name='"network-" + network.name')
+					a(class='link smaller animated-underline', href='../docs/privacy_policy.pdf', target='_BLANK', rel='noopener noreferrer') Политика конфиденциальности
+				section.contacts
+					a.phone.animated-underline(href='callto: +78005006882') 8 (800) 500–68–82
+					a.mail.animated-underline(href='mailto: info@sektaschool.ru') info@sektaschool.ru
+				section.reward
+					img.reward__image(src="@/assets/images/reward-icon.png")
+				section.developer
+					svg-icon(name='logo-immelman')
+					p.smaller Поддержка сайта
+					a.larger(href='https://immelman.ru/', target='_BLANK', rel='noopener noreferrer') «Бюро Иммельман»
 
+		sendpulse
 </template>
 
 <script>
@@ -59,12 +59,6 @@ export default {
 					link: 'https://www.youtube.com/user/sektaschool'
 				},
 			]
-		}
-	},
-	methods: {
-		openForm() {
-			let sendpulse = document.querySelector(".sp-force-hide");
-			sendpulse.classList.remove('sp-force-hide')
 		}
 	}
 }

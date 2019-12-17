@@ -44,8 +44,7 @@ div.course
 					li со всеми необходимыми витаминами и микроэлементами,
 					li no sugar, no junk.
 
-				sendpulse(formId='139063')
-					a() Меню для новогоднего стола! Получить.
+				a(sp-show-form="139063") Меню для новогоднего стола! Получить.
 
 				p #[b А еще:]
 				ul
@@ -55,6 +54,7 @@ div.course
 					li рецепты здоровых блюд для новогоднего стола,
 					li периодическое голодание,
 					li планирование года на базе концепции #[a(href='https://sektascience.com/2019/03/01/new-normal/' target="_BLANK" rel="noopener noreferrer") New Normal].
+	sendpulse
 
 	caption-section
 	entry-form(v-if='courseInfo', formType="enbo", :formData='{prices: courseInfo.prices, platforms: availablePlatforms, id: courseInfo.id, availableCities: availableCities}', :courseName='courseInfo.name')
