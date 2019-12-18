@@ -1,21 +1,21 @@
 <template lang="pug">
-section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/images/first_screen-bg-girls.jpg')}')`, backgroundPosition: '80% 0' }")
+section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/images/first_screen-bg-enbo.jpg')}')`, backgroundPosition: '80% 0' }")
 	.limit.first-screen__container.clearfix
 		.accordion2full__panel.accordion2full__panel_active(style='float: right; margin-top: 3vw;')
 			.first-screen__header
 				h1.first-screen__title
-					p Постройте ваше идеальное тело со&nbsp;Школой #SEKTA
-					p
+					p Зимний курс #sekta
+						br
+						span(style='color: #ca3c3b') Energy Boost
 			.first-screen__content
 				ul
-					li занимайтесь в удобное время и в удобном месте;
-					li онлайн или с тренером в зале;
-					li без голода и переедания;
-					li под чутким контролем кураторов;
-					li с поддержкой единомышленников.
+					li Online;
+					li Разные уровни нагрузки;
+					li Удобное меню;
+					li Новогодние подарки.
 				p
-					router-link(to='/online')
-						green-btn(style='color: #fff', target='_blank', rel='noopener noreferrer') Подробнее об онлайн-курсах
+					router-link(to='/online/energyboost')
+						red-btn(style='color: #fff', target='_blank', rel='noopener noreferrer') Подробнее
 </template>
 
 <script>
@@ -28,7 +28,7 @@ export default {
 		};
 	},
 	components: {
-		GreenBtn: () => import('@/components/form/green-btn.vue'),
+		RedBtn: () => import('@/components/form/red-btn.vue'),
 	},
 	methods: {
 		...mapActions(['setFormModalState'])
@@ -92,6 +92,16 @@ export default {
 			@media (min-width: 1010px) {
 				padding:0;
 				margin: 0;
+			}
+		}
+		.green-btn {
+			margin: 20px 0;
+			width: 100%;
+			max-width: 190px;
+			@media (max-width: 425px) {
+				width: 100%;
+				max-width: none;
+				text-align: center;
 			}
 		}
 	}
@@ -160,7 +170,7 @@ export default {
 
 	@media (max-width: 650px) {
 		.first-screen.main {
-			background-image: url(~@/assets/images/first_screen-bg-girls_small.jpg) !important;
+			background-image: url(~@/assets/images/first_screen-bg-enbo_small.jpg) !important;
 			height: 148vw !important;
 			max-height: 700px;
 			position: relative;
@@ -169,6 +179,7 @@ export default {
 				bottom: 0;
 				& .accordion2full__panel {
 					overflow: visible;
+					width: 100%;
 					margin-top: 0 !important;
 					max-height: max-content;
 					transform: scale(1);
@@ -241,15 +252,6 @@ export default {
 	.container {
 		padding: * 0;
 		margin: * auto;
-	}
-
-	.green-btn {
-		margin: 20px 0;
-		@media (max-width: 425px) {
-			width: 100%;
-			max-width: none;
-			text-align: center;
-		}
 	}
 
 </style>
