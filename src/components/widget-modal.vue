@@ -4,6 +4,7 @@ transition(name='fade')
 		.veil(@click="close")
 		.modal-wrapper
 			.modal-content
+				.close-btn(@click="close")
 				.text-block
 					.text-block__title Тренировки, рецепты и научные статьи в наших аккаунтах:
 					.text-block__icons.icons
@@ -141,9 +142,9 @@ export default {
 		width: 100%;
 		margin: auto;
 		background-color: rgba(0, 0, 0, .6);
-		@media (max-width: 600px) {
+		/* @media (max-width: 600px) {
 			display:none;
-		}
+		} */
 	}
 	.modal-wrapper {
 		display: flex;
@@ -165,10 +166,47 @@ export default {
 		position: relative;
 		z-index: 2;
 		@media (max-width: 600px) {
+			margin: auto;
 			height: auto;
 			display: flex;
 			flex-direction: column;
-			min-height: 100%;
+			/* min-height: 100%; */
+		}
+	}
+	.close-btn {
+		position: absolute;
+		width: 25px;
+		height: 25px;
+		color: #b2b2b2;
+		top: 14px;
+		right: 14px;
+		cursor: pointer;
+		transition: color .2s ease-out;
+		@media (max-width: 600px) {
+			display: none;
+		}
+		&:hover {
+			transition-timing-function: ease-in;
+			transition-duration: .05s;
+			color: color(#b2b2b2 b(80%));
+		}
+		&:after,
+		&:before {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+			display: block;
+			content: "";
+			width: 100%;
+			height: 2px;
+			margin: auto;
+			background-color: currentColor;
+			transform: rotateZ(45deg);
+		}
+		&:after {
+			transform: rotateZ(-45deg);
 		}
 	}
 	.text-block {
