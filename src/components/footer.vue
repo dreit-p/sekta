@@ -15,9 +15,11 @@
 					p ОГРНИП 314667933100032
 				section.links
 					router-link(class='link larger animated-underline', to='/vacancies') Вакансии
-					.icons
+					.icons.mobile-only
 						a(v-for='network in networks', :href='network.link', target='_BLANK', rel='noopener noreferrer')
 							svg-icon(:name='"network-" + network.name')
+					.subscribe.mobile-only
+						a.animated-underline(sp-show-form="139886") Подпишитесь на нашу рассылку
 					a(class='link smaller animated-underline', href='../docs/privacy_policy.pdf', target='_BLANK', rel='noopener noreferrer') Политика конфиденциальности
 				section.contacts
 					a.phone.animated-underline(href='callto: +78005006882') 8 (800) 500–68–82
@@ -155,7 +157,9 @@ export default {
 				display: inline;
 			}
 			.icons {
-				display: none;
+				display: flex;
+				margin-bottom: 0;
+				padding: * 20px;
 			}
 		}
 		.contacts {
@@ -195,6 +199,12 @@ export default {
 		}
 	}
 
+	@media (min-width: 801px) {
+		.mobile-only {
+			display: none !important;
+		}
+	}
+
 	@media (max-width: 800px) {
 		footer.main-footer {
 			.limit {
@@ -222,11 +232,6 @@ export default {
 			}
 			.links {
 				order: 1;
-				.icons {
-					display: flex;
-					margin-bottom: 0;
-					padding: * 20px;
-				}
 			}
 			.organization {
 				order: 2;
