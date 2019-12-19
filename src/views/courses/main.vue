@@ -17,7 +17,7 @@
 						li общий чат в&nbsp;телеграме,
 						li рецепты здоровых новогодних блюд.
 					.buttons
-						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', :to='{ name: "sektaevo" }')
+						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', :to='{ name: "energyboost" }')
 							green-btn Подробности
 			.scroll-appeal
 				| листай вниз
