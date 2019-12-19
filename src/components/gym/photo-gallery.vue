@@ -55,6 +55,7 @@ export default {
 			&:after {
 				content: '';
 				flex-grow: 99999999;
+				flex-basis: 40px;
 			}
 			.tile {
 				background-color: gray;
