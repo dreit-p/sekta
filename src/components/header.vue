@@ -484,8 +484,12 @@ export default {
 		width: 100%;
 		z-index: 1;
 		background-color: var(--bt-dark_elems);
+		@media (max-width: 600px) {
+			display: none;
+		}
 		.limit {
 			width: 100%;
+			overflow: hidden;
 			transition: height .3s;
 		}
 		.category {
