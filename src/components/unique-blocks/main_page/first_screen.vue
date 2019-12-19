@@ -9,8 +9,9 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 						span(style='color: #ca3c3b') Energy Boost
 			.first-screen__content
 				ul
-					li Online;
-					li Разные уровни нагрузки;
+					li Онлайн;
+					li Четыре уровня нагрузки;
+					li От одной до трех тренировок в день;
 					li Удобное меню;
 					li Новогодние подарки.
 				p
