@@ -9,11 +9,11 @@ section.first-screen.main(:style="{ backgroundImage: `url('${require('@/assets/i
 						span(style='color: #ca3c3b') Energy Boost
 			.first-screen__content
 				ul
-					li Онлайн;
-					li Четыре уровня нагрузки;
-					li От одной до трех тренировок в день;
-					li Удобное меню;
-					li Новогодние подарки.
+					li Онлайн
+					li Четыре уровня нагрузки
+					li От одной до трех тренировок в день
+					li Удобное меню
+					li Новогодние подарки
 				p
 					router-link(to='/online/energyboost')
 						red-btn(style='color: #fff', target='_blank', rel='noopener noreferrer') Подробнее
