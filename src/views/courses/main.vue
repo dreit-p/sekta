@@ -1,5 +1,27 @@
 <template lang="pug">
-	article.courses-list
+	article.courses-list.inverted-order
+		section.course
+			.background
+				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-enbo.jpg')} ')`}")
+				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-enbo.jpg')} ')`}")
+			.content-wrapper
+				.content
+					.title Сезонный курс
+						br
+						| #SEKTA ENERGY BOOST
+					p Зимний интенсив никогда не повторяется!
+					ul
+						li 4 уровня сложности — вам доступны все,
+						li готовое меню со&nbsp;списком продуктов,
+						li аналитические задания,
+						li общий чат в&nbsp;телеграме,
+						li рецепты здоровых новогодних блюд.
+					.buttons
+						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', :to='{ name: "sektaevo" }')
+							green-btn Подробности
+			.scroll-appeal
+				| листай вниз
+				.arrows
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/evo_desk.jpg')} ')`}")
@@ -14,9 +36,6 @@
 					.buttons
 						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', :to='{ name: "sektaevo" }')
 							green-btn Подробности
-			.scroll-appeal
-				| листай вниз
-				.arrows
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-s60lite.jpg')} ')`}")
@@ -79,7 +98,6 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Vue from 'vue';
 
 export default {
 	name: 'Courses',
@@ -181,6 +199,26 @@ article.courses-list {
 			float: left;
 			justify-content: flex-end;
 			.content {
+			}
+		}
+	}
+	&.inverted-order {
+		.course:nth-of-type(odd) {
+			.background .img {
+				background-position: 75% center;
+			}
+			.content-wrapper {
+				float: left;
+				justify-content: flex-end;
+			}
+		}
+		.course:nth-of-type(even) {
+			.background .img {
+				background-position: 25% center;
+			}
+			.content-wrapper {
+				float: right;
+				justify-content: flex-start;
 			}
 		}
 	}
