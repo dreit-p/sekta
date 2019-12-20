@@ -141,12 +141,20 @@ export default {
 				margin: 0 *;
 			}
 			&.disabled {
-				opacity: .4;
 				pointer-events: none;
 				box-shadow: none;
+				.image {
+					opacity: 0.4;
+				}
 				.description {
 					pointer-events: none;
-					background-color: color(gray a(.8));
+					background-color: rgba(220, 220, 220, .8);
+				}
+				.desc-title {
+					color: rgba(0,0,0,.7);
+				}
+				.desc-text {
+					color: rgba(0,0,0,.6);
 				}
 				.image:after {
 					background: linear-gradient(to top, color(gray a(.67)), transparent);
