@@ -12,11 +12,9 @@ div.course
 				a.notice.center(href='https://www.youtube.com/watch?v=MUNQRUgy444&feature=youtu.be', target='_BLANK', rel='noopener noreferrer') Пробная тренировка – суставная гимнастика
 				p
 					b Программа подходит женщинам с 12-ой недели беременности.&nbsp;
-					| До начала программы получите от наблюдающего врача&ensp;
-					a(href='../pregnant-sert.jpg' target='_BLANK' rel='noopener noreferrer') справку
-					|  или письменное подтверждение о&ensp;
-					a(href='../docs/parmed-xpreg.pdf' target='_BLANK' rel='noopener noreferrer') разрешенных
-					|  вам нагрузках.
+					| До начала курса вам необходимо получить #[a(href='../docs/pregnancy-ref.jpg' target='_BLANK' rel='noopener noreferrer') справку] или #[a(href='../docs/parmed-xpreg.pdf' target='_BLANK' rel='noopener noreferrer') письменное разрешение] от наблюдающего врача.
+					br
+					| Чтобы рассказать врачу о курсе, скачайте нашу #[a(href='../docs/programma.pdf' target='_BLANK' rel='noopener noreferrer') памятку] с описанием программы и примерами упражнений.&ensp;
 				p
 					b Продолжительность курса:&ensp;
 					| 5 недель.
