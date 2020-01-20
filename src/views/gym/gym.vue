@@ -4,11 +4,8 @@ div.gym
 		template(v-slot:another v-if="courseDate")
 			.huge-hero-text
 				h1.main {{city.name}}
-				//- .additional старт занятий – {{courseDate}}
-				.additional старт курса – 6 января
-				p Тренировки в зале начнутся 13 января
-					br
-					| еще можно присоединиться
+				.additional старт занятий – {{courseDate}}
+				p еще можно присоединиться
 
 	.section-btns
 		.btn.next(v-if='nextBtn.isVisible', @click='scrollTo(nextBtn.destination); nextBtn.isVisible = false') {{ nextBtn.text }}
