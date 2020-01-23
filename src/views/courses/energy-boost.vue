@@ -1,6 +1,6 @@
 <template lang="pug">
 div.course
-	hero(image='course_bg-enbo.jpg', title='ENERGY BOOST', :deadlines=['Dec 9 2019 00:00:00', 'Jan 1 2020 00:00:00'], :deadlineCaptions=['Старт через:', 'Новый год через:'])
+	hero(image='course_bg-enbo.jpg', title='ENERGY BOOST', :deadlines=['Jan 27 2020 13:00:00'], :deadlineCaptions=['До конца продаж осталось:'])
 		.highlight-block
 			p Вы можете чувствовать себя сильным, бодрым и подтянутым всю зиму!
 			p Сезонный #[b онлайн]-курс #SEKTA
