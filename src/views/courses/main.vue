@@ -1,27 +1,5 @@
 <template lang="pug">
-	article.courses-list.inverted-order
-		section.course
-			.background
-				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-enbo.jpg')} ')`}")
-				.mobile-img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_mobile_bg-enbo.jpg')} ')`}")
-			.content-wrapper
-				.content
-					.title Сезонный курс
-						br
-						| #SEKTA ENERGY BOOST
-					p Зимний интенсив никогда не повторяется!
-					ul
-						li 4 уровня сложности — вам доступны все,
-						li готовое меню со&nbsp;списком продуктов,
-						li аналитические задания,
-						li общий чат в&nbsp;телеграме,
-						li рецепты здоровых новогодних блюд.
-					.buttons
-						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', :to='{ name: "energyboost" }')
-							green-btn Подробности
-			.scroll-appeal
-				| листай вниз
-				.arrows
+	article.courses-list
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/evo_desk.jpg')} ')`}")
@@ -36,6 +14,9 @@
 					.buttons
 						router-link(title='ОСНОВНОЙ ОНЛАЙН-КУРС #SEKTAEVO', :to='{ name: "sektaevo" }')
 							green-btn Подробности
+			.scroll-appeal
+				| листай вниз
+				.arrows
 		section.course
 			.background
 				.img(:style="{ backgroundImage: `url(' ${require('@/assets/images/course_wide_bg-s60lite.jpg')} ')`}")
