@@ -19,11 +19,6 @@ let state = {
 	],
 	additionalLinks: [
 		{
-			link: '/online/energyboost',
-			name: 'Energy Boost',
-			classes: 'highlighted'
-		},
-		{
 			link: '/online',
 			name: 'Онлайн курсы',
 			subLinks: [
