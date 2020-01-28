@@ -16,6 +16,10 @@ let state = {
 			link: '/kontakty',
 			name: 'Контакты'
 		},
+		{
+			link: '/emails',
+			name: 'Рассылка'
+		},
 	],
 	additionalLinks: [
 		{
