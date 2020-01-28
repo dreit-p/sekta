@@ -227,6 +227,11 @@ const Router = new VueRouter({
 					import('./views/table/main.vue')
 		},
 		{
+			path: '/emails',
+			component: () =>
+					import('./views/email.vue')
+		},
+		{
 			path: '/password-recovery',
 			name: 'password-recovery',
 			component: () =>
