@@ -2,6 +2,8 @@ Sektaschool project (Frontend part - SPA)
 
 # sekta
 
+![Visualization of the codebase](./diagram.svg)
+
 ## Project setup
 ```
 npm install
