@@ -2,7 +2,7 @@ Sektaschool project (Frontend part - SPA)
 
 # sekta
 
-![Visualization of the codebase](./diagram.svg)
+![Visualization of the codebase](./diagram.svg | height=500)
 
 ## Project setup
 ```
