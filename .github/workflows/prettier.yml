@@ -1,10 +1,7 @@
 name: Continuous Integration
 
 # This action works with pull requests and pushes on the main branch
-on:
-  pull_request:
-  push:
-    branches: [develop]
+on: [push, pull_request]
 
 jobs:
   prettier:
